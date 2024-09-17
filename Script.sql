@@ -39,11 +39,15 @@ CREATE TABLE IF NOT EXISTS `trainproject`.`account` (
   `Password` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `Email` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `RoleID` INT NULL DEFAULT NULL,
+  `PassengerID` INT NULL DEFAULT NULL,
   PRIMARY KEY (`AccountID`),
   INDEX `RoleID` (`RoleID` ASC) VISIBLE,
   CONSTRAINT `account_ibfk_1`
     FOREIGN KEY (`RoleID`)
-    REFERENCES `trainproject`.`role` (`RoleID`))
+    REFERENCES `trainproject`.`role` (`RoleID`),
+  CONSTRAINT `account_ibfk_2`
+    FOREIGN KEY (`PassengerID`)
+    REFERENCES `trainproject`.`Passenger` (`PassengerID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -109,7 +113,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `trainproject`.`passenger` (
   `PassengerID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
-  `Password` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `Email` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `Age` INT NULL DEFAULT NULL,
   `Address` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,

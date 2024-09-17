@@ -15,7 +15,7 @@ import model.location;
  * @author My Asus
  */
 public class TrainDAO extends DBContext {
-    public List<location> getAll() {
+    public List<location> getAllLocation() {
         List<location> list = new ArrayList<>();
         String sql = "select * from location";
         try {
@@ -31,6 +31,6 @@ public class TrainDAO extends DBContext {
     }
         public static void main(String[] args) {
         TrainDAO dao = new TrainDAO();
-        System.out.println(dao.getAll());
+        System.out.println(dao.getAllLocation());
     }
 }
