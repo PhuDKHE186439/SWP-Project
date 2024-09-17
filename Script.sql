@@ -70,8 +70,6 @@ CREATE TABLE IF NOT EXISTS `trainproject`.`train` (
   `TrainScheduleTime` DATE NULL DEFAULT NULL,
   `TrainName` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `NumberOfSeat` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
-  `CompartmentID` INT NULL DEFAULT NULL,
-  `SeatID` INT NULL DEFAULT NULL,
   `StartLocationID` INT NULL DEFAULT NULL,
   `ArrivalLocationID` INT NULL DEFAULT NULL,
   PRIMARY KEY (`TrainID`),
@@ -94,7 +92,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `trainproject`.`compartment` (
   `CompartmentID` INT NOT NULL,
   `CompartmentNumber` INT NULL DEFAULT NULL,
-  `CompartmentType` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `TrainID` INT NULL DEFAULT NULL,
   PRIMARY KEY (`CompartmentID`),
   INDEX `fk_train_idx` (`TrainID` ASC) VISIBLE,
@@ -262,18 +259,19 @@ INSERT INTO Account (AccountID, PhoneNumber, Username, Password, Email, RoleID) 
 
 (7, '555-6543', 'Mana', 'ManagerTicket', 'Manager@gmail.com',2);
 
--- Insert data into Train
-INSERT INTO Train (TrainID, TrainScheduleTime, TrainName, NumberOfSeat, StartLocationID, ArrivalLocationID) VALUES
-(1, '2024-09-17 08:00:00', 'Express 101', 100, 1, 2),
-(2, '2024-09-17 10:30:00', 'Local 202', 120, 2, 3),
-(3, '2024-09-18 07:00:00', 'Regional 303', 150, 1, 4);
 
--- Insert data into Location
 INSERT INTO Location (LocationID, LocationName, Description) VALUES
 (1, 'Ha Noi', 'Main station in Ha Noi'),
 (2, 'Hai Phong', 'Main station in Hai Phong'),
 (3, 'Da Nang', 'Main station in Da Nang'),
 (4, 'Ho Chi Minh', 'Main station in Ho Chi Minh');
+-- Insert data into Train
+INSERT INTO Train (TrainID, TrainScheduleTime, TrainName, NumberOfSeat, StartLocationID, ArrivalLocationID) VALUES
+(1, '2024-09-17 08:00:00', 'Express 101', 100, 1, 2),
+(2, '2024-09-17 10:30:00', 'Local 202', 120, 2, 3);
+
+-- Insert data into Location
+
 
 -- Insert data into Compartment
 INSERT INTO Compartment (CompartmentID, CompartmentNumber, TrainID) VALUES
@@ -291,9 +289,9 @@ INSERT INTO TicketClass (TicketClassID, CategoryName) VALUES
 (2, 'Business Class');
 
 -- Insert data into Ticket
-INSERT INTO Ticket (TicketID, PassengerID, SeatID, TicketClassID, PurchaseDate, TicketPrice, CompartmentID, TimeArrive) VALUES
-(1, 1, 1, 1, '2024-09-01', 150.00, 1, '2024-09-17 08:45:00'),
-(2, 2, 2, 2, '2024-09-01', 50.00, 2, '2024-09-17 11:00:00');
+INSERT INTO Ticket (TicketID, PassengerID, SeatID, CompartmentNumber, TicketClassID, PurchaseDate, TicketPrice, CompartmentID, TimeArrive) VALUES
+(1, 1, 1,1, 1, '2024-09-01', 150.00, 1, '2024-09-17 08:45:00'),
+(2, 2, 2,1, 2, '2024-09-01', 50.00, 2, '2024-09-17 11:00:00');
 
 -- Insert data into Payment
 INSERT INTO Payment (PaymentID, TicketID, PassengerID, PaymentMethod, PaymentDate, Amount) VALUES
