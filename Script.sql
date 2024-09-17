@@ -1,105 +1,240 @@
-USE TrainProject; 
+-- MySQL Workbench Forward Engineering
 
-CREATE TABLE `Role`(
-RoleID INT PRIMARY KEY,
-RoleName NVARCHAR(255)
-);
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-CREATE TABLE Seat (
-    SeatID INT PRIMARY KEY,
-    CompartmentID INT,
-    SeatNumber NVARCHAR(255),
-    SeatType NVARCHAR(255),
-    AvailabilityStatus BOOLEAN,
-    FOREIGN KEY (CompartmentID) REFERENCES Compartment(CompartmentID)
-);
- 
-CREATE TABLE Compartment (
-    CompartmentID INT PRIMARY KEY,
-    CompartmentNumber INT,
-    CompartmentType NVARCHAR(255),
-    TrainID INT,
-    FOREIGN KEY (TrainID) REFERENCES Train(TrainID)
-);
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema trainproject
+-- -----------------------------------------------------
 
-CREATE TABLE Train (
-    TrainID INT PRIMARY KEY,
-    TrainScheduleTime DATE,
-    TrainName NVARCHAR(255),
-    NumberOfSeat NVARCHAR(255),
-    CompartmentID INT,
-    SeatID INT,
-    StartLocationID INT,
-    ArrivalLocationID INT,
-    FOREIGN KEY (StartLocationID) REFERENCES Location(LocationID),
-    FOREIGN KEY (ArrivalLocationID) REFERENCES Location(LocationID)
-);
+-- -----------------------------------------------------
+-- Schema trainproject
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `trainproject` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `trainproject` ;
 
-CREATE TABLE Payment (
-    PaymentID INT PRIMARY KEY,
-    TicketID INT,
-    PassengerID INT,
-    PaymentMethod ENUM('Bank', 'Digital Wallet'),
-    PaymentDate DATE,
-    Amount DOUBLE,
-    FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID),
-    FOREIGN KEY (PassengerID) REFERENCES Passenger(PassengerID)
-);
+-- -----------------------------------------------------
+-- Table `trainproject`.`role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`role` (
+  `RoleID` INT NOT NULL,
+  `RoleName` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  PRIMARY KEY (`RoleID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
-CREATE TABLE Ticket (
-    TicketID INT PRIMARY KEY,
-    PassengerID INT,
-    TicketClassID INT,
-    PurchaseDate DATE,
-    TicketPrice DOUBLE,
-    CompartmentID INT,
-    SeatID INT,
-    CompartmentNumber INT,
-    TimeArrive DATE,
-    FOREIGN KEY (PassengerID) REFERENCES Passenger(PassengerID),
-    FOREIGN KEY (TicketClassID) REFERENCES TicketClass(TicketClassID),
-    FOREIGN KEY (CompartmentID) REFERENCES Compartment(CompartmentID),
-    FOREIGN KEY (SeatID) REFERENCES Seat(SeatID)
-);
 
-CREATE TABLE TicketClass (
-    TicketClassID INT PRIMARY KEY,
-    CategoryName NVARCHAR(255)
-);
+-- -----------------------------------------------------
+-- Table `trainproject`.`account`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`account` (
+  `AccountID` INT NOT NULL,
+  `PhoneNumber` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `Username` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `Password` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `Email` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `RoleID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`AccountID`),
+  INDEX `RoleID` (`RoleID` ASC) VISIBLE,
+  CONSTRAINT `account_ibfk_1`
+    FOREIGN KEY (`RoleID`)
+    REFERENCES `trainproject`.`role` (`RoleID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
-CREATE TABLE Account (
-    AccountID INT PRIMARY KEY,
-    PhoneNumber NVARCHAR(255),
-    Username NVARCHAR(255),
-    `Password` NVARCHAR(255),
-    Email NVARCHAR(255),
-    RoleID INT,
-   FOREIGN KEY (RoleID) REFERENCES Role(RoleID)
-);
 
-CREATE TABLE Feedback (
-    FeedbackID INT PRIMARY KEY,
-    Message TEXT,
-    PassengerID INT,
-    SubmissionDate DATE,
-    FOREIGN KEY (PassengerID) REFERENCES Passenger(PassengerID)
-);
+-- -----------------------------------------------------
+-- Table `trainproject`.`location`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`location` (
+  `LocationID` INT NOT NULL,
+  `LocationName` VARCHAR(45) NULL DEFAULT NULL,
+  `Description` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`LocationID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
-CREATE TABLE Passenger (  
-    PassengerID INT AUTO_INCREMENT PRIMARY KEY,  
-    Name VARCHAR(255),  
-    Password VARCHAR(255),  
-    Email VARCHAR(255),  
-    Age INT,  
-    Address VARCHAR(255),  
-    PhoneNumber VARCHAR(255)  
-);
 
-CREATE TABLE Location (
-    LocationID INT PRIMARY KEY,
-    LocationName NVARCHAR(255),
-    Description TEXT
-);
+-- -----------------------------------------------------
+-- Table `trainproject`.`train`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`train` (
+  `TrainID` INT NOT NULL,
+  `TrainScheduleTime` DATE NULL DEFAULT NULL,
+  `TrainName` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `NumberOfSeat` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `CompartmentID` INT NULL DEFAULT NULL,
+  `SeatID` INT NULL DEFAULT NULL,
+  `StartLocationID` INT NULL DEFAULT NULL,
+  `ArrivalLocationID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`TrainID`),
+  INDEX `StartLocationID` (`StartLocationID` ASC) VISIBLE,
+  INDEX `ArrivalLocationID` (`ArrivalLocationID` ASC) VISIBLE,
+  CONSTRAINT `train_ibfk_1`
+    FOREIGN KEY (`StartLocationID`)
+    REFERENCES `trainproject`.`location` (`LocationID`),
+  CONSTRAINT `train_ibfk_2`
+    FOREIGN KEY (`ArrivalLocationID`)
+    REFERENCES `trainproject`.`location` (`LocationID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`compartment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`compartment` (
+  `CompartmentID` INT NOT NULL,
+  `CompartmentNumber` INT NULL DEFAULT NULL,
+  `CompartmentType` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `TrainID` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`CompartmentID`),
+  INDEX `fk_train_idx` (`TrainID` ASC) VISIBLE,
+  CONSTRAINT `fk_train`
+    FOREIGN KEY (`TrainID`)
+    REFERENCES `trainproject`.`train` (`TrainID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`passenger`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`passenger` (
+  `PassengerID` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `Password` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `Email` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `Age` INT NULL DEFAULT NULL,
+  `Address` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `PhoneNumber` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  PRIMARY KEY (`PassengerID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`feedback`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`feedback` (
+  `FeedbackID` INT NOT NULL,
+  `Message` TEXT NULL DEFAULT NULL,
+  `PassengerID` INT NULL DEFAULT NULL,
+  `SubmissionDate` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`FeedbackID`),
+  INDEX `PassengerID` (`PassengerID` ASC) VISIBLE,
+  CONSTRAINT `feedback_ibfk_1`
+    FOREIGN KEY (`PassengerID`)
+    REFERENCES `trainproject`.`passenger` (`PassengerID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`ticketclass`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`ticketclass` (
+  `TicketClassID` INT NOT NULL,
+  `CategoryName` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  PRIMARY KEY (`TicketClassID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`seat`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`seat` (
+  `SeatID` INT NOT NULL,
+  `CompartmentID` INT NULL DEFAULT NULL,
+  `SeatNumber` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
+  `AvailabilityStatus` TINYINT(1) NULL DEFAULT NULL,
+  `SeatType` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`SeatID`),
+  INDEX `fk_compartment` (`CompartmentID` ASC) VISIBLE,
+  CONSTRAINT `fk_compartment`
+    FOREIGN KEY (`CompartmentID`)
+    REFERENCES `trainproject`.`compartment` (`CompartmentID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`ticket`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`ticket` (
+  `TicketID` INT NOT NULL,
+  `PassengerID` INT NULL DEFAULT NULL,
+  `TicketClassID` INT NULL DEFAULT NULL,
+  `PurchaseDate` DATE NULL DEFAULT NULL,
+  `TicketPrice` DOUBLE NULL DEFAULT NULL,
+  `CompartmentID` INT NULL DEFAULT NULL,
+  `SeatID` INT NULL DEFAULT NULL,
+  `CompartmentNumber` INT NULL DEFAULT NULL,
+  `TimeArrive` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`TicketID`),
+  INDEX `PassengerID` (`PassengerID` ASC) VISIBLE,
+  INDEX `TicketClassID` (`TicketClassID` ASC) VISIBLE,
+  INDEX `CompartmentID` (`CompartmentID` ASC) VISIBLE,
+  INDEX `SeatID` (`SeatID` ASC) VISIBLE,
+  CONSTRAINT `ticket_ibfk_1`
+    FOREIGN KEY (`PassengerID`)
+    REFERENCES `trainproject`.`passenger` (`PassengerID`),
+  CONSTRAINT `ticket_ibfk_2`
+    FOREIGN KEY (`TicketClassID`)
+    REFERENCES `trainproject`.`ticketclass` (`TicketClassID`),
+  CONSTRAINT `ticket_ibfk_3`
+    FOREIGN KEY (`CompartmentID`)
+    REFERENCES `trainproject`.`compartment` (`CompartmentID`),
+  CONSTRAINT `ticket_ibfk_4`
+    FOREIGN KEY (`SeatID`)
+    REFERENCES `trainproject`.`seat` (`SeatID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trainproject`.`payment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`payment` (
+  `PaymentID` INT NOT NULL,
+  `TicketID` INT NULL DEFAULT NULL,
+  `PassengerID` INT NULL DEFAULT NULL,
+  `PaymentMethod` ENUM('Bank', 'Digital Wallet') NULL DEFAULT NULL,
+  `PaymentDate` DATE NULL DEFAULT NULL,
+  `Amount` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`PaymentID`),
+  INDEX `TicketID` (`TicketID` ASC) VISIBLE,
+  INDEX `PassengerID` (`PassengerID` ASC) VISIBLE,
+  CONSTRAINT `payment_ibfk_1`
+    FOREIGN KEY (`TicketID`)
+    REFERENCES `trainproject`.`ticket` (`TicketID`),
+  CONSTRAINT `payment_ibfk_2`
+    FOREIGN KEY (`PassengerID`)
+    REFERENCES `trainproject`.`passenger` (`PassengerID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 -- Insert data into Passenger
