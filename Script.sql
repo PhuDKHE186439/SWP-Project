@@ -95,6 +95,13 @@ CREATE TABLE Passenger (
     PhoneNumber VARCHAR(255)  
 );
 
+CREATE TABLE Location (
+    LocationID INT PRIMARY KEY,
+    LocationName NVARCHAR(255),
+    Description TEXT
+);
+
+
 -- Insert data into Passenger
 INSERT INTO Passenger (PassengerID, Name, Password, Email, Age, Address, PhoneNumber) VALUES
 (1, 'Himmel', 'Frieren123', 'himmel@gmail.com', 28, 'British', '555-1234-4321'),
