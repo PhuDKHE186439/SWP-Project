@@ -12,9 +12,7 @@ body {
     margin: 0;
     overflow-x: hidden;
 	-webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	scroll-behavior: smooth;
 }
 a { color: #6f6f6f; outline: 0 none; text-decoration: none; }
 a:hover, a:focus { text-decoration: none; outline: 0 none; }
@@ -370,7 +368,7 @@ dl dd { margin-bottom: 10px; }
 	Text Color
 ====================*/
 .bg-tp { background-color: transparent; }
-.bg-primary { background-color: ; }
+.bg-primary { background-color: #FFF; }
 .bg-white { background-color: #FFF; }
 .bg-black { background-color: #000; }
 .bg-gray { background-color: #F7F9FB; }
