@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : Sep 18, 2024, 4:26:14 PM
+    Document   : forgetPassword
+    Created on : Sep 18, 2024, 7:55:01 PM
     Author     : My Asus
 --%>
 
@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
 
@@ -29,8 +28,8 @@
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- FAVICONS ICON ============================================= -->
-	<link rel="icon" href="assets/images/TrainLogo.png" type="image/x-icon" />
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/TrainLogo.png" />
+	<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
 	
 	<!-- PAGE TITLE HERE ============================================= -->
 	<title>EduChamp : Education HTML Template </title>
@@ -62,43 +61,25 @@
 	<div id="loading-icon-bx"></div>
 	<div class="account-form">
 		<div class="account-head" style="background-image:url(assets/images/background/TrainBG.jpg);">
-			<a href="index.html"><img src="assets/images/TrainLogo.png" alt=""></a>
 		</div>
 		<div class="account-form-inner">
 			<div class="account-container">
 				<div class="heading-bx left">
-					<h2 class="title-head">Login to your <span>Account</span></h2>
-					<p>Don't have an account? <a href="register.jsp">Create one here</a></p>
+					<h2 class="title-head">Forget <span>Password</span></h2>
+					<p>Login Your Account <a href="login.jsp">Click here</a></p>
 				</div>	
 				<form class="contact-bx">
 					<div class="row placeani">
 						<div class="col-lg-12">
 							<div class="form-group">
 								<div class="input-group">
-									<label>Your Name</label>
-									<input name="dzName" type="text" required="" class="form-control">
+									<label>Your Email Address</label>
+									<input name="dzName" type="email" required="" class="form-control">
 								</div>
-							</div>
-						</div>
-						<div class="col-lg-12">
-							<div class="form-group">
-								<div class="input-group"> 
-									<label>Your Password</label>
-									<input name="dzEmail" type="password" class="form-control" required="">
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-12">
-							<div class="form-group form-forget">
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-									<label class="custom-control-label" for="customControlAutosizing">Remember me</label>
-								</div>
-								<a href="forgetPassword.jsp" class="ml-auto">Forgot Password?</a>
 							</div>
 						</div>
 						<div class="col-lg-12 m-b30">
-							<button name="submit" type="submit" value="Submit" class="btn button-md">Login</button>
+							<button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
 						</div>
 					</div>
 				</form>
