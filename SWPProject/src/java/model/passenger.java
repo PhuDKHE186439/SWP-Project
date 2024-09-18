@@ -72,5 +72,10 @@ public class passenger {
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "passenger{" + "passengerID=" + passengerID + ", name=" + name + ", email=" + email + ", age=" + age + ", Address=" + Address + ", phoneNumber=" + phoneNumber + '}';
+    }
     
 }

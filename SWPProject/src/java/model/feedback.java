@@ -52,5 +52,10 @@ public class feedback {
     public void setSubmissionDate(String submissionDate) {
         this.submissionDate = submissionDate;
     }
+
+    @Override
+    public String toString() {
+        return "feedback{" + "feedbackID=" + feedbackID + ", message=" + message + ", passengerID=" + passengerID + ", submissionDate=" + submissionDate + '}';
+    }
     
 }

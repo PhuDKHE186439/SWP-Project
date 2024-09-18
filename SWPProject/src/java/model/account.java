@@ -82,5 +82,10 @@ public class account {
     public void setPassengerID(int passengerID) {
         this.passengerID = passengerID;
     }
+
+    @Override
+    public String toString() {
+        return "account{" + "accountID=" + accountID + ", phoneNumber=" + phoneNumber + ", username=" + username + ", password=" + password + ", email=" + email + ", roleID=" + roleID + ", passengerID=" + passengerID + '}';
+    }
     
 }

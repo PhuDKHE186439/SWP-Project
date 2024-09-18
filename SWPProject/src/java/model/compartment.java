@@ -42,5 +42,10 @@ public class compartment {
     public void setTrainID(int trainID) {
         this.trainID = trainID;
     }
+
+    @Override
+    public String toString() {
+        return "compartment{" + "compartmentID=" + compartmentID + ", compartmentNumber=" + compartmentNumber + ", trainID=" + trainID + '}';
+    }
     
 }

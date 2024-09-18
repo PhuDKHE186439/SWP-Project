@@ -72,5 +72,10 @@ public class payment {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "payment{" + "paymentID=" + paymentID + ", ticketID=" + ticketID + ", passengerID=" + passengerID + ", paymentMethod=" + paymentMethod + ", paymentDate=" + paymentDate + ", amount=" + amount + '}';
+    }
     
 }

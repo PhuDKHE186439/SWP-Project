@@ -32,5 +32,10 @@ public class ticketClass {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    @Override
+    public String toString() {
+        return "ticketClass{" + "ticketClassID=" + ticketClassID + ", categoryName=" + categoryName + '}';
+    }
     
 }

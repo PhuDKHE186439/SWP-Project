@@ -102,5 +102,10 @@ public class ticket {
     public void setTimeArrive(String timeArrive) {
         this.timeArrive = timeArrive;
     }
+
+    @Override
+    public String toString() {
+        return "ticket{" + "ticketID=" + ticketID + ", passengerID=" + passengerID + ", ticketClassID=" + ticketClassID + ", purchaseDate=" + purchaseDate + ", ticketPrice=" + ticketPrice + ", compartmentID=" + compartmentID + ", seatID=" + seatID + ", compartmentNumber=" + compartmentNumber + ", timeArrive=" + timeArrive + '}';
+    }
     
 }

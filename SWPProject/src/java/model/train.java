@@ -72,5 +72,10 @@ public class train {
     public void setArrivalLocationID(int ArrivalLocationID) {
         this.arrivalLocationID = ArrivalLocationID;
     }
+
+    @Override
+    public String toString() {
+        return "train{" + "trainID=" + trainID + ", trainScheduleTime=" + trainScheduleTime + ", trainName=" + trainName + ", numberOfSeat=" + numberOfSeat + ", startLocationID=" + startLocationID + ", arrivalLocationID=" + arrivalLocationID + '}';
+    }
     
 }

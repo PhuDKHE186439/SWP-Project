@@ -62,6 +62,11 @@ public class seat{
     public void setAvailabilityStatus(int availabilityStatus) {
         this.availabilityStatus = availabilityStatus;
     }
+
+    @Override
+    public String toString() {
+        return "seat{" + "seatID=" + seatID + ", compartmentID=" + compartmentID + ", seatNumber=" + seatNumber + ", seatType=" + seatType + ", availabilityStatus=" + availabilityStatus + '}';
+    }
     
     
 }
