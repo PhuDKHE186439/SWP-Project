@@ -33,7 +33,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `trainproject`.`account`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trainproject`.`account` (
-  `AccountID` INT NOT NULL,
+  `AccountID` INT NOT NULL AUTO_INCREMENT,
   `PhoneNumber` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `Username` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `Password` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
