@@ -8,7 +8,7 @@ package model;
  *
  * @author My Asus
  */
-public class seat {
+public class seat{
     private int seatID;
     private int compartmentID;
     private String seatNumber;
