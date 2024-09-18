@@ -18,20 +18,20 @@
         <meta name="robots" content="" />
 
         <!-- DESCRIPTION -->
-        <meta name="description" content="EduChamp : Education HTML Template" />
+        <meta name="description" content="TrainTravel : Register Page" />
 
         <!-- OG -->
-        <meta property="og:title" content="EduChamp : Education HTML Template" />
-        <meta property="og:description" content="EduChamp : Education HTML Template" />
+        <meta property="og:title" content="TrainTravel : Register Page" />
+        <meta property="og:description" content="TrainTravel : Register Page" />
         <meta property="og:image" content="" />
         <meta name="format-detection" content="telephone=no">
 
         <!-- FAVICONS ICON ============================================= -->
-        <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+        <link rel="icon" href="assets/images/TrainLogo.png" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/TrainLogo.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>EduChamp : Education HTML Template </title>
+        <title>TrainTravel : Register Page </title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,7 +60,6 @@
             <div id="loading-icon-bx"></div>
             <div class="account-form">
                 <div class="account-head" style="background-image:url(assets/images/background/TrainBG.jpg);">
-                    <a href="index.html"><img src="assets/images/" alt=""></a>
                 </div>
                 <div class="account-form-inner">
                     <div class="account-container">

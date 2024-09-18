@@ -20,11 +20,11 @@
 	<meta name="robots" content="" />
 	
 	<!-- DESCRIPTION -->
-	<meta name="description" content="EduChamp : Education HTML Template" />
+	<meta name="description" content="TrainTravel :Login Page" />
 	
 	<!-- OG -->
-	<meta property="og:title" content="EduChamp : Education HTML Template" />
-	<meta property="og:description" content="EduChamp : Education HTML Template" />
+	<meta property="og:title" content="TrainTravel :Login Page" />
+	<meta property="og:description" content="TrainTravel :Login Page" />
 	<meta property="og:image" content="" />
 	<meta name="format-detection" content="telephone=no">
 	
@@ -33,7 +33,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="assets/images/TrainLogo.png" />
 	
 	<!-- PAGE TITLE HERE ============================================= -->
-	<title>EduChamp : Education HTML Template </title>
+	<title>TrainTravel :Login Page </title>
 	
 	<!-- MOBILE SPECIFIC ============================================= -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,8 +61,8 @@
 <div class="page-wraper">
 	<div id="loading-icon-bx"></div>
 	<div class="account-form">
-		<div class="account-head" style="background-image:url(assets/images/background/TrainBG.jpg);">
-			<a href="index.html"><img src="assets/images/TrainLogo.png" alt=""></a>
+		<div class="account-head" style="background-image:url(assets/images/background/TrainBG.jpg);"/>
+			
 		</div>
 		<div class="account-form-inner">
 			<div class="account-container">
