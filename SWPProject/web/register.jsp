@@ -66,6 +66,7 @@
                         <div class="heading-bx left">
                             <h2 class="title-head">Sign Up <span>Now</span></h2>
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
+                            <p style="color: Red">${requestScope.registerError}</p>
                         </div>	
                         <form class="contact-bx" >
                             <div class="row placeani">

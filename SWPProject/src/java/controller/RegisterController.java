@@ -5,12 +5,16 @@
 
 package controller;
 
+import dal.AccountDAO;
+import dal.PassengerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.account;
 
 /**
  *
@@ -50,6 +54,9 @@ public class RegisterController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    AccountDAO accDAO = new AccountDAO();
+    List<account> listacc = accDAO.getAllAccount();
+    PassengerDAO passengerDAO = new PassengerDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -66,7 +73,28 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+        Boolean checkusername = false;
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String age = request.getParameter("age");
+        String address = request.getParameter("address");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        try {
+            for(account o : listacc){
+                if(username.equals(o.getUsername())){
+                    request.setAttribute("registerError", "Username Already Exsits");
+                    checkusername=true;
+                }
+            }
+            if(checkusername.equals(false)){
+                passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
+                accDAO.registerAccount(phone, username, password, email, 3, passengerDAO.getLastPassenger().getPassengerID());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /** 

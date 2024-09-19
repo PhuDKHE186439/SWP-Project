@@ -76,23 +76,21 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label>Your Name</label>
-                                        <input name="username" type="text" required="" class="form-control">
+                                        <input name="username" type="text" placeholder="Your Username" required="" class="form-control" value="${username}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <div class="input-group"> 
-                                        <label>Your Password</label>
-                                        <input name="password" type="password" class="form-control" required="">
+                                        <input name="password" type="password" placeholder="Your Password" class="form-control" required="" value="${password}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-forget">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing" name="remember" value="${check}">
                                         <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                                     </div>
                                     <a href="forgetPassword.jsp" class="ml-auto">Forgot Password?</a>

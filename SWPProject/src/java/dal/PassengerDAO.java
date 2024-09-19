@@ -5,6 +5,8 @@
 package dal;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import model.passenger;
 
 /**
  *
@@ -12,18 +14,30 @@ import java.sql.PreparedStatement;
  */
 public class PassengerDAO extends DBContext {
 
-    public void insertPassengerInformation(int passengerID, String name, String email,int age, String address, String phoneNumber) {
-        String sql = "INSERT INTO Account (AccountID, PhoneNumber, Username, Password, Email, RoleID,PassengerID) VALUES (?,?,?,?,?,?,?)";
+    public void insertPassengerInformation(String name, String email, int age, String address, String phoneNumber) {
+        String sql = "INSERT INTO Passenger ( Name, Email, Age, Address, PhoneNumber) VALUES (?,?,?,?,?)";
         try (PreparedStatement st = connection.prepareStatement(sql);) {
-            st.setInt(1, passengerID);
-            st.setString(2, name);
-            st.setString(3, email);
-            st.setInt(4, age);
-            st.setString(5, address);
-            st.setString(6, phoneNumber);
+            st.setString(1, name);
+            st.setString(2, email);
+            st.setInt(3, age);
+            st.setString(4, address);
+            st.setString(5, phoneNumber);
             st.executeQuery();
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public passenger getLastPassenger() {
+        String sql = "SELECT * FROM Passenger ORDER BY PassengerID DESC LIMIT 1;";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new passenger( rs.getInt("PassengerID"), rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

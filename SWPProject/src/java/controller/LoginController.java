@@ -8,6 +8,7 @@ import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -63,7 +64,18 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // processRequest(request, response);
+        Cookie arr[] = request.getCookies();
+        if (arr != null) {
+            for (Cookie o : arr) {
+                if ("userC".equals(o.getName())) {
+                    request.setAttribute("username", o.getValue());
+                }
+                if ("passC".equals(o.getName())) {
+                    request.setAttribute("password", o.getValue());
+                }
+            }
+        }
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**
@@ -84,11 +96,25 @@ public class LoginController extends HttpServlet {
         list = dao.getAllAccount();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String remember = request.getParameter("remember");
+        Cookie user = new Cookie("userC", username);
+        Cookie pass = new Cookie("passC", password);
         for (account o : list) {
             if (username.equals(o.getUsername()) && password.equals(o.getPassword())) {
                 role = o.getRoleID();
                 check = true;
                 session.setAttribute("AccID", o.getAccountID());
+                if (remember != null) {
+                    user.setMaxAge(60);
+                    pass.setMaxAge(60);
+
+                } else {
+                    user.setMaxAge(0);
+                    pass.setMaxAge(0);
+                }
+                response.addCookie(user);
+                response.addCookie(pass);
+
                 switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
                     case 1 ->
                         response.sendRedirect("home.jsp");
@@ -97,7 +123,6 @@ public class LoginController extends HttpServlet {
                     case 3 ->
                         response.sendRedirect("home.jsp");
                 }
-            } else {
             }
         }
         if (check == false) {

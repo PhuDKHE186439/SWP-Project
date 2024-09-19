@@ -28,16 +28,15 @@ public class AccountDAO extends DBContext {
         }
         return list;
     }
-        public void registerAccount(int accountID, String phoneNumber, String username, String password, String email, int roleID, int passengerID) {
-        String sql = "INSERT INTO Account (AccountID, PhoneNumber, Username, Password, Email, RoleID,PassengerID) VALUES (?,?,?,?,?,?,?)";
+        public void registerAccount(String phoneNumber, String username, String password, String email, int roleID, int passengerID) {
+        String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID,PassengerID) VALUES (?,?,?,?,?,?)";
         try(PreparedStatement st = connection.prepareStatement(sql);) {
-            st.setInt(1, accountID);
-            st.setString(2, phoneNumber);
-            st.setString(3, username);
-            st.setString(4, password);
-            st.setString(5, email);
-            st.setInt(6, roleID);
-            st.setInt(7, passengerID);
+            st.setString(1, phoneNumber);
+            st.setString(2, username);
+            st.setString(3, password);
+            st.setString(4, email);
+            st.setInt(5, roleID);
+            st.setInt(6, passengerID);
             st.executeQuery();
         } catch (Exception e) {
             System.out.println(e);
