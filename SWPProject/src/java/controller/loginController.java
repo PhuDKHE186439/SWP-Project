@@ -5,12 +5,17 @@
 
 package controller;
 
+import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import model.account;
 
 /**
  *
@@ -50,6 +55,8 @@ public class loginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    AccountDAO dao = new AccountDAO();
+    List<account> list = new ArrayList();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -66,7 +73,34 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        boolean check = false;
+        String result;
+        list = dao.getAllAccount();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        for (account o : list) {
+            if (username.equals(o.getUsername()) && password.equals(o.getPassword()) && o.getRoleID()== 1) {
+                check = true;
+                session.setAttribute("account", o.getUsername());
+                session.setAttribute("AccID", o.getAccountID());
+                response.sendRedirect("home");
+                break;
+                //    request.getRequestDispatcher("listservlet").forward(request, response);
+            } else if (username.equals(o.getUsername()) && password.equals(o.getPassword()) && o.getRoleID()== 0) {
+                check = true;
+                session.setAttribute("account", o.getUsername());
+                session.setAttribute("AccID", o.getAccountID());
+                response.sendRedirect("home");
+                break;
+            }
+        }
+
+        if (check == false) {
+            result = "Please check your username or password";
+            request.setAttribute("key", result);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /** 
