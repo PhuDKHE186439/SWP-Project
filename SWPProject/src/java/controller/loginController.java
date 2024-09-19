@@ -60,7 +60,7 @@ public class loginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       // processRequest(request, response);
     } 
 
     /** 
@@ -86,7 +86,6 @@ public class loginController extends HttpServlet {
                 session.setAttribute("AccID", o.getAccountID());
                 response.sendRedirect("home");
                 break;
-                //    request.getRequestDispatcher("listservlet").forward(request, response);
             } else if (username.equals(o.getUsername()) && password.equals(o.getPassword()) && o.getRoleID()== 0) {
                 check = true;
                 session.setAttribute("account", o.getUsername());
@@ -98,7 +97,7 @@ public class loginController extends HttpServlet {
 
         if (check == false) {
             result = "Please check your username or password";
-            request.setAttribute("key", result);
+            request.setAttribute("key", list.get(0));
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }

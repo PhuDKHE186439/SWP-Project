@@ -17,13 +17,12 @@ import model.account;
 public class AccountDAO extends DBContext {
     public List<account> getAllAccount(){
         List<account> list = new ArrayList();
-        String sql = "SELECT * FROM trainproject.account;";
+        String sql = "SELECT * FROM trainproject.account";
         try(PreparedStatement st = connection.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
             while(rs.next()){
                 list.add(new account(rs.getInt("AccountID"),rs.getString("PhoneNumber"),rs.getString("Username"),rs.getString("Password"),rs.getString("Email"),rs.getInt("RoleID"),rs.getInt("PassengerID")));
             }
-            return list;
         } catch (Exception e) {
             System.out.println(e);
         }

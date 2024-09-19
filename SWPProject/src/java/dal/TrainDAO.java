@@ -29,8 +29,4 @@ public class TrainDAO extends DBContext {
         }
         return list;
     }
-        public static void main(String[] args) {
-        TrainDAO dao = new TrainDAO();
-        System.out.println(dao.getAllLocation());
-    }
 }
