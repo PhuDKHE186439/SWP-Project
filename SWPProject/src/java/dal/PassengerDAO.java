@@ -22,7 +22,7 @@ public class PassengerDAO extends DBContext {
             st.setInt(3, age);
             st.setString(4, address);
             st.setString(5, phoneNumber);
-            st.executeQuery();
+            st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -39,5 +39,9 @@ public class PassengerDAO extends DBContext {
             System.out.println(e);
         }
         return null;
+    }
+    public static void main(String[] args) {
+        PassengerDAO dao = new PassengerDAO();
+        dao.insertPassengerInformation("Due2", "Dude2@gmail.com", 20, "Dude", "123456789");
     }
 }

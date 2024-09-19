@@ -66,9 +66,9 @@
                         <div class="heading-bx left">
                             <h2 class="title-head">Sign Up <span>Now</span></h2>
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
-                            <p style="color: Red">${requestScope.registerError}</p>
+                            <p style="color: Red">${requestScope.annoutment}</p>
                         </div>	
-                        <form class="contact-bx" >
+                        <form class="contact-bx" action="register" method="post">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">

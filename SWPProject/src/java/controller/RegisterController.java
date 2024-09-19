@@ -84,14 +84,17 @@ public class RegisterController extends HttpServlet {
         try {
             for(account o : listacc){
                 if(username.equals(o.getUsername())){
-                    request.setAttribute("registerError", "Username Already Exsits");
+                    request.setAttribute("annoutment", "Username Already Exsits");
                     checkusername=true;
                 }
             }
             if(checkusername.equals(false)){
                 passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
                 accDAO.registerAccount(phone, username, password, email, 3, passengerDAO.getLastPassenger().getPassengerID());
+                request.setAttribute("annoutment", "Register Successful");
+                
             }
+            request.getRequestDispatcher("register.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e);
         }

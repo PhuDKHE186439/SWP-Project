@@ -37,7 +37,7 @@ public class AccountDAO extends DBContext {
             st.setString(4, email);
             st.setInt(5, roleID);
             st.setInt(6, passengerID);
-            st.executeQuery();
+            st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
