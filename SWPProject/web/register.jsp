@@ -73,7 +73,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Name</label>
-                                            <input name="dzName" type="text" required="" class="form-control">
+                                            <input name="name" type="text" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Phone Number</label>
-                                            <input name="dzName" type="text" required="" class="form-control">
+                                            <input name="phone" type="text" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Email Address</label>
-                                            <input name="dzName" type="email" required="" class="form-control">
+                                            <input name="email" type="email" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Age</label>
-                                            <input name="dzName" type="number" required="" class="form-control">
+                                            <input name="age" type="number" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Address</label>
-                                            <input name="dzName" type="text" required="" class="form-control">
+                                            <input name="address" type="text" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Username</label>
-                                            <input name="dzName" type="text" required="" class="form-control">
+                                            <input name="username" type="text" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                     <div class="form-group">
                                         <div class="input-group"> 
                                             <label>Your Password</label>
-                                            <input name="dzEmail" type="password" class="form-control" required="">
+                                            <input name="password" type="password" class="form-control" required="">
                                         </div>
                                     </div>
                                 </div>
