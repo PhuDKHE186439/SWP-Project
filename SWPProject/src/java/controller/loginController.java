@@ -84,13 +84,13 @@ public class loginController extends HttpServlet {
                 check = true;
                 session.setAttribute("account", o.getUsername());
                 session.setAttribute("AccID", o.getAccountID());
-                response.sendRedirect("home");
+                response.sendRedirect("home.jsp");
                 break;
             } else if (username.equals(o.getUsername()) && password.equals(o.getPassword()) && o.getRoleID()== 0) {
                 check = true;
                 session.setAttribute("account", o.getUsername());
                 session.setAttribute("AccID", o.getAccountID());
-                response.sendRedirect("home");
+                response.sendRedirect("home.jsp");
                 break;
             }
         }
