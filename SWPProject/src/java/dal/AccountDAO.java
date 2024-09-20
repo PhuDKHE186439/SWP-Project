@@ -32,7 +32,7 @@ public class AccountDAO extends DBContext {
 
     public account getAccountByID(int accouontID) {
         String sql = "SELECT * FROM account WHERE AccountID =?";
-        try(PreparedStatement st = connection.prepareStatement(sql)) {
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, accouontID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -52,6 +52,16 @@ public class AccountDAO extends DBContext {
             st.setString(4, email);
             st.setInt(5, roleID);
             st.setInt(6, passengerID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void banAccount(int accountID) {
+        String sql = "DELETE FROM account WHERE AccountID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, accountID);
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
