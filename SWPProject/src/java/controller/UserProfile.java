@@ -62,10 +62,14 @@ public class UserProfile extends HttpServlet {
         PassengerDAO passDAO = new PassengerDAO();
         AccountDAO accDAO = new AccountDAO();
         HttpSession session = request.getSession();
+        if(session.getAttribute("AccID") !=null){
         int accountID = (int) session.getAttribute("AccID");
         passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
         request.setAttribute("profile", profilePassenger);
         request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /**
