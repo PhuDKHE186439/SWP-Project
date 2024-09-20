@@ -152,6 +152,20 @@ CREATE TABLE IF NOT EXISTS `trainproject`.`ticketclass` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
+-- -----------------------------------------------------
+-- Table `trainproject`.`otpquestion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trainproject`.`otpquestion` (
+  `AccountID` INT null Default	NULL,
+  `OtpQuestion` TEXT NULL DEFAULT NULL,
+  `OtpAnswer` INT NULL DEFAULT NULL,
+  INDEX `AccountID` (`AccountID` ASC) VISIBLE,
+  CONSTRAINT `otpquestion_ibfk_1`
+    FOREIGN KEY (`AccountID`)
+    REFERENCES `trainproject`.`account` (`AccountID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
