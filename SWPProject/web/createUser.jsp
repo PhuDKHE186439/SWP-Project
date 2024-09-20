@@ -4,50 +4,47 @@
     Author     : Laptop
 --%>
 
-<%@ page import="java.sql.ResultSet" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.List, model.role, dal.RoleDAO"%>
+<%@page session="true"%>
+
+<%
+    RoleDAO roleDAO = new RoleDAO();
+    List<role> roles = roleDAO.getAllRoles();
+%>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Create User</title>
-    </head>
-    <body>
-        <h1>Create New User</h1>
-        <c:if test="${param.success == 'true'}">
-            <p style="color:green;">User created successfully!</p>
-        </c:if>
-        <c:if test="${param.error == 'true'}">
-            <p style="color:red;">Error creating user. Please try again.</p>
-        </c:if>
-        <form method="post" action="createUser">
-            <label>Phone Number:</label>
-            <input type="text" name="phoneNumber" required /><br/>
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Account</title>
+</head>
+<body>
+    <h2>Create New Account</h2>
+    <form action="CreateAccountServlet" method="post">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" name="phoneNumber" required><br>
 
-            <label>Username:</label>
-            <input type="text" name="username" required /><br/>
+        <label for="username">Username:</label>
+        <input type="text" name="username" required><br>
 
-            <label>Password:</label>
-            <input type="password" name="password" required /><br/>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br>
 
-            <label>Email:</label>
-            <input type="email" name="email" required /><br/>
+        <label for="email">Email:</label>
+        <input type="email" name="email" required><br>
 
-            <label>Role:</label>
-            <select name="roleId" required>
-                <%
-                    ResultSet roles = (ResultSet) request.getAttribute("roles");
-                    while (roles != null && roles.next()) {
-                        int id = roles.getInt("RoleID");
-                        String name = roles.getString("RoleName");
-                %>
-                <option value="<%= id %>"><%= name %></option>
-                <%
-                    }
-                %>
-            </select><br/>
+        <label for="role">Role:</label>
+        <select name="roleID" required>
+            <option value="" disabled selected>Select Role</option>
+            <% for (role r : roles) { %>
+                <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
+            <% } %>
+        </select><br>
 
-            <input type="submit" value="Create User" />
-        </form>
-    </body>
+        <input type="submit" value="Create Account">
+    </form>
+</body>
 </html>
+
 

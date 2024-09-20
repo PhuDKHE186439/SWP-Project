@@ -71,7 +71,7 @@ public class BanAccount extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         accountDAO.banAccount(accountID);
 
-        response.sendRedirect("accountList.jsp");
+        response.sendRedirect("banUser.jsp");
     }
 
     /** 
