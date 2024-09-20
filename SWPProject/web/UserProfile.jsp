@@ -1,9 +1,15 @@
+<%-- 
+    Document   : UserProfile
+    Created on : Sep 20, 2024, 4:59:36 PM
+    Author     : Laptop
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Profile</title>
+        <title>JSP Page</title>
         <link rel="stylesheet" href="assets/css/UserProfile.css"/>
     </head>
     <body class="body">
@@ -363,6 +369,7 @@
                 <div>
                     <div class="ms-iframe">
                         <div class="hidden-embed w-embed w-script">
+
                         </div>
                     </div>
                 </div>
