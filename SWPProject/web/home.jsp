@@ -14,5 +14,6 @@
     <body>
         <jsp:include page="Menu.jsp"></jsp:include>
         <h1>Hello World!</h1>
+        <jsp:include page="Footer.jsp"></jsp:include>
     </body>
 </html>
