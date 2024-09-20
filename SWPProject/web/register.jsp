@@ -82,7 +82,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Phone Number</label>
-                                            <input name="phone" type="text" required="" class="form-control">
+                                            <input name="phone" type="tel" required="" class="form-control" pattern="[0-9]{10}">
                                         </div>
                                     </div>
                                 </div>

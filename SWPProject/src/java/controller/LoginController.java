@@ -76,6 +76,13 @@ public class LoginController extends HttpServlet {
                 }
             }
         }
+        String checklogout = request.getParameter("logout");
+        HttpSession session = request.getSession();
+
+        if (checklogout != null) {
+            session.removeAttribute("account");
+            session.removeAttribute("AccID");
+        }
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -119,11 +126,11 @@ public class LoginController extends HttpServlet {
 
                 switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
                     case 1 ->
-                        response.sendRedirect("home.jsp");
+                        response.sendRedirect("userprofile");
                     case 2 ->
                         response.sendRedirect("home.jsp");
                     case 3 ->
-                        response.sendRedirect("home.jsp");
+                        response.sendRedirect("userprofile");
                 }
             }
         }

@@ -27,7 +27,19 @@ public class PassengerDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    public passenger getPassengerByID(int passengerID){
+        String sql= "SELECT * FROM Passenger WHERE PassengerID = ?";
+        try(PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, passengerID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new passenger( rs.getInt("PassengerID"), rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     public passenger getLastPassenger() {
         String sql = "SELECT * FROM Passenger ORDER BY PassengerID DESC LIMIT 1;";
         try (PreparedStatement st = connection.prepareStatement(sql);) {
@@ -42,6 +54,6 @@ public class PassengerDAO extends DBContext {
     }
     public static void main(String[] args) {
         PassengerDAO dao = new PassengerDAO();
-        dao.insertPassengerInformation("Due2", "Dude2@gmail.com", 20, "Dude", "123456789");
+        System.out.println(dao.getPassengerByID(1));
     }
 }

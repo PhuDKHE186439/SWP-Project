@@ -24,7 +24,7 @@
                     </div>
                     <div class="dash_contain">
                         <div class="relative">
-                            <a data-ms-action="logout" href="#" class="dash_profile-nav-link is-logout w-inline-block">
+                            <a data-ms-action="logout" href="login?logout=logout" class="dash_profile-nav-link is-logout w-inline-block">
                                 <div class="button-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
                                     <g>
                                     <path d="M0,0h24v24H0V0z" fill="none"></path>
@@ -71,19 +71,19 @@
                                             <div class="profile_flex">
                                                 <div class="profile_column">
                                                     <div class="input-label">First Name</div>
-                                                    <div data-ms-member="first-name" class="input-preview">Duncan</div>
+                                                    <div data-ms-member="first-name" class="input-preview">${profile.name}</div>
                                                 </div>
                                                 <div class="profile_column">
-                                                    <div class="input-label">Last Name</div>
-                                                    <div data-ms-member="last-name" class="input-preview">Hamra</div>
+                                                    <div class="input-label">Age</div>
+                                                    <div data-ms-member="last-name" class="input-preview">${profile.age}</div>
                                                 </div>
                                                 <div class="profile_column">
-                                                    <div class="input-label">Phone</div>
-                                                    <div data-ms-member="phone" class="input-preview">+1 123-456-7890</div>
+                                                    <div class="input-label">Address</div>
+                                                    <div data-ms-member="phone" class="input-preview">${profile.address}</div>
                                                 </div>
                                                 <div class="profile_column">
-                                                    <div class="input-label">Bio</div>
-                                                    <div data-ms-member="bio" class="input-preview">Cofounder</div>
+                                                    <div class="input-label">Phone Number</div>
+                                                    <div data-ms-member="bio" class="input-preview">${profile.phoneNumber}</div>
                                                 </div>
                                             </div>
                                             <div>
@@ -114,20 +114,16 @@
                                                         </div>
                                                     </div>
                                                     <div class="w-form">
-                                                        <form id="wf-form-Profile-Form" name="wf-form-Profile-Form" data-name="Profile Form" method="get" data-ms-form="profile" class="modal_form" data-wf-page-id="66ed4a18c4f9443448dbb307" data-wf-element-id="b1a1c4e4-0a7a-dbd8-f8c9-28d414a57341">
+                                                        <form action="editprofile" id="wf-form-Profile-Form" name="wf-form-Profile-Form" data-name="Profile Form" method="post" data-ms-form="profile" class="modal_form" data-wf-page-id="66ed4a18c4f9443448dbb307" data-wf-element-id="b1a1c4e4-0a7a-dbd8-f8c9-28d414a57341">
                                                             <div class="profile_h1">Personal Information</div>
-                                                            <div class="input-wrapper"><label for="first-name" class="profile_label is-modal">First Name</label><input class="input w-input" maxlength="256" name="first-name" data-name="first name" placeholder="e.g. Dave" type="text" id="first-name" data-ms-member="first-name" required=""></div>
-                                                            <div class="input-wrapper"><label for="last-name" class="profile_label is-modal">Last Name</label><input class="input w-input" maxlength="256" name="last-name" data-name="last name" placeholder="e.g. Matthews" type="text" id="last-name" data-ms-member="last-name" required=""></div>
-                                                            <div class="input-wrapper"><label for="phone" class="profile_label is-modal">Phone</label><input class="input w-input" maxlength="256" name="phone" data-name="phone" placeholder="e.g. 111-222-3333" type="tel" id="phone" data-ms-member="phone" required=""></div>
-                                                            <div class="input-wrapper"><label for="bio" class="profile_label is-modal">Bio</label><input class="input w-input" maxlength="256" name="bio" data-name="bio" placeholder="e.g. Singer" type="text" id="bio" data-ms-member="bio" required=""></div>
+                                                            <div class="input-wrapper"><label for="name" class="profile_label is-modal">Your Name</label><input class="input w-input" maxlength="256" name="name"  placeholder="" type="text"  required=""></div>
+                                                            <div class="input-wrapper"><label for="email" class="profile_label is-modal">Email</label><input class="input w-input" maxlength="256" name="email"  placeholder="" type="email"  required=""></div>
+                                                            <div class="input-wrapper"><label for="age" class="profile_label is-modal">Age</label><input class="input w-input" maxlength="256" name="age"  placeholder="" type="number"  required=""></div>
+                                                            <div class="input-wrapper"><label for="address" class="profile_label is-modal">Address</label><input class="input w-input" maxlength="256" name="address"  placeholder="" type="text"  required=""></div>
+                                                            <div class="input-wrapper"><label for="phone" class="profile_label is-modal">Phone Number</label><input class="input w-input" maxlength="256" name="phone"  placeholder="" type="tel"  required="" pattern="[0-9]{10}"></div>
                                                             <div class="spacer-s"></div><input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Save Changes">
                                                         </form>
-                                                        <div class="w-form-done">
-                                                            <div>Thank you! Your submission has been received!</div>
-                                                        </div>
-                                                        <div class="w-form-fail">
-                                                            <div>Oops! Something went wrong while submitting the form.</div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +133,7 @@
                                             <div class="profile_flex">
                                                 <div class="profile_column">
                                                     <div class="input-label">Email Address</div>
-                                                    <div data-ms-member="email" class="input-preview">duncan@memberstack.com</div>
+                                                    <div data-ms-member="email" class="input-preview">${profile.email}</div>
                                                 </div>
                                             </div>
                                             <div>
@@ -185,13 +181,12 @@
                                             </div>
                                         </div>
                                         <div class="profile_section">
-                                            <div class="profile_section-head">Email Address</div>
+                                            <div class="profile_section-head">Account Change Password</div>
                                             <div class="profile_flex">
                                                 <div class="profile_column">
                                                     <div class="input-label">Password</div>
                                                     <div class="profile_field-wrapper has-button">
                                                         <div data-ms-content="has-password">************</div>
-                                                        <div data-ms-content="!has-password">No Password</div>
                                                     </div>
                                                 </div>
                                             </div>
