@@ -90,7 +90,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group form-forget">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing" name="remember" value="${check}">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing" name="remember" ${check}>
                                         <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                                     </div>
                                     <a href="forgetPassword.jsp" class="ml-auto">Forgot Password?</a>

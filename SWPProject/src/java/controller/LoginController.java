@@ -72,6 +72,7 @@ public class LoginController extends HttpServlet {
                 }
                 if ("passC".equals(o.getName())) {
                     request.setAttribute("password", o.getValue());
+                    request.setAttribute("check", "checked");
                 }
             }
         }
@@ -107,8 +108,9 @@ public class LoginController extends HttpServlet {
                 if (remember != null) {
                     user.setMaxAge(60);
                     pass.setMaxAge(60);
-
+                    request.setAttribute("check", "checked");
                 } else {
+                    request.removeAttribute("check");
                     user.setMaxAge(0);
                     pass.setMaxAge(0);
                 }
