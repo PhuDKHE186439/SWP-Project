@@ -73,8 +73,8 @@
 						<div class="col-lg-12">
 							<div class="form-group">
 								<div class="input-group">
-									<label>Your Email Address</label>
-									<input name="email" type="email" required="" class="form-control">
+									<label>Your Username</label>
+                                                                        <input name="otpquestion" type="text" required="" class="form-control">
 								</div>
 							</div>
 						</div>
