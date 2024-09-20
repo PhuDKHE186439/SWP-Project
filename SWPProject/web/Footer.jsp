@@ -75,6 +75,7 @@
                 <div class="footer_bg">
                     <div class="footer_bg_one"></div>
                     <div class="footer_bg_two"></div>
+                    <div class="footer_bg_three"></div>
                 </div>
             </div>
             <div class="footer_bottom">
