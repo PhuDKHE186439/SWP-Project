@@ -19,7 +19,7 @@ import model.passenger;
  *
  * @author My Asus
  */
-public class UserProfile extends HttpServlet {
+public class UpdateUserProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class UserProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserProfile</title>");
+            out.println("<title>Servlet UpdateUserProfile</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserProfile at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateUserProfile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,17 +59,7 @@ public class UserProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PassengerDAO passDAO = new PassengerDAO();
-        AccountDAO accDAO = new AccountDAO();
-        HttpSession session = request.getSession();
-        if (session.getAttribute("AccID") != null) {
-            int accountID = (int) session.getAttribute("AccID");
-            passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
-            request.setAttribute("profile", profilePassenger);
-            request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -83,6 +73,7 @@ public class UserProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //processRequest(request, response);
         PassengerDAO passDAO = new PassengerDAO();
         HttpSession session = request.getSession();
         AccountDAO accDAO = new AccountDAO();
@@ -90,16 +81,17 @@ public class UserProfile extends HttpServlet {
         String age = request.getParameter("age");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
+        int accountID = (int) session.getAttribute("AccID");
         try {
-            int accountID = (int) session.getAttribute("AccID");
-            passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
-            passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
-            request.setAttribute("profile", profilePassenger);
+            if (name != null) {
+                passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
+            }
 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println(e);
         }
-
+        passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
+        request.setAttribute("profile", profilePassenger);
         request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
     }
 

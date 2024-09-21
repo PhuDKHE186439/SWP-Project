@@ -27,31 +27,48 @@ public class PassengerDAO extends DBContext {
             System.out.println(e);
         }
     }
-    public passenger getPassengerByID(int passengerID){
-        String sql= "SELECT * FROM Passenger WHERE PassengerID = ?";
-        try(PreparedStatement st = connection.prepareStatement(sql)) {
+
+    public passenger getPassengerByID(int passengerID) {
+        String sql = "SELECT * FROM Passenger WHERE PassengerID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, passengerID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                return new passenger( rs.getInt("PassengerID"), rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber"));
+                return new passenger(rs.getInt("PassengerID"), rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber"));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
         return null;
     }
+
+    public void updatePassengerInform(int PassengerID, String name, int age, String address, String phoneNumber) {
+        String sql = "UPDATE passenger SET Name=?, Age=?,Address=?,PhoneNumber=? WHERE PassengerID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setString(1, name);
+            st.setInt(2, age);
+            st.setString(3, address);
+            st.setString(4, phoneNumber);
+            st.setInt(5, PassengerID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public passenger getLastPassenger() {
         String sql = "SELECT * FROM Passenger ORDER BY PassengerID DESC LIMIT 1;";
         try (PreparedStatement st = connection.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                return new passenger( rs.getInt("PassengerID"), rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber"));
+                return new passenger(rs.getInt("PassengerID"), rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber"));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
         return null;
     }
+
     public static void main(String[] args) {
         PassengerDAO dao = new PassengerDAO();
         System.out.println(dao.getPassengerByID(1));
