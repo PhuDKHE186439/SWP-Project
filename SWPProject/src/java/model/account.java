@@ -9,6 +9,7 @@ package model;
  * @author My Asus
  */
 public class account {
+
     private int accountID;
     private String phoneNumber;
     private String username;
@@ -16,8 +17,9 @@ public class account {
     private String email;
     private int roleID;
     private int passengerID;
-   
-    public account(int accountID, String phoneNumber, String username, String password, String email, int roleID, int passengerID) {
+    private String status;
+
+    public account(int accountID, String phoneNumber, String username, String password, String email, int roleID, int passengerID, String status) {
         this.accountID = accountID;
         this.phoneNumber = phoneNumber;
         this.username = username;
@@ -25,6 +27,7 @@ public class account {
         this.email = email;
         this.roleID = roleID;
         this.passengerID = passengerID;
+        this.status = status;
     }
 
     public int getAccountID() {
@@ -83,9 +86,17 @@ public class account {
         this.passengerID = passengerID;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "account{" + "accountID=" + accountID + ", phoneNumber=" + phoneNumber + ", username=" + username + ", password=" + password + ", email=" + email + ", roleID=" + roleID + ", passengerID=" + passengerID + '}';
+        return "account{" + "accountID=" + accountID + ", phoneNumber=" + phoneNumber + ", username=" + username + ", password=" + password + ", email=" + email + ", roleID=" + roleID + ", passengerID=" + passengerID + ", status=" + status + '}';
     }
-    
+
 }

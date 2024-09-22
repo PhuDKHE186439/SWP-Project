@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
 import java.sql.PreparedStatement;
@@ -17,35 +13,54 @@ import model.account;
 public class AccountDAO extends DBContext {
 
     public List<account> getAllAccount() {
-        List<account> list = new ArrayList();
-        String sql = "SELECT * FROM trainproject.account";
+    List<account> list = new ArrayList<>();
+    String sql = "SELECT * FROM trainproject.account"; // Ensure your SQL query includes the status field
+    try (PreparedStatement st = connection.prepareStatement(sql)) {
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            list.add(new account(
+                rs.getInt("AccountID"),
+                rs.getString("PhoneNumber"),
+                rs.getString("Username"),
+                rs.getString("Password"),
+                rs.getString("Email"),
+                rs.getInt("RoleID"),
+                rs.getInt("PassengerID"),
+                rs.getString("Status") // Fetch status from the database
+            ));
+        }
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    return list;
+}
+
+    public account getAccountByID(int accountID) {
+        String sql = "SELECT * FROM trainproject.account WHERE AccountID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, accountID);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                list.add(new account(rs.getInt("AccountID"), rs.getString("PhoneNumber"), rs.getString("Username"), rs.getString("Password"), rs.getString("Email"), rs.getInt("RoleID"), rs.getInt("PassengerID")));
+            if (rs.next()) {
+                return new account(
+                    rs.getInt("AccountID"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Username"),
+                    rs.getString("Password"),
+                    rs.getString("Email"),
+                    rs.getInt("RoleID"),
+                    rs.getInt("PassengerID"),
+                    rs.getString("Status") // Include status
+                );
             }
         } catch (Exception e) {
             System.out.println(e);
-        }
-        return list;
-    }
-
-    public account getAccountByID(int accouontID) {
-        String sql = "SELECT * FROM account WHERE AccountID =?";
-        try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setInt(1, accouontID);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                return new account(rs.getInt("AccountID"), rs.getString("PhoneNumber"), rs.getString("Username"), rs.getString("Password"), rs.getString("Email"), rs.getInt("RoleID"), rs.getInt("PassengerID"));
-            }
-        } catch (Exception e) {
         }
         return null;
     }
 
     public void registerAccount(String phoneNumber, String username, String password, String email, int roleID, int passengerID) {
-        String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID,PassengerID) VALUES (?,?,?,?,?,?)";
-        try (PreparedStatement st = connection.prepareStatement(sql);) {
+        String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID, PassengerID, Status) VALUES (?, ?, ?, ?, ?, ?, 'Active')";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, phoneNumber);
             st.setString(2, username);
             st.setString(3, password);
@@ -57,19 +72,21 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
-
-    public void banAccount(int accountID) {
-        String sql = "DELETE FROM account WHERE AccountID = ?";
+    
+    public void updateAccountStatus(int accountID, String status) {
+        String sql = "UPDATE trainproject.account SET Status = ? WHERE AccountID = ?"; // Use the correct table
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setInt(1, accountID);
+            st.setString(1, status);
+            st.setInt(2, accountID);
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void updateAccountPassword(int accountID, String password){
-        String sql = "UPDATE account SET Password=? WHERE AccountID = ?";
-        try (PreparedStatement st = connection.prepareStatement(sql);) {
+
+    public void updateAccountPassword(int accountID, String password) {
+        String sql = "UPDATE account SET Password = ? WHERE AccountID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, password);
             st.setInt(2, accountID);
             st.executeUpdate();
@@ -77,9 +94,11 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
+
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
         List<account> acclist = dao.getAllAccount();
-        dao.updateAccountPassword(8, "password");
+        System.out.println(dao.getAllAccount());
+        dao.updateAccountStatus(6, "Active");
     }
 }
