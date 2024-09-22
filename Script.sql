@@ -253,11 +253,11 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 -- Insert data into Passenger
-INSERT INTO Passenger (PassengerID, Name, Password, Email, Age, Address, PhoneNumber) VALUES
-(1, 'Himmel', 'Frieren123', 'himmel@gmail.com', 28, 'British', '555-1234-4321'),
-(2, 'John Smith', 'moviestar', 'johnsmith@gmail.com', 34, 'America', '555-5678-4321'),
-(3, 'Rin Tohsaka', 'holygrail', 'emiya@gmail.com', 22, ' Japan', '555-9876-4321'),
-(4, 'Dang Khac Phu', 'phudk123', 'Phudk@gmail.com', 26, 'Viet Nam', '555-6543-4321');
+INSERT INTO Passenger (PassengerID, Name, Email, Age, Address, PhoneNumber) VALUES
+(1, 'Himmel', 'himmel@gmail.com', 28, 'British', '555-1234-4321'),
+(2, 'John Smith', 'johnsmith@gmail.com', 34, 'America', '555-5678-4321'),
+(3, 'Rin Tohsaka','emiya@gmail.com', 22, ' Japan', '555-9876-4321'),
+(4, 'Dang Khac Phu','Phudk@gmail.com', 26, 'Viet Nam', '555-6543-4321');
 
 -- Insert data into Role
 INSERT INTO Role (RoleID, RoleName) VALUES
