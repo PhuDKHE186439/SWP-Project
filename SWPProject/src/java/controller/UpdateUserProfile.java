@@ -77,21 +77,23 @@ public class UpdateUserProfile extends HttpServlet {
         PassengerDAO passDAO = new PassengerDAO();
         HttpSession session = request.getSession();
         AccountDAO accDAO = new AccountDAO();
-        String name = request.getParameter("name");
-        String age = request.getParameter("age");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        int accountID = (int) session.getAttribute("AccID");
-        try {
-            if (name != null) {
-                passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        if (session.getAttribute("AccID") != null) {
+            int accountID = (int) session.getAttribute("AccID");
+            if(accDAO.getAccountByID(accountID).getPassword().equals(currentPassword)){   
+                try {
+                    accDAO.updateAccountPassword(accountID, newPassword);
+                    request.setAttribute("passwordChange", "Password Change Successfully");
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } else {
+                request.setAttribute("passwordChange", "Password Change Failed, Please Check Your Current Password Again");
             }
-
-        } catch (NumberFormatException e) {
-            System.out.println(e);
+            passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
+            request.setAttribute("profile", profilePassenger);
         }
-        passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
-        request.setAttribute("profile", profilePassenger);
         request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
     }
 

@@ -67,10 +67,19 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    public void updateAccountPassword(int accountID, String password){
+        String sql = "UPDATE account SET Password=? WHERE AccountID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setString(1, password);
+            st.setInt(2, accountID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
         List<account> acclist = dao.getAllAccount();
-        System.out.println(dao.getAccountByID(1).getPassengerID());
+        dao.updateAccountPassword(8, "password");
     }
 }

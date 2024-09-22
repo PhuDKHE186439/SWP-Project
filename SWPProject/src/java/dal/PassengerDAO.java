@@ -55,6 +55,16 @@ public class PassengerDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public void updatePassengerInformEmail(int PassengerID, String email) {
+        String sql = "UPDATE passenger SET Email=? WHERE PassengerID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setString(1, email);
+            st.setInt(2, PassengerID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public passenger getLastPassenger() {
         String sql = "SELECT * FROM Passenger ORDER BY PassengerID DESC LIMIT 1;";
@@ -71,6 +81,7 @@ public class PassengerDAO extends DBContext {
 
     public static void main(String[] args) {
         PassengerDAO dao = new PassengerDAO();
-        System.out.println(dao.getPassengerByID(1));
+        System.out.println("");
+        dao.updatePassengerInformEmail(5, "Dude99@gmail.com");
     }
 }

@@ -90,16 +90,23 @@ public class UserProfile extends HttpServlet {
         String age = request.getParameter("age");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
-        try {
+        String email = request.getParameter("email");
+        if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
-            passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
-            passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
-            request.setAttribute("profile", profilePassenger);
 
-        } catch (Exception e) {
-            System.out.println(e);
+            try {
+                if (name != null) {
+                    passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
+                }
+                if (email != null) {
+                    passDAO.updatePassengerInformEmail(accDAO.getAccountByID(accountID).getPassengerID(), email);
+                }
+                passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
+                request.setAttribute("profile", profilePassenger);
+            } catch (NumberFormatException e) {
+                System.out.println(e);
+            }
         }
-
         request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
     }
 
