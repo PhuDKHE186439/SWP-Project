@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `trainproject`.`account` (
   `Email` VARCHAR(255) CHARACTER SET 'utf8mb3' NULL DEFAULT NULL,
   `RoleID` INT NULL DEFAULT NULL,
   `PassengerID` INT NULL DEFAULT NULL,
+  `Status` ENUM('Active', 'Banned') NOT NULL DEFAULT 'Active',
   PRIMARY KEY (`AccountID`),
   INDEX `RoleID` (`RoleID` ASC) VISIBLE,
   CONSTRAINT `account_ibfk_1`
