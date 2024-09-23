@@ -3,6 +3,7 @@
     Created on : Sep 20, 2024, 4:59:36 PM
     Author     : Laptop
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,21 +44,7 @@
                                     <a data-w-tab="Profile" class="dash_profile-nav-link w-inline-block w-tab-link w--current">
                                         <div>My Profile</div>
                                     </a>
-                                    <a data-w-tab="Billing" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Billing</div>
-                                    </a>
-                                    <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Preferences</div>
-                                    </a>
-                                    <a data-w-tab="Tab" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Random</div>
-                                    </a>
-                                    <a data-w-tab="Tab 2" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Extra Something</div>
-                                    </a>
-                                    <a data-w-tab="Tab 3" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Another Option</div>
-                                    </a>
+
                                 </div>
                                 <div class="_100 w-tab-content">
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">
@@ -66,12 +53,20 @@
                                                 <div class="profile_h1">My Profile</div>
                                             </div>
                                         </div>
-                                        <div class="profile_section">
-                                            <div class="profile_section-head">Personal Information</div>
-                                            <div class="profile_flex">
-                                                <div class="profile_column">
-                                                    <div class="input-label">First Name</div>
-                                                    <div data-ms-member="first-name" class="input-preview">${profile.name}</div>
+                                    <c:if test="${requestScope.OTPCheck==false}">
+                                        <div class="profile_form-header">
+                                            <div>
+
+                                                <a href="registerotp">Make Answer to Your OTP Question</a>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <div class="profile_section">
+                                        <div class="profile_section-head">Personal Information</div>
+                                        <div class="profile_flex">
+                                            <div class="profile_column">
+                                                <div class="input-label">First Name</div>
+                                                <div data-ms-member="first-name" class="input-preview">${profile.name}</div>
                                             </div>
                                             <div class="profile_column">
                                                 <div class="input-label">Age</div>
@@ -179,6 +174,7 @@
                                         </div>
                                     </div>
                                     <div class="profile_section">
+
                                         <div class="profile_section-head">Account Change Password</div>
                                         <div class="profile_flex">
                                             <div class="profile_column">
@@ -234,31 +230,55 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="profile_section">
-                                        <div class="profile_section-head">Social Connections</div>
-                                        <div class="profile_flex">
-                                            <div data-ms-auth="manage-providers" class="flex-row-outer social">
-                                                <a data-ms-auth-provider="google" href="#" class="social-btn w-inline-block">
-                                                    <div class="social-content"><img alt="" loading="lazy" src="images/google.svg" class="social-image">
-                                                        <div data-ms-auth-connected-text="Disconnect Google" class="social-text">Continue with Google</div>
-                                                        <div data-ms-auth-disconnect="true" class="disconnect-link"><img alt="" loading="lazy" src="images/close_black_24dp.svg" class="disconnect-image"></div>
+                                    <c:forEach items="${list}" var="o">
+                                        <div class="profile_section">
+                                            <div class="profile_section-head">OTP Security Question</div>
+                                            <div class="profile_flex">
+                                                <div class="profile_column">
+                                                    <div class="input-label">${o.otpQuestion}</div>
+                                                    <div data-ms-member="bio" class="input-preview">${o.otpAnswer}</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="modal_open">
+                                                    <a href="#" class="outline-button edit w-inline-block">
+                                                        <div class="flex-row-outer">
+                                                            <div>Edit</div>
+                                                            <div class="dash_icon edit w-embed"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                                <g>
+                                                                <rect fill="none" height="24" width="24"></rect>
+                                                                </g>
+                                                                <g>
+                                                                <g>
+                                                                <path d="M16.81,8.94l-3.75-3.75L4,14.25V18h3.75L16.81,8.94z M6,16v-0.92l7.06-7.06l0.92,0.92L6.92,16H6z"></path>
+                                                                <path d="M19.71,6.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34C17.17,2.09,16.92,2,16.66,2c-0.25,0-0.51,0.1-0.7,0.29l-1.83,1.83 l3.75,3.75L19.71,6.04z"></path>
+                                                                <rect height="4" width="20" x="2" y="20"></rect>
+                                                                </g>
+                                                                </g>
+                                                                </svg></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="dash_modal">
+                                                    <div class="modal_close">
+                                                        <div class="modal_close-icon w-embed"><svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
+                                                            </svg>
+                                                        </div>
                                                     </div>
-                                                </a>
-                                                <a data-ms-auth-provider="facebook" href="#" class="social-btn w-inline-block">
-                                                    <div class="social-content"><img alt="" loading="lazy" src="images/facebook.svg" class="social-image">
-                                                        <div data-ms-auth-connected-text="Disconnect Facebook" class="social-text">Continue with Facebook</div>
-                                                        <div data-ms-auth-disconnect="true" class="disconnect-link"><img alt="" loading="lazy" src="https://assets-global.website-files.com/632c941ea9199f8985f3fd52/6331f8b4b515a6328c67f9ec_close_black_24dp.svg" class="disconnect-image"></div>
+                                                    <div class="w-form">
+                                                        <form action="changeotp" id="wf-form-Profile-Form" name="wf-form-Profile-Form" data-name="Profile Form" method="post" data-ms-form="profile" class="modal_form" data-wf-page-id="66ed4a18c4f9443448dbb307" data-wf-element-id="b1a1c4e4-0a7a-dbd8-f8c9-28d414a57341">
+                                                            <div class="profile_h1">Personal Information</div>
+                                                            <div class="input-wrapper"><label for="name" class="profile_label is-modal">OTP Question</label><input class="input w-input" maxlength="256" name="otpquestion" value="${o.otpQuestion}" placeholder="${o.otpQuestion}" type="text"  required="" readonly=""></div>
+                                                            <div class="input-wrapper"><label for="phone" class="profile_label is-modal">OTP Answer</label><input class="input w-input" maxlength="256" name="otpanswer" value="${o.otpAnswer}" placeholder="${o.otpAnswer}" type="text"  required=""></div>
+                                                            <div class="spacer-s"></div><input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Save Changes">
+                                                        </form>
+
                                                     </div>
-                                                </a>
-                                                <a data-ms-auth-provider="linkedin" href="#" class="social-btn w-inline-block">
-                                                    <div class="social-content"><img alt="" loading="lazy" src="images/linkedin.svg" class="social-image">
-                                                        <div data-ms-auth-connected-text="Disconnect LinkedIn" class="social-text">Continue with LinkedIn</div>
-                                                        <div data-ms-auth-disconnect="true" class="disconnect-link"><img alt="" loading="lazy" src="https://assets-global.website-files.com/632c941ea9199f8985f3fd52/6331f8b4b515a6328c67f9ec_close_black_24dp.svg" class="disconnect-image"></div>
-                                                    </div>
-                                                </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                                 <div data-w-tab="Billing" class="w-tab-pane"></div>
                                 <div data-w-tab="Preferences" class="w-tab-pane"></div>
