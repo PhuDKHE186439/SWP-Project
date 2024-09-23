@@ -209,7 +209,6 @@
                                                         <div class="text-size-small text-color-grey">Minimum 8-characters.</div>
                                                         <div class="spacer-s"></div><input type="submit" data-wait="Please wait..." class="dash_button is-modal w-button" value="Set Password" onclick="return confirm('Are you sure?')">
                                                     </form>
-
                                                     <div class="w-form-done">
                                                         <div>Thank you! Your submission has been received!</div>
                                                     </div>

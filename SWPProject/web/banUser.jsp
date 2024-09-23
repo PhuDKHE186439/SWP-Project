@@ -26,7 +26,7 @@
 </head>
 <body>
     <h2>Ban Account</h2>
-    <form action="BanAccountServlet" method="post">
+    <form action="BanAccount" method="post">
         <label for="account">Select Account to Ban:</label><br>
         <input type="text" id="searchInput" placeholder="Search accounts..." onkeyup="filterAccounts()"><br>
         <select id="accountSelect" name="accountID" required size="5">
