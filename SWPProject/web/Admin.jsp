@@ -56,10 +56,10 @@
                                     <a data-w-tab="Profile" class="dash_profile-nav-link w-inline-block w-tab-link w--current">
                                         <div>Account </div>
                                     </a>
-                                    <a data-w-tab="Role" class="dash_profile-nav-link w-inline-block w-tab-link">
+                                    <a data-w-tab="Role" class="dash_profile-nav-link w-inline-block  " href="Admin2.jsp">
                                         <div>Role</div>
                                     </a>
-                                    <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block w-tab-link">
+                                    <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block  "href="Admin2.jsp">
                                         <div>Preferences</div>
                                     </a>
                                     <a data-w-tab="Tab" class="dash_profile-nav-link w-inline-block w-tab-link">
@@ -274,7 +274,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div data-w-tab="Role" class="w-tab-pane"></div>
+                            <div data-w-tab="Account" class="w-tab-pane"></div>
                             <div data-w-tab="Preferences" class="w-tab-pane"></div>
                             <div data-w-tab="Tab" class="w-tab-pane"></div>
                             <div data-w-tab="Tab 2" class="w-tab-pane"></div>
