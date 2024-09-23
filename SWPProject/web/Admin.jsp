@@ -57,7 +57,7 @@
                                         <div>Account </div>
                                     </a>
                                     <a data-w-tab="Role" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Billing</div>
+                                        <div>Role</div>
                                     </a>
                                     <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block w-tab-link">
                                         <div>Preferences</div>
@@ -72,7 +72,7 @@
                                         <div>Another Option</div>
                                     </a>
                                 </div>
-                                <div class="_100 w-tab-content">
+                                <div class="_100 w-tab-content ">
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">
                                         <div class="profile_form-header">
                                             <div>
@@ -274,7 +274,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div data-w-tab="Role" class="w-tab-pane"></div>
+                            <div data-w-tab="Role" class="w-tab-pane w--tab-active"></div>
                             <div data-w-tab="Preferences" class="w-tab-pane"></div>
                             <div data-w-tab="Tab" class="w-tab-pane"></div>
                             <div data-w-tab="Tab 2" class="w-tab-pane"></div>

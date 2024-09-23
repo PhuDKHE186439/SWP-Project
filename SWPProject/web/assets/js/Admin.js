@@ -8,3 +8,13 @@ function filterAccounts(formType) {
     }
 }
 
+function loadTabContent(page) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", page, true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            document.getElementById('tabContent').innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}

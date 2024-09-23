@@ -1042,3 +1042,13 @@ a {
     padding-bottom: 1.25rem;
   }
 }
+.dash_profile-nav-link {
+  color: var(--slate-grey);
+  background-color: transparent;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.dash_profile-nav-link.w--current {
+  background-color: var(--royal-blue); /* Ensure this highlights the current tab */
+  color: white; /* Make sure text color changes for active tab */
+}
