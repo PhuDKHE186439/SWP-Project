@@ -20,7 +20,7 @@ import model.passenger;
  *
  * @author My Asus
  */
-public class UserProfile extends HttpServlet {
+public class RegisterOTP extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class UserProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserProfile</title>");
+            out.println("<title>Servlet RegisterOTP</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserProfile at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RegisterOTP at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,25 +60,7 @@ public class UserProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PassengerDAO passDAO = new PassengerDAO();
-        AccountDAO accDAO = new AccountDAO();
-        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
-        HttpSession session = request.getSession();
-        if (session.getAttribute("AccID") != null) {
-            int accountID = (int) session.getAttribute("AccID");
-            passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
-            request.setAttribute("profile", profilePassenger);
-            if (otpDAO.getOTPByID(accountID).isEmpty()) {
-                request.setAttribute("OTPCheck", false);
-            } else {
-                request.setAttribute("OTPCheck", true);
-            }
-            session.setAttribute("list", otpDAO.getOTPByID(accountID));
-            request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
-
-        } else {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("createOTP.jsp").forward(request, response);
     }
 
     /**
@@ -92,36 +74,28 @@ public class UserProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PassengerDAO passDAO = new PassengerDAO();
         HttpSession session = request.getSession();
+        OtpQuestionDAO dao = new OtpQuestionDAO();
+        PassengerDAO passDAO = new PassengerDAO();
         AccountDAO accDAO = new AccountDAO();
-        String name = request.getParameter("name");
-        String age = request.getParameter("age");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
+        String answer1=request.getParameter("answer1");
+        String answer2=request.getParameter("answer2");
+        String answer3=request.getParameter("answer3");
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
-            if (otpDAO.getOTPByID(accountID).isEmpty()) {
-                session.setAttribute("OTPCheck", false);
-            } else {
-                session.setAttribute("OTPCheck", true);
+            if(dao.getOTPByID(accountID)!=null){
+                dao.addOTPQuestion(accountID, "Fav Animal", answer1);
+                dao.addOTPQuestion(accountID, "ur Crush", answer2);
+                dao.addOTPQuestion(accountID, "neighbor name", answer3);
             }
-            try {
-                if (name != null) {
-                    passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
-                }
-                if (email != null) {
-                    passDAO.updatePassengerInformEmail(accDAO.getAccountByID(accountID).getPassengerID(), email);
-                }
-                passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
-                request.setAttribute("profile", profilePassenger);
-            } catch (NumberFormatException e) {
-                System.out.println(e);
-            }
+            session.setAttribute("list", dao.getOTPByID(accountID));
+            request.setAttribute("OTPCheck", true);
+            passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
+            request.setAttribute("profile", profilePassenger);
+            request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+        } else {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
     }
 
     /**

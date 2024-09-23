@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.account;
-
 /**
  *
  * @author My Asus
@@ -13,27 +12,27 @@ import model.account;
 public class AccountDAO extends DBContext {
 
     public List<account> getAllAccount() {
-    List<account> list = new ArrayList<>();
-    String sql = "SELECT * FROM trainproject.account"; // Ensure your SQL query includes the status field
-    try (PreparedStatement st = connection.prepareStatement(sql)) {
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            list.add(new account(
-                rs.getInt("AccountID"),
-                rs.getString("PhoneNumber"),
-                rs.getString("Username"),
-                rs.getString("Password"),
-                rs.getString("Email"),
-                rs.getInt("RoleID"),
-                rs.getInt("PassengerID"),
-                rs.getString("Status") // Fetch status from the database
-            ));
+        List<account> list = new ArrayList<>();
+        String sql = "SELECT * FROM trainproject.account"; // Ensure your SQL query includes the status field
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new account(
+                        rs.getInt("AccountID"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getInt("RoleID"),
+                        rs.getInt("PassengerID"),
+                        rs.getString("Status") // Fetch status from the database
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-    } catch (Exception e) {
-        System.out.println(e);
+        return list;
     }
-    return list;
-}
 
     public account getAccountByID(int accountID) {
         String sql = "SELECT * FROM trainproject.account WHERE AccountID = ?";
@@ -42,14 +41,14 @@ public class AccountDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return new account(
-                    rs.getInt("AccountID"),
-                    rs.getString("PhoneNumber"),
-                    rs.getString("Username"),
-                    rs.getString("Password"),
-                    rs.getString("Email"),
-                    rs.getInt("RoleID"),
-                    rs.getInt("PassengerID"),
-                    rs.getString("Status") // Include status
+                        rs.getInt("AccountID"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getInt("RoleID"),
+                        rs.getInt("PassengerID"),
+                        rs.getString("Status") // Include status
                 );
             }
         } catch (Exception e) {
@@ -72,7 +71,7 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     public void updateAccountStatus(int accountID, String status) {
         String sql = "UPDATE trainproject.account SET Status = ? WHERE AccountID = ?"; // Use the correct table
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -93,6 +92,28 @@ public class AccountDAO extends DBContext {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public account getLastAccount() {
+        String sql = "SELECT * FROM account ORDER BY AccountID DESC LIMIT 1;";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new account(
+                        rs.getInt("AccountID"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getInt("RoleID"),
+                        rs.getInt("PassengerID"),
+                        rs.getString("Status") // Include status
+                );
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     public static void main(String[] args) {

@@ -3,6 +3,7 @@
     Created on : Sep 18, 2024, 7:35:22 PM
     Author     : My Asus
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,7 +69,7 @@
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
                             <p style="color: Red">${requestScope.annoutment}</p>
                         </div>	
-                        <form class="contact-bx" action="register" method="post">
+                        <form class="contact-bx" action="registerotp" method="post">
                             <div class="row placeani">
                                 What is your favorite animal?
                                 <div class="col-lg-12">

@@ -3,6 +3,7 @@
     Created on : Sep 20, 2024, 4:59:36 PM
     Author     : Laptop
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,6 +44,7 @@
                                     <a data-w-tab="Profile" class="dash_profile-nav-link w-inline-block w-tab-link w--current">
                                         <div>My Profile</div>
                                     </a>
+
                                 </div>
                                 <div class="_100 w-tab-content">
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">
@@ -51,12 +53,20 @@
                                                 <div class="profile_h1">My Profile</div>
                                             </div>
                                         </div>
-                                        <div class="profile_section">
-                                            <div class="profile_section-head">Personal Information</div>
-                                            <div class="profile_flex">
-                                                <div class="profile_column">
-                                                    <div class="input-label">First Name</div>
-                                                    <div data-ms-member="first-name" class="input-preview">${profile.name}</div>
+                                    <c:if test="${requestScope.OTPCheck==false}">
+                                        <div class="profile_form-header">
+                                            <div>
+
+                                                <a href="registerotp">Make Answer to Your OTP Question</a>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <div class="profile_section">
+                                        <div class="profile_section-head">Personal Information</div>
+                                        <div class="profile_flex">
+                                            <div class="profile_column">
+                                                <div class="input-label">First Name</div>
+                                                <div data-ms-member="first-name" class="input-preview">${profile.name}</div>
                                             </div>
                                             <div class="profile_column">
                                                 <div class="input-label">Age</div>
@@ -164,6 +174,7 @@
                                         </div>
                                     </div>
                                     <div class="profile_section">
+
                                         <div class="profile_section-head">Account Change Password</div>
                                         <div class="profile_flex">
                                             <div class="profile_column">
@@ -221,11 +232,11 @@
                                     </div>
                                     <c:forEach items="${list}" var="o">
                                         <div class="profile_section">
-                                            <div class="profile_section-head">Personal Information</div>
+                                            <div class="profile_section-head">OTP Security Question</div>
                                             <div class="profile_flex">
                                                 <div class="profile_column">
-                                                    <div class="input-label">Question</div>
-                                                    <div data-ms-member="bio" class="input-preview">Answer</div>
+                                                    <div class="input-label">${o.otpQuestion}</div>
+                                                    <div data-ms-member="bio" class="input-preview">${o.otpAnswer}</div>
                                                 </div>
                                             </div>
                                             <div>
@@ -256,10 +267,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="w-form">
-                                                        <form action="userprofile" id="wf-form-Profile-Form" name="wf-form-Profile-Form" data-name="Profile Form" method="post" data-ms-form="profile" class="modal_form" data-wf-page-id="66ed4a18c4f9443448dbb307" data-wf-element-id="b1a1c4e4-0a7a-dbd8-f8c9-28d414a57341">
+                                                        <form action="changeotp" id="wf-form-Profile-Form" name="wf-form-Profile-Form" data-name="Profile Form" method="post" data-ms-form="profile" class="modal_form" data-wf-page-id="66ed4a18c4f9443448dbb307" data-wf-element-id="b1a1c4e4-0a7a-dbd8-f8c9-28d414a57341">
                                                             <div class="profile_h1">Personal Information</div>
-                                                            <div class="input-wrapper"><label for="name" class="profile_label is-modal">Input Question</label><input class="input w-input" maxlength="256" name="otpquestion" Value="${profile.name}" placeholder="${profile.name}" type="text"  required=""></div>
-                                                            <div class="input-wrapper"><label for="phone" class="profile_label is-modal">Input Answer</label><input class="input w-input" maxlength="256" name="otpanswer" value="${profile.phoneNumber}" placeholder="${profile.phoneNumber}" type="tel"  required="" pattern="[0-9]{10}"></div>
+                                                            <div class="input-wrapper"><label for="name" class="profile_label is-modal">OTP Question</label><input class="input w-input" maxlength="256" name="otpquestion" value="${o.otpQuestion}" placeholder="${o.otpQuestion}" type="text"  required="" readonly=""></div>
+                                                            <div class="input-wrapper"><label for="phone" class="profile_label is-modal">OTP Answer</label><input class="input w-input" maxlength="256" name="otpanswer" value="${o.otpAnswer}" placeholder="${o.otpAnswer}" type="text"  required=""></div>
                                                             <div class="spacer-s"></div><input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Save Changes">
                                                         </form>
 
