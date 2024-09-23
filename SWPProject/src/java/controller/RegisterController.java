@@ -94,7 +94,7 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("annoutment", "Register Successful");
                 
             }
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+            request.getRequestDispatcher("createOTP.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e);
         }
