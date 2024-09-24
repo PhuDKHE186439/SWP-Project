@@ -38,21 +38,21 @@
                     <div class="dash_contain">
                         <div class="relative">
                             <a data-ms-action="logout" href="login?logout=logout" class="dash_profile-nav-link is-logout w-inline-block">
-    <div class="button-icon w-embed">
-        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
-            <g>
-                <path d="M0,0h24v24H0V0z" fill="none"></path>
-            </g>
-            <g>
-                <g>
-                    <path d="M5,5h6c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h6c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1H5V5z"></path>
-                    <path d="M20.65,11.65l-2.79-2.79C17.54,8.54,17,8.76,17,9.21V11h-7c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h7v1.79 c0,0.45,0.54,0.67,0.85,0.35l2.79-2.79C20.84,12.16,20.84,11.84,20.65,11.65z"></path>
-                </g>
-            </g>
-        </svg>
-    </div>
-    <div>Log out</div>
-</a>
+                                <div class="button-icon w-embed">
+                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                    <g>
+                                    <path d="M0,0h24v24H0V0z" fill="none"></path>
+                                    </g>
+                                    <g>
+                                    <g>
+                                    <path d="M5,5h6c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h6c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1H5V5z"></path>
+                                    <path d="M20.65,11.65l-2.79-2.79C17.54,8.54,17,8.76,17,9.21V11h-7c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h7v1.79 c0,0.45,0.54,0.67,0.85,0.35l2.79-2.79C20.84,12.16,20.84,11.84,20.65,11.65z"></path>
+                                    </g>
+                                    </g>
+                                    </svg>
+                                </div>
+                                <div>Log out</div>
+                            </a>
 
                             <div data-current="Profile" data-easing="ease" data-duration-in="300" data-duration-out="100" class="dash_profile-tabs w-tabs">
                                 <div class="dash_profile-menu w-tab-menu">
@@ -71,7 +71,7 @@
                                     <a data-w-tab="Tab 2" class="dash_profile-nav-link w-inline-block w-tab-link">
                                         <div>Extra Something</div>
                                     </a>
-                                    
+
                                 </div>
                                 <div class="_100 w-tab-content">
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">
@@ -81,15 +81,15 @@
                                             </div>
                                         </div>
                                         <div class="profile_section">
-                                            <div class="profile_section-head">Ban Account</div>
+                                            <div class="profile_section-head">Account List</div>
                                             <div class="profile_flex"></div>
                                             <div>
                                                 <div class="modal_open">
                                                     <a href="#" class="outline-button edit w-inline-block">
                                                         <div class="flex-row-outer">
-                                                            <div>Edit</div>
+                                                            <div>Search</div>
                                                             <div class="dash_icon edit w-embed">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
                                                                 <g>
                                                                 <path d="M16.81,8.94l-3.75-3.75L4,14.25V18h3.75L16.81,8.94z M6,16v-0.92l7.06-7.06l0.92,0.92L6.92,16H6z"></path>
                                                                 <path d="M19.71,6.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34C17.17,2.09,16.92,2,16.66,2c-0.25,0-0.51,0.1-0.7,0.29l-1.83,1.83 l3.75,3.75L19.71,6.04z"></path>
@@ -103,23 +103,78 @@
                                                 <div class="dash_modal">
                                                     <div class="modal_close">
                                                         <div class="modal_close-icon w-embed">
-                                                            <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <svg width="420" height="420" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
                                                             </svg>
                                                         </div>
                                                     </div>
                                                     <div class="w-form">
-                                                        <!-- Ban Account Form -->
-                                                        <form action="BanAccount" id="wf-form-Ban-Account" method="post" class="modal_form">
-                                                            <div class="profile_h1">Ban Account</div>
+                                                        <!-- Account List Form -->
+                                                        <form action="BanAccount" id="wf-form-Account-List" method="post" class="modal_form">
+                                                            <div class="profile_h1">Account List</div>
                                                             <div class="input-wrapper">
-                                                                <label for="account" class="profile_label is-modal">Select Account to Ban:</label>
-                                                                <input class="input w-input" type="text" id="searchInputBan" placeholder="Search accounts..." onkeyup="filterAccounts('Ban')">
+                                                                <label for="searchInput" class="profile_label is-modal">Search Accounts:</label>
+                                                                <input class="input w-input" type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterAccounts()">
                                                             </div>
                                                             <div class="input-wrapper">
-                                                                <label for="accountSelectBan" class="profile_label is-modal">Account:</label>
-                                                                <select class="input w-input" id="accountSelectBan" name="accountID" required size="5"style="width: 100%; height: auto;" >
+                                                                <label for="accountSelect" class="profile_label is-modal">Select Account:</label>
+                                                                <select class="input w-input" id="accountSelect" name="accountID" required size="5" style="width: 100%; height: auto;">
                                                                     <option value="" disabled selected>Select Account</option>
+                                                                <% for (account acc : accounts) { %>
+                                                                <option value="<%= acc.getAccountID() %>">
+                                                                    <%= acc.getUsername() %> - <%= acc.getEmail() %> - <%= acc.getStatus() %>
+                                                                </option>
+                                                                <% } %>
+                                                            </select>
+                                                        </div>
+                                                        <div class="spacer-s"></div>
+                                                        <input type="hidden" name="action" value="view">
+                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="View Account">       
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile_section">
+                                        <div class="profile_section-head">Ban Account</div>
+                                        <div class="profile_flex"></div>
+                                        <div>
+                                            <div class="modal_open">
+                                                <a href="#" class="outline-button edit w-inline-block">
+                                                    <div class="flex-row-outer">
+                                                        <div>Edit</div>
+                                                        <div class="dash_icon edit w-embed">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                            <g>
+                                                            <path d="M16.81,8.94l-3.75-3.75L4,14.25V18h3.75L16.81,8.94z M6,16v-0.92l7.06-7.06l0.92,0.92L6.92,16H6z"></path>
+                                                            <path d="M19.71,6.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34C17.17,2.09,16.92,2,16.66,2c-0.25,0-0.51,0.1-0.7,0.29l-1.83,1.83 l3.75,3.75L19.71,6.04z"></path>
+                                                            <rect height="4" width="20" x="2" y="20"></rect>
+                                                            </g>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="dash_modal">
+                                                <div class="modal_close">
+                                                    <div class="modal_close-icon w-embed">
+                                                        <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="w-form">
+                                                    <!-- Ban Account Form -->
+                                                    <form action="BanAccount" id="wf-form-Ban-Account" method="post" class="modal_form">
+                                                        <div class="profile_h1">Ban Account</div>
+                                                        <div class="input-wrapper">
+                                                            <label for="account" class="profile_label is-modal">Select Account to Ban:</label>
+                                                            <input class="input w-input" type="text" id="searchInputBan" placeholder="Search accounts..." onkeyup="filterAccounts('Ban')">
+                                                        </div>
+                                                        <div class="input-wrapper">
+                                                            <label for="accountSelectBan" class="profile_label is-modal">Account:</label>
+                                                            <select class="input w-input" id="accountSelectBan" name="accountID" required size="5"style="width: 100%; height: auto;" >
+                                                                <option value="" disabled selected>Select Account</option>
                                                                 <% for (account acc : accounts) { %>
                                                                 <option value="<%= acc.getAccountID() %>">
                                                                     <%= acc.getUsername() %> - <%= acc.getEmail() %> - <%= acc.getStatus() %>
@@ -135,7 +190,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="profile_section">
                                         <div class="profile_section-head">Unban Account</div>
                                         <div class="profile_flex"></div>
@@ -199,80 +253,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="profile_section">
-                                        <div class="profile_section-head">Create Account</div>
-                                        <div class="profile_flex">                
-                                        </div>
-                                        <div>
-                                            <div class="modal_open">
-                                                <a href="#" class="outline-button edit w-inline-block">
-                                                    <div class="flex-row-outer">
-                                                        <div>Edit</div>
-                                                        <div class="dash_icon edit w-embed">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
-                                                            <g>
-                                                            <path d="M16.81,8.94l-3.75-3.75L4,14.25V18h3.75L16.81,8.94z M6,16v-0.92l7.06-7.06l0.92,0.92L6.92,16H6z"></path>
-                                                            <path d="M19.71,6.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34C17.17,2.09,16.92,2,16.66,2c-0.25,0-0.51,0.1-0.7,0.29l-1.83,1.83 l3.75,3.75L19.71,6.04z"></path>
-                                                            <rect height="4" width="20" x="2" y="20"></rect>
-                                                            </g>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="dash_modal">
-                                                <div class="modal_close">
-                                                    <div class="modal_close-icon w-embed">
-                                                        <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <div class="w-form">
-                                                    <form action="CreateAccountServlet" id="wf-form-Create-Account" method="post" class="modal_form">
-                                                        <div class="profile_h1">Create New Account</div>
-                                                        <div class="input-wrapper">
-                                                            <label for="phoneNumber" class="profile_label is-modal">Phone Number</label>
-                                                            <input class="input w-input" maxlength="256" name="phoneNumber" value="${profile.phoneNumber}" placeholder="${profile.phoneNumber}" type="text" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="username" class="profile_label is-modal">Username</label>
-                                                            <input class="input w-input" maxlength="256" name="username" value="${profile.username}" placeholder="${profile.username}" type="text" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="password" class="profile_label is-modal">Password</label>
-                                                            <input class="input w-input" maxlength="256" name="password" value="${profile.password}" placeholder="${profile.password}" type="password" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="email" class="profile_label is-modal">Email</label>
-                                                            <input class="input w-input" maxlength="256" name="email" value="${profile.email}" placeholder="${profile.email}" type="email" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="roleID" class="profile_label is-modal">Role</label>
-                                                            <select class="input w-input" name="roleID" required>
-                                                                <option value="" disabled selected>Select Role</option>
-                                                                <% for (role r : roles) { %>
-                                                                <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
-                                                                <% } %>
-                                                            </select>
-                                                        </div>
-                                                        <div class="spacer-s"></div>
-                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Create Account" onclick="return confirm('Are you sure?')">
-                                                        <input type="hidden" name="action" value="create">
-                                                    </form>
-                                                </div>
 
-
-                                                <script>
-                                                    function closeModal() {
-                                                        document.getElementById("wf-form-Create-Account").reset();
-                                                        // Logic to close the modal or reset the form, as per your project needs
-                                                    }
-                                                </script>
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div data-w-tab="Account" class="w-tab-pane"></div>

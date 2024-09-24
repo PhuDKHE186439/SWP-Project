@@ -36,6 +36,10 @@
         <servlet-name>RegisterOTP</servlet-name>
         <servlet-class>controller.RegisterOTP</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountList</servlet-name>
+        <servlet-class>controller.Admin.AccountList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -71,5 +75,9 @@
     <servlet-mapping>
         <servlet-name>RegisterOTP</servlet-name>
         <url-pattern>/registerotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountList</servlet-name>
+        <url-pattern>/AccountList</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -57,7 +57,7 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    public void registerAccount(String phoneNumber, String username, String password, String email, int roleID, int passengerID) {
+    public void registerAccount(String phoneNumber, String username, String password, String email, int roleID) {
         String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID, PassengerID, Status) VALUES (?, ?, ?, ?, ?, ?, 'Active')";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, phoneNumber);
@@ -65,7 +65,6 @@ public class AccountDAO extends DBContext {
             st.setString(3, password);
             st.setString(4, email);
             st.setInt(5, roleID);
-            st.setInt(6, passengerID);
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

@@ -8,6 +8,19 @@ function filterAccounts(formType) {
     }
 }
 
+function filterAccounts() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase();
+    const select = document.getElementById('accountSelect');
+    const options = select.options;
+
+    // Loop through all options and hide those that don't match the search
+    for (let i = 1; i < options.length; i++) { // Start from 1 to skip the first disabled option
+        const accountName = options[i].text.toLowerCase();
+        options[i].style.display = accountName.includes(filter) ? '' : 'none';
+    }
+}
+
 function loadTabContent(page) {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", page, true);
