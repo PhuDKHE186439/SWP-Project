@@ -38,29 +38,32 @@
                     <div class="dash_contain">
                         <div class="relative">
                             <a data-ms-action="logout" href="login?logout=logout" class="dash_profile-nav-link is-logout w-inline-block">
-                                <div class="button-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
-                                    <g>
-                                    <path d="M0,0h24v24H0V0z" fill="none"></path>
-                                    </g>
-                                    <g>
-                                    <g>
-                                    <path d="M5,5h6c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h6c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1H5V5z"></path>
-                                    <path d="M20.65,11.65l-2.79-2.79C17.54,8.54,17,8.76,17,9.21V11h-7c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h7v1.79 c0,0.45,0.54,0.67,0.85,0.35l2.79-2.79C20.84,12.16,20.84,11.84,20.65,11.65z"></path>
-                                    </g>
-                                    </g>
-                                    </svg></div>
-                                <div>Log out</div>
-                            </a>
+    <div class="button-icon w-embed">
+        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+            <g>
+                <path d="M0,0h24v24H0V0z" fill="none"></path>
+            </g>
+            <g>
+                <g>
+                    <path d="M5,5h6c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h6c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1H5V5z"></path>
+                    <path d="M20.65,11.65l-2.79-2.79C17.54,8.54,17,8.76,17,9.21V11h-7c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h7v1.79 c0,0.45,0.54,0.67,0.85,0.35l2.79-2.79C20.84,12.16,20.84,11.84,20.65,11.65z"></path>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <div>Log out</div>
+</a>
+
                             <div data-current="Profile" data-easing="ease" data-duration-in="300" data-duration-out="100" class="dash_profile-tabs w-tabs">
                                 <div class="dash_profile-menu w-tab-menu">
                                     <a data-w-tab="Profile" class="dash_profile-nav-link w-inline-block w-tab-link w--current">
-                                        <div>Account </div>
+                                        <div>Ban Manager </div>
                                     </a>
                                     <a data-w-tab="Role" class="dash_profile-nav-link w-inline-block  " href="Admin2.jsp">
-                                        <div>Role</div>
+                                        <div>Role Manager</div>
                                     </a>
-                                    <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block  "href="Admin2.jsp">
-                                        <div>Preferences</div>
+                                    <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block  "href="Admin3.jsp">
+                                        <div>Acc Manager</div>
                                     </a>
                                     <a data-w-tab="Tab" class="dash_profile-nav-link w-inline-block w-tab-link">
                                         <div>Random</div>
@@ -68,9 +71,7 @@
                                     <a data-w-tab="Tab 2" class="dash_profile-nav-link w-inline-block w-tab-link">
                                         <div>Extra Something</div>
                                     </a>
-                                    <a data-w-tab="Tab 3" class="dash_profile-nav-link w-inline-block w-tab-link">
-                                        <div>Another Option</div>
-                                    </a>
+                                    
                                 </div>
                                 <div class="_100 w-tab-content">
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">

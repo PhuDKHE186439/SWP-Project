@@ -39,7 +39,7 @@ public class RoleDAO extends DBContext {
             st.setInt(2, roleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace(); // Handle exceptions as needed
         }
     }
 
@@ -60,6 +60,8 @@ public class RoleDAO extends DBContext {
     public static void main(String[] args) {
         RoleDAO dao = new RoleDAO();
         List<role> rolelist = dao.getAllRoles();
-        System.out.println(dao.getAllRoles());
+        int roleID = 4;
+        String newRoleName = "UpdatedRoleName";
+        dao.updateRole(roleID, newRoleName);
     }
 }
