@@ -80,7 +80,7 @@ public class CreateAccountServlet extends HttpServlet {
 
         AccountDAO accountDAO = new AccountDAO();
         try {
-            accountDAO.registerAccount(phoneNumber, username, password, email, roleID, passengerID);
+            accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
             request.setAttribute("message", "Thank you! Your submission has been received!");
         } catch (Exception e) {
             request.setAttribute("error", "Oops! Something went wrong while submitting the form.");
