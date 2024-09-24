@@ -114,7 +114,7 @@
                                                             <div class="profile_h1">Account List</div>
                                                             <div class="input-wrapper">
                                                                 <label for="searchInput" class="profile_label is-modal">Search Accounts:</label>
-                                                                <input class="input w-input" type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterAccounts()">
+                                                                <input class="input w-input" type="text" id="searchInput" placeholder="Search by username..." oninput="filterAccounts('AccountList')">
                                                             </div>
                                                             <div class="input-wrapper">
                                                                 <label for="accountSelect" class="profile_label is-modal">Select Account:</label>
@@ -144,7 +144,7 @@
                                                     <div class="flex-row-outer">
                                                         <div>Edit</div>
                                                         <div class="dash_icon edit w-embed">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
                                                             <g>
                                                             <path d="M16.81,8.94l-3.75-3.75L4,14.25V18h3.75L16.81,8.94z M6,16v-0.92l7.06-7.06l0.92,0.92L6.92,16H6z"></path>
                                                             <path d="M19.71,6.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34C17.17,2.09,16.92,2,16.66,2c-0.25,0-0.51,0.1-0.7,0.29l-1.83,1.83 l3.75,3.75L19.71,6.04z"></path>
@@ -158,7 +158,7 @@
                                             <div class="dash_modal">
                                                 <div class="modal_close">
                                                     <div class="modal_close-icon w-embed">
-                                                        <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <svg width="420" height="420" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
                                                         </svg>
                                                     </div>
@@ -169,11 +169,11 @@
                                                         <div class="profile_h1">Ban Account</div>
                                                         <div class="input-wrapper">
                                                             <label for="account" class="profile_label is-modal">Select Account to Ban:</label>
-                                                            <input class="input w-input" type="text" id="searchInputBan" placeholder="Search accounts..." onkeyup="filterAccounts('Ban')">
+                                                            <input class="input w-input" type="text" id="searchInputBan" placeholder="Search accounts..." oninput="filterAccounts('Ban')">
                                                         </div>
                                                         <div class="input-wrapper">
                                                             <label for="accountSelectBan" class="profile_label is-modal">Account:</label>
-                                                            <select class="input w-input" id="accountSelectBan" name="accountID" required size="5"style="width: 100%; height: auto;" >
+                                                            <select class="input w-input" id="accountSelectBan" name="accountID" required size="5" style="width: 100%; height: auto;">
                                                                 <option value="" disabled selected>Select Account</option>
                                                                 <% for (account acc : accounts) { %>
                                                                 <option value="<%= acc.getAccountID() %>">
@@ -190,6 +190,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="profile_section">
                                         <div class="profile_section-head">Unban Account</div>
                                         <div class="profile_flex"></div>
@@ -199,7 +200,7 @@
                                                     <div class="flex-row-outer">
                                                         <div>Edit</div>
                                                         <div class="dash_icon edit w-embed">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
                                                             <g>
                                                             <rect fill="none" height="24" width="24"></rect>
                                                             </g>
@@ -218,7 +219,7 @@
                                             <div class="dash_modal">
                                                 <div class="modal_close">
                                                     <div class="modal_close-icon w-embed">
-                                                        <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <svg width="420" height="420" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
                                                         </svg>
                                                     </div>
@@ -228,8 +229,11 @@
                                                     <form action="BanAccount" id="wf-form-Unban-Form" method="post" class="modal_form">
                                                         <div class="profile_h1">Unban Account</div>
                                                         <div class="input-wrapper">
-                                                            <label for="account" class="profile_label is-modal">Select Account to Unban:</label><br>
-                                                            <input class="input w-input" type="text" id="searchInputUnban" placeholder="Search accounts..." onkeyup="filterAccounts('searchInputUnban', 'accountSelectUnban')"><br>
+                                                            <label for="account" class="profile_label is-modal">Select Account to Unban:</label>
+                                                            <input class="input w-input" type="text" id="searchInputUnban" placeholder="Search accounts..." oninput="filterAccounts('Unban')">
+                                                        </div>
+                                                        <div class="input-wrapper">
+                                                            <label for="accountSelectUnban" class="profile_label is-modal">Account:</label>
                                                             <select class="input w-input" id="accountSelectUnban" name="accountID" required size="5" style="width: 100%; height: auto;">
                                                                 <option value="" disabled selected>Select Account</option>
                                                                 <% for (account acc : accounts) { %>
@@ -239,6 +243,7 @@
                                                                 <% } %>
                                                             </select>
                                                         </div>
+
                                                         <div class="spacer-s"></div>
                                                         <input type="hidden" name="action" value="unban">
                                                         <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Unban Account" onclick="return confirm('Are you sure?')">
@@ -253,6 +258,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 
                                 </div>
                             </div>
