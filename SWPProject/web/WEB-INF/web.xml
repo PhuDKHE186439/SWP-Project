@@ -48,6 +48,10 @@
         <servlet-name>FeedbackController</servlet-name>
         <servlet-class>controller.FeedbackController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PassengerInfoServlet</servlet-name>
+        <servlet-class>controller.PassengerInfoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -91,5 +95,9 @@
     <servlet-mapping>
         <servlet-name>FeedbackController</servlet-name>
         <url-pattern>/FeedbackController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PassengerInfoServlet</servlet-name>
+        <url-pattern>/PassengerInfoServlet</url-pattern>
     </servlet-mapping>
 </web-app>

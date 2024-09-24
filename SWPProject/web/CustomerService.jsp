@@ -4,8 +4,8 @@
     Author     : My Asus
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,21 +67,13 @@
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Customer feedback</a>
 
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Customer feedback</a>
                         <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
                         <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
                         <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="signin.html" class="dropdown-item">Sign In</a>
-                                <a href="signup.html" class="dropdown-item">Sign Up</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                                <a href="blank.html" class="dropdown-item">Blank Page</a>
-                            </div>
-                        </div>
+
                     </div>
                 </nav>
             </div>
@@ -179,140 +171,149 @@
                     </div>
                 </nav>
                 <!-- Navbar End -->
-
-
                 <!-- Sale & Revenue Start -->
-                <div class="container-fluid pt-4 px-4">
-    <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Customer Feedback</h6>
-            <a href="">Show All</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                        <th scope="col">Feedback ID</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Passenger ID</th>
-                        <th scope="col">Submission Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="feedback" items="${feedbackList}">
-                        <tr>
-                            <td>${feedback.feedbackID}</td>
-                            <td>${feedback.message}</td>
-                            <td>${feedback.passengerID}</td>
-                            <td>${feedback.submissionDate}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-                <!-- Sale & Revenue End -->
-
-
-                <!-- Sales Chart Start -->
-                <div class="container-fluid pt-4 px-4">
-                    <div class="row g-4">
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light text-center rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Worldwide Sales</h6>
-                                    <a href="">Show All</a>
-                                </div>
-                                <canvas id="worldwide-sales"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light text-center rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Salse & Revenue</h6>
-                                    <a href="">Show All</a>
-                                </div>
-                                <canvas id="salse-revenue"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Sales Chart End -->
-
-
-                <!-- Recent Sales Start -->
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Recent Salse</h6>
-                            <a href="">Show All</a>
+                            <h6 class="mb-0">Customer Feedback</h6>
+                            <a href="feedback">Show All</a>
                         </div>
+
+                        <!-- Search and Filter Section -->
+                        <form action="feedback" method="get" class="mb-4" id="searchForm">
+                            <div class="row mb-3 align-items-center">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Feedback" name="search" value="${param.search}">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <select name="sortOrder" class="form-select d-inline-block w-auto" onchange="document.getElementById('searchForm').submit();">
+                                        <option value="latest" ${param.sortOrder == 'latest' ? 'selected' : ''}>Latest</option>
+                                        <option value="oldest" ${param.sortOrder == 'oldest' ? 'selected' : ''}>Oldest</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+
                         <div class="table-responsive">
                             <table class="table text-start align-middle table-bordered table-hover mb-0">
                                 <thead>
                                     <tr class="text-dark">
-                                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Invoice</th>
-                                        <th scope="col">Customer</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Feedback ID</th>
+                                        <th scope="col">Message</th>
+                                        <th scope="col">Passenger ID</th>
+                                        <th scope="col">Submission Date</th>
+                                        <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
+                                    <c:forEach var="feedback" items="${feedbackList}">
+                                        <tr>
+                                            <td>${feedback.feedbackID}</td>
+                                            <td>${feedback.message}</td>
+                                            <td>${feedback.passengerID}</td>
+                                            <td>${feedback.submissionDate}</td>
+                                            <td>
+                                                <a href="#" class="btn btn-warning btn-sm" 
+                                                   data-bs-toggle="modal" 
+                                                   data-bs-target="#editFeedbackModal" 
+                                                   data-feedback-id="${feedback.feedbackID}" 
+                                                   data-message="${feedback.message}"
+                                                   data-passenger-id="${feedback.passengerID}"
+                                                   data-submission-date="${feedback.submissionDate}">Edit</a>
+                                                <form action="deleteFeedback" method="post" style="display:inline;">
+                                                    <input type="hidden" name="feedbackID" value="${feedback.feedbackID}" />
+                                                    <button type="submit" class="btn btn-danger btn-sm" 
+                                                            onclick="return confirm('Are you sure you want to delete this feedback?');">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Pagination Controls -->
+                        <div class="mt-4">
+                            <c:if test="${currentPage > 1}">
+                                <a href="feedback?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Previous</a>
+                            </c:if>
+                            <c:if test="${currentPage < totalPages}">
+                                <a href="feedback?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Next</a>
+                            </c:if>
+                            <div>
+                                Page ${currentPage} of ${totalPages}
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
-                <!-- Recent Sales End -->
+                <!-- Sale & Revenue End -->
+
+                <!-- Edit Feedback Modal -->
+                <div class="modal fade" id="editFeedbackModal" tabindex="-1" aria-labelledby="editFeedbackModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editFeedbackModalLabel">Edit Feedback</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="editFeedbackForm" action="updateFeedback" method="post">
+                                    <input type="hidden" name="feedbackID" id="feedbackID" value="">
+                                    <div class="mb-3">
+                                        <label for="editMessage" class="form-label">Message</label>
+                                        <input type="text" class="form-control" id="editMessage" name="message" value="" required>
+                                    </div>
+<!--                                    <div class="mb-3">
+                                        <label for="editPassengerID" class="form-label">Passenger ID</label>
+                                        <input type="number" class="form-control" id="editPassengerID" name="passengerID" value="" required>
+                                    </div>-->
+                                    <div class="mb-3">
+                                        <label for="editSubmissionDate" class="form-label">Submission Date</label>
+                                        <input type="date" class="form-control" id="editSubmissionDate" name="submissionDate" value="" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" form="editFeedbackForm">Update Feedback</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    // JavaScript to populate the edit modal with feedback data
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var editFeedbackModal = document.getElementById('editFeedbackModal');
+
+                        editFeedbackModal.addEventListener('show.bs.modal', function (event) {
+                            var button = event.relatedTarget; // Button that triggered the modal
+                            var feedbackID = button.getAttribute('data-feedback-id');
+                            var message = button.getAttribute('data-message');
+                            var passengerID = button.getAttribute('data-passenger-id');
+                            var submissionDate = button.getAttribute('data-submission-date');
+
+                            // Update the modal's content.
+                            var modalFeedbackID = editFeedbackModal.querySelector('#feedbackID');
+                            var modalMessage = editFeedbackModal.querySelector('#editMessage');
+                            var modalPassengerID = editFeedbackModal.querySelector('#editPassengerID');
+                            var modalSubmissionDate = editFeedbackModal.querySelector('#editSubmissionDate');
+
+                            modalFeedbackID.value = feedbackID;
+                            modalMessage.value = message;
+                            modalPassengerID.value = passengerID;
+                            modalSubmissionDate.value = submissionDate;
+                        });
+                    });
+                </script>
+
+                <!-- Sales Chart End -->
+
+
 
 
                 <!-- Widgets Start -->
