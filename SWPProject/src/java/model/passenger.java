@@ -25,6 +25,9 @@ public class passenger {
         this.phoneNumber = phoneNumber;
     }
 
+    public passenger() {
+    }
+
     public int getPassengerID() {
         return passengerID;
     }
@@ -77,5 +80,5 @@ public class passenger {
     public String toString() {
         return "passenger{" + "passengerID=" + passengerID + ", name=" + name + ", email=" + email + ", age=" + age + ", Address=" + Address + ", phoneNumber=" + phoneNumber + '}';
     }
-    
+
 }
