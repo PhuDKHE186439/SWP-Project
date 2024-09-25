@@ -74,7 +74,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<label>Your Username</label>
-                                                                        <input name="otpquestion" type="text" required="" class="form-control">
+                                                                        <input name="username" type="text" required="" class="form-control">
 								</div>
 							</div>
 						</div>

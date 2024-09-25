@@ -56,6 +56,28 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+    public account getAccountByUsername(String username) {
+        String sql = "SELECT * FROM trainproject.account WHERE Username = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new account(
+                        rs.getInt("AccountID"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getInt("RoleID"),
+                        rs.getInt("PassengerID"),
+                        rs.getString("Status") // Include status
+                );
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 
     public void registerAccount(String phoneNumber, String username, String password, String email, int roleID, int PassengerID) {
         String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID, PassengerID, Status) VALUES (?, ?, ?, ?, ?, ?, 'Active')";
@@ -133,6 +155,5 @@ public class AccountDAO extends DBContext {
         AccountDAO dao = new AccountDAO();
         List<account> acclist = dao.getAllAccount();
         System.out.println(dao.getAllAccount());
-        dao.registerAccountAD("123456789", "BROS", "BROS", "BROS@gmail.com", 2);
     }
 }
