@@ -62,7 +62,7 @@
                             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                         </div>
                         <div class="ms-3">
-                            <h6 class="mb-0">Jhon Doe</h6>
+                            <h6 class="mb-0">User</h6>
                             <span>Admin</span>
                         </div>
                     </div>
@@ -90,9 +90,9 @@
                     <a href="#" class="sidebar-toggler flex-shrink-0">
                         <i class="fa fa-bars"></i>
                     </a>
-<!--                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search">
-                    </form>-->
+                    <!--                    <form class="d-none d-md-flex ms-4">
+                                            <input class="form-control border-0" type="search" placeholder="Search">
+                                        </form>-->
                     <div class="navbar-nav align-items-center ms-auto">
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -160,7 +160,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <img class="rounded-circle me-lg-2" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <span class="d-none d-lg-inline-flex">John Doe</span>
+                                <span class="d-none d-lg-inline-flex">User</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="#" class="dropdown-item">My Profile</a>
@@ -298,7 +298,7 @@
 
                                 <!-- Passenger Info Modal -->
                                 <div class="modal fade" id="passengerInfoModal" tabindex="-1" aria-labelledby="passengerInfoModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="passengerInfoModalLabel">Passenger Information</h5>
@@ -317,22 +317,20 @@
                         </div>
                         <!-- Customer Feedback Section End -->
 
-                        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
                         <script>
-                                                                        // JavaScript to populate the edit modal with feedback data
                                                                         document.addEventListener('DOMContentLoaded', function () {
                                                                             var editFeedbackModal = document.getElementById('editFeedbackModal');
 
                                                                             editFeedbackModal.addEventListener('show.bs.modal', function (event) {
-                                                                                var button = event.relatedTarget; // Button that triggered the modal
+                                                                                var button = event.relatedTarget;
                                                                                 var feedbackID = button.getAttribute('data-feedback-id');
                                                                                 var message = button.getAttribute('data-message');
                                                                                 var passengerID = button.getAttribute('data-passenger-id');
                                                                                 var submissionDate = button.getAttribute('data-submission-date');
 
-                                                                                // Populate modal fields
                                                                                 document.getElementById('feedbackID').value = feedbackID;
                                                                                 document.getElementById('editMessage').value = message;
                                                                                 document.getElementById('editPassengerID').value = passengerID;
@@ -340,16 +338,30 @@
                                                                             });
 
                                                                             // Load passenger information when clicking on Passenger ID
-                                                                            $('.passenger-id').on('click', function (e) {
-                                                                                e.preventDefault();
-                                                                                var passengerID = $(this).data('passenger-id');
+                                                                            document.querySelectorAll('.passenger-id').forEach(function (element) {
+                                                                                element.addEventListener('click', function (e) {
+                                                                                    e.preventDefault();
+                                                                                    var passengerID = this.getAttribute('data-passenger-id');
+                                                                                    var modal = document.getElementById('passengerInfoModal');
+                                                                                    var contentDiv = modal.querySelector('#passengerInfoContent');
 
-                                                                                // Simulate fetching passenger data (replace with actual fetching logic)
-                                                                                var passengerData = '<p><strong>Passenger ID:</strong> ' + passengerID + '</p>' +
-                                                                                        '<p><strong>Name:</strong> John Doe</p>' +
-                                                                                        '<p><strong>Email:</strong> johndoe@example.com</p>' +
-                                                                                        '<p><strong>Phone:</strong> 123-456-7890</p>';
-                                                                                $('#passengerInfoContent').html(passengerData);
+                                                                                    contentDiv.innerHTML = 'Loading passenger information...';
+
+                                                                                    fetch('viewPassengerInfo?passengerID=' + passengerID)
+                                                                                            .then(response => {
+                                                                                                if (!response.ok) {
+                                                                                                    throw new Error('HTTP error ' + response.status);
+                                                                                                }
+                                                                                                return response.text();
+                                                                                            })
+                                                                                            .then(html => {
+                                                                                                contentDiv.innerHTML = html;
+                                                                                            })
+                                                                                            .catch(error => {
+                                                                                                contentDiv.innerHTML = 'Error fetching passenger information: ' + error.message;
+                                                                                                console.error('Error:', error);
+                                                                                            });
+                                                                                });
                                                                             });
                                                                         });
                         </script>
@@ -494,10 +506,9 @@
                                 &copy; <a href="#">TrainTicketBooking</a>, All Right Reserved. 
                             </div>
                             <div class="col-12 col-sm-6 text-center text-sm-end">
-                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                <a href="https://htmlcodex.com"></a>
+                                
                                 </br>
-                                 <a class="border-bottom" href="https://themewagon.com" target="_blank"></a>
+                                <a class="border-bottom" href="https://themewagon.com" target="_blank"></a>
                             </div>
                         </div>
                     </div>
