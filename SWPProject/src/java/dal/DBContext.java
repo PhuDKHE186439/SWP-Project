@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author My Asus
  */
 public class DBContext {
-    protected Connection connection;
+    public Connection connection;
     public  DBContext(){
         String url="jdbc:mysql://localhost:3306/trainproject";
         String user = "root";

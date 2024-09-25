@@ -106,14 +106,12 @@
                                                     </div>
                                                     <div class="w-form">
                                                         <!-- Account List Form -->
-                                                        <form action="AccountList" id="wf-form-Account-List" method="post" class="modal_form">
+                                                        <form action="BanAccount" id="wf-form-Account-List" method="post" class="modal_form">
                                                             <div class="profile_h1">Account List</div>
-
                                                             <div class="input-wrapper">
                                                                 <label for="searchInput" class="profile_label is-modal">Search Accounts:</label>
-                                                                <input class="input w-input" type="text" id="searchInput" name="searchInput" placeholder="Search by username..." required onkeyup="filterAccounts()">
+                                                                <input class="input w-input" type="text" id="searchInput" placeholder="Search by username..." oninput="filterAccounts('AccountList')">
                                                             </div>
-
                                                             <div class="input-wrapper">
                                                                 <label for="accountSelect" class="profile_label is-modal">Select Account:</label>
                                                                 <select class="input w-input" id="accountSelect" name="accountID" required size="5" style="width: 100%; height: auto;">
@@ -125,24 +123,10 @@
                                                                 <% } %>
                                                             </select>
                                                         </div>
-
                                                         <div class="spacer-s"></div>
                                                         <input type="hidden" name="action" value="view">
                                                         <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="View Account">       
                                                     </form>
-                                                            <script>
-                                                                function filterAccounts() {
-    const input = document.getElementById('searchInput');
-    const filter = input.value.toLowerCase();
-    const select = document.getElementById('accountSelect');
-    const options = select.options;
-
-    for (let i = 1; i < options.length; i++) { // Start from 1 to skip the first disabled option
-        const username = options[i].text.toLowerCase();
-        options[i].style.display = username.includes(filter) ? '' : 'none';
-    }
-}
-                                                            </script>
                                                 </div>
                                             </div>
                                         </div>

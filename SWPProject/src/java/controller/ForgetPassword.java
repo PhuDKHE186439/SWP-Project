@@ -72,6 +72,8 @@ public class ForgetPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
+        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
+        otpDAO.getOTPByID(0);
         request.getRequestDispatcher("login.jsp").forward(request, response);
 
     }
