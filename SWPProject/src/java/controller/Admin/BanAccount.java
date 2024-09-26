@@ -70,17 +70,23 @@ public class BanAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
         int accountID = Integer.parseInt(request.getParameter("accountID"));
-        String action = request.getParameter("action"); // Get action type (ban or unban)
-
         AccountDAO accountDAO = new AccountDAO();
+        String message;
         if ("ban".equals(action)) {
-            accountDAO.updateAccountStatus(accountID, "Banned"); // Ban the account
+            accountDAO.updateAccountStatus(accountID, "Banned");
+            message = "Account banned successfully.";
         } else if ("unban".equals(action)) {
-            accountDAO.updateAccountStatus(accountID, "Active"); // Unban the account
+            accountDAO.updateAccountStatus(accountID, "Active");
+            message = "Account activated successfully.";
+        } else {
+            message = "Invalid action.";
         }
 
-        response.sendRedirect("Admin.jsp"); // Redirect after the operation
+        // Store message in request attribute and redirect to Admin page
+        request.setAttribute("message", message);
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
     }
 
     /**

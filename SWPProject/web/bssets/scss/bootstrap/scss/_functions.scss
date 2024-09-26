@@ -34,11 +34,22 @@
 
 // Internal Bootstrap function to turn maps into its negative variant.
 // It prefixes the keys with `n` and makes the value negative.
-@function negativify-map($map) {
+/*@function negativify-map($map) {
   $result: ();
   @each $key, $value in $map {
     @if $key != 0 {
       $result: map-merge($result, ("n" + $key: (-$value)));
+    }
+  }
+  @return $result;
+}*/
+
+@function negativify-map($map) {
+  $result: ();
+  @each $key, $value in $map {
+    @if $key != 0 {
+      $key-str: if(type-of($key) == "string", $key, #{$key});
+      $result: map-merge($result, ("n#{$key-str}": -$value));
     }
   }
   @return $result;
