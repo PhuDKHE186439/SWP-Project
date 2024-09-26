@@ -84,9 +84,9 @@ public class RegisterOTP extends HttpServlet {
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
             if(dao.getOTPByID(accountID)!=null){
-                dao.addOTPQuestion(accountID, "Fav Animal", answer1);
-                dao.addOTPQuestion(accountID, "ur Crush", answer2);
-                dao.addOTPQuestion(accountID, "neighbor name", answer3);
+                dao.addOTPQuestion(accountID, "What is Your Favorite Animal?", answer1);
+                dao.addOTPQuestion(accountID, "Who is Your Crush?", answer2);
+                dao.addOTPQuestion(accountID, "What is Your Neighbor Name?", answer3);
             }
             session.setAttribute("list", dao.getOTPByID(accountID));
             request.setAttribute("OTPCheck", true);
