@@ -53,16 +53,16 @@
             <!-- Sidebar Start -->
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
-                    <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <a href="/SWPProject/feedback" class="navbar-brand mx-4 mb-3">
                         <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>CUSTOMER SERVICES</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">
-                            <img class="rounded-circle" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                         </div>
                         <div class="ms-3">
-                            <h6 class="mb-0">Jhon Doe</h6>
+                            <h6 class="mb-0">User</h6>
                             <span>Admin</span>
                         </div>
                     </div>
@@ -90,9 +90,9 @@
                     <a href="#" class="sidebar-toggler flex-shrink-0">
                         <i class="fa fa-bars"></i>
                     </a>
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search">
-                    </form>
+                    <!--                    <form class="d-none d-md-flex ms-4">
+                                            <input class="form-control border-0" type="search" placeholder="Search">
+                                        </form>-->
                     <div class="navbar-nav align-items-center ms-auto">
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -102,9 +102,9 @@
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <img class="rounded-circle" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                         <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <h6 class="fw-normal mb-0">User send you a message</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                     </div>
@@ -112,9 +112,9 @@
                                 <hr class="dropdown-divider">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <img class="rounded-circle" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                         <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <h6 class="fw-normal mb-0">User send you a message</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                     </div>
@@ -122,9 +122,9 @@
                                 <hr class="dropdown-divider">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <img class="rounded-circle" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                         <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <h6 class="fw-normal mb-0">User send you a message</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                     </div>
@@ -159,8 +159,8 @@
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <span class="d-none d-lg-inline-flex">John Doe</span>
+                                <img class="rounded-circle me-lg-2" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
+                                <span class="d-none d-lg-inline-flex">User</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="#" class="dropdown-item">My Profile</a>
@@ -171,145 +171,203 @@
                     </div>
                 </nav>
                 <!-- Navbar End -->
-                <!-- Sale & Revenue Start -->
-                <div class="container-fluid pt-4 px-4">
-                    <div class="bg-light text-center rounded p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Customer Feedback</h6>
-                            <a href="feedback">Show All</a>
-                        </div>
-
-                        <!-- Search and Filter Section -->
-                        <form action="feedback" method="get" class="mb-4" id="searchForm">
-                            <div class="row mb-3 align-items-center">
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search Feedback" name="search" value="${param.search}">
-                                        <button type="submit" class="btn btn-primary">Search</button>
-                                    </div>
+                <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+                <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+                <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+                        <title>Customer Feedback</title>
+                    </head>
+                    <body>
+                        <!-- Customer Feedback Section Start -->
+                        <div class="container-fluid pt-4 px-4">
+                            <div class="bg-light text-center rounded p-4">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Customer Feedback</h6>
+                                    <a href="feedback">Show All</a>
                                 </div>
-                                <div class="col-md-6 text-end">
-                                    <select name="sortOrder" class="form-select d-inline-block w-auto" onchange="document.getElementById('searchForm').submit();">
-                                        <option value="latest" ${param.sortOrder == 'latest' ? 'selected' : ''}>Latest</option>
-                                        <option value="oldest" ${param.sortOrder == 'oldest' ? 'selected' : ''}>Oldest</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
 
-                        <div class="table-responsive">
-                            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                                <thead>
-                                    <tr class="text-dark">
-                                        <th scope="col">Feedback ID</th>
-                                        <th scope="col">Message</th>
-                                        <th scope="col">Passenger ID</th>
-                                        <th scope="col">Submission Date</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="feedback" items="${feedbackList}">
-                                        <tr>
-                                            <td>${feedback.feedbackID}</td>
-                                            <td>${feedback.message}</td>
-                                            <td>${feedback.passengerID}</td>
-                                            <td>${feedback.submissionDate}</td>
-                                            <td>
-                                                <a href="#" class="btn btn-warning btn-sm" 
-                                                   data-bs-toggle="modal" 
-                                                   data-bs-target="#editFeedbackModal" 
-                                                   data-feedback-id="${feedback.feedbackID}" 
-                                                   data-message="${feedback.message}"
-                                                   data-passenger-id="${feedback.passengerID}"
-                                                   data-submission-date="${feedback.submissionDate}">Edit</a>
-                                                <form action="deleteFeedback" method="post" style="display:inline;">
-                                                    <input type="hidden" name="feedbackID" value="${feedback.feedbackID}" />
-                                                    <button type="submit" class="btn btn-danger btn-sm" 
-                                                            onclick="return confirm('Are you sure you want to delete this feedback?');">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Pagination Controls -->
-                        <div class="mt-4">
-                            <c:if test="${currentPage > 1}">
-                                <a href="feedback?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Previous</a>
-                            </c:if>
-                            <c:if test="${currentPage < totalPages}">
-                                <a href="feedback?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Next</a>
-                            </c:if>
-                            <div>
-                                Page ${currentPage} of ${totalPages}
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <!-- Sale & Revenue End -->
-
-                <!-- Edit Feedback Modal -->
-                <div class="modal fade" id="editFeedbackModal" tabindex="-1" aria-labelledby="editFeedbackModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editFeedbackModalLabel">Edit Feedback</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="editFeedbackForm" action="updateFeedback" method="post">
-                                    <input type="hidden" name="feedbackID" id="feedbackID" value="">
-                                    <div class="mb-3">
-                                        <label for="editMessage" class="form-label">Message</label>
-                                        <input type="text" class="form-control" id="editMessage" name="message" value="" required>
-                                    </div>
-<!--                                    <div class="mb-3">
-                                        <label for="editPassengerID" class="form-label">Passenger ID</label>
-                                        <input type="number" class="form-control" id="editPassengerID" name="passengerID" value="" required>
-                                    </div>-->
-                                    <div class="mb-3">
-                                        <label for="editSubmissionDate" class="form-label">Submission Date</label>
-                                        <input type="date" class="form-control" id="editSubmissionDate" name="submissionDate" value="" required>
+                                <!-- Search and Filter Section -->
+                                <form action="feedback" method="get" class="mb-4" id="searchForm">
+                                    <div class="row mb-3 align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Search Feedback" name="search" value="${param.search}">
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-end">
+                                            <select name="sortOrder" class="form-select d-inline-block w-auto" onchange="document.getElementById('searchForm').submit();">
+                                                <option value="latest" ${param.sortOrder == 'latest' ? 'selected' : ''}>Latest</option>
+                                                <option value="oldest" ${param.sortOrder == 'oldest' ? 'selected' : ''}>Oldest</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" form="editFeedbackForm">Update Feedback</button>
+
+                                <!-- Feedback Table -->
+                                <div class="table-responsive">
+                                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                                        <thead>
+                                            <tr class="text-dark">
+                                                <th scope="col">Feedback ID</th>
+                                                <th scope="col">Message</th>
+                                                <th scope="col">Passenger ID</th>
+                                                <th scope="col">Submission Date</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="feedback" items="${feedbackList}">
+                                                <tr>
+                                                    <td>${feedback.feedbackID}</td>
+                                                    <td>${feedback.message}</td>
+                                                    <td>
+                                                        <a href="#" class="passenger-id" data-passenger-id="${feedback.passengerID}" data-bs-toggle="modal" data-bs-target="#passengerInfoModal">
+                                                            ${feedback.passengerID}
+                                                        </a>
+                                                    </td>
+                                                    <td>${feedback.submissionDate}</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-warning btn-sm" 
+                                                           data-bs-toggle="modal" 
+                                                           data-bs-target="#editFeedbackModal" 
+                                                           data-feedback-id="${feedback.feedbackID}" 
+                                                           data-message="${feedback.message}"
+                                                           data-passenger-id="${feedback.passengerID}"
+                                                           data-submission-date="${feedback.submissionDate}">Edit</a>
+                                                        <form action="feedback?action=deleteFeedback" method="post" style="display:inline;">
+                                                            <input type="hidden" name="feedbackID" value="${feedback.feedbackID}" />
+                                                            <button type="submit" class="btn btn-danger btn-sm" 
+                                                                    onclick="return confirm('Are you sure you want to delete this feedback?');">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Pagination Controls -->
+                                <div class="mt-4">
+                                    <c:if test="${currentPage > 1}">
+                                        <a href="feedback?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Previous</a>
+                                    </c:if>
+                                    <c:if test="${currentPage < totalPages}">
+                                        <a href="feedback?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Next</a>
+                                    </c:if>
+                                    <div>
+                                        Page ${currentPage} of ${totalPages}
+                                    </div>
+                                </div>
+
+                                <!-- Edit Feedback Modal -->
+                                <div class="modal fade" id="editFeedbackModal" tabindex="-1" aria-labelledby="editFeedbackModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editFeedbackModalLabel">Edit Feedback</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="editFeedbackForm" action="feedback?action=updateFeedback" method="post">
+                                                    <input type="hidden" name="feedbackID" id="feedbackID" value="">
+                                                    <div class="mb-3">
+                                                        <label for="editMessage" class="form-label">Message</label>
+                                                        <input type="text" class="form-control" id="editMessage" name="message" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="editPassengerID" class="form-label">Passenger ID</label>
+                                                        <input type="number" class="form-control" id="editPassengerID" name="passengerID" required readonly>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="editSubmissionDate" class="form-label">Submission Date</label>
+                                                        <input type="date" class="form-control" id="editSubmissionDate" name="submissionDate" required>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" form="editFeedbackForm">Update Feedback</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Passenger Info Modal -->
+                                <div class="modal fade" id="passengerInfoModal" tabindex="-1" aria-labelledby="passengerInfoModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="passengerInfoModalLabel">Passenger Information</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="passengerInfoContent">
+                                                    <!-- Passenger information will be loaded here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
-                </div>
-                <script>
-                    // JavaScript to populate the edit modal with feedback data
-                    document.addEventListener('DOMContentLoaded', function () {
-                        var editFeedbackModal = document.getElementById('editFeedbackModal');
+                        <!-- Customer Feedback Section End -->
 
-                        editFeedbackModal.addEventListener('show.bs.modal', function (event) {
-                            var button = event.relatedTarget; // Button that triggered the modal
-                            var feedbackID = button.getAttribute('data-feedback-id');
-                            var message = button.getAttribute('data-message');
-                            var passengerID = button.getAttribute('data-passenger-id');
-                            var submissionDate = button.getAttribute('data-submission-date');
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+                        <script>
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                            var editFeedbackModal = document.getElementById('editFeedbackModal');
 
-                            // Update the modal's content.
-                            var modalFeedbackID = editFeedbackModal.querySelector('#feedbackID');
-                            var modalMessage = editFeedbackModal.querySelector('#editMessage');
-                            var modalPassengerID = editFeedbackModal.querySelector('#editPassengerID');
-                            var modalSubmissionDate = editFeedbackModal.querySelector('#editSubmissionDate');
+                                                                            editFeedbackModal.addEventListener('show.bs.modal', function (event) {
+                                                                                var button = event.relatedTarget;
+                                                                                var feedbackID = button.getAttribute('data-feedback-id');
+                                                                                var message = button.getAttribute('data-message');
+                                                                                var passengerID = button.getAttribute('data-passenger-id');
+                                                                                var submissionDate = button.getAttribute('data-submission-date');
 
-                            modalFeedbackID.value = feedbackID;
-                            modalMessage.value = message;
-                            modalPassengerID.value = passengerID;
-                            modalSubmissionDate.value = submissionDate;
-                        });
-                    });
-                </script>
+                                                                                document.getElementById('feedbackID').value = feedbackID;
+                                                                                document.getElementById('editMessage').value = message;
+                                                                                document.getElementById('editPassengerID').value = passengerID;
+                                                                                document.getElementById('editSubmissionDate').value = submissionDate;
+                                                                            });
+
+                                                                            // Load passenger information when clicking on Passenger ID
+                                                                            document.querySelectorAll('.passenger-id').forEach(function (element) {
+                                                                                element.addEventListener('click', function (e) {
+                                                                                    e.preventDefault();
+                                                                                    var passengerID = this.getAttribute('data-passenger-id');
+                                                                                    var modal = document.getElementById('passengerInfoModal');
+                                                                                    var contentDiv = modal.querySelector('#passengerInfoContent');
+
+                                                                                    contentDiv.innerHTML = 'Loading passenger information...';
+
+                                                                                    fetch('viewPassengerInfo?passengerID=' + passengerID)
+                                                                                            .then(response => {
+                                                                                                if (!response.ok) {
+                                                                                                    throw new Error('HTTP error ' + response.status);
+                                                                                                }
+                                                                                                return response.text();
+                                                                                            })
+                                                                                            .then(html => {
+                                                                                                contentDiv.innerHTML = html;
+                                                                                            })
+                                                                                            .catch(error => {
+                                                                                                contentDiv.innerHTML = 'Error fetching passenger information: ' + error.message;
+                                                                                                console.error('Error:', error);
+                                                                                            });
+                                                                                });
+                                                                            });
+                                                                        });
+                        </script>
+                    </body>
+                </html>
+
 
                 <!-- Sales Chart End -->
 
@@ -326,40 +384,40 @@
                                     <a href="">Show All</a>
                                 </div>
                                 <div class="d-flex align-items-center border-bottom py-3">
-                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                     <div class="w-100 ms-3">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
+                                            <h6 class="mb-0">User</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                         <span>Short message goes here...</span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center border-bottom py-3">
-                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                     <div class="w-100 ms-3">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
+                                            <h6 class="mb-0">User</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                         <span>Short message goes here...</span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center border-bottom py-3">
-                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                     <div class="w-100 ms-3">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
+                                            <h6 class="mb-0">User</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                         <span>Short message goes here...</span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center pt-3">
-                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle flex-shrink-0" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
                                     <div class="w-100 ms-3">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
+                                            <h6 class="mb-0">User</h6>
                                             <small>15 minutes ago</small>
                                         </div>
                                         <span>Short message goes here...</span>
@@ -445,13 +503,12 @@
                     <div class="bg-light rounded-top p-4">
                         <div class="row">
                             <div class="col-12 col-sm-6 text-center text-sm-start">
-                                &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                                &copy; <a href="#">TrainTicketBooking</a>, All Right Reserved. 
                             </div>
                             <div class="col-12 col-sm-6 text-center text-sm-end">
-                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+
                                 </br>
-                                Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                                <a class="border-bottom" href="https://themewagon.com" target="_blank"></a>
                             </div>
                         </div>
                     </div>
@@ -459,7 +516,13 @@
                 <!-- Footer End -->
             </div>
             <!-- Content End -->
-
+            <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+            <df-messenger
+                intent="WELCOME"
+                chat-title="TrainSupportAI"
+                agent-id="b97fb560-b522-4b67-a79f-1dd5d8471965"
+                language-code="vi"
+                ></df-messenger>
 
             <!-- Back to Top -->
             <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

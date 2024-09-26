@@ -16,4 +16,11 @@
         <h1>Hello World!</h1>
         <jsp:include page="Footer.jsp"></jsp:include>
     </body>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="TrainSupportAI"
+  agent-id="b97fb560-b522-4b67-a79f-1dd5d8471965"
+  language-code="vi"
+></df-messenger>
 </html>

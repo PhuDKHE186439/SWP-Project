@@ -92,7 +92,7 @@ public class RegisterOTP extends HttpServlet {
             request.setAttribute("OTPCheck", true);
             passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
             request.setAttribute("profile", profilePassenger);
-            request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("UserProfiletest.jsp").forward(request, response);
         } else {
         request.getRequestDispatcher("login.jsp").forward(request, response);
         }

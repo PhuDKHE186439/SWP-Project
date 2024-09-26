@@ -70,7 +70,7 @@
                         <h2 class="title-head">Login to your <span>Account</span></h2>
                         <p>Don't have an account? <a href="register.jsp">Create one here</a></p>
                         <p style="color: Red">${requestScope.key}</p>
-                        <p style="color: Red">${requestScope.test}</p>
+                        <p style="color: greenyellow">${requestScope.annoutment}</p>
                     </div>	
                     <form action="login" method="post" class="contact-bx">
                         <div class="row placeani">

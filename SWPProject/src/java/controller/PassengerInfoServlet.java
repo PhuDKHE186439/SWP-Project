@@ -42,6 +42,9 @@ public class PassengerInfoServlet extends HttpServlet {
             htmlResponse.append("<div><strong>Passenger ID:</strong> ").append(passenger.getPassengerID()).append("</div>");
             htmlResponse.append("<div><strong>Name:</strong> ").append(passenger.getUsername()).append("</div>");
             htmlResponse.append("<div><strong>Email:</strong> ").append(passenger.getEmail()).append("</div>");
+            htmlResponse.append("<div><strong>Phone:</strong> ").append(passenger.getPhoneNumber()).append("</div>");
+          htmlResponse.append("<div><strong>Status:</strong> ").append(passenger.getStatus()).append("</div>");
+
             // Add more fields as necessary
 
             // Set the response type to HTML

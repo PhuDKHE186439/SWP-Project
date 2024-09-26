@@ -88,20 +88,26 @@ public class RegisterController extends HttpServlet {
         String address = request.getParameter("address");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String repassword = request.getParameter("repassword");
         try {
             for (account o : listacc) {
                 if (username.equals(o.getUsername())) {
                     request.setAttribute("annoutment", "Username Already Exsits");
                     checkusername = true;
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
                 }
             }
-            if (checkusername.equals(false)) {
+            if(!password.endsWith(repassword)){
+                request.setAttribute("annoutment", "Password and Re-Type Passsword does not match!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            if (checkusername.equals(false) && password.equals(repassword)) {
                 passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
                 accDAO.registerAccount(phone, username, password, email, 3, passengerDAO.getLastPassenger().getPassengerID());
                 request.setAttribute("annoutment", "Register Successful");
             }
 
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } catch (ServletException | IOException | NumberFormatException e) {
             System.out.println(e);
         }

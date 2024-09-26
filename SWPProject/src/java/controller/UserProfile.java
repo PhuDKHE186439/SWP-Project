@@ -74,7 +74,7 @@ public class UserProfile extends HttpServlet {
                 request.setAttribute("OTPCheck", true);
             }
             session.setAttribute("list", otpDAO.getOTPByID(accountID));
-            request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("UserProfiletest.jsp").forward(request, response);
 
         } else {
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -121,7 +121,7 @@ public class UserProfile extends HttpServlet {
                 System.out.println(e);
             }
         }
-        request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+        request.getRequestDispatcher("UserProfiletest.jsp").forward(request, response);
     }
 
     /**

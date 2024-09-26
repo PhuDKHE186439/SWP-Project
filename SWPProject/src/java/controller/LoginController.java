@@ -137,7 +137,7 @@ public class LoginController extends HttpServlet {
 
                 switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
                     case 1 ->
-                        response.sendRedirect("admin.jsp");
+                        response.sendRedirect("Admin.jsp");
                     case 2 ->
                         response.sendRedirect("home.jsp");
                     case 3 ->
