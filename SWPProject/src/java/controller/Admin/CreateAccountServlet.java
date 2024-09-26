@@ -86,7 +86,7 @@ public class CreateAccountServlet extends HttpServlet {
             request.setAttribute("error", "Oops! Something went wrong while submitting the form.");
         }
 
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        request.getRequestDispatcher("Admin3.jsp").forward(request, response);
     }
 
     /**
