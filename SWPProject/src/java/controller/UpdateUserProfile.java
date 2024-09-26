@@ -79,17 +79,20 @@ public class UpdateUserProfile extends HttpServlet {
         AccountDAO accDAO = new AccountDAO();
         String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");
+        String rePassword = request.getParameter("rePassword");
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
-            if(accDAO.getAccountByID(accountID).getPassword().equals(currentPassword)){   
+            if(accDAO.getAccountByID(accountID).getPassword().equals(currentPassword) && rePassword.equals(newPassword)){   
                 try {
                     accDAO.updateAccountPassword(accountID, newPassword);
                     request.setAttribute("passwordChange", "Password Change Successfully");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-            } else {
+            } else if(!accDAO.getAccountByID(accountID).getPassword().equals(currentPassword)){
                 request.setAttribute("passwordChange", "Password Change Failed, Please Check Your Current Password Again");
+            } else {
+                request.setAttribute("passwordChange", "Password Change Failed, Re-Type Password Does not Matches");
             }
             passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
             request.setAttribute("profile", profilePassenger);
