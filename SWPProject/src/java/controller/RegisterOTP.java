@@ -87,6 +87,7 @@ public class RegisterOTP extends HttpServlet {
                 dao.addOTPQuestion(accountID, "What is Your Favorite Animal?", answer1);
                 dao.addOTPQuestion(accountID, "Who is Your Crush?", answer2);
                 dao.addOTPQuestion(accountID, "What is Your Neighbor Name?", answer3);
+
             }
             session.setAttribute("list", dao.getOTPByID(accountID));
             request.setAttribute("OTPCheck", true);
