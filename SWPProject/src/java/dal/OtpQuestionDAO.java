@@ -48,6 +48,7 @@ public class OtpQuestionDAO extends DBContext {
     }
         public static void main(String[] args) {
         OtpQuestionDAO dao = new OtpQuestionDAO();
+        dao.addOTPQuestion(1, "D", "D");
         System.out.println(dao.getOTPByID(8));
     }
 }

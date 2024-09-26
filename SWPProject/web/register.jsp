@@ -126,6 +126,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="input-group"> 
+                                            <label>Re-Type Your Password</label>
+                                            <input name="repassword" type="password" class="form-control" required="">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 m-b30">
                                     <button name="submit" type="submit" value="Submit" class="btn button-md">Sign Up</button>
                                 </div>

@@ -1052,5 +1052,5 @@ a {
 
 .dash_profile-nav-link.w--current {
   background-color: var(--royal-blue); /* Ensure this highlights the current tab */
-  color: white; /* Make sure text color changes for active tab */
+  color: black; /* Make sure text color changes for active tab */
 }

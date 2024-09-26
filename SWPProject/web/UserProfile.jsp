@@ -42,9 +42,8 @@
                             <div data-current="Profile" data-easing="ease" data-duration-in="300" data-duration-out="100" class="dash_profile-tabs w-tabs">
                                 <div class="dash_profile-menu w-tab-menu">
                                     <a data-w-tab="Profile" class="dash_profile-nav-link w-inline-block w-tab-link w--current">
-                                        <div>My Profile</div>
+                                        <h5><div>My Profile</div></h5>
                                     </a>
-
                                 </div>
                                 <div class="_100 w-tab-content">
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">
@@ -126,7 +125,6 @@
                                         <div class="profile_section-head">Email Address</div>
                                         <div class="profile_flex">
                                             <div class="profile_column">
-                                                <div class="input-label">Email Address</div>
                                                 <div data-ms-member="email" class="input-preview">${profile.email}</div>
                                             </div>
                                         </div>
@@ -178,7 +176,6 @@
                                         <div class="profile_section-head">Account Change Password</div>
                                         <div class="profile_flex">
                                             <div class="profile_column">
-                                                <div class="input-label">Password</div>
                                                 <div class="profile_field-wrapper has-button">
                                                     <div data-ms-content="has-password">************</div>
                                                 </div>
