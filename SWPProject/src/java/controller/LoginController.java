@@ -133,10 +133,6 @@ public class LoginController extends HttpServlet {
                     } else {
                         request.setAttribute("OTPCheck", true);
                     }
-                    if (check == false) {
-                        request.setAttribute("key", result);
-                        request.getRequestDispatcher("login.jsp").forward(request, response);
-                    }
                 }
 
                 switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
@@ -148,6 +144,10 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect("userprofile");
                 }
             }
+        }
+        if (check == false) {
+            request.setAttribute("key", result);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
 
     }
