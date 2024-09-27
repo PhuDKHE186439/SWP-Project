@@ -194,48 +194,233 @@
 
 
                 <!-- Ban Function Start -->
-                <div class="container-fluid pt-4 px-4">
-                    <div class="bg-light text-center rounded p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Account Management</h6>
-                            <a href="">Show All</a>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                                <thead>
-                                    <tr class="text-dark">
-                                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                        <th scope="col">Account Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Phone Number</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (account acc : accounts) { %>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td><%= acc.getUsername() %></td>
-                                        <td><%= acc.getEmail() %></td>
-                                        <td><%= acc.getPhoneNumber() %></td>
-                                        <td><%= acc.getStatus() %></td>
-                                        <td>
-                                            <form action="BanAccount" method="post" style="display:inline;">
-                                                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
-                                                <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
-                                                <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
-                                                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
+                <div class="bg-light text-center rounded p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="mb-0">Account Management</h6>
+        <div class="d-flex align-items-center">
+            <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
+            <button id="returnToNormalBtn" class="btn btn-primary" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
+            <!-- Create New Account Button -->
+            <button class="btn btn-success ms-2" onclick="openCreateAccountModal()">Create New Account</button>
+        </div>
+    </div>
+
+    <!-- Search Functionality -->
+    <div class="mb-4">
+        <div class="d-flex align-items-center">
+            <select id="searchCriteria" class="form-select" aria-label="Search Criteria" style="width: auto; margin-right: 10px;">
+                <option value="username">Account Name</option>
+                <option value="email">Email</option>
+                <option value="phone">Phone Number</option>
+                <option value="status">Status</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
+            <button class="btn btn-primary" onclick="searchAccounts()">Search</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table text-start align-middle table-bordered table-hover mb-0">
+            <thead>
+                <tr class="text-dark">
+                    <th scope="col">Account Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="accountList">
+                <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
+                     account acc = accounts.get(i); %>
+                    <tr>
+                        <td><%= acc.getUsername() %></td>
+                        <td><%= acc.getEmail() %></td>
+                        <td><%= acc.getPhoneNumber() %></td>
+                        <td><%= acc.getStatus() %></td>
+                        <td>
+                            <form action="BanAccount" method="post" style="display:inline;">
+                                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                                <button type="submit" class="btn btn-sm btn-primary" 
+                                    onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+                <!-- Create Account Modal -->
+                <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="createAccountForm">
+                                    <div class="mb-3">
+                                        <label for="modalAccountName" class="form-label">Account Name</label>
+                                        <input type="text" class="form-control" id="modalAccountName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalPassword" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="modalPassword" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="modalEmail" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" id="modalPhoneNumber" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalRole" class="form-label">Role</label>
+                                        <select class="form-select" id="modalRole" required>
+                                            <option value="">Select Role</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">User</option>
+                                            <!-- Add more roles as needed -->
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="createAccount()">Create Account</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    function openCreateAccountModal() {
+                        const modal = new bootstrap.Modal(document.getElementById('createAccountModal'));
+                        modal.show();
+                    }
+
+                    function createAccount() {
+                        const accountName = document.getElementById("modalAccountName").value;
+                        const password = document.getElementById("modalPassword").value;
+                        const email = document.getElementById("modalEmail").value;
+                        const phoneNumber = document.getElementById("modalPhoneNumber").value;
+                        const role = document.getElementById("modalRole").value;
+
+                        if (accountName && password && email && phoneNumber && role) {
+                            const formData = new FormData();
+                            formData.append("username", accountName);
+                            formData.append("password", password);
+                            formData.append("email", email);
+                            formData.append("phoneNumber", phoneNumber);
+                            formData.append("roleID", role);
+
+                            fetch("CreateAccountServlet", {
+                                method: "POST",
+                                body: formData
+                            })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            location.reload(); // Reload the page to see the new account
+                                        } else {
+                                            alert("Failed to create account");
+                                        }
+                                    })
+                                    .catch(error => console.error('Error:', error));
+                        } else {
+                            alert("Please fill in all fields");
+                        }
+                    }
+
+                    function showAll() {
+                        const accountList = document.getElementById("accountList");
+                        accountList.innerHTML = ""; // Clear the initial rows
+                    <% for (account acc : accounts) { %>
+                        accountList.innerHTML += `
+                                <tr>
+                                    <td><%= acc.getUsername() %></td>
+                                    <td><%= acc.getEmail() %></td>
+                                    <td><%= acc.getPhoneNumber() %></td>
+                                    <td><%= acc.getStatus() %></td>
+                                    <td>
+                                        <form action="BanAccount" method="post" style="display:inline;">
+                                            <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                            <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                                            <button type="submit" class="btn btn-sm btn-primary" 
+                                                onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            `;
+                    <% } %>
+                        document.getElementById('showAllBtn').style.display = "none"; // Hide "Show All"
+                        document.getElementById('returnToNormalBtn').style.display = "inline"; // Show "Return to Normal"
+                    }
+
+                    function returnToNormal() {
+                        const accountList = document.getElementById("accountList");
+                        accountList.innerHTML = ""; // Clear the extended rows
+                    <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
+                            account acc = accounts.get(i); %>
+                        accountList.innerHTML += `
+                                <tr>
+                                    <td><%= acc.getUsername() %></td>
+                                    <td><%= acc.getEmail() %></td>
+                                    <td><%= acc.getPhoneNumber() %></td>
+                                    <td><%= acc.getStatus() %></td>
+                                    <td>
+                                        <form action="BanAccount" method="post" style="display:inline;">
+                                            <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                            <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                                            <button type="submit" class="btn btn-sm btn-primary" 
+                                                onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            `;
+                    <% } %>
+                        document.getElementById('showAllBtn').style.display = "inline"; // Show "Show All"
+                        document.getElementById('returnToNormalBtn').style.display = "none"; // Hide "Return to Normal"
+                    }
+                </script>
+
+                <!-- Show All Button Functionality -->
+                <script>
+                    document.getElementById('showAllBtn').addEventListener('click', function () {
+                        const accountList = document.getElementById("accountList");
+                        accountList.innerHTML = ""; // Clear the initial rows
+                    <% for (account acc : accounts) { %>
+                        accountList.innerHTML += `
+                            <tr>
+                                <td><%= acc.getUsername() %></td>
+                                <td><%= acc.getEmail() %></td>
+                                <td><%= acc.getPhoneNumber() %></td>
+                                <td><%= acc.getStatus() %></td>
+                                <td>
+                                    <form action="BanAccount" method="post" style="display:inline;">
+                                        <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                        <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                                        <button type="submit" class="btn btn-sm btn-primary" 
+                                            onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        `;
+                    <% } %>
+                        document.getElementById('showAllBtn').style.display = "none"; // Hide the button after click
+                    });
+                </script>
+
                 <!-- Ban Function End -->
 
                 <!-- Widgets Start -->
@@ -243,52 +428,114 @@
                     <div class="row g-4">
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <div class="h-100 bg-light rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h6 class="mb-0">Messages</h6>
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Role Management</h6>
                                     <a href="">Show All</a>
                                 </div>
-                                <div class="d-flex align-items-center border-bottom py-3">
-                                    <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+
+                                <!-- Add Role -->
+                                <div class="d-flex align-items-center mb-3">
+                                    <form action="ManageRole" method="post" class="d-flex align-items-center">
+                                        <input class="form-control bg-transparent" type="text" placeholder="Enter role name" name="roleName" required>
+                                        <input type="hidden" name="action" value="add">
+                                        <button type="submit" class="btn btn-primary ms-2">Add</button>
+                                    </form>
+                                </div>
+
+                                <!-- Existing Roles -->
+                                <% for (role r : roles) { %>
+                                <div class="d-flex align-items-center border-bottom py-2">
                                     <div class="w-100 ms-3">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">John Doe</h6>
-                                            <small>15 minutes ago</small>
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <span><%= r.getRoleName() %></span>
+                                            <div class="d-flex">
+                                                <button class="btn btn-sm btn-warning ms-1" onclick="openEditPopup('<%= r.getRoleID() %>', '<%= r.getRoleName() %>')">Edit</button>
+                                                <form action="ManageRole" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this role?')">
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <input type="hidden" name="roleID" value="<%= r.getRoleID() %>">
+                                                    <button type="submit" class="btn btn-sm text-danger ms-1"><i class="fa fa-times"></i></button>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <span>Short message goes here...</span>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-center border-bottom py-3">
-                                    <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="w-100 ms-3">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                        <span>Short message goes here...</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center border-bottom py-3">
-                                    <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="w-100 ms-3">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                        <span>Short message goes here...</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center pt-3">
-                                    <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="w-100 ms-3">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-0">Jhon Doe</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                        <span>Short message goes here...</span>
-                                    </div>
-                                </div>
+                                <% } %>
                             </div>
                         </div>
+
+                        <!-- Edit Role Popup -->
+                        <div id="editRolePopup" style="display: none;" class="popup">
+                            <div class="popup-content">
+                                <span class="close" onclick="closeEditPopup()">&times;</span>
+                                <form action="ManageRole" method="post">
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" id="editRoleID" name="roleID">
+                                    <div class="input-wrapper">
+                                        <label for="roleName" class="profile_label">New Role Name</label>
+                                        <input type="text" id="editRoleName" name="roleName" placeholder="Enter new role name" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <script>
+                            function openEditPopup(roleID, roleName) {
+                                document.getElementById('editRoleID').value = roleID;
+                                document.getElementById('editRoleName').value = roleName;
+                                document.getElementById('editRolePopup').style.display = 'block';
+                            }
+
+                            function closeEditPopup() {
+                                document.getElementById('editRolePopup').style.display = 'none';
+                            }
+                        </script>
+
+                        <style>
+                            .popup {
+                                position: fixed;
+                                z-index: 1;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                overflow: auto;
+                                background-color: rgba(0,0,0,0.4);
+                                padding-top: 60px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+
+                            .popup-content {
+                                background-color: #fefefe;
+                                padding: 20px;
+                                border: 1px solid #888;
+                                width: 80%;
+                                max-width: 400px;
+                                margin: auto;
+                            }
+
+                            .close {
+                                color: #aaa;
+                                float: right;
+                                font-size: 28px;
+                                font-weight: bold;
+                            }
+
+                            .close:hover,
+                            .close:focus {
+                                color: black;
+                                text-decoration: none;
+                                cursor: pointer;
+                            }
+                        </style>
+
+
+
+
+
+
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <div class="h-100 bg-light rounded p-4">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -398,7 +645,7 @@
 
         <!-- Template Javascript -->
         <script src="bssets/js/main.js"></script>
-        <script src="assets/js/Admin.js" type="text/javascript"></script>
+        <script src="assets/js/Admin.js"></script>
     </body>
 
 </html>

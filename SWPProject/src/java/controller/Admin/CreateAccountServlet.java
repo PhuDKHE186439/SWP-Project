@@ -73,20 +73,19 @@ public class CreateAccountServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
+        String roleIDStr = request.getParameter("roleID");
 
-        String passengerIDStr = request.getParameter("passengerID");
-        int passengerID = (passengerIDStr != null && !passengerIDStr.isEmpty()) ? Integer.parseInt(passengerIDStr) : 0; // Default to 0 or handle as needed
+        // Make sure to handle the case where roleID is not a number
+        int roleID = (roleIDStr != null && !roleIDStr.isEmpty()) ? Integer.parseInt(roleIDStr) : 0;
 
         AccountDAO accountDAO = new AccountDAO();
         try {
             accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-            request.setAttribute("message", "Thank you! Your submission has been received!");
+            response.setStatus(HttpServletResponse.SC_OK); // Send success response
         } catch (Exception e) {
-            request.setAttribute("error", "Oops! Something went wrong while submitting the form.");
+            e.printStackTrace(); // Log the exception
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // Send error response
         }
-
-        request.getRequestDispatcher("Admin3.jsp").forward(request, response);
     }
 
     /**

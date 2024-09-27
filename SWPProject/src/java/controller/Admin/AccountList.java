@@ -21,6 +21,14 @@ import model.account;
  */
 public class AccountList extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+    private AccountDAO accountDAO;
+
+    public AccountList() {
+        super();
+        accountDAO = new AccountDAO(); // Assuming you have AccountDAO to interact with DB
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,34 +65,21 @@ public class AccountList extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    AccountDAO accountDAO = new AccountDAO();
-    List<account> accounts = accountDAO.getAllAccount(); // Fetch all accounts
-
-    // Check if "Show All" was requested
-    String showAllParam = request.getParameter("showAll");
-    boolean showAll = showAllParam != null && showAllParam.equals("true"); // Use showAllParam to check
-
-    request.setAttribute("accounts", accounts); // Set accounts in request scope
-    request.setAttribute("showAll", showAll); // Set showAll flag in request scope
-    request.getRequestDispatcher("Admin.jsp").forward(request, response); // Forward to JSP
-}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Fetching all accounts
+        List<account> accounts = accountDAO.getAllAccount();
+        
+        // Setting the account list in the request scope
+        request.setAttribute("accountList", accounts);
+        
+        // Forwarding to Admin.jsp
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+    }
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        AccountDAO accountDAO = new AccountDAO();
-        String searchInput = request.getParameter("searchInput");
-        List<account> accounts = accountDAO.getAllAccount();
-        if (searchInput != null && !searchInput.isEmpty()) {
-            accounts = accounts.stream()
-                    .filter(acc -> acc.getUsername().toLowerCase().contains(searchInput.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-        request.setAttribute("accounts", accounts);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 
     /**

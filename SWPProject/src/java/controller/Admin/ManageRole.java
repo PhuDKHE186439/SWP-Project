@@ -91,7 +91,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         roleDAO.updateRole(roleID, roleName); // Use roleName here
     }
 
-    response.sendRedirect("Admin2.jsp");
+    response.sendRedirect("Admin.jsp");
 }
 
 
