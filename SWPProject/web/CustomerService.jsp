@@ -51,11 +51,14 @@
 
 
             <!-- Sidebar Start -->
-            <div class="sidebar pe-4 pb-3">
+            <div class="sidebar pe-4 pb-3" style="width: 330px;"> <!-- Adjust width as needed -->
                 <nav class="navbar bg-light navbar-light">
-                    <a href="/SWPProject/feedback" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>CUSTOMER SERVICES</h3>
+                    <a href="/SWPProject/feedback" class="navbar-brand mx-4 mb-3" style="white-space: nowrap;"> <!-- Prevent wrapping -->
+                        <h3 class="text-primary" style="display: inline; margin: 0;"> <!-- Inline display to avoid line breaks -->
+                            CUSTOMER SERVICES <!-- Removed the hashtag icon -->
+                        </h3>
                     </a>
+
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">
                             <img class="rounded-circle" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
@@ -63,20 +66,19 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="mb-0">User</h6>
-                            <span>Admin</span>
+                            <span>CustomerService</span>
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Customer feedback</a>
-
-                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Customer feedback</a>
-                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-
+                        <a href="index.html" class="nav-item nav-link active" style="white-space: nowrap;"><i class="fa fa-tachometer-alt me-2"></i>Customer feedback</a>
+                        <a href="widget.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-th me-2"></i>Customer feedback</a>
+                        <a href="form.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-keyboard me-2"></i>Forms</a>
+                        <a href="table.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-table me-2"></i>Tables</a>
+                        <a href="chart.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-chart-bar me-2"></i>Charts</a>
                     </div>
                 </nav>
             </div>
+
             <!-- Sidebar End -->
 
 
@@ -251,14 +253,40 @@
                                 </div>
 
                                 <!-- Pagination Controls -->
-                                <div class="mt-4">
+                                <div class="mt-4 text-center">
                                     <c:if test="${currentPage > 1}">
                                         <a href="feedback?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Previous</a>
                                     </c:if>
+
+                                    <c:if test="${currentPage > 2}">
+                                        <a href="feedback?page=1&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">1</a>
+                                        <c:if test="${currentPage > 3}">
+                                            <span>...</span>
+                                        </c:if>
+                                    </c:if>
+
+                                    <c:if test="${currentPage > 1}">
+                                        <a href="feedback?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">${currentPage - 1}</a>
+                                    </c:if>
+
+                                    <span class="btn btn-primary">${currentPage}</span>
+
+                                    <c:if test="${currentPage < totalPages}">
+                                        <a href="feedback?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">${currentPage + 1}</a>
+                                    </c:if>
+
+                                    <c:if test="${currentPage < totalPages - 1}">
+                                        <c:if test="${currentPage < totalPages - 2}">
+                                            <span>...</span>
+                                        </c:if>
+                                        <a href="feedback?page=${totalPages}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">${totalPages}</a>
+                                    </c:if>
+
                                     <c:if test="${currentPage < totalPages}">
                                         <a href="feedback?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Next</a>
                                     </c:if>
-                                    <div>
+
+                                    <div class="mt-2">
                                         Page ${currentPage} of ${totalPages}
                                     </div>
                                 </div>
