@@ -68,32 +68,31 @@ public class ManageRole extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String action = request.getParameter("action");
-    RoleDAO roleDAO = new RoleDAO();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        RoleDAO roleDAO = new RoleDAO();
 
-    if ("add".equals(action)) {
-        String roleName = request.getParameter("roleName");
-        roleDAO.addRole(roleName);
-    } else if ("delete".equals(action)) {
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-        roleDAO.deleteRole(roleID);
-    } else if ("edit".equals(action)) {
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-        String roleName = request.getParameter("roleName"); // Change this line
+        if ("add".equals(action)) {
+            String roleName = request.getParameter("roleName");
+            roleDAO.addRole(roleName);
+        } else if ("delete".equals(action)) {
+            int roleID = Integer.parseInt(request.getParameter("roleID"));
+            roleDAO.deleteRole(roleID);
+        } else if ("edit".equals(action)) {
+            int roleID = Integer.parseInt(request.getParameter("roleID"));
+            String roleName = request.getParameter("roleName"); // Change this line
 
-        // Check if roleName is not null or empty
-        if (roleName == null || roleName.trim().isEmpty()) {
-            request.setAttribute("errorMessage", "Role name cannot be empty");
-            request.getRequestDispatcher("Admin2.jsp").forward(request, response);
-            return; // Exit the method early if there's an error
+            // Check if roleName is not null or empty
+            if (roleName == null || roleName.trim().isEmpty()) {
+                request.setAttribute("errorMessage", "Role name cannot be empty");
+                request.getRequestDispatcher("Admin2.jsp").forward(request, response);
+                return; // Exit the method early if there's an error
+            }
+            roleDAO.updateRole(roleID, roleName); // Use roleName here
         }
-        roleDAO.updateRole(roleID, roleName); // Use roleName here
+
+        response.sendRedirect("Admin.jsp");
     }
-
-    response.sendRedirect("Admin.jsp");
-}
-
 
     /**
      * Returns a short description of the servlet.
