@@ -4,7 +4,9 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css');
 @import url('https://themify.me/wp-content/themes/themify-v32/themify-icons/themify-icons.css');
 @import url('https://lottie.host/2c586647-60e7-4933-a582-d24959e5dc6f/nEPlxf7cyC.json');
-
+.custom-footer-wrapper .new_footer_area {
+    /* Reset or specify styles for the footer here */
+}
 body {
     background: #fbfbfd;
 }

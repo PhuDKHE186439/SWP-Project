@@ -229,7 +229,6 @@ CREATE TABLE `role` (
   PRIMARY KEY (`RoleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `role`
 --
@@ -239,6 +238,17 @@ LOCK TABLES `role` WRITE;
 INSERT INTO `role` VALUES (1,'Admin'),(2,'TicketManager'),(3,'Passenger');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+-- Step 1: Drop the foreign key constraint
+ALTER TABLE account DROP FOREIGN KEY account_ibfk_1;
+
+-- Step 2: Modify RoleID to AUTO_INCREMENT
+ALTER TABLE role MODIFY RoleID INT NOT NULL AUTO_INCREMENT;
+
+-- Step 3: Recreate the foreign key constraint
+ALTER TABLE account
+ADD CONSTRAINT account_ibfk_1 FOREIGN KEY (RoleID) REFERENCES role(RoleID);
 
 --
 -- Table structure for table `seat`

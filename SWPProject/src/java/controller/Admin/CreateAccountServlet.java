@@ -60,10 +60,10 @@ public class CreateAccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RoleDAO roleDAO = new RoleDAO();
-        List<role> roles = roleDAO.getAllRoles();
+        List<role> roles = roleDAO.getAllRoles(); // Ensure this matches the class name
 
-        request.setAttribute("roles", roles);
-        request.getRequestDispatcher("your_jsp_page.jsp").forward(request, response); // Forward to your JSP page
+        request.setAttribute("roles", roles); // Set the attribute correctly
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
     }
 
     /**
@@ -74,24 +74,30 @@ public class CreateAccountServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String roleIDStr = request.getParameter("roleID");
+    @WebServlet("/CreateAccountServlet")
+    public class CreateAccountServlet extends HttpServlet {
 
-        // Make sure to handle the case where roleID is not a number
-        int roleID = (roleIDStr != null && !roleIDStr.isEmpty()) ? Integer.parseInt(roleIDStr) : 0;
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String roleID = request.getParameter("roleID");
 
-        AccountDAO accountDAO = new AccountDAO();
-        try {
-            accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-            response.setStatus(HttpServletResponse.SC_OK); // Send success response
-        } catch (Exception e) {
-            e.printStackTrace(); // Log the exception
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // Send error response
+            // Create a new Account object (assuming you have an Account class)
+            Account newAccount = new Account(username, password, email, phoneNumber, roleID);
+
+            // Create an instance of your DAO (Data Access Object)
+            AccountDAO accountDAO = new AccountDAO();
+
+            // Insert the account into the database
+            boolean isSuccess = accountDAO.createAccount(newAccount);
+
+            if (isSuccess) {
+                response.setStatus(HttpServletResponse.SC_OK); // Success
+            } else {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // Failure
+            }
         }
     }
 
@@ -106,4 +112,3 @@ public class CreateAccountServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-

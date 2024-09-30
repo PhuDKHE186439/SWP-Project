@@ -196,10 +196,12 @@
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Account Management</h6>
-                            <button id="showAllBtn" class="btn btn-primary" onclick="showAll()">Show All</button>
-                            <button id="returnToNormalBtn" class="btn btn-primary" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
+                            <div class="d-flex">
+                                <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
+                                <button class="btn btn-success" onclick="openCreateAccountModal()">Create New Account</button>
+                                <button id="returnToNormalBtn" class="btn btn-primary ms-2" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
+                            </div>
                         </div>
-
                         <!-- Search Functionality -->
                         <div class="mb-4">
                             <div class="d-flex align-items-center">
@@ -324,11 +326,20 @@
                                         <label for="modalRole" class="form-label">Role</label>
                                         <select class="form-select" id="modalRole" required>
                                             <option value="">Select Role</option>
-                                            <option value="1">Admin</option>
-                                            <option value="2">User</option>
-                                            <!-- Add more roles as needed -->
+                                            <% 
+                                            List<role> roles = (List<role>) request.getAttribute("roles"); // Retrieve the roles
+                                            if (roles != null) {
+                                                for (role r : roles) { 
+                                            %>
+                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
+                                            <% 
+                                                }
+                                            } 
+                                            %>
                                         </select>
                                     </div>
+
+
                                     <button type="button" class="btn btn-primary" onclick="createAccount()">Create Account</button>
                                 </form>
                             </div>
@@ -641,21 +652,15 @@
                 </div>
                 <!-- Widgets End -->
                 <!-- Footer Start -->
-                <div class="container-fluid pt-4 px-4">
-                    <div class="bg-light rounded-top p-4">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 text-center text-sm-start">
-                                &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                            </div>
-                            <div class="col-12 col-sm-6 text-center text-sm-end">
-                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                                </br>
-                                Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
+
+                <script>
+                    const iframe = document.getElementById('footer-frame');
+                    iframe.onload = function () {
+                        // Adjust the height of the iframe to fit its content
+                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                    };
+                </script>
                 <!-- Footer End -->
             </div>
             <!-- Content End -->

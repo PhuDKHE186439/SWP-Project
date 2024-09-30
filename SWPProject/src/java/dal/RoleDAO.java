@@ -59,9 +59,15 @@ public class RoleDAO extends DBContext {
     }
     public static void main(String[] args) {
         RoleDAO dao = new RoleDAO();
-        List<role> rolelist = dao.getAllRoles();
-        int roleID = 4;
-        String newRoleName = "UpdatedRoleName";
-        dao.updateRole(roleID, newRoleName);
+
+        // Add a new role
+        String newRoleName = "Tester"; // Change as needed
+        dao.addRole(newRoleName);
+
+        // Retrieve all roles
+        List<role> roleList = dao.getAllRoles();
+        for (role role : roleList) {
+            System.out.println("Role ID: " + role.getRoleID() + ", Role Name: " + role.getRoleName());
+        }
     }
 }
