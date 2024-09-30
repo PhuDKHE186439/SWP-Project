@@ -13,7 +13,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <title>DASHMIN - Bootstrap Admin Template</title>
@@ -43,7 +42,6 @@
         <!-- Template Stylesheet -->
         <link href="bssets/css/style.css" rel="stylesheet">
     </head>
-
     <body>
         <div class="container-xxl position-relative bg-white d-flex p-0">
             <!-- Spinner Start -->
@@ -96,7 +94,7 @@
                         </div>
                     </div>
                 </nav>
-            </div>
+            </div>      
             <!-- Sidebar End -->
 
 
@@ -195,66 +193,65 @@
 
                 <!-- Ban Function Start -->
                 <div class="bg-light text-center rounded p-4">
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <h6 class="mb-0">Account Management</h6>
-        <div class="d-flex align-items-center">
-            <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
-            <button id="returnToNormalBtn" class="btn btn-primary" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
-            <!-- Create New Account Button -->
-            <button class="btn btn-success ms-2" onclick="openCreateAccountModal()">Create New Account</button>
-        </div>
-    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Account Management</h6>
+                        <div class="d-flex align-items-center">
+                            <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
+                            <button id="returnToNormalBtn" class="btn btn-primary" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
+                            <!-- Create New Account Button -->
+                            <button class="btn btn-success ms-2" onclick="openCreateAccountModal()">Create New Account</button>
+                        </div>
+                    </div>
 
-    <!-- Search Functionality -->
-    <div class="mb-4">
-        <div class="d-flex align-items-center">
-            <select id="searchCriteria" class="form-select" aria-label="Search Criteria" style="width: auto; margin-right: 10px;">
-                <option value="username">Account Name</option>
-                <option value="email">Email</option>
-                <option value="phone">Phone Number</option>
-                <option value="status">Status</option>
-            </select>
-            <input type="text" id="searchInput" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
-            <button class="btn btn-primary" onclick="searchAccounts()">Search</button>
-        </div>
-    </div>
+                    <!-- Search Functionality -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center">
+                            <select id="searchCriteria" class="form-select" aria-label="Search Criteria" style="width: auto; margin-right: 10px;">
+                                <option value="username">Account Name</option>
+                                <option value="email">Email</option>
+                                <option value="phone">Phone Number</option>
+                                <option value="status">Status</option>
+                            </select>
+                            <input type="text" id="searchInput" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
+                            <button class="btn btn-primary" onclick="searchAccounts()">Search</button>
+                        </div>
+                    </div>
 
-    <div class="table-responsive">
-        <table class="table text-start align-middle table-bordered table-hover mb-0">
-            <thead>
-                <tr class="text-dark">
-                    <th scope="col">Account Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody id="accountList">
-                <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">Account Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountList">
+                                <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
                      account acc = accounts.get(i); %>
-                    <tr>
-                        <td><%= acc.getUsername() %></td>
-                        <td><%= acc.getEmail() %></td>
-                        <td><%= acc.getPhoneNumber() %></td>
-                        <td><%= acc.getStatus() %></td>
-                        <td>
-                            <form action="BanAccount" method="post" style="display:inline;">
-                                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
-                                <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
-                                <button type="submit" class="btn btn-sm btn-primary" 
-                                    onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
-                                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
-</div>
-
+                                <tr>
+                                    <td><%= acc.getUsername() %></td>
+                                    <td><%= acc.getEmail() %></td>
+                                    <td><%= acc.getPhoneNumber() %></td>
+                                    <td><%= acc.getStatus() %></td>
+                                    <td>
+                                        <form action="BanAccount" method="post" style="display:inline;">
+                                            <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                            <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                                            <button type="submit" class="btn btn-sm btn-primary" 
+                                                    onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                                                <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <!-- Create Account Modal -->
                 <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
@@ -420,7 +417,6 @@
                         document.getElementById('showAllBtn').style.display = "none"; // Hide the button after click
                     });
                 </script>
-
                 <!-- Ban Function End -->
 
                 <!-- Widgets Start -->
@@ -531,11 +527,6 @@
                             }
                         </style>
 
-
-
-
-
-
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <div class="h-100 bg-light rounded p-4">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -605,8 +596,6 @@
                     </div>
                 </div>
                 <!-- Widgets End -->
-
-
                 <!-- Footer Start -->
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-light rounded-top p-4">
@@ -626,8 +615,6 @@
                 <!-- Footer End -->
             </div>
             <!-- Content End -->
-
-
             <!-- Back to Top -->
             <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>
