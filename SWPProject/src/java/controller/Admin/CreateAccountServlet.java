@@ -5,12 +5,15 @@
 package controller.Admin;
 
 import dal.AccountDAO;
+import dal.RoleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.role;
 
 /**
  *
@@ -56,7 +59,11 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RoleDAO roleDAO = new RoleDAO();
+        List<role> roles = roleDAO.getAllRoles();
+
+        request.setAttribute("roles", roles);
+        request.getRequestDispatcher("your_jsp_page.jsp").forward(request, response); // Forward to your JSP page
     }
 
     /**
