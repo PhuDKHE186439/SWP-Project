@@ -68,6 +68,7 @@
 					<h2 class="title-head">Forget <span>Password</span></h2>
 					<p>Login Your Account <a href="login.jsp">Click here</a></p>
 				</div>	
+                            <p style="color: Red">${requestScope.error}</p>
 				<form action="forgetpassword" method="post" class="contact-bx">
 					<div class="row placeani">
 						<div class="col-lg-12">

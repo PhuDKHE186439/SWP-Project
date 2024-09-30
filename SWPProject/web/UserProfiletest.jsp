@@ -61,7 +61,7 @@
             <div id="loading-icon-bx"></div>
             <!-- Header Top ==== -->
             <jsp:include page="Menu.jsp"></jsp:include>
-
+            
                 <!-- header END ==== -->
                 <!-- Content -->
                 <div class="page-content bg-white">
@@ -77,11 +77,11 @@
                                     <div class="col-lg-3 col-md-4 col-sm-12 m-b30">
                                         <div class="profile-bx text-center">
                                             <div class="user-profile-thumb">
-                                                <img src="assets/images/profile/pic1.jpg" alt=""/>
+                                               
                                             </div>
                                             <div class="profile-info">
-                                                <h4>Mark Andre</h4>
-                                                <span>mark.example@info.com</span>
+                                                <h4>${profile.name}</h4>
+                                                <span>${profile.email}</span>
                                             </div>
                                             <div class="profile-tabnav">
                                                 <ul class="nav nav-tabs">
@@ -110,6 +110,7 @@
                                                             <div class="form-group row">
                                                                 <div class="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
                                                                     <h3>1. Personal Details</h3>
+                                                                    <p style="color: Red">${requestScope.AccID}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -121,7 +122,7 @@
                                                         <div class="form-group row">
                                                             <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">Date Of Birth</label>
                                                             <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                                <input class="form-control" name="age" value="${profile.age}"  placeholder="${profile.age}" type="number"  required="">
+                                                                <input class="form-control" name="age" value="${profile.age}"  placeholder="${profile.age}" type="tel"  required="" pattern="[1-9]{1}[1-9]{3}">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">

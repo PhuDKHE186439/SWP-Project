@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                Who is your crush?
+                                What is Your Pet Name?
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -87,7 +87,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                What is your neighbour name?
+                                What is Your Neighbor Name?
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">

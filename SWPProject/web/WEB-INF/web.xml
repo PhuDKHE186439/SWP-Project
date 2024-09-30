@@ -56,6 +56,10 @@
         <servlet-name>PassengerInfo</servlet-name>
         <servlet-class>controller.PassengerInfo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPassword</servlet-name>
+        <servlet-class>controller.ResetPassword</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -107,5 +111,9 @@
     <servlet-mapping>
         <servlet-name>PassengerInfo</servlet-name>
         <url-pattern>/PassengerInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPassword</servlet-name>
+        <url-pattern>/resetpass</url-pattern>
     </servlet-mapping>
 </web-app>

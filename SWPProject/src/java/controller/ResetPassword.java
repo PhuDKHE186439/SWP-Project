@@ -14,14 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.account;
 import model.otpQuestion;
 
 /**
  *
  * @author My Asus
  */
-public class ForgetPassword extends HttpServlet {
+public class ResetPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class ForgetPassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ForgetPassword</title>");
+            out.println("<title>Servlet ResetPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ForgetPassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResetPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +60,7 @@ public class ForgetPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("resetpassword").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -75,18 +74,19 @@ public class ForgetPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-                HttpSession session = request.getSession();
-
-        AccountDAO accDAO = new AccountDAO();
+        HttpSession session = request.getSession();
+        if(session.getAttribute("AccIDOTP")!=null){
+        int AccID = (int)session.getAttribute("AccIDOTP");
+        String answer1 = request.getParameter("answer1");
+        String answer2 = request.getParameter("answer2");
+        String answer3 = request.getParameter("answer3");
         OtpQuestionDAO otpDAO = new OtpQuestionDAO();
-        if (accDAO.getAccountByUsername(username) != null) {
-            session.setAttribute("AccIDOTP", accDAO.getAccountByUsername(username).getAccountID());
-            request.getRequestDispatcher("AnswerOTP.jsp").forward(request, response);
-        } else {
-            request.setAttribute("error", "Please Enter Right Username");
-            request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
-
+        
+            List<otpQuestion> otplist = otpDAO.getOTPByID(AccID);
+            if (answer1.equals(otplist.get(0).getOtpAnswer()) && answer2.equals(otplist.get(1).getOtpAnswer()) && answer3.equals(otplist.get(2).getOtpAnswer())) {
+                request.setAttribute("key", otplist);
+            }
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
 
     }

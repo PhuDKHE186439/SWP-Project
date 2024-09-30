@@ -64,78 +64,38 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Sign Up <span>Now</span></h2>
+                            <h2 class="title-head">Forget Your<span>Password</span></h2>
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
-                            <p style="color: Red">${requestScope.annoutment}</p>
+                            <p style="color: Red">${requestScope.AccID}</p>
                         </div>	
-                        <form class="contact-bx" action="register" method="post">
+                        <form class="contact-bx" action="resetpass" method="post">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Name</label>
-                                            <input name="name" type="text" required="" class="form-control">
+                                            <label>What Your Favorite Animal?</label>
+                                            <input name="answer1" type="text" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Phone Number</label>
-                                            <input name="phone" type="tel" required="" class="form-control" pattern="[0-9]{10}">
+                                            <label>What Your Pet Name?</label>
+                                            <input name="answer2" type="text" required="" class="form-control" >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Email Address</label>
-                                            <input name="email" type="email" required="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label>Your Year of Birth</label>
-                                            <input name="age" type="tel" required="" class="form-control" pattern="[1-9]{1}[1-9]{3}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label>Your Address</label>
-                                            <input name="address" type="text" required="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label>Your Username</label>
-                                            <input name="username" type="text" required="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> 
-                                            <label>Your Password</label>
-                                            <input name="password" type="password" class="form-control" required="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> 
-                                            <label>Re-Type Your Password</label>
-                                            <input name="repassword" type="password" class="form-control" required="">
+                                            <label>What is Your Neighbor Name></label>
+                                            <input name="answer3" type="text" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30">
-                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Sign Up</button>
+                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
                                 </div>
                             </div>
                         </form>
