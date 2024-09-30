@@ -73,22 +73,27 @@ public class ManageRole extends HttpServlet {
         RoleDAO roleDAO = new RoleDAO();
 
         if ("add".equals(action)) {
-            String roleName = request.getParameter("roleName");
+        String roleName = request.getParameter("roleName");
+        System.out.println("Adding role: " + roleName); // Debugging output
+
+        if (roleName != null && !roleName.trim().isEmpty()) {
             roleDAO.addRole(roleName);
-        } else if ("delete".equals(action)) {
+        } else {
+            System.out.println("Role name is empty or null.");
+        }
+    } else if ("delete".equals(action)) {
             int roleID = Integer.parseInt(request.getParameter("roleID"));
             roleDAO.deleteRole(roleID);
         } else if ("edit".equals(action)) {
             int roleID = Integer.parseInt(request.getParameter("roleID"));
-            String roleName = request.getParameter("roleName"); // Change this line
+            String roleName = request.getParameter("roleName");
 
-            // Check if roleName is not null or empty
             if (roleName == null || roleName.trim().isEmpty()) {
                 request.setAttribute("errorMessage", "Role name cannot be empty");
                 request.getRequestDispatcher("Admin2.jsp").forward(request, response);
-                return; // Exit the method early if there's an error
+                return;
             }
-            roleDAO.updateRole(roleID, roleName); // Use roleName here
+            roleDAO.updateRole(roleID, roleName);
         }
 
         response.sendRedirect("Admin.jsp");
