@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="assets/css/Footer.css"/>
     </head>
     <body>
-        <footer class="new_footer_area bg_color">
+        <footer class="new_footer_area bg_color" >
             <div class="new_footer_top">
                 <div class="container">
                     <div class="row">
