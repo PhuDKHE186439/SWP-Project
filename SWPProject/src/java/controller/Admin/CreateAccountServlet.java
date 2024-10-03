@@ -79,16 +79,15 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         int roleID = Integer.parseInt(request.getParameter("roleID"));
-        int passengerID = Integer.parseInt(request.getParameter("passengerID"));  // Ensure you have passengerID
 
         AccountDAO accountDAO = new AccountDAO();
-        accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID, passengerID);
+        accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID); // Use the retrieved passengerID
 
         // Redirect back to Admin.jsp with success/failure message
         HttpSession session = request.getSession();
@@ -107,4 +106,3 @@ public class CreateAccountServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-

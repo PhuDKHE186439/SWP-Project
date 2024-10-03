@@ -93,15 +93,14 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
-    public void registerAccountAD(String phoneNumber, String username, String password, String email, int roleID, int PassengerID) {
-        String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID, PassengerID, Status) VALUES (?, ?, ?, ?, ?, ?, 'Active')";
+    public void registerAccountAD(String phoneNumber, String username, String password, String email, int roleID) {
+        String sql = "INSERT INTO Account (PhoneNumber, Username, Password, Email, RoleID, Status) VALUES ( ?, ?, ?, ?, ?, 'Active')";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, phoneNumber);
             st.setString(2, username);
             st.setString(3, password);
             st.setString(4, email);
             st.setInt(5, roleID);
-            st.setInt(6, PassengerID);
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
