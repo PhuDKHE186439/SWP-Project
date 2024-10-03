@@ -150,8 +150,6 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-    
-    
 
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
