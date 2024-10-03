@@ -28,7 +28,7 @@
 
         <!-- FAVICONS ICON ============================================= -->
         <link rel="icon" href="assets/images/TrainLogo.png" type="image/x-icon" />
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/TrainLogo.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="assets/images/TrainLogo.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
         <title>TrainTravel : Register Page </title>
@@ -66,31 +66,23 @@
                         <div class="heading-bx left">
                             <h2 class="title-head">Forget Your<span>Password</span></h2>
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
-                            <p style="color: Red">${requestScope.annoutment}</p>
+                            <p style="color: red">${requestScope.annoutment}</p>
                         </div>	
                         <form class="contact-bx" action="resetpass" method="post">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>What Your Favorite Animal?</label>
-                                            <input name="answer1" type="text" required="" class="form-control">
+                                            <label>Your New Password</label>
+                                            <input name="newpassreset" type="password" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>What Your Pet Name?</label>
-                                            <input name="answer2" type="text" required="" class="form-control" >
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label>What is Your Neighbor Name></label>
-                                            <input name="answer3" type="text" required="" class="form-control">
+                                            <label>Re-Type Your Password</label>
+                                            <input name="repassreset" type="password" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
