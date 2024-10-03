@@ -75,18 +75,33 @@ public class ResetPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if(session.getAttribute("AccIDOTP")!=null){
-        int AccID = (int)session.getAttribute("AccIDOTP");
-        String answer1 = request.getParameter("answer1");
-        String answer2 = request.getParameter("answer2");
-        String answer3 = request.getParameter("answer3");
-        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
-        
+        if (session.getAttribute("AccIDOTP") != null) {
+            int AccID = (int) session.getAttribute("AccIDOTP");
+            String answer1 = request.getParameter("answer1");
+            String answer2 = request.getParameter("answer2");
+            String answer3 = request.getParameter("answer3");
+            String resetpass = request.getParameter("newpassreset");
+            String repass = request.getParameter("repassreset");
+            OtpQuestionDAO otpDAO = new OtpQuestionDAO();
+            AccountDAO accDAO = new AccountDAO();
             List<otpQuestion> otplist = otpDAO.getOTPByID(AccID);
-            if (answer1.equals(otplist.get(0).getOtpAnswer()) && answer2.equals(otplist.get(1).getOtpAnswer()) && answer3.equals(otplist.get(2).getOtpAnswer())) {
-                request.setAttribute("key", otplist);
+            if (answer1 != null) {
+                if (answer1.equals(otplist.get(0).getOtpAnswer()) && answer2.equals(otplist.get(1).getOtpAnswer()) && answer3.equals(otplist.get(2).getOtpAnswer())) {
+                    request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("annoutment", "The Answer Is Not Correts");
+                    request.getRequestDispatcher("AnswerOTP.jsp").forward(request, response);
+                }
             }
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            if (resetpass != null && resetpass.equals(repass)) {
+                accDAO.updateAccountPassword(AccID, resetpass);
+                request.setAttribute("annoutment", "Reset Password Successful, Please Login Again");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else {
+                request.setAttribute("annoutment", "Password and Re-Type Password not Corrects");
+                request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
+
+            }
         }
 
     }

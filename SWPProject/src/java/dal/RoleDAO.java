@@ -39,7 +39,8 @@ public class RoleDAO extends DBContext {
             st.setInt(2, roleID);
             st.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle exceptions as needed
+            // Handle exceptions as needed
+            
         }
     }
 

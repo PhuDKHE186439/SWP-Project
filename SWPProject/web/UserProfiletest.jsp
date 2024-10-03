@@ -19,7 +19,7 @@
         <meta name="robots" content="" />
 
         <!-- DESCRIPTION -->
-        <meta name="description" content="EduChamp : Education HTML Template" />
+        <!--        <meta name="description" content="EduChamp : Education HTML Template" />-->
 
         <!-- OG -->
         <meta property="og:title" content="EduChamp : Education HTML Template" />
@@ -28,11 +28,11 @@
         <meta name="format-detection" content="telephone=no">
 
         <!-- FAVICONS ICON ============================================= -->
-        <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+        <!--        <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+                <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />-->
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>EduChamp : Education HTML Template </title>
+        <title>TrainTravel  </title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,7 +61,7 @@
             <div id="loading-icon-bx"></div>
             <!-- Header Top ==== -->
             <jsp:include page="Menu.jsp"></jsp:include>
-            
+
                 <!-- header END ==== -->
                 <!-- Content -->
                 <div class="page-content bg-white">
@@ -77,46 +77,48 @@
                                     <div class="col-lg-3 col-md-4 col-sm-12 m-b30">
                                         <div class="profile-bx text-center">
                                             <div class="user-profile-thumb">
-                                               
+
                                             </div>
                                             <div class="profile-info">
                                                 <h4>${profile.name}</h4>
-                                                <span>${profile.email}</span>
-                                            </div>
-                                            <div class="profile-tabnav">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" data-toggle="tab" href="#courses"><i class="ti-book"></i>Your Profile</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" data-toggle="tab" href="#change-password"><i class="ti-lock"></i>Change Password</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" data-toggle="tab" href="#quiz-results"><i class="ti-bookmark-alt"></i>OTP Question </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <span>${profile.email}</span>
+                                        </div>
+                                        <div class="profile-tabnav">
+                                            <ul class="nav nav-tabs">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#courses"><i class="ti-book"></i>Your Profile</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#change-password"><i class="ti-lock"></i>Change Password</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#quiz-results"><i class="ti-bookmark-alt"></i>OTP Question </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="col-lg-9 col-md-8 col-sm-12 m-b30">
-                                        <div class="profile-content-bx">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="courses">
-                                                    <div class="profile-head">
-                                                        <h3>Edit Profile</h3>
-                                                    </div>
-                                                    <form class="edit-profile" action="userprofile" method="post">
-                                                        <div class="">
-                                                            <div class="form-group row">
-                                                                <div class="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
-                                                                    <h3>1. Personal Details</h3>
-                                                                    <p style="color: Red">${requestScope.AccID}</p>
-                                                                </div>
+                                </div>
+                                <div class="col-lg-9 col-md-8 col-sm-12 m-b30">
+                                    <div class="profile-content-bx">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="courses">
+                                                <div class="profile-head">
+                                                    <p style="color: Red">${requestScope.passwordChange}</p>
+
+                                                    <h3>Edit Profile</h3>
+                                                </div>
+                                                <form class="edit-profile" action="userprofile" method="post">
+                                                    <div class="">
+                                                        <div class="form-group row">
+                                                            <div class="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
+                                                                <h3>1. Personal Details</h3>
+                                                                <p style="color: Red">${requestScope.AccID}</p>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">Full Name</label>
-                                                                <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                                    <input class="form-control" name="name" Value="${profile.name}" placeholder="${profile.name}" type="text"  required="">
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">Full Name</label>
+                                                            <div class="col-12 col-sm-9 col-md-9 col-lg-7">
+                                                                <input class="form-control" name="name" Value="${profile.name}" placeholder="${profile.name}" type="text"  required="">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -158,16 +160,30 @@
                                                     </div>
                                                 </form>
                                             </div>
+
                                             <div class="tab-pane" id="quiz-results">
-                                                <div class="profile-head">
-                                                    <h3>OTP Question</h3>
-                                                </div>
-                                                <c:forEach items="${list}" var="o">
+                                                <c:if test="${requestScope.OTPCheck==true}">
+                                                    <div class="profile-head">
+                                                        <h3>OTP Question</h3>
+                                                    </div>
+
                                                     <form class="edit-profile" action="changeotp" method="post">
                                                         <div class="form-group row">
-                                                            <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">${o.otpQuestion}</label>
+                                                            <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">What is your favorite animal?</label>
                                                             <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                                <input class="form-control" name="name" Value="${o.otpAnswer}" placeholder="${o.otpAnswer}" type="text"  required="">
+                                                                <input class="form-control" name="changeotp1" Value="${OTP1}" placeholder="${OTP1}" type="text"  required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">What is Your Pet Name?</label>
+                                                            <div class="col-12 col-sm-9 col-md-9 col-lg-7">
+                                                                <input class="form-control" name="changeotp2" Value="${OTP2}" placeholder="${OTP2}" type="text"  required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">What is Your Neighbor Name?</label>
+                                                            <div class="col-12 col-sm-9 col-md-9 col-lg-7">
+                                                                <input class="form-control" name="changeotp3" Value="${OTP3}" placeholder="${OTP3}" type="text"  required="">
                                                             </div>
                                                         </div>
                                                         <div class="">
@@ -183,7 +199,7 @@
                                                             </div>
                                                         </div>
                                                     </form>
-                                                </c:forEach>
+                                                </c:if>       
                                                 <c:if test="${requestScope.OTPCheck==false}">
                                                     <div class="profile_form-header">
                                                         <div>
@@ -199,9 +215,6 @@
                                                 <form class="edit-profile" action="updateuserprofile" method="post">
                                                     <div class="">
                                                         <div class="form-group row">
-                                                            <div class="col-12 col-sm-8 col-md-8 col-lg-9 ml-auto">
-                                                                <h3>Password</h3>
-                                                            </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="col-12 col-sm-4 col-md-4 col-lg-3 col-form-label">Current Password</label>

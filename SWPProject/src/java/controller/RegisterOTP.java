@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.otpQuestion;
 import model.passenger;
 
 /**
@@ -85,7 +87,7 @@ public class RegisterOTP extends HttpServlet {
             int accountID = (int) session.getAttribute("AccID");
             if(dao.getOTPByID(accountID)!=null){
                 dao.addOTPQuestion(accountID, "What is Your Favorite Animal?", answer1);
-                dao.addOTPQuestion(accountID, "Who is Your Crush?", answer2);
+                dao.addOTPQuestion(accountID, "What is Your Pet Name?", answer2);
                 dao.addOTPQuestion(accountID, "What is Your Neighbor Name?", answer3);
 
             }
@@ -93,6 +95,13 @@ public class RegisterOTP extends HttpServlet {
             request.setAttribute("OTPCheck", true);
             passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
             request.setAttribute("profile", profilePassenger);
+            List<otpQuestion> otps = dao.getOTPByID(accountID);
+            if (!otps.isEmpty()) {
+                session.setAttribute("OTP1", otps.get(0).getOtpAnswer());
+                session.setAttribute("OTP2", otps.get(1).getOtpAnswer());
+                session.setAttribute("OTP3", otps.get(2).getOtpAnswer());
+
+            }
             request.getRequestDispatcher("UserProfiletest.jsp").forward(request, response);
         } else {
         request.getRequestDispatcher("login.jsp").forward(request, response);

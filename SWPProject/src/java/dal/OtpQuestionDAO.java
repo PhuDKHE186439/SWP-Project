@@ -28,6 +28,18 @@ public class OtpQuestionDAO extends DBContext {
         }
     }
 
+    public void updateOTPQuestion(String question, String answer, int accountID) {
+        String sql = "UPDATE otpquestion SET OtpAnswer=? Where OtpQuestion=? AND AccountID=?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, answer);
+            st.setString(2, question);
+            st.setInt(3, accountID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public List<otpQuestion> getOTPByID(int accountID) {
         List<otpQuestion> list = new ArrayList<>();
         String sql = "SELECT * FROM trainproject.otpquestion Where AccountID=?"; // Ensure your SQL query includes the status field
@@ -46,10 +58,10 @@ public class OtpQuestionDAO extends DBContext {
         }
         return list;
     }
-        public static void main(String[] args) {
+
+    public static void main(String[] args) {
         OtpQuestionDAO dao = new OtpQuestionDAO();
-        
+
         System.out.println(dao.getOTPByID(10));
     }
-        
 }
