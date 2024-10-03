@@ -22,17 +22,18 @@ public class FeedbackController extends HttpServlet {
         
         // Get current page, default to 1
         int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
-        int recordsPerPage = 5; // Number of records per page
+        int recordsPerPage = 5;
 
-        // Get search and sort parameters
-        String search = request.getParameter("search") != null ? request.getParameter("search") : "";
-        String sortOrder = request.getParameter("sortOrder") != null ? request.getParameter("sortOrder") : "latest"; // default to latest
+        // Get search and sort parameters with trimming
+        String search = request.getParameter("search");
+        search = (search != null) ? search.trim() : "";
+        
+        String sortOrder = request.getParameter("sortOrder");
+        sortOrder = (sortOrder != null) ? sortOrder : "latest";
 
-        // Get total feedback count and calculate total pages
+        // Get feedback records and total count
         int totalRecords = dao.getTotalFeedbackCount(search);
         int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-
-        // Get feedback records for the current page
         List<feedback> feedbackList = dao.getFeedbackBySearchAndSort(search, sortOrder, currentPage, recordsPerPage);
 
         // Set attributes for JSP
@@ -41,6 +42,7 @@ public class FeedbackController extends HttpServlet {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("search", search);
         request.setAttribute("sortOrder", sortOrder);
+        request.setAttribute("totalRecords", totalRecords);
 
         // Forward to JSP page
         RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerService.jsp");

@@ -12,6 +12,8 @@ public class feedback {
     private int feedbackID;
     private String message;
     private int passengerID;
+    private String passengerName;    // New field
+    private String passengerPhone;   // New field
     private String submissionDate;
 
     public feedback(int feedbackID, String message, int passengerID, String submissionDate) {
