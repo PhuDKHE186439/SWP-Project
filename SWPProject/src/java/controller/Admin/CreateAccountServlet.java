@@ -12,7 +12,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.account;
 import model.role;
 
 /**
@@ -75,24 +77,23 @@ public class CreateAccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String phoneNumber = request.getParameter("phoneNumber");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String roleIDStr = request.getParameter("roleID");
-
-        // Make sure to handle the case where roleID is not a number
-        int roleID = (roleIDStr != null && !roleIDStr.isEmpty()) ? Integer.parseInt(roleIDStr) : 0;
+        String phoneNumber = request.getParameter("phoneNumber");
+        int roleID = Integer.parseInt(request.getParameter("roleID"));
+        int passengerID = Integer.parseInt(request.getParameter("passengerID"));  // Ensure you have passengerID
 
         AccountDAO accountDAO = new AccountDAO();
-        try {
-            accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-            response.setStatus(HttpServletResponse.SC_OK); // Send success response
-        } catch (Exception e) {
-            e.printStackTrace(); // Log the exception
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // Send error response
-        }
+        accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID, passengerID);
+
+        // Redirect back to Admin.jsp with success/failure message
+        HttpSession session = request.getSession();
+        session.setAttribute("message", "Account created successfully.");
+        response.sendRedirect("Admin.jsp");
     }
 
     /**

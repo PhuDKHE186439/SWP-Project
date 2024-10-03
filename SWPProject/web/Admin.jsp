@@ -294,58 +294,54 @@
                         }
                     }
                 </script>
-
+                
 
                 <!-- Create Account Modal -->
                 <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="createAccountForm">
-                                    <div class="mb-3">
-                                        <label for="modalAccountName" class="form-label">Account Name</label>
-                                        <input type="text" class="form-control" id="modalAccountName" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalPassword" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="modalPassword" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="modalEmail" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
-                                        <input type="text" class="form-control" id="modalPhoneNumber" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalRole" class="form-label">Role</label>
-                                        <select class="form-select" id="modalRole" required>
-                                            <option value="">Select Role</option>
-                                            <% 
-                                            List<role> roles = (List<role>) request.getAttribute("roles"); // Retrieve the roles
-                                            if (roles != null) {
-                                                for (role r : roles) { 
-                                            %>
-                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
-                                            <% 
-                                                }
-                                            } 
-                                            %>
-                                        </select>
-                                    </div>
-
-
-                                    <button type="button" class="btn btn-primary" onclick="createAccount()">Create Account</button>
-                                </form>
-                            </div>
-                        </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form submission points to CreateAccountServlet -->
+                <form id="createAccountForm" action="CreateAccountServlet" method="post">
+                    <div class="mb-3">
+                        <label for="modalAccountName" class="form-label">Account Name</label>
+                        <input type="text" class="form-control" id="modalAccountName" name="username" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="modalPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="modalPassword" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="modalEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="modalPhoneNumber" name="phoneNumber" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalRole" class="form-label">Role</label>
+                        <select class="form-select" id="modalRole" name="roleID" required>
+                            <option value="">Select Role</option>
+                            
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalPassengerID" class="form-label">Passenger ID</label>
+                        <input type="text" class="form-control" id="modalPassengerID" name="passengerID" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                 <script>
                     function openCreateAccountModal() {
