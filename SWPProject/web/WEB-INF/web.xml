@@ -64,6 +64,14 @@
         <servlet-name>ChangeOTP</servlet-name>
         <servlet-class>controller.ChangeOTP</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeedbackForCustomer</servlet-name>
+        <servlet-class>controller.FeedbackForCustomer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -123,5 +131,13 @@
     <servlet-mapping>
         <servlet-name>ChangeOTP</servlet-name>
         <url-pattern>/changeotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedbackForCustomer</servlet-name>
+        <url-pattern>/feedbackforcustomer</url-pattern>
     </servlet-mapping>
 </web-app>
