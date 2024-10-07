@@ -64,6 +64,10 @@
         <servlet-name>ChangeOTP</servlet-name>
         <servlet-class>controller.ChangeOTP</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountEditServlet</servlet-name>
+        <servlet-class>controller.Admin.AccountEditServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -123,5 +127,9 @@
     <servlet-mapping>
         <servlet-name>ChangeOTP</servlet-name>
         <url-pattern>/changeotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountEditServlet</servlet-name>
+        <url-pattern>/AccountEditServlet</url-pattern>
     </servlet-mapping>
 </web-app>

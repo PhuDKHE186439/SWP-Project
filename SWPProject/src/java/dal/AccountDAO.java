@@ -151,7 +151,29 @@ public class AccountDAO extends DBContext {
         return null;
     }
     
-    
+    public void updateAccount(account acc) {
+    String sql = "UPDATE trainproject.account SET PhoneNumber = ?, Username = ?, Email = ? WHERE AccountID = ?";
+    try (PreparedStatement st = connection.prepareStatement(sql)) {
+        st.setString(1, acc.getPhoneNumber());
+        st.setString(2, acc.getUsername());
+        st.setString(3, acc.getEmail());
+        st.setInt(4, acc.getAccountID());
+        st.executeUpdate();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
+
+public void deleteAccount(int accountID) {
+    String sql = "DELETE FROM trainproject.account WHERE AccountID = ?";
+    try (PreparedStatement st = connection.prepareStatement(sql)) {
+        st.setInt(1, accountID);
+        st.executeUpdate();
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
+
     
 
     public static void main(String[] args) {
