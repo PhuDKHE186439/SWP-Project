@@ -28,42 +28,18 @@
                     </form>
                     <div class="navbar-nav align-items-center ms-auto">
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Message</span>
+                                <span class="d-none d-lg-inline-flex">Make Feedback</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
+                                <a class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">FeedBack Message</h6>
+                                    <form method="post" action="feedbackforcustomer">
+                                        <input name="feedback"  type="text">
+                                        <button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
+                                    </form>
                                 </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all message</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -92,13 +68,11 @@
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <span class="d-none d-lg-inline-flex">John Doe</span>
+                                <span class="d-none d-lg-inline-flex">Profile</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">My Profile</a>
-                                <a href="#" class="dropdown-item">Settings</a>
-                                <a href="#" class="dropdown-item">Log Out</a>
+                                <a href="userprofile" class="dropdown-item">My Profile</a>
+                                <a href="logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>
@@ -108,6 +82,15 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script <script src="assets/js/navbar.js"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="bssets/lib/chart/chart.min.js"></script>
+        <script src="bssets/lib/easing/easing.min.js"></script>
+        <script src="bssets/lib/waypoints/waypoints.min.js"></script>
+        <script src="bssets/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="bssets/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="bssets/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="bssets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 </script>
 </body>
 </html>
