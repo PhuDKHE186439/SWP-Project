@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
+<%@page import="java.util.List, model.account, model.train, dal.AccountDAO, model.role, dal.RoleDAO, java.util.ArrayList"%>
 <%@page session="true"%>
 <%
     AccountDAO accountDAO = new AccountDAO();
@@ -9,6 +9,16 @@
 <%
     RoleDAO roleDAO = new RoleDAO();
     List<role> roles = roleDAO.getAllRoles();
+    List<train> trainList = new ArrayList<>();
+      
+    trainList.add(new train(1, "08:00", "Train A", "50", 1, 2));
+    trainList.add(new train(2, "09:00", "Train B", "60", 1, 3));
+    
+    trainList.add(new train(2, "09:00", "Train B", "60", 1, 3));
+    trainList.add(new train(3, "10:00", "Train C", "70", 2, 3));
+    trainList.add(new train(2, "09:00", "Train B", "60", 1, 3));
+    trainList.add(new train(3, "10:00", "Train C", "70", 2, 3));
+    trainList.add(new train(3, "10:00", "Train C", "70", 2, 3));
 %>
 
 <!DOCTYPE html>
@@ -189,47 +199,37 @@
                     </div>
                 </nav>
                 <!-- Navbar End -->
-                <div class="form-container w-25 border p-4 rounded shadow">
-                    <h3 class="text-center mb-4">Tìm kiếm vé tàu</h3>
-                     <form action="searchTrainResult.jsp" method="GET">
-                        <!-- Ga đi -->
-                        <div class="mb-3">
-                            <label for="gaDi" class="form-label">Ga đi</label>
-                            <select class="form-select" id="gaDi">
-                                <option selected>Chọn ga đi</option>
-                                <option value="1">Ga Hà Nội</option>
-                                <option value="2">Ga Sài Gòn</option>
-                                <option value="3">Ga Đà Nẵng</option>
-                            </select>
-                        </div>
+                <div class="form-container border p-4 rounded shadow">
+                    <div class="d-flex flex-nowrap overflow-auto" style="gap: 10px;">
+                        <%
+                        // Lặp qua danh sách tàu và truyền từng tàu vào trang trainInfomation.jsp
+                        for (train t : trainList) {
+                            // Truyền thông tin của từng tàu
+                            int trainID = t.getTrainID(); // Thông tin ID tàu
+                            String departureTime = t.getTrainScheduleTime(); // Thời gian đi
+                            String trainName = t.getTrainName(); // Tên tàu
+                            int totalSeats = Integer.parseInt(t.getNumberOfSeat()); // Tổng số chỗ (chuyển đổi từ String sang int)
+                            int availableSeats = totalSeats - 10; // Giả sử có 10 chỗ đã được đặt trước (số này cần được thay đổi theo logic thực tế)
 
-                        <!-- Ga đến -->
-                        <div class="mb-3">
-                            <label for="gaDen" class="form-label">Ga đến</label>
-                            <select class="form-select" id="gaDen">
-                                <option selected>Chọn ga đến</option>
-                                <option value="1">Ga Hà Nội</option>
-                                <option value="2">Ga Sài Gòn</option>
-                                <option value="3">Ga Đà Nẵng</option>
-                            </select>
-                        </div>
+                        %>
+                        <!-- Hiển thị thông tin tàu -->
+                        <jsp:include page="trainInfomation.jsp">
+                            <jsp:param name="departureTime" value="<%= departureTime %>" />
+                            <jsp:param name="arrivalTime" value="Chưa có thông tin" />
+                            <jsp:param name="availableSeats" value="<%= availableSeats %>" />
+                            <jsp:param name="totalSeats" value="<%= totalSeats %>" />
+                            <jsp:param name="trainName" value="<%= trainName %>" />
+                        </jsp:include>
+                        <%
+                            }
+                        %>
 
-                        <!-- Ngày đi -->
-                        <div class="mb-3">
-                            <label for="ngayDi" class="form-label">Ngày đi</label>
-                            <input type="date" class="form-control" id="ngayDi">
-                        </div>
-
-                        <!-- Ngày về -->
-                        <div class="mb-3">
-                            <label for="ngayVe" class="form-label">Ngày về</label>
-                            <input type="date" class="form-control" id="ngayVe">
-                        </div>
-
-                        <!-- Nút tìm kiếm -->
-                        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
-                    </form>
+                    </div>
+                    <div class="w-100"> <!-- w-100 để thẻ div rộng 100% theo thẻ cha -->
+                        <jsp:include page="seatInformation.jsp"/>
+                    </div>
                 </div>
+
                 <!-- Footer Start -->
                 <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
 
