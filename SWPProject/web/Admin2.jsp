@@ -198,9 +198,10 @@
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Account Management</h6>
                             <div class="d-flex align-items-center">
-                                <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
                                 <button class="btn btn-success me-2" onclick="openCreateAccountModal()">Create New Account</button>
+                                <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAllAccounts()">Show All</button>
                                 <button id="returnToNormalBtn" class="btn btn-primary" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
+
                             </div>
                         </div>
 
@@ -211,7 +212,7 @@
                                     <option value="username">Account Name</option>
                                     <option value="email">Email</option>
                                     <option value="phone">Phone Number</option>
-                                    <option value="status">Status</option>
+                                    <option value="role">Role</option>
                                 </select>
                                 <input type="text" id="searchInput" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
                                 <button class="btn btn-primary" onclick="searchAccounts()">Search</button>
@@ -225,24 +226,34 @@
                                         <th scope="col">Account Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone Number</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Role</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="accountList">
                                     <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
-                        account acc = accounts.get(i); %>
+                                        account acc = accounts.get(i); 
+                                        String roleName = ""; // Replace with method to retrieve role name by roleID
+                                        for (role r : roles) {
+                                            if (r.getRoleID() == acc.getRoleID()) {
+                                                roleName = r.getRoleName();
+                                                break;
+                                            }
+                                        } %>
                                     <tr>
                                         <td><%= acc.getUsername() %></td>
                                         <td><%= acc.getEmail() %></td>
                                         <td><%= acc.getPhoneNumber() %></td>
-                                        <td><%= acc.getStatus() %></td>
+                                        <td><%= roleName %></td>
                                         <td>
-                                            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', '<%= acc.getStatus() %>')">Edit</button>
+                                            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
                                             <form action="AccountEditServlet" method="post" style="display:inline;">
                                                 <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                                <input type="hidden" name="action" value="delete"> <!-- Ensure this action is set -->
                                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
                                             </form>
+
+
                                         </td>
                                     </tr>
                                     <% } %>
@@ -278,7 +289,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="editAccountForm" action="UpdateAccountServlet" method="POST">
+                                <form id="editAccountForm" action="AccountEditServlet" method="POST">
                                     <input type="hidden" id="editAccountID" name="accountID">
                                     <div class="mb-3">
                                         <label for="editAccountName" class="form-label">Account Name</label>
@@ -293,10 +304,18 @@
                                         <input type="text" class="form-control" name="phoneNumber" id="editPhoneNumber" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="editStatus" class="form-label">Status</label>
-                                        <select class="form-select" name="status" id="editStatus" required>
-                                            <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option>
+                                        <label for="modalRole" class="form-label">Role</label>
+                                        <select class="form-select" name="roleID" id="modalRole" required>
+                                            <option value="">Select Role</option>
+                                            <% 
+                                            if (roles != null) {
+                                                for (role r : roles) { 
+                                            %>
+                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
+                                            <% 
+                                                }
+                                            } 
+                                            %>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update Account</button>
@@ -312,12 +331,12 @@
                         modal.show();
                     }
 
-                    function openEditAccountModal(accountID, username, email, phoneNumber, status) {
+                    function openEditAccountModal(accountID, username, email, phoneNumber, roleID) {
                         document.getElementById('editAccountID').value = accountID;
                         document.getElementById('editAccountName').value = username;
                         document.getElementById('editEmail').value = email;
                         document.getElementById('editPhoneNumber').value = phoneNumber;
-                        document.getElementById('editStatus').value = status;
+                        document.getElementById('modalRole').value = roleID;
 
                         const modal = new bootstrap.Modal(document.getElementById('editAccountModal'));
                         modal.show();
@@ -344,7 +363,7 @@
                                     case "phone":
                                         match = cells[2].textContent.toLowerCase().includes(searchInput);
                                         break;
-                                    case "status":
+                                    case "role":
                                         match = cells[3].textContent.toLowerCase().includes(searchInput);
                                         break;
                                 }
@@ -354,103 +373,82 @@
                         }
                     }
 
-                    function createAccount() {
-                        const accountName = document.getElementById("modalAccountName").value;
-                        const password = document.getElementById("modalPassword").value;
-                        const email = document.getElementById("modalEmail").value;
-                        const phoneNumber = document.getElementById("modalPhoneNumber").value;
-                        const role = document.getElementById("modalRole").value;
-
-                        if (accountName && password && email && phoneNumber && role) {
-                            const formData = new FormData();
-                            formData.append("username", accountName);
-                            formData.append("password", password);
-                            formData.append("email", email);
-                            formData.append("phoneNumber", phoneNumber);
-                            formData.append("roleID", role);
-
-                            fetch("CreateAccountServlet", {
-                                method: "POST",
-                                body: formData
-                            })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            location.reload();
-                                        } else {
-                                            alert("Failed to create account");
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
-                        } else {
-                            alert("Please fill in all fields");
-                        }
-                    }
-
                     function showAllAccounts() {
                         const accountList = document.getElementById("accountList");
-                        accountList.innerHTML = "";
-                    <% for (account acc : accounts) { %>
+                        accountList.innerHTML = ""; // Clear existing accounts
+                    <% 
+                        for (account acc : accounts) { 
+                            String roleName = ""; // Replace with method to retrieve role name by roleID
+                            for (role r : roles) {
+                                if (r.getRoleID() == acc.getRoleID()) {
+                                    roleName = r.getRoleName();
+                                    break;
+                                }
+                            } 
+                    %>
                         accountList.innerHTML += `
-            <tr>
-                <td><%= acc.getUsername() %></td>
-                <td><%= acc.getEmail() %></td>
-                <td><%= acc.getPhoneNumber() %></td>
-                <td><%= acc.getStatus() %></td>
-                <td>
-                    <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>)">Edit</button>
-                    <form action="AccountEditServlet" method="post" style="display:inline;">
-                        <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
-                        <button type="submit" class="btn btn-sm btn-danger" 
-                            onclick="return confirm('Are you sure you want to delete this account?')">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        `;
+    <tr>
+        <td><%= acc.getUsername() %></td>
+        <td><%= acc.getEmail() %></td>
+        <td><%= acc.getPhoneNumber() %></td>
+        <td><%= roleName %></td>
+        <td>
+            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
+            <form action="AccountEditServlet" method="post" style="display:inline;">
+                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    `;
                     <% } %>
-                        document.getElementById('showAllBtn').style.display = "none";
-                        document.getElementById('returnToNormalBtn').style.display = "inline";
+
+                        // Toggle button visibility
+                        document.getElementById("showAllBtn").style.display = "none"; // Hide "Show All" button
+                        document.getElementById("returnToNormalBtn").style.display = "inline"; // Show "Return to Normal" button
                     }
 
                     function returnToNormal() {
                         const accountList = document.getElementById("accountList");
-                        accountList.innerHTML = "";
+                        accountList.innerHTML = ""; // Clear existing accounts
                     <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
-        account acc = accounts.get(i); %>
+                        account acc = accounts.get(i); 
+                        String roleName = ""; // Replace with method to retrieve role name by roleID
+                        for (role r : roles) {
+                            if (r.getRoleID() == acc.getRoleID()) {
+                                roleName = r.getRoleName();
+                                break;
+                            }
+                        } 
+                    %>
                         accountList.innerHTML += `
-            <tr>
-                <td><%= acc.getUsername() %></td>
-                <td><%= acc.getEmail() %></td>
-                <td><%= acc.getPhoneNumber() %></td>
-                <td><%= acc.getStatus() %></td>
-                <td>
-                    <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>)">Edit</button>
-                    <form action="DeleteAccount" method="post" style="display:inline;">
-                        <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
-                        <button type="submit" class="btn btn-sm btn-danger" 
-                            onclick="return confirm('Are you sure you want to delete this account?')">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        `;
+    <tr>
+        <td><%= acc.getUsername() %></td>
+        <td><%= acc.getEmail() %></td>
+        <td><%= acc.getPhoneNumber() %></td>
+        <td><%= roleName %></td>
+        <td>
+            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
+            <form action="AccountEditServlet" method="post" style="display:inline;">
+                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    `;
                     <% } %>
-                        document.getElementById('showAllBtn').style.display = "inline";
-                        document.getElementById('returnToNormalBtn').style.display = "none";
+
+                        // Toggle button visibility
+                        document.getElementById("showAllBtn").style.display = "inline"; // Show "Show All" button
+                        document.getElementById("returnToNormalBtn").style.display = "none"; // Hide "Return to Normal" button
                     }
 
-                    document.getElementById('showAllBtn').addEventListener('click', showAllAccounts);
 
-
-                    document.getElementById('showAllBtn').addEventListener('click', showAllAccounts);
-
-
-                    document.getElementById('showAllBtn').addEventListener('click', showAllAccounts);
                 </script>
 
-                <!-- Ban Function End -->
+
+
+                <!-- Account Update End -->
 
                 <!-- Widgets Start -->
                 <div class="container-fluid pt-4 px-4">

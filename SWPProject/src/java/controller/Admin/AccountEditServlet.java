@@ -5,19 +5,23 @@
 package controller.Admin;
 
 import dal.AccountDAO;
+import dal.RoleDAO;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import model.account;
+import model.role;
 
 /**
  *
  * @author Laptop
  */
+@WebServlet(name = "AccountEditServlet", urlPatterns = {"/AccountEditServlet"})
 public class AccountEditServlet extends HttpServlet {
 
     /**
@@ -58,42 +62,33 @@ public class AccountEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int accountId = Integer.parseInt(request.getParameter("accountID"));
+
+        int accountID = Integer.parseInt(request.getParameter("accountID"));
         AccountDAO accountDAO = new AccountDAO();
-        account acc = accountDAO.getAccountByID(accountId); // Retrieve account by ID
-
+        account acc = accountDAO.getAccountByID(accountID);
         RoleDAO roleDAO = new RoleDAO();
-        List<role> roles = roleDAO.getAllRoles(); // Retrieve all roles
-
+        List<role> roles = roleDAO.getAllRoles();
         request.setAttribute("account", acc);
-        request.setAttribute("roles", roles); // Pass roles to the JSP
-        request.getRequestDispatcher("EditAccount.jsp").forward(request, response); // Forward to your EditAccount.jsp
+        request.setAttribute("roles", roles);
+        request.getRequestDispatcher("Admin2.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
+
+        int accountID = Integer.parseInt(request.getParameter("accountID"));
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        int roleID = Integer.parseInt(request.getParameter("roleID"));
+
+        // Update the account directly
         AccountDAO accountDAO = new AccountDAO();
-        HttpSession session = request.getSession();
+        account updatedAccount = new account(accountID, phoneNumber, username, null, email, roleID, 0, null); // Adjust constructor accordingly
+        accountDAO.updateAccount(updatedAccount);
 
-        if ("edit".equals(action)) {
-            int accountId = Integer.parseInt(request.getParameter("accountID"));
-            String email = request.getParameter("email");
-            String phoneNumber = request.getParameter("phoneNumber");
-            String username = request.getParameter("username");
-            int roleID = Integer.parseInt(request.getParameter("roleID"));
-
-            account acc = new account(accountId, phoneNumber, username, null, email, roleID, 0, "Active");
-            accountDAO.updateAccount(acc);
-            session.setAttribute("message", "Account updated successfully.");
-        } else if ("delete".equals(action)) {
-            int accountId = Integer.parseInt(request.getParameter("accountID"));
-            accountDAO.deleteAccount(accountId);
-            session.setAttribute("message", "Account deleted successfully.");
-        }
-
-        response.sendRedirect("Admin.jsp"); // Redirect to Admin.jsp after update/delete
+        response.sendRedirect("Admin2.jsp?success=update");
     }
 
     /**
