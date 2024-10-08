@@ -74,10 +74,19 @@ public class AccountEditServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-        int accountID = Integer.parseInt(request.getParameter("accountID"));
+    String submitType = request.getParameter("submitType");
+    int accountID = Integer.parseInt(request.getParameter("accountID"));
+
+    if ("delete".equals(submitType)) {
+        // Handle the delete action
+        AccountDAO accountDAO = new AccountDAO();
+        accountDAO.deleteAccount(accountID); // Implement deleteAccount in your AccountDAO
+        response.sendRedirect("Admin2.jsp?success=delete");
+    } else {
+        // Handle the update action
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
@@ -90,6 +99,8 @@ public class AccountEditServlet extends HttpServlet {
 
         response.sendRedirect("Admin2.jsp?success=update");
     }
+}
+
 
     /**
      * Returns a short description of the servlet.
