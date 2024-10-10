@@ -124,7 +124,7 @@
                                                         <div class="form-group row">
                                                             <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">Date Of Birth</label>
                                                             <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                                <input class="form-control" name="age" value="${profile.age}"  placeholder="${profile.age}" type="tel"  required="" pattern="[1-9]{1}[1-9]{3}">
+                                                                <input class="form-control" name="age" value="${profile.age}"  placeholder="${profile.age}" type="tel"  required="" pattern="[1-2]{1}[0-9]{3}">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">

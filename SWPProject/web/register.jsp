@@ -98,7 +98,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Year of Birth</label>
-                                            <input name="age" type="tel" required="" class="form-control" pattern="[1-9]{1}[0-9]{3}">
+                                            <input name="age" type="tel" required="" class="form-control" pattern="[1-2]{1}[0-9]{3}">
                                         </div>
                                     </div>
                                 </div>
