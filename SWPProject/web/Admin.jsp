@@ -196,9 +196,9 @@
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Account Management</h6>
-                            <div class="d-flex">
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-success me-2" onclick="openCreateAccountModal()">Create New Account</button>
                                 <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
-                                <button class="btn btn-success" onclick="openCreateAccountModal()">Create New Account</button>
                                 <button id="returnToNormalBtn" class="btn btn-primary ms-2" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
                             </div>
                         </div>
@@ -254,13 +254,6 @@
                 </div>
 
                 <script>
-                    function showAll() {
-                        // Show all accounts logic (same as before)
-                    }
-
-                    function returnToNormal() {
-                        // Return to normal logic (same as before)
-                    }
 
                     function searchAccounts() {
                         const searchCriteria = document.getElementById("searchCriteria").value;

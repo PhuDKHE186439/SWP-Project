@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="Admin.jsp" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="Admin.jsp" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
                             <div class="dropdown-menu bg-transparent border-0">
@@ -271,8 +271,39 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="createAccountForm" action="CreateAccountServlet" method="POST">
-                                    <!-- form fields -->
+                                <form id="createAccountForm" action="CreateAccountServlet" method="POST"> <!-- Ensure action points to the servlet -->
+                                    <div class="mb-3">
+                                        <label for="modalAccountName" class="form-label">Account Name</label>
+                                        <input type="text" class="form-control" name="username" id="modalAccountName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalPassword" class="form-label">Password</label>
+                                        <input type="password" class="form-control" name="password" id="modalPassword" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="modalEmail" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" name="phoneNumber" id="modalPhoneNumber" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalRole" class="form-label">Role</label>
+                                        <select class="form-select" name="roleID" id="modalRole" required>
+                                            <option value="">Select Role</option>
+                                            <% 
+                                            if (roles != null) {
+                                                for (role r : roles) { 
+                                            %>
+                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
+                                            <% 
+                                                }
+                                            } 
+                                            %>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Create Account</button>
                                 </form>
                             </div>
                         </div>
@@ -421,20 +452,20 @@
                         } 
                     %>
                         accountList.innerHTML += `
-    <tr>
-        <td><%= acc.getUsername() %></td>
-        <td><%= acc.getEmail() %></td>
-        <td><%= acc.getPhoneNumber() %></td>
-        <td><%= roleName %></td>
-        <td>
-            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
-            <form action="AccountEditServlet" method="post" style="display:inline;">
-                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
-            </form>
-        </td>
-    </tr>
-    `;
+            <tr>
+                <td><%= acc.getUsername() %></td>
+                <td><%= acc.getEmail() %></td>
+                <td><%= acc.getPhoneNumber() %></td>
+                <td><%= roleName %></td>
+                <td>
+                    <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
+                    <form action="AccountEditServlet" method="post" style="display:inline;">
+                        <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+    `       ;
                     <% } %>
 
                         // Toggle button visibility
