@@ -57,7 +57,7 @@
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
                     <a href="index.html" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                        <h3 class="text-primary">Train Traveler</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">
@@ -71,27 +71,27 @@
                     </div>
                     <div class="navbar-nav w-100">
                         <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="button.html" class="dropdown-item">Buttons</a>
-                                <a href="typography.html" class="dropdown-item">Typography</a>
-                                <a href="element.html" class="dropdown-item">Other Elements</a>
-                            </div>
-                        </div>
+                        <!--                        <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                                                    <div class="dropdown-menu bg-transparent border-0">
+                                                        <a href="button.html" class="dropdown-item">Buttons</a>
+                                                        <a href="typography.html" class="dropdown-item">Typography</a>
+                                                        <a href="element.html" class="dropdown-item">Other Elements</a>
+                                                    </div>
+                                                </div>-->
                         <a href="Admin2.jsp" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Account Update</a>
-                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="signin.html" class="dropdown-item">Sign In</a>
-                                <a href="signup.html" class="dropdown-item">Sign Up</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                                <a href="blank.html" class="dropdown-item">Blank Page</a>
-                            </div>
-                        </div>
+                        <!--                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
+                                                <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
+                                                <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                                                <div class="nav-item dropdown">
+                                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                                                    <div class="dropdown-menu bg-transparent border-0">
+                                                        <a href="signin.html" class="dropdown-item">Sign In</a>
+                                                        <a href="signup.html" class="dropdown-item">Sign Up</a>
+                                                        <a href="404.html" class="dropdown-item">404 Error</a>
+                                                        <a href="blank.html" class="dropdown-item">Blank Page</a>
+                                                    </div>
+                                                </div>-->
                     </div>
                 </nav>
             </div>      
@@ -108,9 +108,18 @@
                     <a href="#" class="sidebar-toggler flex-shrink-0">
                         <i class="fa fa-bars"></i>
                     </a>
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search">
+                    <form class="d-none d-md-flex ms-4" id="searchForm" onsubmit="return searchInPage();">
+                        <input class="form-control border-0" type="search" id="searchInput" placeholder="Search" required>
+                        <button type="submit" class="btn btn-primary ms-2">Search</button>
                     </form>
+                    <style>
+                        .highlight {
+                            background-color: yellow;
+                            font-weight: bold;
+                        }
+                    </style>
+                    <script src="assets/js/SearchNav.js"></script>
+
                     <div class="navbar-nav align-items-center ms-auto">
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -195,7 +204,7 @@
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Account Management</h6>
+                            <h5 class="mb-0">Account Management</h5>
                             <div class="d-flex align-items-center">
                                 <button class="btn btn-success me-2" onclick="openCreateAccountModal()">Create New Account</button>
                                 <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAll()">Show All</button>
@@ -287,55 +296,55 @@
                         }
                     }
                 </script>
-                
+
 
                 <!-- Create Account Modal -->
                 <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="createAccountForm" action="CreateAccountServlet" method="POST"> <!-- Ensure action points to the servlet -->
-                    <div class="mb-3">
-                        <label for="modalAccountName" class="form-label">Account Name</label>
-                        <input type="text" class="form-control" name="username" id="modalAccountName" required>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="createAccountForm" action="CreateAccountServlet" method="POST"> <!-- Ensure action points to the servlet -->
+                                    <div class="mb-3">
+                                        <label for="modalAccountName" class="form-label">Account Name</label>
+                                        <input type="text" class="form-control" name="username" id="modalAccountName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalPassword" class="form-label">Password</label>
+                                        <input type="password" class="form-control" name="password" id="modalPassword" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="modalEmail" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" name="phoneNumber" id="modalPhoneNumber" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modalRole" class="form-label">Role</label>
+                                        <select class="form-select" name="roleID" id="modalRole" required>
+                                            <option value="">Select Role</option>
+                                            <% 
+                                            if (roles != null) {
+                                                for (role r : roles) { 
+                                            %>
+                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
+                                            <% 
+                                                }
+                                            } 
+                                            %>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Create Account</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="modalPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="modalPassword" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="modalEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="modalEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" name="phoneNumber" id="modalPhoneNumber" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="modalRole" class="form-label">Role</label>
-                        <select class="form-select" name="roleID" id="modalRole" required>
-                            <option value="">Select Role</option>
-                            <% 
-                            if (roles != null) {
-                                for (role r : roles) { 
-                            %>
-                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
-                            <% 
-                                }
-                            } 
-                            %>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create Account</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
 
                 <script>
                     function openCreateAccountModal() {
