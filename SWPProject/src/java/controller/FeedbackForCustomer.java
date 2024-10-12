@@ -82,10 +82,13 @@ public class FeedbackForCustomer extends HttpServlet {
             try {
                 int accID = (int)session.getAttribute("AccID");
                 feedDAO.createFeedback(message, accDAO.getAccountByID(accID).getPassengerID(), currentDateTime.toString());
+                request.getRequestDispatcher("userprofile").forward(request, response);
             } catch (Exception e) {
             }
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("userprofile").forward(request, response);
+        
     }
 
     /**

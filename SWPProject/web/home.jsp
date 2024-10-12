@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
 <%@page session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%
     AccountDAO accountDAO = new AccountDAO();
     List<account> accounts = accountDAO.getAllAccount(); // Make sure this retrieves the accounts list
@@ -113,42 +115,18 @@
                     </form>
                     <div class="navbar-nav align-items-center ms-auto">
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Message</span>
+                                <span class="d-none d-lg-inline-flex">Make Feedback</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
+                                <a class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">FeedBack Message</h6>
+                                    <form method="post" action="feedbackforcustomer">
+                                        <input name="feedback"  type="text">
+                                        <button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
+                                    </form>
                                 </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all message</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -177,13 +155,11 @@
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <span class="d-none d-lg-inline-flex">John Doe</span>
+                                <span class="d-none d-lg-inline-flex">Profile</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">My Profile</a>
-                                <a href="#" class="dropdown-item">Settings</a>
-                                <a href="#" class="dropdown-item">Log Out</a>
+                                <a href="userprofile" class="dropdown-item">My Profile</a>
+                                <a href="logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>
@@ -191,15 +167,15 @@
                 <!-- Navbar End -->
                 <div class="form-container w-25 border p-4 rounded shadow">
                     <h3 class="text-center mb-4">Tìm kiếm vé tàu</h3>
-                     <form action="searchTrainResult.jsp" method="GET">
+                    <form action="searchTrainResult.jsp" method="GET">
                         <!-- Ga đi -->
                         <div class="mb-3">
                             <label for="gaDi" class="form-label">Ga đi</label>
                             <select class="form-select" id="gaDi">
                                 <option selected>Chọn ga đi</option>
-                                <option value="1">Ga Hà Nội</option>
-                                <option value="2">Ga Sài Gòn</option>
-                                <option value="3">Ga Đà Nẵng</option>
+                                <c:forEach var="i" items="${requestScope.location}">
+                                    <option value="${i.locationID}">${i.locationName}</option>
+                                </c:forEach>
                             </select>
                         </div>
 
@@ -208,9 +184,9 @@
                             <label for="gaDen" class="form-label">Ga đến</label>
                             <select class="form-select" id="gaDen">
                                 <option selected>Chọn ga đến</option>
-                                <option value="1">Ga Hà Nội</option>
-                                <option value="2">Ga Sài Gòn</option>
-                                <option value="3">Ga Đà Nẵng</option>
+                                <c:forEach var="i" items="${requestScope.location}">
+                                    <option value="${i.locationID}">${i.locationName}</option>
+                                </c:forEach>
                             </select>
                         </div>
 
