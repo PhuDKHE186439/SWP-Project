@@ -56,6 +56,7 @@ public class HomePage extends HttpServlet {
     throws ServletException, IOException {
         //processRequest(request, response);
         TrainDAO trainDAO = new TrainDAO();
+        
         request.setAttribute("location", trainDAO.getAllLocation());
         request.getRequestDispatcher("home.jsp").forward(request, response);
     } 

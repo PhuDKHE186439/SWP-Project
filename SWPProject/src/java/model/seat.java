@@ -10,14 +10,14 @@ package model;
  */
 public class seat{
     private int seatID;
-    private int compartmentID;
+    private compartment compartment;
     private String seatNumber;
     private String seatType;
     private int availabilityStatus;
 
-    public seat(int seatID, int compartmentID, String seatNumber, String seatType, int availabilityStatus) {
+    public seat(int seatID, compartment compartment, String seatNumber, String seatType, int availabilityStatus) {
         this.seatID = seatID;
-        this.compartmentID = compartmentID;
+        this.compartment = compartment;
         this.seatNumber = seatNumber;
         this.seatType = seatType;
         this.availabilityStatus = availabilityStatus;
@@ -31,12 +31,12 @@ public class seat{
         this.seatID = seatID;
     }
 
-    public int getCompartmentID() {
-        return compartmentID;
+    public compartment getCompartment() {
+        return compartment;
     }
 
-    public void setCompartmentID(int compartmentID) {
-        this.compartmentID = compartmentID;
+    public void setCompartment(compartment compartment) {
+        this.compartment = compartment;
     }
 
     public String getSeatNumber() {
@@ -65,7 +65,7 @@ public class seat{
 
     @Override
     public String toString() {
-        return "seat{" + "seatID=" + seatID + ", compartmentID=" + compartmentID + ", seatNumber=" + seatNumber + ", seatType=" + seatType + ", availabilityStatus=" + availabilityStatus + '}';
+        return "seat{" + "seatID=" + seatID + ", compartmentID=" + compartment + ", seatNumber=" + seatNumber + ", seatType=" + seatType + ", availabilityStatus=" + availabilityStatus + '}';
     }
     
     

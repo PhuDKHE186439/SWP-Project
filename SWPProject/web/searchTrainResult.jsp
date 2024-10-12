@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.List, model.account, model.train, dal.AccountDAO, model.role, dal.RoleDAO, java.util.ArrayList"%>
+<%@page import="java.util.List, model.account, model.train, dal.AccountDAO, model.role, dal.RoleDAO, java.util.ArrayList, dal.TrainDAO"%>
 <%@page session="true"%>
 <%
     AccountDAO accountDAO = new AccountDAO();
@@ -9,16 +9,9 @@
 <%
     RoleDAO roleDAO = new RoleDAO();
     List<role> roles = roleDAO.getAllRoles();
-    List<train> trainList = new ArrayList<>();
+    TrainDAO trainDAO = new TrainDAO();
+    List<train> trainList = trainDAO.getAllTrain();
       
-    trainList.add(new train(1, "08:00", "Train A", "50", 1, 2));
-    trainList.add(new train(2, "09:00", "Train B", "60", 1, 3));
-    
-    trainList.add(new train(2, "09:00", "Train B", "60", 1, 3));
-    trainList.add(new train(3, "10:00", "Train C", "70", 2, 3));
-    trainList.add(new train(2, "09:00", "Train B", "60", 1, 3));
-    trainList.add(new train(3, "10:00", "Train C", "70", 2, 3));
-    trainList.add(new train(3, "10:00", "Train C", "70", 2, 3));
 %>
 
 <!DOCTYPE html>
@@ -181,7 +174,7 @@
                             int trainID = t.getTrainID(); // Thông tin ID tàu
                             String departureTime = t.getTrainScheduleTime(); // Thời gian đi
                             String trainName = t.getTrainName(); // Tên tàu
-                            int totalSeats = Integer.parseInt(t.getNumberOfSeat()); // Tổng số chỗ (chuyển đổi từ String sang int)
+                            int totalSeats = t.getNumberOfSeat(); // Tổng số chỗ (chuyển đổi từ String sang int)
                             int availableSeats = totalSeats - 10; // Giả sử có 10 chỗ đã được đặt trước (số này cần được thay đổi theo logic thực tế)
 
                         %>
