@@ -28,9 +28,13 @@
                         <th>ID</th>
                         <th>Schedule Time</th>
                         <th>Name</th>
-                        <th>Number Of Seats</th>
                         <th>Location Start</th>
                         <th>Location Arrival</th>
+                        <th>Start Time</th>
+                        <th>Estimated End Time</th>
+                        <th>Number Of Carriages</th>
+                        <th>Number Of Seats</th>
+                        <th>Status</th>
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -40,9 +44,15 @@
                             <td>${item.trainID}</td>
                             <td>${item.trainScheduleTime}</td>
                             <td>${item.trainName}</td>
-                            <td>${item.numberOfSeat}</td>
                             <td>${item.start.locationName}</td>
                             <td>${item.end.locationName}</td>
+
+                            <td>${item.startTime}</td>
+                            <td>${item.estimatedEndTime}</td>
+                            <td>${item.numberOfCarriages}</td>
+                            <td>${item.numberOfSeat}</td>
+                            <td>${item.status}</td>
+
                             <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateTrain${item.trainID}">
                                     Update
@@ -67,13 +77,10 @@
                                             <label for="recipient-name" class="col-form-label">Name</label>
                                             <input type="text" class="form-control" id="recipient-name" required="" name="name" value="${item.trainName}">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="recipient-seats" class="col-form-label">Number Of Seats</label>
-                                            <input type="number" min="1" class="form-control" id="recipient-seats" name="seats" required="" value="${item.numberOfSeat}">
-                                        </div>
+
                                         <div class="mb-3">
                                             <label for="recipient-seats" class="col-form-label">Location Start</label>
-                                            <select name="startID" required="">
+                                            <select name="startID" required=""  class="form-control">
                                                 <c:forEach items="${locations}" var="i">
                                                     <option value="${i.locationID}" ${item.start.locationID == i.locationID ? 'selected' : ''}>${i.locationName}</option>
                                                 </c:forEach>
@@ -81,23 +88,54 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="recipient-seats" class="col-form-label">Location End</label>
-                                            <select name="endID" required="">
+                                            <select name="endID" required=""  class="form-control">
                                                 <c:forEach items="${locations}" var="i">
                                                     <option value="${i.locationID}" ${item.end.locationID == i.locationID ? 'selected' : ''}>${i.locationName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
-                                </form>
+                                        <div class="mb-3">
+                                            <label for="recipient-startTime" class="col-form-label">Start Time</label>
+                                            <input type="time" class="form-control" id="recipient-startTime" name="startTime" required="" value="${item.startTime}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="recipient-estimatedEndTime" class="col-form-label">Estimated End Time</label>
+                                            <input type="time" class="form-control" id="recipient-estimatedEndTime" name="estimatedEndTime" required="" value="${item.estimatedEndTime}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="recipient-numberOfCarriages" class="col-form-label">Number Of Carriages</label>
+                                            <input type="number" class="form-control" id="recipient-numberOfCarriages" name="numberOfCarriages" required="" value="${item.numberOfCarriages}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="recipient-seats" class="col-form-label">Number Of Seats</label>
+                                            <input type="number" min="1" class="form-control" id="recipient-seats" name="seats" required="" value="${item.numberOfSeat}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="recipient-status" class="col-form-label">Status</label>
+                                            <select name="status" class="form-control" id="recipient-status" required="">
+                                                <option value="Active" <c:if test="${item.status == 'Active'}">selected</c:if>>Active</option>
+                                                <option value="Waiting for Departure" <c:if test="${item.status == 'Waiting for Departure'}">selected</c:if>>Waiting for Departure</option>
+                                                <option value="Under Maintenance" <c:if test="${item.status == 'Under Maintenance'}">selected</c:if>>Under Maintenance</option>
+                                                <option value="Delayed" <c:if test="${item.status == 'Delayed'}">selected</c:if>>Delayed</option>
+                                                <option value="Cancelled" <c:if test="${item.status == 'Cancelled'}">selected</c:if>>Cancelled</option>
+                                                <option value="Completed" <c:if test="${item.status == 'Completed'}">selected</c:if>>Completed</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    </tr>
+                        </tr>
                 </c:forEach>
                 </tbody>
             </table>
@@ -120,13 +158,10 @@
                                 <label for="recipient-name" class="col-form-label">Name</label>
                                 <input type="text" class="form-control" id="recipient-name" required="" name="name">
                             </div>
-                            <div class="mb-3">
-                                <label for="recipient-seats" class="col-form-label">Number Of Seats</label>
-                                <input type="number" class="form-control" id="recipient-seats" name="seats" required=""> 
-                            </div>
+
                             <div class="mb-3">
                                 <label for="recipient-seats" class="col-form-label">Location Start</label>
-                                <select name="startID" required="">
+                                <select name="startID" required=""  class="form-control" >
                                     <c:forEach items="${locations}" var="i">
                                         <option value="${i.locationID}">${i.locationName}</option>
                                     </c:forEach>
@@ -134,11 +169,31 @@
                             </div>
                             <div class="mb-3">
                                 <label for="recipient-seats" class="col-form-label">Location End</label>
-                                <select name="endID" required="">
+                                <select name="endID" required=""  class="form-control">
                                     <c:forEach items="${locations}" var="i">
                                         <option value="${i.locationID}">${i.locationName}</option>
                                     </c:forEach>
                                 </select>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="recipient-startTime" class="col-form-label">Start Time</label>
+                                <input type="time" class="form-control" id="recipient-startTime" name="startTime" required="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-estimatedEndTime" class="col-form-label">Estimated End Time</label>
+                                <input type="time" class="form-control" id="recipient-estimatedEndTime" name="estimatedEndTime" required="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-numberOfCarriages" class="col-form-label">Number Of Carriages</label>
+                                <input type="number" class="form-control" id="recipient-numberOfCarriages" name="numberOfCarriages" required="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-seats" class="col-form-label">Number Of Seats</label>
+                                <input type="number" class="form-control" id="recipient-seats" name="seats" required=""> 
                             </div>
 
                         </div>

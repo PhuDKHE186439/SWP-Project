@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.Admin;
 
 import dal.TrainDAO;
@@ -12,6 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import model.train;
 
 /**
@@ -19,16 +20,18 @@ import model.train;
  * @author Admin
  */
 public class CreateUpdateTrain extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String id = request.getParameter("id");
@@ -37,16 +40,50 @@ public class CreateUpdateTrain extends HttpServlet {
             String seats = request.getParameter("seats");
             String startID = request.getParameter("startID");
             String endID = request.getParameter("endID");
-            train t = new train(Integer.parseInt(id), schedule, name, seats, Integer.parseInt(startID), Integer.parseInt(endID));
+
+            String startTimeStr = request.getParameter("startTime");
+            String estimatedEndTimeStr = request.getParameter("estimatedEndTime");
+            String numberOfCarriagesStr = request.getParameter("numberOfCarriages");
+
+            // Set default status
+            String status = request.getParameter("status");
+            // Convert startTime and estimatedEndTime from String to Time
+            Time startTime = null;
+            Time estimatedEndTime = null;
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); // adjust format as needed
+                startTime = new Time(sdf.parse(startTimeStr).getTime());
+                estimatedEndTime = new Time(sdf.parse(estimatedEndTimeStr).getTime());
+                // Check if estimatedEndTime is greater than startTime
+                if (estimatedEndTime.before(startTime)) {
+                    // Handle the case when estimatedEndTime is not greater than startTime
+                    // You can throw an exception, return an error message, etc.
+                    throw new IllegalArgumentException("Estimated end time must be after the start time.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // Handle parsing exceptions
+                return;
+            }
+
+            // Convert numberOfCarriages to int
+            int numberOfCarriages = Integer.parseInt(numberOfCarriagesStr);
+
+            train t = new train(Integer.parseInt(id), schedule, name, seats, Integer.parseInt(startID), Integer.parseInt(endID), status, // set status
+                    startTime, // set startTime
+                    estimatedEndTime, // set estimatedEndTime
+                    numberOfCarriages // set numberOfCarriages
+            );
             TrainDAO trainDAO = new TrainDAO();
-            trainDAO.updateTrain(t,Integer.parseInt(id));
+            trainDAO.updateTrain(t, Integer.parseInt(id));
             response.sendRedirect("trains");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -54,12 +91,13 @@ public class CreateUpdateTrain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -67,12 +105,13 @@ public class CreateUpdateTrain extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
