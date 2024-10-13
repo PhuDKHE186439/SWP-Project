@@ -324,22 +324,23 @@
                                                             <th>TimeArrive</th>
                                                             <th>Price</th>
                                                             <th>PruchaseDate</th>
+                                                            <th>PurchaseMethod</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <c:forEach var="i" items="${requestScope.CustomerHistory}">
                                                     <tr>
-                                                        <td>${i.ticketID}</td>
-                                                        <td>${i.ticketClass.categoryName}</td>
-                                                        <td>${i.seat.compartment.compartmentNumber}</td>
-                                                        <td>${i.seat.seatNumber}</td>
-                                                        <td>${i.timeArrive}</td>
-                                                        <td>${i.ticketPrice}</td>
-                                                        <td>${i.purchaseDate}</td>
+                                                        <td>${i.ticket.ticketID}</td>
+                                                        <td>${i.ticket.ticketClass.categoryName}</td>
+                                                        <td>${i.ticket.seat.compartment.compartmentNumber}</td>
+                                                        <td>${i.ticket.seat.seatNumber}</td>
+                                                        <td>${i.ticket.timeArrive}</td>
+                                                        <td>${i.ticket.ticketPrice}</td>
+                                                        <td>${i.ticket.purchaseDate}</td>
+                                                        <td>${i.paymentMethod}</td>
                                                     </tr>
                                                     </c:forEach>
                                                     </tbody>
-
                                                 </table>
 
                                             </div> 

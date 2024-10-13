@@ -16,7 +16,7 @@ public class train {
     private location startLocation;
     private location arrivalLocation;
 
-    public train(int trainID, String trainScheduleTime, String trainName, int numberOfSeat, location startLocationID, location arrivalLocationID) {
+    public train(int trainID, String trainScheduleTime, String trainName, int numberOfSeat, location startLocation, location arrivalLocation) {
         this.trainID = trainID;
         this.trainScheduleTime = trainScheduleTime;
         this.trainName = trainName;
