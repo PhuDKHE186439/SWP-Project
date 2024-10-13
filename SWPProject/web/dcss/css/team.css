@@ -1,0 +1,88 @@
+/*
+Template Name: Apz News
+File: Layout CSS
+Author: TemplatesOnWeb
+Author URI: https://www.templateonweb.com/
+Licence: <a href="https://www.templateonweb.com/license">Website Template Licence</a>
+*/
+/*********************team*************/
+#team_home{
+ padding-top:40px;
+ padding-bottom:40px;
+ background:#0bc1931a;
+  }
+.team_homei h5{
+ color:#666;  
+   }
+.team_homei h5:before {
+    display: inline-block;
+    width: 10%;
+    height: 1px;
+    background-color: #000;
+    vertical-align: middle;
+    margin-right: 2%;
+    content: "";
+}
+.team_homei h5:after {
+    display: inline-block;
+    width: 10%;
+    height: 1px;
+    background-color: #000;
+    vertical-align: middle;
+    margin-left: 2%;
+    content: "";
+}
+.team_homeii{
+ border:1px solid #0bc1931a;
+ padding:5px 10px 20px 10px;
+ background:#fff; 
+  }
+.team_homei:hover{
+  box-shadow: 0 0 10px #0bc1931a;
+  }
+.team_homei img{
+ width:100%; 
+  }
+.grid figure {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	width: 100%;
+	text-align: center;
+	cursor: pointer;
+}
+
+figure.effect-jazz figcaption::after,
+figure.effect-jazz img
+ {
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+figure.effect-jazz:hover img {
+	-webkit-transform: scale3d(1.05,1.05,1);
+	transform: scale3d(1.05,1.05,1);
+}
+.team_homeii .social-circle li a{
+background:#0bc193;
+  }
+.team_home{
+margin-top:30px; 
+ }
+/*********************team_end****************/
+
+@media screen and (max-width : 767px){
+.team_homei {
+margin-top:10px; 
+ }
+}
+
+@media (min-width:768px) and (max-width:991px) {
+
+ }
+@media (min-width:992px) and (max-width:1200px) {
+
+  }
+@media (min-width:1201px) and (max-width:1355px) {
+
+ }

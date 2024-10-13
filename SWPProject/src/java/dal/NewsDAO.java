@@ -199,4 +199,17 @@ public class NewsDAO extends DBContext {
             rs.getTimestamp("updated_at")
         );
     }
+    public News getLatestNews() {
+    String sql = "SELECT * FROM trainproject.news ORDER BY id DESC LIMIT 1";
+    try (PreparedStatement st = connection.prepareStatement(sql)) {
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return extractNewsFromResultSet(rs);
+        }
+    } catch (SQLException e) {
+        System.out.println("Error in getLatestNews: " + e.getMessage());
+    }
+    return null; // Return null if no news found
+}
+
 }

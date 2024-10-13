@@ -102,6 +102,7 @@ public class NewsController extends HttpServlet {
     request.setAttribute("search", search);
     request.setAttribute("sortOrder", sortOrder);
     request.setAttribute("status", status); // Set status in the request
+
     request.getRequestDispatcher("/NewsManagement.jsp").forward(request, response);
 }
 

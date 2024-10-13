@@ -11,7 +11,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .modal-body pre {
+            white-space: pre-wrap; /* Preserve whitespace and wrap lines */
+            word-wrap: break-word; /* Allow long words to be broken */
+        }
+    </style>
 </head>
+
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">News Management</h1>
@@ -84,8 +91,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td><fmt:formatDate value="${news.created_at}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${news.updated_at}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                <td><fmt:formatDate value="${news.created_at}" pattern="yyyy-MM-dd    HH:mm"/></td>
+                                <td><fmt:formatDate value="${news.updated_at}" pattern="yyyy-MM-dd     HH:mm"/></td>
                                 <td>
                                 <button class="btn btn-info btn-sm view-news" data-id="${news.id}">
                                         <i class="fas fa-eye"></i> View
@@ -203,7 +210,9 @@
                 });
             });
         });
-        // View News
+ 
+
+
 $('.view-news').click(function() {
     var newsId = $(this).data('id');
     $.get('${pageContext.request.contextPath}/news/view?id=' + newsId, function(news) {
@@ -215,7 +224,7 @@ $('.view-news').click(function() {
         if (news.image) {
             content += '<img src="' + news.image + '" class="img-fluid mb-3" alt="News Image">';
         }
-        content += '<p>' + news.content + '</p>';
+        content += '<pre>' + news.content + '</pre>'; // Use <pre> to preserve formatting
         
         // Load the content into the modal and show it
         $('#viewNewsContent').html(content);
