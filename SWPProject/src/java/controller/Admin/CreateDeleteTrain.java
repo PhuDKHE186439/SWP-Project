@@ -5,7 +5,7 @@
 
 package controller.Admin;
 
-import dal.AccountDAO;
+import dal.TrainDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,9 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Laptop
+ * @author Admin
  */
-public class CreateAccountServlet extends HttpServlet {
+public class CreateDeleteTrain extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,16 +30,10 @@ public class CreateAccountServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateAccountServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateAccountServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String id = request.getParameter("id");
+            TrainDAO trainDAO = new TrainDAO();
+            trainDAO.deleteTrain(Integer.parseInt(id));
+            response.sendRedirect("trains");
         }
     } 
 
@@ -65,18 +59,9 @@ public class CreateAccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-        int passengerID = Integer.parseInt(request.getParameter("passengerID"));
-
-        AccountDAO accountDAO = new AccountDAO();
-        accountDAO.registerAccount(phoneNumber, username, password, email, roleID, passengerID);
-
-        response.sendRedirect("success.jsp");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /** 

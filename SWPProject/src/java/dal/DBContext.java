@@ -19,13 +19,17 @@ public class DBContext {
     public  DBContext(){
         String url="jdbc:mysql://localhost:3306/trainproject";
         String user = "root";
-        String pass = "123";
+        String pass = "Kimanh3082@";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(new DBContext().connection);
     }
     
 }

@@ -4,6 +4,8 @@
  */
 package model;
 
+import dal.LocationDAO;
+
 /**
  *
  * @author My Asus
@@ -15,6 +17,8 @@ public class train {
     private String numberOfSeat;
     private int startLocationID;
     private int arrivalLocationID;
+    private location start;
+    private location end;
 
     public train(int trainID, String trainScheduleTime, String trainName, String numberOfSeat, int startLocationID, int arrivalLocationID) {
         this.trainID = trainID;
@@ -24,6 +28,30 @@ public class train {
         this.startLocationID = startLocationID;
         this.arrivalLocationID = arrivalLocationID;
     }
+
+    public location getStart() {
+        return start;
+    }
+
+    public void setStart(location start) {
+        this.start = start;
+    }
+
+    public location getEnd() {
+        return end;
+    }
+
+    public void setEnd(location end) {
+        this.end = end;
+    }
+
+    public train(int trainID, String trainScheduleTime, String trainName, String numberOfSeat,int startLocationID, int arrivalLocationID,LocationDAO locationDAO) {
+        this(trainID,trainScheduleTime,trainName,numberOfSeat,startLocationID,arrivalLocationID);
+        this.start = locationDAO.getLocationByID(startLocationID);
+        this.end = locationDAO.getLocationByID(arrivalLocationID);
+    }
+    
+    
 
     public int getTrainID() {
         return trainID;

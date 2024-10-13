@@ -14,7 +14,7 @@
     </head>
     <body class="body">
         <jsp:include page="Menu.jsp"></jsp:include>
-            <div class="page-wrapper">
+            <div class="page-wrapper"> 
                 <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="dash_nav-bar w-nav"></div>
                 <div class="dash_content">
                     <div class="dash_header">
@@ -224,6 +224,7 @@
                                                         <div class="text-size-small text-color-grey">Minimum 8-characters.</div>
                                                         <div class="spacer-s"></div><input type="submit" data-wait="Please wait..." class="dash_button is-modal w-button" value="Set Password" onclick="return confirm('Are you sure?')">
                                                     </form>
+
                                                     <div class="w-form-done">
                                                         <div>Thank you! Your submission has been received!</div>
                                                     </div>

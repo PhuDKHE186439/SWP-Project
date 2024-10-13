@@ -5,18 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
+<%@page import="java.util.List, model.account, dal.AccountDAO"%>
 <%@page session="true"%>
 <%
     AccountDAO accountDAO = new AccountDAO();
     List<account> accounts = accountDAO.getAllAccount(); // Make sure this retrieves the accounts list
 %>
-
-<%
-    RoleDAO roleDAO = new RoleDAO();
-    List<role> roles = roleDAO.getAllRoles();
-%>
-
 
 <!DOCTYPE html>
 <html>
@@ -54,9 +48,9 @@
                             <div data-current="Profile" data-easing="ease" data-duration-in="300" data-duration-out="100" class="dash_profile-tabs w-tabs">
                                 <div class="dash_profile-menu w-tab-menu">
                                     <a data-w-tab="Profile" class="dash_profile-nav-link w-inline-block w-tab-link w--current">
-                                        <div>Account </div>
+                                        <div>My Profile</div>
                                     </a>
-                                    <a data-w-tab="Role" class="dash_profile-nav-link w-inline-block w-tab-link">
+                                    <a data-w-tab="Billing" class="dash_profile-nav-link w-inline-block w-tab-link">
                                         <div>Billing</div>
                                     </a>
                                     <a data-w-tab="Preferences" class="dash_profile-nav-link w-inline-block w-tab-link">
@@ -76,12 +70,13 @@
                                     <div data-w-tab="Profile" class="w-tab-pane w--tab-active">
                                         <div class="profile_form-header">
                                             <div>
-                                                <div class="profile_h1">Account Manager</div>
+                                                <div class="profile_h1">My Profile</div>
                                             </div>
                                         </div>
                                         <div class="profile_section">
-                                            <div class="profile_section-head">Ban Account</div>
-                                            <div class="profile_flex"></div>
+                                            <div class="profile_section-head">Personal Information</div>
+                                            <div class="profile_flex">                
+                                            </div>
                                             <div>
                                                 <div class="modal_open">
                                                     <a href="#" class="outline-button edit w-inline-block">
@@ -99,6 +94,7 @@
                                                         </div>
                                                     </a>
                                                 </div>
+
                                                 <div class="dash_modal">
                                                     <div class="modal_close">
                                                         <div class="modal_close-icon w-embed">
@@ -107,17 +103,14 @@
                                                             </svg>
                                                         </div>
                                                     </div>
+
                                                     <div class="w-form">
-                                                        <!-- Ban Account Form -->
-                                                        <form action="BanAccount" id="wf-form-Ban-Account" method="post" class="modal_form">
+                                                        <form action="BanAccount" id="wf-form-Profile-Form" method="post" class="modal_form">
                                                             <div class="profile_h1">Ban Account</div>
                                                             <div class="input-wrapper">
-                                                                <label for="account" class="profile_label is-modal">Select Account to Ban:</label>
-                                                                <input class="input w-input" type="text" id="searchInputBan" placeholder="Search accounts..." onkeyup="filterAccounts('Ban')">
-                                                            </div>
-                                                            <div class="input-wrapper">
-                                                                <label for="accountSelectBan" class="profile_label is-modal">Account:</label>
-                                                                <select class="input w-input" id="accountSelectBan" name="accountID" required size="5"style="width: 100%; height: auto;" >
+                                                                <label for="account" class="profile_label is-modal">Select Account to Ban:</label><br>
+                                                                <input type="text" id="searchInput" placeholder="Search accounts..." onkeyup="filterAccounts()"><br>
+                                                                <select id="accountSelect" name="accountID" required size="5">
                                                                     <option value="" disabled selected>Select Account</option>
                                                                 <% for (account acc : accounts) { %>
                                                                 <option value="<%= acc.getAccountID() %>">
@@ -127,24 +120,47 @@
                                                             </select>
                                                         </div>
                                                         <div class="spacer-s"></div>
-                                                        <input type="hidden" name="action" value="ban">
-                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Ban Account" onclick="return confirm('Are you sure?')">       
+                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Ban Account">
                                                     </form>
+                                                    <div class="w-form-done">
+                                                        <div>Thank you! Your submission has been received!</div>
+                                                    </div>
+                                                    <div class="w-form-fail">
+                                                        <div>Oops! Something went wrong while submitting the form.</div>
+                                                    </div>
                                                 </div>
+
+                                                <script>
+                                                    function filterAccounts() {
+                                                        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+                                                        const options = document.getElementById('accountSelect').options;
+
+                                                        for (let i = 0; i < options.length; i++) {
+                                                            const optionText = options[i].text.toLowerCase();
+                                                            options[i].style.display = optionText.includes(searchInput) ? 'block' : 'none';
+                                                        }
+                                                    }
+                                                </script>
+
+
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                     <div class="profile_section">
-                                        <div class="profile_section-head">Unban Account</div>
-                                        <div class="profile_flex"></div>
+                                        <div class="profile_section-head">Email Address</div>
+                                        <div class="profile_flex">
+                                            <div class="profile_column">
+                                                <div class="input-label">Email Address</div>
+                                                <div data-ms-member="email" class="input-preview">${profile.email}</div>
+                                            </div>
+                                        </div>
                                         <div>
                                             <div class="modal_open">
                                                 <a href="#" class="outline-button edit w-inline-block">
                                                     <div class="flex-row-outer">
                                                         <div>Edit</div>
-                                                        <div class="dash_icon edit w-embed">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                        <div class="dash_icon edit w-embed"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
                                                             <g>
                                                             <rect fill="none" height="24" width="24"></rect>
                                                             </g>
@@ -155,27 +171,25 @@
                                                             <rect height="4" width="20" x="2" y="20"></rect>
                                                             </g>
                                                             </g>
-                                                            </svg>
-                                                        </div>
+                                                            </svg></div>
                                                     </div>
                                                 </a>
                                             </div>
                                             <div class="dash_modal">
                                                 <div class="modal_close">
-                                                    <div class="modal_close-icon w-embed">
-                                                        <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <div class="modal_close-icon w-embed"><svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
                                                         </svg>
                                                     </div>
                                                 </div>
                                                 <div class="w-form">
                                                     <!-- Unban Account Form -->
-                                                    <form action="BanAccount" id="wf-form-Unban-Form" method="post" class="modal_form">
+                                                    <form action="UnbanAccount" id="wf-form-Unban-Form" method="post" class="modal_form">
                                                         <div class="profile_h1">Unban Account</div>
                                                         <div class="input-wrapper">
                                                             <label for="account" class="profile_label is-modal">Select Account to Unban:</label><br>
-                                                            <input class="input w-input" type="text" id="searchInputUnban" placeholder="Search accounts..." onkeyup="filterAccounts('searchInputUnban', 'accountSelectUnban')"><br>
-                                                            <select class="input w-input" id="accountSelectUnban" name="accountID" required size="5" style="width: 100%; height: auto;">
+                                                            <input type="text" id="searchInputUnban" placeholder="Search accounts..." onkeyup="filterAccounts('searchInputUnban', 'accountSelectUnban')"><br>
+                                                            <select id="accountSelectUnban" name="accountID" required size="5">
                                                                 <option value="" disabled selected>Select Account</option>
                                                                 <% for (account acc : accounts) { %>
                                                                 <option value="<%= acc.getAccountID() %>">
@@ -185,8 +199,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="spacer-s"></div>
-                                                        <input type="hidden" name="action" value="unban">
-                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Unban Account" onclick="return confirm('Are you sure?')">
+                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Unban Account">
                                                     </form>
                                                     <div class="w-form-done">
                                                         <div>Thank you! Your submission has been received!</div>
@@ -199,192 +212,173 @@
                                         </div>
                                     </div>
                                     <div class="profile_section">
-                                        <div class="profile_section-head">Create Account</div>
-                                        <div class="profile_flex">                
+                                        <div class="profile_section-head">Account Change Password</div>
+                                        <div class="profile_flex">
+                                            <div class="profile_column">
+                                                <div class="input-label">Password</div>
+                                                <div class="profile_field-wrapper has-button">
+                                                    <div data-ms-content="has-password">************</div>
+                                                </div>
+                                                <p style="color: Red">${requestScope.passwordChange}</p>
+                                            </div>
                                         </div>
                                         <div>
                                             <div class="modal_open">
                                                 <a href="#" class="outline-button edit w-inline-block">
                                                     <div class="flex-row-outer">
                                                         <div>Edit</div>
-                                                        <div class="dash_icon edit w-embed">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                        <div class="dash_icon edit w-embed"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewbox="0 0 24 24" width="24px" fill="currentColor">
+                                                            <g>
+                                                            <rect fill="none" height="24" width="24"></rect>
+                                                            </g>
+                                                            <g>
                                                             <g>
                                                             <path d="M16.81,8.94l-3.75-3.75L4,14.25V18h3.75L16.81,8.94z M6,16v-0.92l7.06-7.06l0.92,0.92L6.92,16H6z"></path>
                                                             <path d="M19.71,6.04c0.39-0.39,0.39-1.02,0-1.41l-2.34-2.34C17.17,2.09,16.92,2,16.66,2c-0.25,0-0.51,0.1-0.7,0.29l-1.83,1.83 l3.75,3.75L19.71,6.04z"></path>
                                                             <rect height="4" width="20" x="2" y="20"></rect>
                                                             </g>
-                                                            </svg>
-                                                        </div>
+                                                            </g>
+                                                            </svg></div>
                                                     </div>
                                                 </a>
                                             </div>
                                             <div class="dash_modal">
                                                 <div class="modal_close">
-                                                    <div class="modal_close-icon w-embed">
-                                                        <svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <div class="modal_close-icon w-embed"><svg width="420" height="420" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22ZM12 10.586L9.172 7.757L7.757 9.172L10.586 12L7.757 14.828L9.172 16.243L12 13.414L14.828 16.243L16.243 14.828L13.414 12L16.243 9.172L14.828 7.757L12 10.586Z" fill="currentColor"></path>
                                                         </svg>
                                                     </div>
                                                 </div>
                                                 <div class="w-form">
-                                                    <form action="CreateAccountServlet" id="wf-form-Create-Account" method="post" class="modal_form">
-                                                        <div class="profile_h1">Create New Account</div>
-                                                        <div class="input-wrapper">
-                                                            <label for="phoneNumber" class="profile_label is-modal">Phone Number</label>
-                                                            <input class="input w-input" maxlength="256" name="phoneNumber" value="${profile.phoneNumber}" placeholder="${profile.phoneNumber}" type="text" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="username" class="profile_label is-modal">Username</label>
-                                                            <input class="input w-input" maxlength="256" name="username" value="${profile.username}" placeholder="${profile.username}" type="text" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="password" class="profile_label is-modal">Password</label>
-                                                            <input class="input w-input" maxlength="256" name="password" value="${profile.password}" placeholder="${profile.password}" type="password" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="email" class="profile_label is-modal">Email</label>
-                                                            <input class="input w-input" maxlength="256" name="email" value="${profile.email}" placeholder="${profile.email}" type="email" required>
-                                                        </div>
-                                                        <div class="input-wrapper">
-                                                            <label for="roleID" class="profile_label is-modal">Role</label>
-                                                            <select class="input w-input" name="roleID" required>
-                                                                <option value="" disabled selected>Select Role</option>
-                                                                <% for (role r : roles) { %>
-                                                                <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
-                                                                <% } %>
-                                                            </select>
-                                                        </div>
-                                                        <div class="spacer-s"></div>
-                                                        <input type="submit" data-wait="Please wait..." class="dash_button w-button" value="Create Account" onclick="return confirm('Are you sure?')">
-                                                        <input type="hidden" name="action" value="create">
+                                                    <form action="updateuserprofile" id="wf-form-Password-Form" name="wf-form-Password-Form" data-name="Password Form" method="post" data-ms-form="password" class="modal_form" data-wf-page-id="66ed4a18c4f9443448dbb307" data-wf-element-id="534b86fd-38d8-e0e8-e189-7bc1b8387d7a">
+                                                        <div class="profile_h1">Update Password</div>
+                                                        <div data-ms-content="has-password"><label for="Current-Password" class="profile_label is-modal">Current Password</label><input class="input w-input" maxlength="256" name="currentPassword" data-name="Current Password" placeholder="" type="password" id="Current-Password" data-ms-member="current-password" required=""></div>
+                                                        <div class="input-wrapper"><label for="New-Password" class="profile_label is-modal">New Password</label><input class="input w-input" maxlength="256" name="newPassword" data-name="newPassword" placeholder="" type="password" id="New-Password" data-ms-member="new-password" required=""></div>
+                                                        <div class="text-size-small text-color-grey">Minimum 8-characters.</div>
+                                                        <div class="spacer-s"></div><input type="submit" data-wait="Please wait..." class="dash_button is-modal w-button" value="Set Password" onclick="return confirm('Are you sure?')">
                                                     </form>
+
+                                                    <div class="w-form-done">
+                                                        <div>Thank you! Your submission has been received!</div>
+                                                    </div>
+                                                    <div class="w-form-fail">
+                                                        <div>Oops! Something went wrong while submitting the form.</div>
+                                                    </div>
                                                 </div>
-
-
-                                                <script>
-                                                    function closeModal() {
-                                                        document.getElementById("wf-form-Create-Account").reset();
-                                                        // Logic to close the modal or reset the form, as per your project needs
-                                                    }
-                                                </script>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div data-w-tab="Billing" class="w-tab-pane"></div>
+                                <div data-w-tab="Preferences" class="w-tab-pane"></div>
+                                <div data-w-tab="Tab" class="w-tab-pane"></div>
+                                <div data-w-tab="Tab 2" class="w-tab-pane"></div>
+                                <div data-w-tab="Tab 3" class="w-tab-pane"></div>
                             </div>
-                            <div data-w-tab="Role" class="w-tab-pane"></div>
-                            <div data-w-tab="Preferences" class="w-tab-pane"></div>
-                            <div data-w-tab="Tab" class="w-tab-pane"></div>
-                            <div data-w-tab="Tab 2" class="w-tab-pane"></div>
-                            <div data-w-tab="Tab 3" class="w-tab-pane"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="delete-me">
-        <div class="hide">
-            <div data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1ac" class="widget-wrapper">
-                <div class="widget-container">
-                    <div class="widget-embed w-embed w-iframe">
-                        <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/295b4d0c28e1418293db4da9b226b61f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-                        <style>
-                            .widget-wrapper:hover .double-click {
-                                opacity: 1;
-                            }
-                            .widget-wrapper:hover .widget-move {
-                                opacity: .50;
-                            }
-                            .widget-move:hover {
-                                opacity: 1 !important;
-                            }
-                        </style>
+        <div class="delete-me">
+            <div class="hide">
+                <div data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1ac" class="widget-wrapper">
+                    <div class="widget-container">
+                        <div class="widget-embed w-embed w-iframe">
+                            <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/295b4d0c28e1418293db4da9b226b61f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+                            <style>
+                                .widget-wrapper:hover .double-click {
+                                    opacity: 1;
+                                }
+                                .widget-wrapper:hover .widget-move {
+                                    opacity: .50;
+                                }
+                                .widget-move:hover {
+                                    opacity: 1 !important;
+                                }
+                            </style>
+                        </div>
                     </div>
+                    <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1af" href="#" class="widget-move right w-inline-block">
+                        <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
+                            <g>
+                            <rect fill="none" height="24" width="24"></rect>
+                            </g>
+                            <g>
+                            <g>
+                            <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
+                            <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
+                            </polygon></polygon></g>
+                            </g>
+                            </svg></div>
+                    </a>
+                    <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b1" href="#" class="widget-move left w-inline-block">
+                        <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
+                            <g>
+                            <rect fill="none" height="24" width="24"></rect>
+                            </g>
+                            <g>
+                            <g>
+                            <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
+                            <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
+                            </polygon></polygon></g>
+                            </g>
+                            </svg></div>
+                    </a>
+                    <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b3" href="#" class="widget-move down w-inline-block">
+                        <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
+                            <g>
+                            <rect fill="none" height="24" width="24"></rect>
+                            </g>
+                            <g>
+                            <g>
+                            <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
+                            <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
+                            </polygon></polygon></g>
+                            </g>
+                            </svg></div>
+                    </a>
+                    <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b5" href="#" class="widget-move w-inline-block">
+                        <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
+                            <g>
+                            <rect fill="none" height="24" width="24"></rect>
+                            </g>
+                            <g>
+                            <g>
+                            <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
+                            <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
+                            </polygon></polygon></g>
+                            </g>
+                            </svg></div>
+                    </a>
+                    <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b7" href="#" class="widget-close w-inline-block">
+                        <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none"></path>
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path>
+                            </svg></div>
+                    </a>
+                    <div class="double-click">Double Click <br>to expand</div>
                 </div>
-                <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1af" href="#" class="widget-move right w-inline-block">
-                    <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
-                        <g>
-                        <rect fill="none" height="24" width="24"></rect>
-                        </g>
-                        <g>
-                        <g>
-                        <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
-                        <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
-                        </polygon></polygon></g>
-                        </g>
+                <div data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1bd" class="widget-mobile">
+                    <div class="widget-svg play w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="100px" fill="currentColor">
+                        <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"></path>
                         </svg></div>
-                </a>
-                <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b1" href="#" class="widget-move left w-inline-block">
-                    <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
-                        <g>
-                        <rect fill="none" height="24" width="24"></rect>
-                        </g>
-                        <g>
-                        <g>
-                        <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
-                        <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
-                        </polygon></polygon></g>
-                        </g>
-                        </svg></div>
-                </a>
-                <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b3" href="#" class="widget-move down w-inline-block">
-                    <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
-                        <g>
-                        <rect fill="none" height="24" width="24"></rect>
-                        </g>
-                        <g>
-                        <g>
-                        <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
-                        <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
-                        </polygon></polygon></g>
-                        </g>
-                        </svg></div>
-                </a>
-                <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b5" href="#" class="widget-move w-inline-block">
-                    <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
-                        <g>
-                        <rect fill="none" height="24" width="24"></rect>
-                        </g>
-                        <g>
-                        <g>
-                        <polygon points="6,17.59 7.41,19 12,14.42 16.59,19 18,17.59 12,11.59">
-                        <polygon points="6,11 7.41,12.41 12,7.83 16.59,12.41 18,11 12,5">
-                        </polygon></polygon></g>
-                        </g>
-                        </svg></div>
-                </a>
-                <a data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1b7" href="#" class="widget-close w-inline-block">
-                    <div class="widget-svg-small w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
+                    <div class="widget-svg close w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
                         <path d="M0 0h24v24H0V0z" fill="none"></path>
                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path>
                         </svg></div>
-                </a>
-                <div class="double-click">Double Click <br>to expand</div>
+                </div>
             </div>
-            <div data-w-id="0cb43e2f-5d10-d354-9968-decb3ee8a1bd" class="widget-mobile">
-                <div class="widget-svg play w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="100px" fill="currentColor">
-                    <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"></path>
-                    </svg></div>
-                <div class="widget-svg close w-embed"><svg xmlns="http://www.w3.org/2000/svg" height="auto" viewbox="0 0 24 24" width="1000px" fill="currentColor">
-                    <path d="M0 0h24v24H0V0z" fill="none"></path>
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path>
-                    </svg></div>
-            </div>
-        </div>
-        <div>
-            <div class="ms-iframe">
-                <div class="hidden-embed w-embed w-script">
+            <div>
+                <div class="ms-iframe">
+                    <div class="hidden-embed w-embed w-script">
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <jsp:include page="Footer.jsp"></jsp:include>
-    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=66ed4a17c4f9443448dbb298" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="assets/js/UserProfile.js" type="text/javascript"></script>
-    <script src="assets/js/Admin.js" type="text/javascript"></script>
-</body>
+        <jsp:include page="Footer.jsp"></jsp:include>
+        <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=66ed4a17c4f9443448dbb298" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="assets/js/UserProfile.js" type="text/javascript"></script>
+    </body>
 </html>

@@ -80,7 +80,7 @@ public class BanAccount extends HttpServlet {
             accountDAO.updateAccountStatus(accountID, "Active"); // Unban the account
         }
 
-        response.sendRedirect("Admin.jsp"); // Redirect after the operation
+        response.sendRedirect("banUser.jsp"); // Redirect after the operation
     }
 
     /**
