@@ -68,7 +68,7 @@
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
                             <p style="color: Red">${requestScope.annoutment}</p>
                         </div>	
-                        <form class="contact-bx" action="register" method="post">
+                        <form class="contact-bx" action="register" method="post" autocomplete="off">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">

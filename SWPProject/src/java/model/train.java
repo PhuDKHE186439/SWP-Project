@@ -12,17 +12,17 @@ public class train {
     private int trainID;
     private String trainScheduleTime;
     private String trainName;
-    private String numberOfSeat;
-    private int startLocationID;
-    private int arrivalLocationID;
+    private int numberOfSeat;
+    private location startLocation;
+    private location arrivalLocation;
 
-    public train(int trainID, String trainScheduleTime, String trainName, String numberOfSeat, int startLocationID, int arrivalLocationID) {
+    public train(int trainID, String trainScheduleTime, String trainName, int numberOfSeat, location startLocation, location arrivalLocation) {
         this.trainID = trainID;
         this.trainScheduleTime = trainScheduleTime;
         this.trainName = trainName;
         this.numberOfSeat = numberOfSeat;
-        this.startLocationID = startLocationID;
-        this.arrivalLocationID = arrivalLocationID;
+        this.startLocation = startLocation;
+        this.arrivalLocation = arrivalLocation;
     }
 
     public int getTrainID() {
@@ -49,33 +49,35 @@ public class train {
         this.trainName = trainName;
     }
 
-    public String getNumberOfSeat() {
+    public int getNumberOfSeat() {
         return numberOfSeat;
     }
 
-    public void setNumberOfSeat(String numberOfSeat) {
+    public void setNumberOfSeat(int numberOfSeat) {
         this.numberOfSeat = numberOfSeat;
     }
 
-    public int getStartLocationID() {
-        return startLocationID;
+    public location getStartLocation() {
+        return startLocation;
     }
 
-    public void setStartLocationID(int startLocationID) {
-        this.startLocationID = startLocationID;
+    public void setStartLocation(location startLocation) {
+        this.startLocation = startLocation;
     }
 
-    public int getArrivalLocationID() {
-        return arrivalLocationID;
+    public location getArrivalLocation() {
+        return arrivalLocation;
     }
 
-    public void setArrivalLocationID(int ArrivalLocationID) {
-        this.arrivalLocationID = ArrivalLocationID;
+    public void setArrivalLocation(location arrivalLocation) {
+        this.arrivalLocation = arrivalLocation;
     }
+
+
 
     @Override
     public String toString() {
-        return "train{" + "trainID=" + trainID + ", trainScheduleTime=" + trainScheduleTime + ", trainName=" + trainName + ", numberOfSeat=" + numberOfSeat + ", startLocationID=" + startLocationID + ", arrivalLocationID=" + arrivalLocationID + '}';
+        return "train{" + "trainID=" + trainID + ", trainScheduleTime=" + trainScheduleTime + ", trainName=" + trainName + ", numberOfSeat=" + numberOfSeat + ", startLocationID=" + startLocation + ", arrivalLocationID=" + arrivalLocation + '}';
     }
     
 }

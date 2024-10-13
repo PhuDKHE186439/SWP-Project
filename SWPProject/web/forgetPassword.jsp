@@ -69,7 +69,7 @@
 					<p>Login Your Account <a href="login.jsp">Click here</a></p>
 				</div>	
                             <p style="color: Red">${requestScope.error}</p>
-				<form action="forgetpassword" method="post" class="contact-bx">
+                            <form action="forgetpassword" method="post" class="contact-bx" autocomplete="off">
 					<div class="row placeani">
 						<div class="col-lg-12">
 							<div class="form-group">

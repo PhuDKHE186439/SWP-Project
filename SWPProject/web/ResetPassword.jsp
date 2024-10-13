@@ -68,21 +68,19 @@
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
                             <p style="color: red">${requestScope.annoutment}</p>
                         </div>	
-                        <form class="contact-bx" action="resetpass" method="post">
+                        <form class="contact-bx" action="resetpass" method="post" autocomplete="off">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your New Password</label>
-                                            <input name="newpassreset" type="password" required="" class="form-control">
+                                            <input name="newpassreset" type="password" required="" class="form-control" placeholder="Your New Password">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Re-Type Your Password</label>
-                                            <input name="repassreset" type="password" required="" class="form-control">
+                                            <input name="repassreset" type="password" required="" class="form-control" placeholder="Re-Type Your Password">
                                         </div>
                                     </div>
                                 </div>

@@ -11,9 +11,9 @@ package model;
 public class compartment {
     private int compartmentID;
     private int compartmentNumber;
-    private int trainID;
+    private train trainID;
 
-    public compartment(int compartmentID, int compartmentNumber, int trainID) {
+    public compartment(int compartmentID, int compartmentNumber, train trainID) {
         this.compartmentID = compartmentID;
         this.compartmentNumber = compartmentNumber;
         this.trainID = trainID;
@@ -35,11 +35,11 @@ public class compartment {
         this.compartmentNumber = compartmentNumber;
     }
 
-    public int getTrainID() {
+    public train getTrainID() {
         return trainID;
     }
 
-    public void setTrainID(int trainID) {
+    public void setTrainID(train trainID) {
         this.trainID = trainID;
     }
 

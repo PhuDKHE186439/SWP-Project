@@ -7,6 +7,8 @@ package controller;
 import dal.AccountDAO;
 import dal.OtpQuestionDAO;
 import dal.PassengerDAO;
+import dal.PaymentDAO;
+import dal.TicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,10 +68,13 @@ public class UserProfile extends HttpServlet {
         AccountDAO accDAO = new AccountDAO();
         OtpQuestionDAO otpDAO = new OtpQuestionDAO();
         HttpSession session = request.getSession();
+        TicketDAO ticketDAO = new TicketDAO();
+        PaymentDAO paymentDAO = new PaymentDAO();
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
             passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
             request.setAttribute("profile", profilePassenger);
+            request.setAttribute("CustomerHistory", paymentDAO.getPaymentByPassengerID(accDAO.getAccountByID(accountID).getPassengerID()));
             if (otpDAO.getOTPByID(accountID).isEmpty()) {
                 request.setAttribute("OTPCheck", false);
             } else {
@@ -108,6 +113,7 @@ public class UserProfile extends HttpServlet {
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         OtpQuestionDAO otpDAO = new OtpQuestionDAO();
+        TicketDAO ticketDAO = new TicketDAO();
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
             if (otpDAO.getOTPByID(accountID).isEmpty()) {
@@ -124,6 +130,7 @@ public class UserProfile extends HttpServlet {
                 }
                 passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
                 request.setAttribute("profile", profilePassenger);
+                request.setAttribute("CustomerHistory", ticketDAO.getTicketByPassengerID(accDAO.getAccountByID(accountID).getPassengerID()));
             } catch (NumberFormatException e) {
                 System.out.println(e);
             }
