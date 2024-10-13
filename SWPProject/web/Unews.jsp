@@ -303,7 +303,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="center_home_1m clearfix">
-                        <c:forEach var="newsItem" items="${newsList}" begin="4" end="6">
+                        <c:forEach var="newsItem" items="${newsList}" begin="7" end="9">
                             <div class="center_home_1m1 ${status.first ? 'mgt' : ''} clearfix">
                                 <div class="center_home_1m1i">
                                     <a href="?action=view&id=${newsItem.id}"><img src="${newsItem.image}" class="iw" alt="${newsItem.title}"></a>
@@ -317,7 +317,7 @@
                     </div>
                 </div>                  <div class="col-sm-3 space_left">
                     <div class="center_home_1rm clearfix">
-                        <c:forEach var="newsItem" items="${newsList}" begin="8" end="9"> <!-- Show one more news item -->
+                        <c:forEach var="newsItem" items="${newsList}" begin="8" end="10"> <!-- Show one more news item -->
                             <div class="center_home_1lm1 clearfix">
                                 <a href="?action=view&id=${newsItem.id}">
                                     <img src="${newsItem.image}" class="iw" alt="${newsItem.title}">
@@ -336,7 +336,7 @@
                             </ul>
                             <div class="tab-content clearfix">
                                 <div id="home" class="tab-pane fade clearfix active in">
-                                    <c:forEach var="newsItem" items="${newsList}" begin="9" end="12"> <!-- Display more news in tabs -->
+                                    <c:forEach var="newsItem" items="${newsList}" begin="4" end="8"> <!-- Display more news in tabs -->
                                         <div class="click clearfix">
                                             <div class="click_i clearfix">
                                                 <div class="col-sm-4 space_left">
