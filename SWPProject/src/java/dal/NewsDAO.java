@@ -22,104 +22,92 @@ public class NewsDAO extends DBContext {
     }
 
     public List<News> getNewsBySearchAndSort(String search, String sortOrder, String status, int currentPage, int recordsPerPage) {
-    List<News> newsList = new ArrayList<>();
-    String[] searchTerms = prepareSearchTerms(search);
+        List<News> newsList = new ArrayList<>();
+        String processedSearch = processSearchString(search);
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM trainproject.news WHERE 1=1");
 
-    StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM news WHERE 1=1");
-
-    // Add status filter if it's provided
-    if (status != null && !status.isEmpty()) {
-        sqlBuilder.append(" AND status = ?");
-    }
-
-    if (searchTerms.length > 0) {
-        sqlBuilder.append(" AND (");
-        for (int i = 0; i < searchTerms.length; i++) {
-            if (i > 0) sqlBuilder.append(" OR ");
-            sqlBuilder.append("(title LIKE ? OR content LIKE ? OR location LIKE ?)");
-        }
-        sqlBuilder.append(")");
-    }
-
-    sqlBuilder.append(" ORDER BY created_at ").append("oldest".equalsIgnoreCase(sortOrder) ? "ASC" : "DESC");
-    sqlBuilder.append(" LIMIT ?, ?");
-
-    try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
-        int paramIndex = 1;
-
-        // Set the status parameter if applicable
         if (status != null && !status.isEmpty()) {
-            st.setInt(paramIndex++, Integer.parseInt(status));
+            sqlBuilder.append(" AND status = ?");
         }
 
-        for (String term : searchTerms) {
-            String searchPattern = "%" + term + "%";
-            for (int i = 0; i < 3; i++) {
-                st.setString(paramIndex++, searchPattern);
+        if (!processedSearch.isEmpty()) {
+            sqlBuilder.append(" AND (LOWER(title) LIKE ? OR LOWER(content) LIKE ? OR LOWER(location) LIKE ?)");
+        }
+
+        sqlBuilder.append(" ORDER BY created_at ").append("oldest".equalsIgnoreCase(sortOrder) ? "ASC" : "DESC");
+        sqlBuilder.append(" LIMIT ? OFFSET ?");
+
+        try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
+            int paramIndex = 1;
+
+            if (status != null && !status.isEmpty()) {
+                st.setInt(paramIndex++, Integer.parseInt(status));
             }
+
+            if (!processedSearch.isEmpty()) {
+                String searchPattern = "%" + processedSearch.replace("+", "%") + "%";
+                for (int i = 0; i < 3; i++) {
+                    st.setString(paramIndex++, searchPattern.toLowerCase());
+                }
+            }
+
+            st.setInt(paramIndex++, recordsPerPage);
+            st.setInt(paramIndex, (currentPage - 1) * recordsPerPage);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                newsList.add(extractNewsFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getNewsBySearchAndSort: " + e.getMessage());
         }
 
-        st.setInt(paramIndex++, (currentPage - 1) * recordsPerPage);
-        st.setInt(paramIndex, recordsPerPage);
-
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            newsList.add(extractNewsFromResultSet(rs));
-        }
-    } catch (SQLException e) {
-        System.out.println("Error in getNewsBySearchAndSort: " + e.getMessage());
-    }
-    return newsList;
-}
-
-
-   public int getTotalNewsCount(String search, String status) {
-    int totalRecords = 0;
-    String[] searchTerms = prepareSearchTerms(search);
-
-    StringBuilder sqlBuilder = new StringBuilder("SELECT COUNT(*) FROM trainproject.news WHERE 1=1");
-
-    // Add status filter if it's provided
-    if (status != null && !status.isEmpty()) {
-        sqlBuilder.append(" AND status = ?");
+        return newsList;
     }
 
-    // Add search terms filter
-    if (searchTerms.length > 0) {
-        sqlBuilder.append(" AND (");
-        for (int i = 0; i < searchTerms.length; i++) {
-            if (i > 0) sqlBuilder.append(" OR ");
-            sqlBuilder.append("(title LIKE ? OR content LIKE ? OR location LIKE ?)");
-        }
-        sqlBuilder.append(")");
-    }
+    public int getTotalNewsCount(String search, String status) {
+        int totalRecords = 0;
+        String processedSearch = processSearchString(search);
 
-    try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
-        int paramIndex = 1;
+        StringBuilder sqlBuilder = new StringBuilder("SELECT COUNT(*) FROM trainproject.news WHERE 1=1");
 
-        // Set the status parameter if applicable
         if (status != null && !status.isEmpty()) {
-            st.setInt(paramIndex++, Integer.parseInt(status));
+            sqlBuilder.append(" AND status = ?");
         }
 
-        // Set search term parameters
-        for (String term : searchTerms) {
-            String searchPattern = "%" + term + "%";
-            for (int i = 0; i < 3; i++) {
-                st.setString(paramIndex++, searchPattern);
+        if (!processedSearch.isEmpty()) {
+            sqlBuilder.append(" AND (LOWER(title) LIKE ? OR LOWER(content) LIKE ? OR LOWER(location) LIKE ?)");
+        }
+
+        try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
+            int paramIndex = 1;
+
+            if (status != null && !status.isEmpty()) {
+                st.setInt(paramIndex++, Integer.parseInt(status));
             }
-        }
 
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            totalRecords = rs.getInt(1);
+            if (!processedSearch.isEmpty()) {
+                String searchPattern = "%" + processedSearch.replace("+", "%") + "%";
+                for (int i = 0; i < 3; i++) {
+                    st.setString(paramIndex++, searchPattern.toLowerCase());
+                }
+            }
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                totalRecords = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getTotalNewsCount: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error in getTotalNewsCount: " + e.getMessage());
+        return totalRecords;
     }
-    return totalRecords;
-}
 
+    private String processSearchString(String search) {
+        if (search == null) return "";
+        // Trim leading and trailing spaces, replace one or more spaces with a single +
+        return search.trim().replaceAll("\\s+", "+");
+    }
 
     public boolean create(News news) {
         String sql = "INSERT INTO trainproject.news (title, content, image, location, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -139,7 +127,7 @@ public class NewsDAO extends DBContext {
     }
 
     public News read(int id) {
-        String sql = "SELECT * FROM news WHERE id = ?";
+        String sql = "SELECT * FROM trainproject.news WHERE id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
@@ -153,7 +141,7 @@ public class NewsDAO extends DBContext {
     }
 
     public boolean update(News news) {
-        String sql = "UPDATE news SET title = ?, content = ?, image = ?, location = ?, status = ?, updated_at = ? WHERE id = ?";
+        String sql = "UPDATE trainproject.news SET title = ?, content = ?, image = ?, location = ?, status = ?, updated_at = ? WHERE id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, news.getTitle());
             st.setString(2, news.getContent());
@@ -170,7 +158,7 @@ public class NewsDAO extends DBContext {
     }
 
     public boolean delete(int id) {
-        String sql = "DELETE FROM news WHERE id = ?";
+        String sql = "DELETE FROM trainproject.news WHERE id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
             return st.executeUpdate() > 0;
@@ -178,6 +166,36 @@ public class NewsDAO extends DBContext {
             System.out.println("Error in delete: " + e.getMessage());
             return false;
         }
+    }
+
+    public List<News> getLatestNews(int limit) {
+        List<News> newsList = new ArrayList<>();
+        String sql = "SELECT * FROM trainproject.news ORDER BY created_at DESC LIMIT ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, limit);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                newsList.add(extractNewsFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getLatestNews: " + e.getMessage());
+        }
+        return newsList;
+    }
+
+    public List<News> getRandomNewsWithStatus1(int limit) {
+        List<News> newsList = new ArrayList<>();
+        String sql = "SELECT * FROM trainproject.news WHERE status = 1 ORDER BY RAND() LIMIT ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, limit);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                newsList.add(extractNewsFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getRandomNewsWithStatus1: " + e.getMessage());
+        }
+        return newsList;
     }
 
     private String[] prepareSearchTerms(String search) {
@@ -199,17 +217,17 @@ public class NewsDAO extends DBContext {
             rs.getTimestamp("updated_at")
         );
     }
-    public News getLatestNews() {
-    String sql = "SELECT * FROM trainproject.news ORDER BY id DESC LIMIT 1";
-    try (PreparedStatement st = connection.prepareStatement(sql)) {
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            return extractNewsFromResultSet(rs);
-        }
-    } catch (SQLException e) {
-        System.out.println("Error in getLatestNews: " + e.getMessage());
-    }
-    return null; // Return null if no news found
-}
 
+    public News getLatestNews() {
+        String sql = "SELECT * FROM trainproject.news ORDER BY id DESC LIMIT 1";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return extractNewsFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getLatestNews: " + e.getMessage());
+        }
+        return null; // Return null if no news found
+    }
 }

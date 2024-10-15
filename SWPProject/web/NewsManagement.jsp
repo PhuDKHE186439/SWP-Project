@@ -37,14 +37,14 @@
             <input type="text" class="form-control" placeholder="Search News" name="search" value="${param.search}">
         </div>
         <div class="col-auto">
-            <select name="sortOrder" class="form-select">
+            <select name="sortOrder" class="form-select" onchange="document.getElementById('searchForm').submit();">
                 <option value="latest" ${param.sortOrder == 'latest' ? 'selected' : ''}>Latest</option>
                 <option value="oldest" ${param.sortOrder == 'oldest' ? 'selected' : ''}>Oldest</option>
             </select>
         </div>
         <div class="col-auto">
-            <select name="status" class="form-select">
-                <option value="" ${empty param.status ? 'selected' : ''}>All Status</option>
+            <select name="status"  class="form-select" onchange="document.getElementById('searchForm').submit();">
+                <option value="" ${empty param.status ? 'selected' : '' }>All Status</option>
                 <option value="1" ${param.status == '1' ? 'selected' : ''}>Active</option>
                 <option value="2" ${param.status == '2' ? 'selected' : ''}>Inactive</option>
             </select>
