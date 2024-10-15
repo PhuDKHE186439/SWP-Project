@@ -88,10 +88,10 @@
                     <a href="#" class="sidebar-toggler flex-shrink-0">
                         <i class="fa fa-bars"></i>
                     </a>
-                    <form class="d-none d-md-flex ms-4" id="searchForm" onsubmit="return searchInPage();">
+<!--                    <form class="d-none d-md-flex ms-4" id="searchForm" onsubmit="return searchInPage();">
                         <input class="form-control border-0" type="search" id="searchInput" placeholder="Search" required>
                         <button type="submit" class="btn btn-primary ms-2">Search</button>
-                    </form><!--
+                    </form>
                     <style>
                         .highlight {
                             background-color: yellow;
