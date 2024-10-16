@@ -25,60 +25,64 @@
     </head>
 
     <body>
-<section id="center" class="center_home">
-    <div class="container">
-        <div class="row">
-            <div class="center_home_1 clearfix">
-                
-                                 <div class="col-sm-3 space_left">
-                    <div class="center_home_1rm clearfix">
-                        <c:forEach var="newsItem" items="${newsList}" begin="8" end="10"> <!-- Show one more news item -->
-                            <div class="center_home_1lm1 clearfix">
-                                <a href="?action=view&id=${newsItem.id}">
-                                    <img src="${newsItem.image}" class="iw" alt="${newsItem.title}">
-                                </a>
-                                <h6 class="col_2">
-                                    <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
-                                </h6>
-                                <h5 class="bold">
-                                    <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
-                                </h5>
-                            </div>
-                        </c:forEach>
-                        <div class="center_home_1r1 clearfix">
-                            <ul class="nav_1">
-                                <li class="active"><a data-toggle="tab" href="#home">LATEST </a></li>
-                            </ul>
-                            <div class="tab-content clearfix">
-                                <div id="home" class="tab-pane fade clearfix active in">
-                                    <c:forEach var="newsItem" items="${newsList}" begin="4" end="8"> <!-- Display more news in tabs -->
-                                        <div class="click clearfix">
-                                            <div class="click_i clearfix">
-                                                <div class="col-sm-4 space_left">
-                                                    <div class="click_il clearfix">
-                                                        <a href="?action=view&id=${newsItem.id}">
-                                                            <img src="${newsItem.image}" class="iw" alt="${newsItem.title}">
-                                                        </a>
+        <section id="center" class="center_home">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="center_home_1 clearfix">
+
+                        <div class="col-sm-3 space_left">
+                            
+                            <div class="center_home_1rm clearfix">
+
+                                <c:forEach var="newsItem" items="${newsList}" begin="8" end="11"> <!-- Show one more news item -->
+                                    <div class="center_home_1lm1 clearfix">
+
+                                        <a href="?action=view&id=${newsItem.id}">
+                                            <img src="${newsItem.image}" class="iw" alt="${newsItem.title}">
+                                        </a>
+                                        <h6 class="col_2">
+                                            <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
+                                        </h6>
+                                        <h5 class="bold">
+                                            <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
+                                        </h5>
+                                    </div>
+                                </c:forEach>
+                                <div class="center_home_1r1 clearfix">
+                                    <ul class="nav_1">
+                                        <li class="active"><a data-toggle="tab" href="#home">LATEST </a></li>
+                                    </ul>
+                                    <div class="tab-content clearfix">
+                                        <div id="home" class="tab-pane fade clearfix active in">
+                                            <c:forEach var="newsItem" items="${newsList}" begin="4" end="8"> <!-- Display more news in tabs -->
+                                                <div class="click clearfix">
+                                                    <div class="click_i clearfix">
+                                                        <div class="col-sm-4 space_left">
+                                                            <div class="click_il clearfix">
+                                                                <a href="?action=view&id=${newsItem.id}">
+                                                                    <img src="${newsItem.image}" class="iw" alt="${newsItem.title}">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-8 space_all">
+                                                            <div class="click_ir clearfix">
+                                                                <h6 class="col_2 mgt">
+                                                                    <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
+                                                                </h6>
+                                                                <h5 class="bold">
+                                                                    <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-8 space_all">
-                                                    <div class="click_ir clearfix">
-                                                        <h6 class="col_2 mgt">
-                                                            <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
-                                                        </h6>
-                                                        <h5 class="bold">
-                                                            <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </c:forEach>
                                         </div>
-                                    </c:forEach>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
