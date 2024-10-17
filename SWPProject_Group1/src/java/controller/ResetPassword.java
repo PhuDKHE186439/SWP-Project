@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.otpQuestion;
-
+import EnCrypt.BCrypt;
 /**
  *
  * @author My Asus
@@ -60,7 +60,8 @@ public class ResetPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       // processRequest(request, response);
+       request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
     }
 
     /**
@@ -93,7 +94,8 @@ public class ResetPassword extends HttpServlet {
                 }
             }
             if (resetpass != null && resetpass.equals(repass)) {
-                accDAO.updateAccountPassword(AccID, resetpass);
+                String pass = BCrypt.hashpw(resetpass, BCrypt.gensalt());
+                accDAO.updateAccountPassword(AccID, pass);
                 request.setAttribute("annoutment", "Reset Password Successful, Please Login Again");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {

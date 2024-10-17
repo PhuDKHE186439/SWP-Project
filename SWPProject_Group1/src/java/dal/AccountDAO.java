@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.account;
+import EnCrypt.BCrypt;
+import model.SendGoogle;
 
 /**
  *
@@ -120,17 +122,19 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
+
     public void updateAccountInformEmailPhone(int PassengerID, String email, String phone) {
         String sql = "UPDATE Account SET Email=?, PhoneNumber=? WHERE PassengerID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql);) {
             st.setString(1, email);
-            st.setString(2,phone);
+            st.setString(2, phone);
             st.setInt(3, PassengerID);
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
     public void updateAccountPassword(int accountID, String password) {
         String sql = "UPDATE account SET Password = ? WHERE AccountID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -188,9 +192,25 @@ public class AccountDAO extends DBContext {
         }
     }
 
+    public SendGoogle GetEmail() {
+        String sql = "Select * From  sendgmailaccount";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new SendGoogle(
+                        rs.getString("Gmail"),
+                        rs.getString("Password")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
         List<account> acclist = dao.getAllAccount();
-        System.out.println(dao.getAllAccount());
+        String s = BCrypt.hashpw("abc", BCrypt.gensalt());
     }
 }

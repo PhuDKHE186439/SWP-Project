@@ -1,6 +1,7 @@
 
 package email;
 
+import dal.AccountDAO;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -9,15 +10,17 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
+import model.SendGoogle;
 
 
 public class Email {
-
+AccountDAO dao = new AccountDAO();
     //email: tripove.work@gmail.com
     //password: recl ryfo jrju aick
-    final String from = "traintravel238@gmail.com";
-    final String password = "xgdwcowsiuhubmfz";
+    SendGoogle acc = dao.GetEmail();
+    final String from = acc.getEmail() ;
+//   final String password = "xgdwcowsiuhubmfz";
+       final String password = acc.getPass();
 
     public void sendEmail(String to, String newPassword) {
         Properties props = new Properties();
