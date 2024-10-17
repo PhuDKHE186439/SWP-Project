@@ -22,9 +22,7 @@
         <script src="dcss/js/jquery-2.1.1.min.js"></script>
         <script src="dcss/js/bootstrap.min.js"></script>
     </head>
-
     <body>
-
         <section id="header">
             <div class="container">
                 <div class="row">
@@ -124,7 +122,6 @@
                                     </li>
 
                                 </ul>
-
                             </li>
                             <li><a class="m_tag" href="about.html">About Us</a></li>
                             <li><a class="m_tag" href="service.html">Services</a></li>
@@ -142,7 +139,6 @@
                                     <li><a class="border_none hvr-forward" href="contact.html">Contact Us</a></li>
                                 </ul>
                             </li>
-
                         </ul>
                         <ul class="nav navbar-nav">
                             <li class="dropdown"><a class="m_tag m_tag_1" href="#" data-toggle="dropdown"><span class="fa fa-search"></span></a>

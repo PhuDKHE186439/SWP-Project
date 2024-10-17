@@ -54,74 +54,11 @@
         <!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
         <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
-
     </head>
     <body id="bg">
         <div class="page-wraper">
             <div id="loading-icon-bx"></div>
             <!-- Header Top ==== -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-                </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
-                <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Make Feedback</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a class="dropdown-item">
-                                <h6 class="fw-normal mb-0">FeedBack Message</h6>
-                                <form method="post" action="feedbackforcustomer">
-                                    <input name="feedback"  type="text">
-                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
-                                </form>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notificatin</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Profile updated</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">New user added</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Password changed</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all notifications</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <span class="d-none d-lg-inline-flex">Profile</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="userprofile" class="dropdown-item">My Profile</a>
-                            <a href="ticketHistory" class="dropdown-item">Ticket History</a> 
-                            <a href="logout" class="dropdown-item">Log Out</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
 
             <!-- header END ==== -->
             <!-- Content -->
@@ -132,8 +69,19 @@
                 <!-- inner page banner END -->
                 <div class="content-block">
                     <!-- About Us -->
+
                     <div class="section-area section-sp1">
                         <div class="container">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle border rounded p-2 fs-5" data-bs-toggle="dropdown">
+                                    <span class="d-none d-lg-inline-flex">Profile</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end bg-light text-white border-0 rounded-0 rounded-bottom m-0">
+                                    <a href="userprofile" class="dropdown-item">My Profile</a>
+                                    <a href="ticketHistory" class="dropdown-item">Ticket History</a>
+                                    <a href="logout" class="dropdown-item">Log Out</a>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-12 m-b30">
                                     <div class="profile-bx text-center">
@@ -329,56 +277,56 @@
                                                     </thead>
                                                     <tbody>
                                                         <c:forEach var="i" items="${requestScope.CustomerHistory}">
-                                                    <tr>
-                                                        <td>${i.ticket.ticketID}</td>
-                                                        <td>${i.ticket.ticketClass.categoryName}</td>
-                                                        <td>${i.ticket.seat.compartment.compartmentNumber}</td>
-                                                        <td>${i.ticket.seat.seatNumber}</td>
-                                                        <td>${i.ticket.timeArrive}</td>
-                                                        <td>${i.ticket.ticketPrice}</td>
-                                                        <td>${i.ticket.purchaseDate}</td>
-                                                        <td>${i.paymentMethod}</td>
-                                                    </tr>
-                                                    </c:forEach>
+                                                            <tr>
+                                                                <td>${i.ticket.ticketID}</td>
+                                                                <td>${i.ticket.ticketClass.categoryName}</td>
+                                                                <td>${i.ticket.seat.compartment.compartmentNumber}</td>
+                                                                <td>${i.ticket.seat.seatNumber}</td>
+                                                                <td>${i.ticket.timeArrive}</td>
+                                                                <td>${i.ticket.ticketPrice}</td>
+                                                                <td>${i.ticket.purchaseDate}</td>
+                                                                <td>${i.paymentMethod}</td>
+                                                            </tr>
+                                                        </c:forEach>
                                                     </tbody>
                                                 </table>
-<div class="mt-4 text-center">
-                                    <c:if test="${currentPage > 1}">
-                                        <a href="userprofile?page=${currentPage - 1}" class="btn btn-primary">Previous</a>
-                                    </c:if>
+                                                <div class="mt-4 text-center">
+                                                    <c:if test="${currentPage > 1}">
+                                                        <a href="userprofile?page=${currentPage - 1}" class="btn btn-primary">Previous</a>
+                                                    </c:if>
 
-                                    <c:if test="${currentPage > 2}">
-                                        <a href="userprofile?page=1" class="btn btn-outline-primary">1</a>
-                                        <c:if test="${currentPage > 3}">
-                                            <span>...</span>
-                                        </c:if>
-                                    </c:if>
+                                                    <c:if test="${currentPage > 2}">
+                                                        <a href="userprofile?page=1" class="btn btn-outline-primary">1</a>
+                                                        <c:if test="${currentPage > 3}">
+                                                            <span>...</span>
+                                                        </c:if>
+                                                    </c:if>
 
-                                    <c:if test="${currentPage > 1}">
-                                        <a href="userprofile?page=${currentPage - 1}" class="btn btn-outline-primary">${currentPage - 1}</a>
-                                    </c:if>
+                                                    <c:if test="${currentPage > 1}">
+                                                        <a href="userprofile?page=${currentPage - 1}" class="btn btn-outline-primary">${currentPage - 1}</a>
+                                                    </c:if>
 
-                                    <span class="btn btn-primary">${currentPage}</span>
+                                                    <span class="btn btn-primary">${currentPage}</span>
 
-                                    <c:if test="${currentPage < totalPages}">
-                                        <a href="userprofile?page=${currentPage + 1}" class="btn btn-outline-primary">${currentPage + 1}</a>
-                                    </c:if>
+                                                    <c:if test="${currentPage < totalPages}">
+                                                        <a href="userprofile?page=${currentPage + 1}" class="btn btn-outline-primary">${currentPage + 1}</a>
+                                                    </c:if>
 
-                                    <c:if test="${currentPage < totalPages - 1}">
-                                        <c:if test="${currentPage < totalPages - 2}">
-                                            <span>...</span>
-                                        </c:if>
-                                        <a href="userprofile?page=${totalPages}" class="btn btn-outline-primary">${totalPages}</a>
-                                    </c:if>
+                                                    <c:if test="${currentPage < totalPages - 1}">
+                                                        <c:if test="${currentPage < totalPages - 2}">
+                                                            <span>...</span>
+                                                        </c:if>
+                                                        <a href="userprofile?page=${totalPages}" class="btn btn-outline-primary">${totalPages}</a>
+                                                    </c:if>
 
-                                    <c:if test="${currentPage < totalPages}">
-                                        <a href="userprofile?page=${totalPages}" class="btn btn-primary">Next</a>
-                                    </c:if>
+                                                    <c:if test="${currentPage < totalPages}">
+                                                        <a href="userprofile?page=${totalPages}" class="btn btn-primary">Next</a>
+                                                    </c:if>
 
-                                    <div class="mt-2">
-                                        Page ${currentPage} of ${totalPages}
-                                    </div>
-                                </div>
+                                                    <div class="mt-2">
+                                                        Page ${currentPage} of ${totalPages}
+                                                    </div>
+                                                </div>
                                             </div> 
                                         </div>
                                     </div>
@@ -414,13 +362,6 @@
             <script <script src="assets/js/navbar.js"></script>
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="bssets/lib/chart/chart.min.js"></script>
-            <script src="bssets/lib/easing/easing.min.js"></script>
-            <script src="bssets/lib/waypoints/waypoints.min.js"></script>
-            <script src="bssets/lib/owlcarousel/owl.carousel.min.js"></script>
-            <script src="bssets/lib/tempusdominus/js/moment.min.js"></script>
-            <script src="bssets/lib/tempusdominus/js/moment-timezone.min.js"></script>
-            <script src="bssets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
     </body>
     <style>
         :root {

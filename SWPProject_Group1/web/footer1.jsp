@@ -30,7 +30,7 @@
             <div class="footer_1 clearfix">
                 <div class="col-sm-3">
                     <div class="footer_1i clearfix">
-                        <h3 class="mgt"><a class="col_1" href="index.html"><i class="fa fa-train"></i> Train Ticket Hub</a></h3>
+                        <h3 class="mgt"><a class="col_1" href="index.html"><i class="fa fa-train"></i> Train Ticket Hub Group1 SE1863</a></h3>
                         <p>Your one-stop solution for train ticket booking.</p>
                         <p>Experience seamless travel planning with our user-friendly platform.</p>
                     </div>

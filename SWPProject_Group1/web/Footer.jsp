@@ -1,96 +1,141 @@
 <%-- 
-    Document   : Footer
-    Created on : Sep 20, 2024, 3:08:34 PM
-    Author     : Laptop
+    Document   : NewsDetails
+    Created on : Oct 14, 2024, 3:04:03 AM
+    Author     : P C
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Footer</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
-        <link rel="stylesheet" href="https://themify.me/wp-content/themes/themify-v32/themify-icons/themify-icons.css"/>
-        <link rel="stylesheet" href="assets/css/Footer.css"/>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Apz News</title>
+        <link href="dcss/css/bootstrap.min.css" rel="stylesheet">
+        <link href="dcss/css/global.css" rel="stylesheet">
+        <link href="dcss/css/blog.css" rel="stylesheet">
+        <link href="dcss/css/index.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="dcss/css/font-awesome.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
     </head>
+
     <body>
-        <footer class="new_footer_area bg_color" >
-            <div class="new_footer_top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Get in Touch</h3>
-                                <p>Don’t miss any updates of our new templates and extensions.!</p>
-                                <form action="#" class="f_subscribe_two mailchimp" method="post" novalidate="true" _lpchecked="1">
-                                    <input type="text" name="EMAIL" class="form-control memail" placeholder="Email">
-                                    <button class="btn btn_get btn_get_two" type="submit">Subscribe</button>
-                                    <p class="mchimp-errmessage" style="display: none;"></p>
-                                    <p class="mchimp-sucmessage" style="display: none;"></p>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Download</h3>
-                                <ul class="list-unstyled f_list">
-                                    <li><a href="#">Company</a></li>
-                                    <li><a href="#">Android App</a></li>
-                                    <li><a href="#">ios App</a></li>
-                                    <li><a href="#">Desktop</a></li>
-                                    <li><a href="#">Projects</a></li>
-                                    <li><a href="#">My tasks</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Help</h3>
-                                <ul class="list-unstyled f_list">
-                                    <li><a href="#">FAQ</a></li>
-                                    <li><a href="#">Term &amp; conditions</a></li>
-                                    <li><a href="#">Reporting</a></li>
-                                    <li><a href="#">Documentation</a></li>
-                                    <li><a href="#">Support Policy</a></li>
-                                    <li><a href="#">Privacy</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Team Solutions</h3>
-                                <h4 class="f-title f_600 t_color f_size_18">TT - T1 - SE1863</h4>
-                                <div class="f_social_icon">
-                                    <a href="#" class="fab fa-facebook"></a>
-                                    <a href="#" class="fab fa-twitter"></a>
-                                    <a href="#" class="fab fa-linkedin"></a>
-                                    <a href="#" class="fab fa-pinterest"></a>
-                                </div>
-                            </div>
-                        </div>
+<section id="footer" class="clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="footer_1 clearfix">
+                <div class="col-sm-3">
+                    <div class="footer_1i clearfix">
+                        <h3 class="mgt"><a class="col_1" href="index.html"><i class="fa fa-train"></i> Train Ticket Hub Group1 SE1863</a></h3>
+                        <p>Your one-stop solution for train ticket booking.</p>
+                        <p>Experience seamless travel planning with our user-friendly platform.</p>
                     </div>
                 </div>
-                <div class="footer_bg">
-                    <div class="footer_bg_one"></div>
-                    <div class="footer_bg_two"></div>
-                    <div class="footer_bg_three"></div>
+                <div class="col-sm-3">
+                    <div class="footer_1i clearfix">
+                        <h4 class="col_1">Customer Support</h4>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-question-circle"></i> FAQs</a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i> Contact Us</a></li>
+                            <li><a href="#"><i class="fa fa-ticket"></i> Manage Booking</a></li>
+                            <li><a href="#"><i class="fa fa-pencil"></i> Feedback</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="footer_bottom">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-sm-7">
-                            <p class="mb-0 f_400">© cakecounter Inc.. 2019 All rights reserved.</p>
-                        </div>
-                        <div class="col-lg-6 col-sm-5 text-right">
-                            <p>Made with <i class="icon_heart"></i> in <a href="http://cakecounter.com" target="_blank">CakeCounter</a></p>
-                        </div>
+                <div class="col-sm-3">
+                    <div class="footer_1i clearfix">
+                        <h4 class="col_1">Travel Information</h4>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-map"></i> Route Planner</a></li>
+                            <li><a href="#"><i class="fa fa-clock"></i> Train Schedules</a></li>
+                            <li><a href="#"><i class="fa fa-star"></i> Popular Destinations</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="footer_1i clearfix">
+                        <h4 class="col_1">Follow Us</h4>
+                        <ul class="social-network social-circle">
+                            <li><a href="#" class="icoRss" title="RSS"><i class="fa fa-rss"></i></a></li>
+                            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" class="icoInstagram" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </footer>
+            <div class="footer_2 clearfix">
+                <div class="col-sm-4">
+                    <div class="footer_1i clearfix">
+                        <h4 class="col_1">Payment Options</h4>
+                        <ul>
+                            <li><a href="#">Credit Card</a></li>
+                            <li><a href="#">Debit Card</a></li>
+                            <li><a href="#">UPI</a></li>
+                            <li><a href="#">Net Banking</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="footer_1i clearfix">
+                        <h4 class="col_1">Office Address</h4>
+                        <p>18700 Orchard Lake Road, Suite 120 Farmington Hills, U.S.A.</p>
+                        <h4 class="col_1"><span class="normal">Phone:</span> +01 2345 6789</h4>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="footer_1i clearfix">
+                        <h4 class="col_1">Subscribe to Updates</h4>
+                        <p>Stay updated with the latest offers and travel tips.</p>
+                        <form action="#" method="post">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="footer_bottom">
+    <div class="container">
+        <div class="row">
+            <div class="footer_b text-center clearfix">
+                <div class="col-sm-12">
+                    <p class="mgt col_2">© 2024 Train Ticket Hub. All Rights Reserved | Designed by <a class="col_1" href="http://www.templateonweb.com">TemplateOnWeb</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        </script>
+
+        <script>
+            $("#menu-close").click(function (e) {
+                e.preventDefault();
+                $("#sidebar-wrapper").toggleClass("active");
+            });
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#sidebar-wrapper").toggleClass("active");
+            });
+        </script>
+
+        <script src="js/ziehharmonika.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('.ziehharmonika').ziehharmonika({
+                    collapsible: true,
+                    prefix: 'â˜…'
+                });
+            });
+        </script>
+
     </body>
+
 </html>
