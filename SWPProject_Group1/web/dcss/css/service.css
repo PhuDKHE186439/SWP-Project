@@ -1,0 +1,148 @@
+/*
+Template Name: Apz News
+File: Layout CSS
+Author: TemplatesOnWeb
+Author URI: https://www.templateonweb.com/
+Licence: <a href="https://www.templateonweb.com/license">Website Template Licence</a>
+*/
+/*********************service*************/
+.center_service{
+padding-top:40px;
+padding-bottom:40px; 
+ }
+
+#services_top{
+  padding-top:30px;
+  padding-bottom:35px;
+  background:#0bc1931a;
+  }
+.services_top_1i hr{
+ margin-top:0;
+ margin-bottom:0;
+ margin-top:15px;
+ border-width:3px;
+ border-color:#0bc193;
+ width:10%;
+ margin-left:0;
+  }
+.services_top_1i ul li i{
+  font-size:8px;
+  vertical-align:middle;
+  margin-right:5px;
+  color: #0bc193;
+   }
+.services_top_1i ul li{
+margin-bottom:5px;    
+	}
+.services_top_1ii{
+margin-top:40px;  
+  }
+#example_h{
+padding-top:40px;
+padding-bottom:40px;  
+  }
+.example_h_1l span i{
+  font-size:40px;
+  color:#0bc193;
+  }
+.example_h_1l{
+ border:1px solid #0bc1931a;
+ padding:20px 10px 25px 10px;
+ background:#0bc1931a; 
+  }
+.example_h_1l hr{
+border-width:3px;
+border-color:#0bc193;
+width:15%;
+ }
+.example_h_1{
+ margin-top:30px; 
+  }
+
+#skill_home{
+padding-top:30px;
+padding-bottom:40px; 
+background:#0bc1931a; 
+  }
+.skill_home_1l h3{
+  width:60%; 
+   }
+.skill_home_1l ul li{
+display:inline-block;
+padding-left:5px;
+padding-right:5px; 
+  } 
+.skill_home_1r{
+background:#fff;
+padding:10px 15px 20px 15px;
+border-radius:15px 30px;  
+  }
+.skill_home_1r p{
+ margin-top:15px;  
+   }
+.skill_home_1r p i{
+ margin-right:5px;
+ background:#0bc193;
+ text-align:center;
+ width:40px;
+ height:40px;
+ line-height:40px;
+ border-radius:50%;
+ color:#fff; 
+  }
+.skill_home_1r .para_1:before {
+    display: inline-block;
+    width: 15%;
+    height: 2px;
+    background-color: #0bc193;
+    vertical-align: middle;
+    margin-right: 2%;
+    content: "";
+}
+.center_serv{
+padding-top:40px;
+padding-bottom:40px; 
+ }
+/*********************service_end****************/
+
+@media screen and (max-width : 767px){
+#services_top{
+  text-align:center;
+  }
+.services_top_1i hr{
+ margin-left:auto; 
+  }
+.example_h_1l {
+  margin-bottom:10px;
+  }
+#skill_home{
+  text-align:center; 
+  }
+.skill_home_1r {
+margin-top:10px;  
+  }
+.skill_home_1l h3 {
+    width: 100%;
+}
+}
+
+@media (min-width:768px) and (max-width:991px) {
+.services_top_1i .button{
+  padding:10px 20px;
+  }
+.services_top_1i  h3{
+font-size:24px;
+  }
+.skill_home_1l .button{
+  padding:10px 20px;
+  }
+.skill_home_1l .button_1{
+  padding:10px 20px;
+  }
+ }
+@media (min-width:992px) and (max-width:1200px) {
+
+  }
+@media (min-width:1201px) and (max-width:1355px) {
+
+ }
