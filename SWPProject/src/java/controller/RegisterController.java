@@ -103,6 +103,7 @@ public class RegisterController extends HttpServlet {
             }
             if (checkusername.equals(false) && password.equals(repassword)) {
                 passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
+                
                 accDAO.registerAccount(phone, username, password, email, 3, passengerDAO.getLastPassenger().getPassengerID());
                 request.setAttribute("annoutment", "Register Successful");
             }

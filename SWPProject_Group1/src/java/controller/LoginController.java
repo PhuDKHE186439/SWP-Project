@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.account;
+import EnCrypt.BCrypt;
+
 
 /**
  *
@@ -111,7 +113,7 @@ public class LoginController extends HttpServlet {
         Cookie user = new Cookie("userC", username);
         Cookie pass = new Cookie("passC", password);
         for (account o : list) {
-            if (username.equals(o.getUsername()) && password.equals(o.getPassword())) {
+            if (username.equals(o.getUsername()) && BCrypt.checkpw(password, o.getPassword())) {
                 role = o.getRoleID();
                 check = true;
                 session.setAttribute("AccID", o.getAccountID());

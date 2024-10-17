@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.account;
-
+import EnCrypt.BCrypt;
 /**
  *
  * @author My Asus
@@ -80,7 +80,6 @@ public class RegisterController extends HttpServlet {
             throws ServletException, IOException {
         Boolean checkusername = false;
         HttpSession session = request.getSession();
-
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
@@ -103,7 +102,8 @@ public class RegisterController extends HttpServlet {
             }
             if (checkusername.equals(false) && password.equals(repassword)) {
                 passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
-                accDAO.registerAccount(phone, username, password, email, 3, passengerDAO.getLastPassenger().getPassengerID());
+                String cryptPassword = BCrypt.hashpw(password,BCrypt.gensalt());
+                accDAO.registerAccount(phone, username, cryptPassword, email, 3, passengerDAO.getLastPassenger().getPassengerID());
                 request.setAttribute("annoutment", "Register Successful");
             }
 

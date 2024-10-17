@@ -70,8 +70,8 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
 
-                            <li><a class="m_tag" href="index.html">Home</a></li>
-                            <li><a class="m_tag" href="/SWPProject/cac">hhâh</a></li>
+                            <li><a class="m_tag" href="home">Home</a></li>
+                            <li><a class="m_tag" href="/SWPProject_Group1/userprofile">Profile</a></li>
                             <li class="dropdown dropdown-large">
                                 <a href="#" class="dropdown-toggle m_tag" data-toggle="dropdown">Politics<b class="caret"></b></a>
 
@@ -126,7 +126,7 @@
                             <li><a class="m_tag" href="about.html">About Us</a></li>
                             <li><a class="m_tag" href="service.html">Services</a></li>
                             <li class="dropdown">
-                                <a class="m_tag active_tab" href="/SWPProject/Unews"  role="button" aria-expanded="false">News<span class=""></span></a>
+                                <a class="m_tag active_tab" href="/SWPProject_Group1/Unews"  role="button" aria-expanded="false">News<span class=""></span></a>
 <!--                                <ul class="dropdown-menu drop_3" role="menu">
                                     <li><a class="hvr-forward" href="blog.html">Blog</a></li>
                                     <li><a class="border_none hvr-forward" href="blog_detail.html">Blog Detail</a></li>

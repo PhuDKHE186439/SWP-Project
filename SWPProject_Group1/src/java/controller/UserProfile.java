@@ -68,7 +68,6 @@ public class UserProfile extends HttpServlet {
         AccountDAO accDAO = new AccountDAO();
         OtpQuestionDAO otpDAO = new OtpQuestionDAO();
         HttpSession session = request.getSession();
-        TicketDAO ticketDAO = new TicketDAO();
         PaymentDAO paymentDAO = new PaymentDAO();
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
@@ -94,7 +93,7 @@ public class UserProfile extends HttpServlet {
                 session.setAttribute("OTP3", otps.get(2).getOtpAnswer());
 
             }
-            request.getRequestDispatcher("UserProfiletest.jsp").forward(request, response);
+            request.getRequestDispatcher("profiletest.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

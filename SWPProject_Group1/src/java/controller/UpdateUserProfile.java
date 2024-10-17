@@ -7,6 +7,7 @@ package controller;
 import dal.AccountDAO;
 import dal.OtpQuestionDAO;
 import dal.PassengerDAO;
+import dal.PaymentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.otpQuestion;
 import model.passenger;
+import EnCrypt.BCrypt;
+
 
 /**
  *
@@ -85,14 +88,15 @@ public class UpdateUserProfile extends HttpServlet {
         String rePassword = request.getParameter("rePassword");
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
-            if (accDAO.getAccountByID(accountID).getPassword().equals(currentPassword) && rePassword.equals(newPassword)) {
+            if ( BCrypt.checkpw(currentPassword, accDAO.getAccountByID(accountID).getPassword()) && rePassword.equals(newPassword)) {
                 try {
-                    accDAO.updateAccountPassword(accountID, newPassword);
+                    String cryptpass = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+                    accDAO.updateAccountPassword(accountID, cryptpass);
                     request.setAttribute("passwordChange", "Password Change Successfully");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-            } else if (!accDAO.getAccountByID(accountID).getPassword().equals(currentPassword)) {
+            } else if (! BCrypt.checkpw(currentPassword, accDAO.getAccountByID(accountID).getPassword())) {
                 request.setAttribute("passwordChange", "Password Change Failed, Please Check Your Current Password Again");
             } else {
                 request.setAttribute("passwordChange", "Password Change Failed, Re-Type Password Does not Matches");
@@ -111,9 +115,20 @@ public class UpdateUserProfile extends HttpServlet {
                 session.setAttribute("OTP2", otps.get(1).getOtpAnswer());
                 session.setAttribute("OTP3", otps.get(2).getOtpAnswer());
             }
-        }
+            PaymentDAO paymentDAO = new PaymentDAO();
 
-        request.getRequestDispatcher("UserProfiletest.jsp").forward(request, response);
+        int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
+            int recordsPerPage = 2;
+            int totalRecords = paymentDAO.getPaymentByPassengerID(accDAO.getAccountByID(accountID).getPassengerID()).size();
+            int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("totalRecords", totalRecords);
+            request.setAttribute("CustomerHistory", paymentDAO.getPaymentPaging(accDAO.getAccountByID(accountID).getPassengerID(),currentPage, recordsPerPage));
+
+        }
+                
+        request.getRequestDispatcher("profiletest.jsp").forward(request, response);
     }
 
     /**
