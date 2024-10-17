@@ -28,6 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author CTT VNPAY
  */
+
 @WebServlet(name = "ajaxServlet", urlPatterns = "/ajaxServlet")
 public class ajaxServlet extends HttpServlet {
 

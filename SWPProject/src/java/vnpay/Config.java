@@ -25,7 +25,8 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  * @author Laptop
  */
-public class Config{
+public class Config{ 
+    
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:9999/SWPProject/vnpay_return.jsp";
