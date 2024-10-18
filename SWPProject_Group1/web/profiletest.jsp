@@ -41,9 +41,6 @@
                                             <a class="nav-link" data-toggle="tab" href="#change-password"><i class="ti-lock"></i>Change Password</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#quiz-results"><i class="ti-bookmark-alt"></i>OTP Question </a>
-                                        </li>
-                                        <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#edit-profile"><i class="ti-pencil-alt"></i>Booking history</a>
                                         </li>
                                     </ul>
@@ -109,54 +106,6 @@
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>
-
-                                    <div class="tab-pane" id="quiz-results">
-                                        <c:if test="${requestScope.OTPCheck==true}">
-                                            <div class="profile-head">
-                                                <h3>OTP Question</h3>
-                                            </div>
-
-                                            <form class="edit-profile" action="changeotp" method="post">
-                                                <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">What is your favorite animal?</label>
-                                                    <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                        <input class="form-control" name="changeotp1" Value="${OTP1}" placeholder="${OTP1}" type="text"  required="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">What is Your Pet Name?</label>
-                                                    <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                        <input class="form-control" name="changeotp2" Value="${OTP2}" placeholder="${OTP2}" type="text"  required="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">What is Your Neighbor Name?</label>
-                                                    <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                        <input class="form-control" name="changeotp3" Value="${OTP3}" placeholder="${OTP3}" type="text"  required="">
-                                                    </div>
-                                                </div>
-                                                <div class="">
-                                                    <div class="">
-                                                        <div class="row">
-                                                            <div class="col-12 col-sm-3 col-md-3 col-lg-2">
-                                                            </div>
-                                                            <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                                <button type="submit" class="btn">Save changes</button>
-                                                                <button type="reset" class="btn-secondry">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </c:if>       
-                                        <c:if test="${requestScope.OTPCheck==false}">
-                                            <div class="profile_form-header">
-                                                <div>
-                                                    <a href="registerotp">Make Answer to OTP Question</a>
-                                                </div>
-                                            </div>
-                                        </c:if>
                                     </div>
                                     <div class="tab-pane" id="change-password">
                                         <div class="profile-head">
