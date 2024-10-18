@@ -154,6 +154,7 @@
                                                 <tr>
                                                     <th>TicketID</th>
                                                     <th>TicketClass</th>
+                                                    <<th>Train</th>
                                                     <th>Compartment</th>
                                                     <th>Seat</th>
                                                     <th>TimeArrive</th>
@@ -167,6 +168,7 @@
                                                     <tr>
                                                         <td>${i.ticket.ticketID}</td>
                                                         <td>${i.ticket.ticketClass.categoryName}</td>
+                                                        <td>${i.ticket.seat.compartment.train.trainName}</td>
                                                         <td>${i.ticket.seat.compartment.compartmentNumber}</td>
                                                         <td>${i.ticket.seat.seatNumber}</td>
                                                         <td>${i.ticket.timeArrive}</td>

@@ -11,12 +11,12 @@ package model;
 public class compartment {
     private int compartmentID;
     private int compartmentNumber;
-    private train trainID;
+    private train train;
 
     public compartment(int compartmentID, int compartmentNumber, train trainID) {
         this.compartmentID = compartmentID;
         this.compartmentNumber = compartmentNumber;
-        this.trainID = trainID;
+        this.train = trainID;
     }
 
     public int getCompartmentID() {
@@ -35,17 +35,17 @@ public class compartment {
         this.compartmentNumber = compartmentNumber;
     }
 
-    public train getTrainID() {
-        return trainID;
+    public train getTrain() {
+        return train;
     }
 
-    public void setTrainID(train trainID) {
-        this.trainID = trainID;
+    public void setTrain(train trainID) {
+        this.train = trainID;
     }
 
     @Override
     public String toString() {
-        return "compartment{" + "compartmentID=" + compartmentID + ", compartmentNumber=" + compartmentNumber + ", trainID=" + trainID + '}';
+        return "compartment{" + "compartmentID=" + compartmentID + ", compartmentNumber=" + compartmentNumber + ", trainID=" + train + '}';
     }
     
 }
