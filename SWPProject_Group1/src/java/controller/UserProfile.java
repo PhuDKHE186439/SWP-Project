@@ -66,7 +66,6 @@ public class UserProfile extends HttpServlet {
             throws ServletException, IOException {
         PassengerDAO passDAO = new PassengerDAO();
         AccountDAO accDAO = new AccountDAO();
-        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
         HttpSession session = request.getSession();
         PaymentDAO paymentDAO = new PaymentDAO();
         if (session.getAttribute("AccID") != null) {
@@ -81,18 +80,6 @@ public class UserProfile extends HttpServlet {
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("totalRecords", totalRecords);
             request.setAttribute("CustomerHistory", paymentDAO.getPaymentPaging(accDAO.getAccountByID(accountID).getPassengerID(),currentPage, recordsPerPage));
-            if (otpDAO.getOTPByID(accountID).isEmpty()) {
-                request.setAttribute("OTPCheck", false);
-            } else {
-                request.setAttribute("OTPCheck", true);
-            }
-            List<otpQuestion> otps = otpDAO.getOTPByID(accountID);
-            if (!otps.isEmpty()) {
-                session.setAttribute("OTP1", otps.get(0).getOtpAnswer());
-                session.setAttribute("OTP2", otps.get(1).getOtpAnswer());
-                session.setAttribute("OTP3", otps.get(2).getOtpAnswer());
-
-            }
             request.getRequestDispatcher("profiletest.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("login.jsp").forward(request, response);

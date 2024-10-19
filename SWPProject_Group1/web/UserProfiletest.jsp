@@ -59,7 +59,15 @@
         <div class="page-wraper">
             <div id="loading-icon-bx"></div>
             <!-- Header Top ==== -->
+            <iframe id="footer-frame" src="header1.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
 
+                <script>
+                    const iframe = document.getElementById('footer-frame');
+                    iframe.onload = function () {
+                        // Adjust the height of the iframe to fit its content
+                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                    };
+                </script>
             <!-- header END ==== -->
             <!-- Content -->
             <div class="page-content bg-white">
@@ -286,7 +294,15 @@
                     <!-- contact area END -->
                 </div>
                 <!-- Content END-->
-                <jsp:include page="Footer.jsp"></jsp:include>
+                <iframe id="footer-frame" src="footer1.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
+
+                <script>
+                    const iframe = document.getElementById('footer-frame');
+                    iframe.onload = function () {
+                        // Adjust the height of the iframe to fit its content
+                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                    };
+                </script>
 
                 <!-- Footer END ==== -->
                 <button class="back-to-top fa fa-chevron-up" ></button>

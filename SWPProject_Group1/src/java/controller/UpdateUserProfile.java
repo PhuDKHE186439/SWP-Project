@@ -5,7 +5,6 @@
 package controller;
 
 import dal.AccountDAO;
-import dal.OtpQuestionDAO;
 import dal.PassengerDAO;
 import dal.PaymentDAO;
 import java.io.IOException;
@@ -15,8 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.otpQuestion;
 import model.passenger;
 import EnCrypt.BCrypt;
 
@@ -103,18 +100,6 @@ public class UpdateUserProfile extends HttpServlet {
             }
             passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
             request.setAttribute("profile", profilePassenger);
-            OtpQuestionDAO otpDAO = new OtpQuestionDAO();
-            List<otpQuestion> otps = otpDAO.getOTPByID(accountID);
-            if (otpDAO.getOTPByID(accountID).isEmpty()) {
-                request.setAttribute("OTPCheck", false);
-            } else {
-                request.setAttribute("OTPCheck", true);
-            }
-            if (!otps.isEmpty()) {
-                session.setAttribute("OTP1", otps.get(0).getOtpAnswer());
-                session.setAttribute("OTP2", otps.get(1).getOtpAnswer());
-                session.setAttribute("OTP3", otps.get(2).getOtpAnswer());
-            }
             PaymentDAO paymentDAO = new PaymentDAO();
 
         int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
