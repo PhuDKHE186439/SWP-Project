@@ -15,13 +15,25 @@ public class feedback {
     private String passengerName;    // New field
     private String passengerPhone;   // New field
     private String submissionDate;
+    private String feedbackType;
 
-    public feedback(int feedbackID, String message, int passengerID, String submissionDate) {
+    public feedback(int feedbackID, String message, int passengerID, String submissionDate, String FeedbackType) {
         this.feedbackID = feedbackID;
         this.message = message;
         this.passengerID = passengerID;
         this.submissionDate = submissionDate;
+        this.feedbackType = FeedbackType;
     }
+
+    public String getFeedbackType() {
+        return feedbackType;
+    }
+
+    public void setFeedbackType(String FeedbackType) {
+        this.feedbackType = FeedbackType;
+    }
+
+     
 
     public int getFeedbackID() {
         return feedbackID;
@@ -57,7 +69,9 @@ public class feedback {
 
     @Override
     public String toString() {
-        return "feedback{" + "feedbackID=" + feedbackID + ", message=" + message + ", passengerID=" + passengerID + ", submissionDate=" + submissionDate + '}';
+        return "feedback{" + "feedbackID=" + feedbackID + ", message=" + message + ", passengerID=" + passengerID + ", submissionDate=" + submissionDate + ", FeedbackType=" + feedbackType + '}';
     }
+
+
     
 }

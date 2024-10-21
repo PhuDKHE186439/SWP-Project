@@ -216,6 +216,7 @@
                                             <tr class="text-dark">
                                                 <th scope="col">Feedback ID</th>
                                                 <th scope="col">Message</th>
+                                                <th scope="col">Feedback Type</th>
                                                 <th scope="col">Passenger ID</th>
                                                 <th scope="col">Submission Date</th>
                                                 <th scope="col">Actions</th>
@@ -226,11 +227,13 @@
                                                 <tr>
                                                     <td>${feedback.feedbackID}</td>
                                                     <td>${feedback.message}</td>
+                                                    <td>${feedback.feedbackType}</td>
                                                     <td>
                                                         <a href="#" class="passenger-id" data-passenger-id="${feedback.passengerID}" data-bs-toggle="modal" data-bs-target="#passengerInfoModal">
                                                             ${feedback.passengerID}
                                                         </a>
                                                     </td>
+                                                    
                                                     <td>${feedback.submissionDate}</td>
                                                     <td>
                                                         <a href="#" class="btn btn-warning btn-sm" 
@@ -238,6 +241,7 @@
                                                            data-bs-target="#editFeedbackModal" 
                                                            data-feedback-id="${feedback.feedbackID}" 
                                                            data-message="${feedback.message}"
+                                                           data-feedback-type="${feedback.feedbackType}"
                                                            data-passenger-id="${feedback.passengerID}"
                                                            data-submission-date="${feedback.submissionDate}">Edit</a>
                                                         <form action="feedback?action=deleteFeedback" method="post" style="display:inline;">
@@ -314,6 +318,10 @@
                                                         <label for="editSubmissionDate" class="form-label">Submission Date</label>
                                                         <input type="date" class="form-control" id="editSubmissionDate" name="submissionDate" required>
                                                     </div>
+                                                    <div class="mb-3">
+                                                        <label for="editFeedbackType" class="form-label">Feedback Type</label>
+                                                        <input type="text" class="form-control" id="editFeedbackType" name="FeedbackType" required>
+                                                    </div>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -358,11 +366,13 @@
                                                                                 var message = button.getAttribute('data-message');
                                                                                 var passengerID = button.getAttribute('data-passenger-id');
                                                                                 var submissionDate = button.getAttribute('data-submission-date');
+                                                                                var feedbackType = button.getAttribute('data-feedback-type');
 
                                                                                 document.getElementById('feedbackID').value = feedbackID;
                                                                                 document.getElementById('editMessage').value = message;
                                                                                 document.getElementById('editPassengerID').value = passengerID;
                                                                                 document.getElementById('editSubmissionDate').value = submissionDate;
+                                                                                document.getElementById('editFeedbackType').value = feedbackType;
                                                                             });
 
                                                                             // Load passenger information when clicking on Passenger ID

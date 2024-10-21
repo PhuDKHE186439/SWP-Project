@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.feedback;
-
+//Chay 2 Dong lenh benh duoi de add them cot FeedbackType
+//ALTER TABLE `trainproject`.`feedback` 
+//ADD COLUMN `FeedbackType` VARCHAR(45) NULL AFTER `SubmissionDate`;
 public class FeedbackDAO extends DBContext {
 
     // Method to get all feedback records
@@ -192,10 +194,12 @@ public class FeedbackDAO extends DBContext {
     // Helper method to extract feedback from ResultSet
     private feedback extractFeedbackFromResultSet(ResultSet rs) throws SQLException {
         return new feedback(
+                
                 rs.getInt("FeedbackID"),
                 rs.getString("Message"),
                 rs.getInt("PassengerID"),
-                rs.getString("SubmissionDate")
+                rs.getString("SubmissionDate"),
+                rs.getString("FeedbackType")
         );
     }
 
@@ -205,8 +209,9 @@ public class FeedbackDAO extends DBContext {
 
         // Test search functionality
 //        System.out.println("Testing search functionality:");
-//        List<feedback> searchResults = dao.getFeedbackBySearchAndSort("test search", "latest", 1, 5);
+        List<feedback> searchResults = dao.getFeedbackBySearchAndSort("", "latest", 1, 5);
 //        for (feedback f : searchResults) {
+System.out.println(searchResults);
 //            System.out.println(f);
 //        }
 //        
@@ -214,7 +219,8 @@ public class FeedbackDAO extends DBContext {
 //        System.out.println("\nTesting count functionality:");
 //        int count = dao.getTotalFeedbackCount("test search");
 //        System.out.println("Total records found: " + count);
-        dao.createFeedback("Hello", 3, LocalDate.now().toString());
+//        dao.createFeedback("Hello", 3, LocalDate.now().toString());
+//        System.out.println(dao.getAllFeedback());
     
 
 

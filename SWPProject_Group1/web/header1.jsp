@@ -3,6 +3,7 @@
     Created on : Oct 14, 2024, 3:04:03 AM
     Author     : P C
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -72,6 +73,9 @@
 
                             <li><a class="m_tag" href="home">Home</a></li>
                             <li><a class="m_tag" href="/SWPProject_Group1/userprofile">Profile</a></li>
+                            <c:if test="${sessionScope.AccID!=null}">
+                                <li><a class="m_tag" href="logout">LOGOUT</a></li>
+                            </c:if>
                             <li class="dropdown dropdown-large">
                                 <a href="#" class="dropdown-toggle m_tag" data-toggle="dropdown">Politics<b class="caret"></b></a>
 
@@ -126,11 +130,11 @@
                             <li><a class="m_tag" href="about.html">About Us</a></li>
                             <li><a class="m_tag" href="service.html">Services</a></li>
                             <li class="dropdown">
-                                <a class="m_tag active_tab" href="/SWPProject_Group1/Unews"  role="button" aria-expanded="false">News<span class=""></span></a>
-<!--                                <ul class="dropdown-menu drop_3" role="menu">
-                                    <li><a class="hvr-forward" href="blog.html">Blog</a></li>
-                                    <li><a class="border_none hvr-forward" href="blog_detail.html">Blog Detail</a></li>
-                                </ul>-->
+                                <a class="m_tag" href="/SWPProject_Group1/Unews"  role="button" aria-expanded="false">News<span class=""></span></a>
+                                <!--                                <ul class="dropdown-menu drop_3" role="menu">
+                                                                    <li><a class="hvr-forward" href="blog.html">Blog</a></li>
+                                                                    <li><a class="border_none hvr-forward" href="blog_detail.html">Blog Detail</a></li>
+                                                                </ul>-->
                             </li>
                             <li class="dropdown">
                                 <a class="m_tag" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Pages<span class="caret"></span></a>
@@ -161,7 +165,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        
+
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>
@@ -169,46 +173,46 @@
             </nav>
 
         </section>
-        
+
         <script>
-    $(document).ready(function () {
+            $(document).ready(function () {
 
-        /*****Fixed Menu******/
-        var secondaryNav = $('.cd-secondary-nav'),
-                secondaryNavTopPosition = secondaryNav.offset().top;
-        $(window).on('scroll', function () {
-            var navbar_height = document.querySelector('.navbar').offsetHeight;
-            var top = 30;
-            if ($(window).scrollTop() > secondaryNavTopPosition) {
-                secondaryNav.addClass('is-fixed');
-                $("body").css("padding-top", navbar_height);
-            } else {
-                secondaryNav.removeClass('is-fixed');
-                $("body").css("padding-top", 0);
-            }
-        });
+                /*****Fixed Menu******/
+                var secondaryNav = $('.cd-secondary-nav'),
+                        secondaryNavTopPosition = secondaryNav.offset().top;
+                $(window).on('scroll', function () {
+                    var navbar_height = document.querySelector('.navbar').offsetHeight;
+                    var top = 30;
+                    if ($(window).scrollTop() > secondaryNavTopPosition) {
+                        secondaryNav.addClass('is-fixed');
+                        $("body").css("padding-top", navbar_height);
+                    } else {
+                        secondaryNav.removeClass('is-fixed');
+                        $("body").css("padding-top", 0);
+                    }
+                });
 
-    });
-</script>
+            });
+        </script>
 
-<script>
-    $("#menu-close").click(function (e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-</script>
+        <script>
+            $("#menu-close").click(function (e) {
+                e.preventDefault();
+                $("#sidebar-wrapper").toggleClass("active");
+            });
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#sidebar-wrapper").toggleClass("active");
+            });
+        </script>
 
-<script src="js/ziehharmonika.js"></script>
+        <script src="js/ziehharmonika.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $('.ziehharmonika').ziehharmonika({
-            collapsible: true,
-            prefix: 'â˜…'
-        });
-    });
-</script>
+        <script>
+            $(document).ready(function () {
+                $('.ziehharmonika').ziehharmonika({
+                    collapsible: true,
+                    prefix: 'â˜…'
+                });
+            });
+        </script>

@@ -35,7 +35,6 @@ public class FeedbackController extends HttpServlet {
         int totalRecords = dao.getTotalFeedbackCount(search);
         int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
         List<feedback> feedbackList = dao.getFeedbackBySearchAndSort(search, sortOrder, currentPage, recordsPerPage);
-
         // Set attributes for JSP
         request.setAttribute("feedbackList", feedbackList);
         request.setAttribute("currentPage", currentPage);
@@ -83,8 +82,8 @@ public class FeedbackController extends HttpServlet {
         String message = request.getParameter("message");
         int passengerID = Integer.parseInt(request.getParameter("passengerID"));
         String submissionDate = request.getParameter("submissionDate");
-
-        feedback newFeedback = new feedback(0, message, passengerID, submissionDate);
+        String feedbacktype = request.getParameter("feedbacktype");
+        feedback newFeedback = new feedback(0, message, passengerID, submissionDate,feedbacktype);
         new FeedbackDAO().createFeedback(newFeedback);
     }
 
@@ -93,8 +92,9 @@ public class FeedbackController extends HttpServlet {
         String message = request.getParameter("message");
         int passengerID = Integer.parseInt(request.getParameter("passengerID"));
         String submissionDate = request.getParameter("submissionDate");
+        String feedbacktype = request.getParameter("feedbacktype");
 
-        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate);
+        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate,feedbacktype);
         new FeedbackDAO().updateFeedback(updatedFeedback);
     }
 

@@ -68,69 +68,61 @@
                             <p>Login Your Account <a href="login.jsp">Click here</a></p>
                             <p style="color: Red">${requestScope.annoutment}</p>
                         </div>	
-                        <form class="contact-bx" action="register" method="post" autocomplete="off">
+                        <form class="contact-bx" action="register" method="post" autocomplete="off" style="">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Name</label>
-                                            <input name="name" type="text" required="" class="form-control">
+                                            <input name="name" type="text" required="" class="form-control" placeholder="Your Name">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Phone Number</label>
-                                            <input name="phone" type="tel" required="" class="form-control" pattern="[0-9]{10}">
+                                            <input name="phone" type="tel" required="" class="form-control" pattern="[0-9]{10}" placeholder="Your Phone Number">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Email Address</label>
-                                            <input name="email" type="email" required="" class="form-control">
+                                            <input name="email" type="email" required="" class="form-control" placeholder="Your Email Address">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Year of Birth</label>
-                                            <input name="age" type="tel" required="" class="form-control" pattern="[1-2]{1}[0-9]{3}">
+                                            <input name="age" type="tel" required="" class="form-control" pattern="[1-2]{1}[0-9]{3}" placeholder="Your Year of Birth">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Address</label>
-                                            <input name="address" type="text" required="" class="form-control">
+                                            <input name="address" type="text" required="" class="form-control" placeholder="Your Address">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Username</label>
-                                            <input name="username" type="text" required="" class="form-control">
+                                            <input name="username" type="text" required="" class="form-control" placeholder="Your Username">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group"> 
-                                            <label>Your Password</label>
-                                            <input name="password" type="password" class="form-control" required="">
+                                            <input name="password" type="password" class="form-control" required="" placeholder="Your Password">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group"> 
-                                            <label>Re-Type Your Password</label>
-                                            <input name="repassword" type="password" class="form-control" required="">
+                                            <input name="repassword" type="password" class="form-control" required="" placeholder="Re-Type Your Password">
                                         </div>
                                     </div>
                                 </div>
