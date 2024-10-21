@@ -1,6 +1,6 @@
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.nio.charset.StandardCharsets"%>
-<%@page import="com.vnpay.common.Config"%>
+<%@page import="vnpay.Config"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -22,7 +22,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>KẾT QUẢ THANH TOÁN</title>
-        <!-- Bootstrap core CSS -->
+        <!-- Bootstrap core CSS -->     
         <link href="assets/bootstrap.min.css" rel="stylesheet"/>
         <!-- Custom styles for this template -->
         <link href="assets/jumbotron-narrow.css" rel="stylesheet"> 
