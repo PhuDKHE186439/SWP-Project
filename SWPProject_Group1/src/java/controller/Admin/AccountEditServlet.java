@@ -81,18 +81,14 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     int accountID = Integer.parseInt(request.getParameter("accountID"));
 
     if ("delete".equals(submitType)) {
-        // Handle the delete action
         AccountDAO accountDAO = new AccountDAO();
-        accountDAO.deleteAccount(accountID); // Implement deleteAccount in your AccountDAO
+        accountDAO.deleteAccount(accountID);
         response.sendRedirect("Admin2.jsp?success=delete");
     } else {
-        // Handle the update action
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         int roleID = Integer.parseInt(request.getParameter("roleID"));
-
-        // Update the account directly
         AccountDAO accountDAO = new AccountDAO();
         account updatedAccount = new account(accountID, phoneNumber, username, null, email, roleID, 0, null); // Adjust constructor accordingly
         accountDAO.updateAccount(updatedAccount);

@@ -247,7 +247,7 @@
                                         <td>
                                             <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
                                             <form action="AccountEditServlet" method="post" style="display:inline;">
-                                                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                                                <input type="hidden" name="accountID" value="<%=acc.getAccountID() %>">
                                                 <input type="hidden" name="submitType" value="delete">
                                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
                                             </form>
