@@ -468,12 +468,7 @@
                         toggleAccountList(accounts, false);
                     }
 
-
-
                 </script>
-
-
-
                 <!-- Account Update End -->
 
                 <!-- Widgets Start -->
@@ -493,9 +488,6 @@
                                         <button type="submit" class="btn btn-primary ms-2">Add</button>
                                     </form>
                                 </div>
-
-
-
                                 <!-- Existing Roles -->
                                 <% for (role r : roles) { %>
                                 <div class="d-flex align-items-center border-bottom py-2">
@@ -516,7 +508,6 @@
                                 <% } %>
                             </div>
                         </div>
-
                         <!-- Edit Role Popup -->
                         <div id="editRolePopup" style="display: none;" class="popup">
                             <div class="popup-content">
@@ -584,8 +575,6 @@
                                 cursor: pointer;
                             }
                         </style>
-
-
 
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <div class="h-100 bg-light rounded p-4">
