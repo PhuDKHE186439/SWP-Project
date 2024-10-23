@@ -56,7 +56,7 @@
             <!-- Sidebar Start -->
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
-                    <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <a href="home.jsp" class="navbar-brand mx-4 mb-3">
                         <h3 class="text-primary">Train Traveler</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
@@ -201,7 +201,6 @@
                                 <button class="btn btn-primary" onclick="searchAccounts()">Search</button>
                             </div>
                         </div>
-
                         <div class="table-responsive">
                             <table class="table text-start align-middle table-bordered table-hover mb-0">
                                 <thead>
@@ -249,8 +248,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <!-- Create Account Modal -->
                 <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -298,7 +295,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Edit Account Modal -->
                 <div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -343,14 +339,11 @@
                         </div>
                     </div>
                 </div>
-
                 <script>
-                    // Create and Edit Account Modals
                     function openCreateAccountModal() {
                         const modal = new bootstrap.Modal(document.getElementById('createAccountModal'));
                         modal.show();
                     }
-
                     function openEditAccountModal(accountID, username, email, phoneNumber, roleID) {
                         document.getElementById('editAccountID').value = accountID;
                         document.getElementById('editAccountName').value = username;
@@ -359,7 +352,6 @@
                         document.getElementById('modalRole').value = roleID;
                         $('#editAccountModal').modal('show');
                     }
-
                     function createAccount() {
                         const accountName = document.getElementById("modalAccountName").value;
                         const password = document.getElementById("modalPassword").value;
@@ -391,8 +383,6 @@
                             alert("Please fill in all fields");
                         }
                     }
-
-// Search Accounts Function
                     function searchAccounts() {
                         const searchCriteria = document.getElementById("searchCriteria").value;
                         const searchInput = document.getElementById("searchInput").value.toLowerCase();
@@ -424,49 +414,87 @@
                         }
                     }
 
-// Show and Return Account Listings
-                    function toggleAccountList(accounts, showAll) {
+                    function showAllAccounts() {
                         const accountList = document.getElementById("accountList");
                         accountList.innerHTML = ""; // Clear existing accounts
 
-                        for (let i = 0; i < (showAll ? accounts.length : Math.min(10, accounts.length)); i++) {
-                            const acc = accounts[i];
-                            let roleName = ""; // Replace with method to retrieve role name by roleID
-                            for (let r of roles) {
-                                if (r.getRoleID() === acc.getRoleID()) {
-                                    roleName = r.getRoleName();
-                                    break;
-                                }
-                            }
-
-                            accountList.innerHTML += `
+                        // Loop through all accounts and populate the table
+                    <% for (account acc : accounts) { 
+        String roleName = ""; // Replace with method to retrieve role name by roleID
+        for (role r : roles) {
+            if (r.getRoleID() == acc.getRoleID()) {
+                roleName = r.getRoleName();
+                break;
+            }
+        } 
+                    %>
+                        accountList.innerHTML += `
         <tr>
-            <td>${acc.getUsername()}</td>
-            <td>${acc.getEmail()}</td>
-            <td>${acc.getPhoneNumber()}</td>
-            <td>${roleName}</td>
+            <td><%= acc.getUsername() %></td>
+            <td><%= acc.getEmail() %></td>
+            <td><%= acc.getPhoneNumber() %></td>
+            <td><%= roleName %></td>
+            <td><%= acc.getStatus() %></td>
             <td>
-                <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(${acc.getAccountID()}, '${acc.getUsername()}', '${acc.getEmail()}', '${acc.getPhoneNumber()}', ${acc.getRoleID()})">Edit</button>
-                <form action="AccountEditServlet" method="post" style="display:inline;">
-                    <input type="hidden" name="accountID" value="${acc.getAccountID()}">
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
+                <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
+                <form action="BanAccount" method="post" style="display:inline;">
+                    <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                    <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                    <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                    </button>
                 </form>
             </td>
         </tr>
-        `;
-                        }
+    `;
+                    <% } %>
 
-                        document.getElementById("showAllBtn").style.display = showAll ? "none" : "inline";
-                        document.getElementById("returnToNormalBtn").style.display = showAll ? "inline" : "none";
-                    }
-
-                    function showAllAccounts() {
-                        toggleAccountList(accounts, true);
+                        // Hide "Show All" and display "Return to Normal" button
+                        document.getElementById("showAllBtn").style.display = "none";
+                        document.getElementById("returnToNormalBtn").style.display = "inline";
                     }
 
                     function returnToNormal() {
-                        toggleAccountList(accounts, false);
+                        const accountList = document.getElementById("accountList");
+                        accountList.innerHTML = ""; // Clear the full account list
+
+                        // Show only the first 10 accounts (or fewer, depending on total)
+                    <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
+        account acc = accounts.get(i); 
+        String roleName = ""; // Replace with method to retrieve role name by roleID
+        for (role r : roles) {
+            if (r.getRoleID() == acc.getRoleID()) {
+                roleName = r.getRoleName();
+                break;
+            }
+        } 
+                    %>
+                        accountList.innerHTML += `
+        <tr>
+            <td><%= acc.getUsername() %></td>
+            <td><%= acc.getEmail() %></td>
+            <td><%= acc.getPhoneNumber() %></td>
+            <td><%= roleName %></td>
+            <td><%= acc.getStatus() %></td>
+            <td>
+                <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
+                <form action="BanAccount" method="post" style="display:inline;">
+                    <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
+                    <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
+                    <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
+                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    `;
+                    <% } %>
+
+                        // Display "Show All" and hide "Return to Normal" button
+                        document.getElementById("showAllBtn").style.display = "inline";
+                        document.getElementById("returnToNormalBtn").style.display = "none";
                     }
+
 
                 </script>
                 <!-- Account Update End -->
@@ -646,15 +674,7 @@
                 </div>
                 <!-- Widgets End -->
                 <!-- Footer Start -->
-                <iframe id="Footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
-
-                <script>
-                    const iframe = document.getElementById('footer-frame');
-                    iframe.onload = function () {
-                        // Adjust the height of the iframe to fit its content
-                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-                    };
-                </script>
+                
                 <!-- Footer End -->
             </div>
             <!-- Content End -->
