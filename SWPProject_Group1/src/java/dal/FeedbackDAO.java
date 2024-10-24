@@ -140,13 +140,13 @@ public class FeedbackDAO extends DBContext {
         }
     }
 
-    //Method Crate Message with no feedback
-    public boolean createFeedback(String message, int passengerID, String date) {
-        String sql = "INSERT INTO trainproject.feedback (Message, PassengerID, SubmissionDate) VALUES (?, ?, ?)";
+    public boolean createFeedback(String message, int passengerID, String date, String feedbacktype) {
+        String sql = "INSERT INTO trainproject.feedback (Message, PassengerID, SubmissionDate, FeedbackType) VALUES (?, ?, ?, ?)";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, message);
             st.setInt(2, passengerID);
             st.setString(3, date);
+            st.setString(4, feedbacktype);
             return st.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error in createFeedback: " + e.getMessage());
@@ -203,6 +203,59 @@ public class FeedbackDAO extends DBContext {
         );
     }
 
+    public List<feedback> getFeedbackBySearchAndSortBugs(String search, String sortOrder, int currentPage, int recordsPerPage, String feedbacktype) {
+        List<feedback> feedbackList = new ArrayList<>();
+
+        // Clean and prepare search terms
+        String[] searchTerms = prepareSearchTerms(search);
+
+        // Build dynamic SQL query based on search terms
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM trainproject.feedback WHERE FeedbackType=?");
+        if (searchTerms.length > 0) {
+            sqlBuilder.append(" AND (");
+            for (int i = 0; i < searchTerms.length; i++) {
+                if (i > 0) {
+                    sqlBuilder.append(" OR ");
+                }
+                sqlBuilder.append("(Message LIKE ? OR ")
+                        .append("CAST(FeedbackID AS CHAR) LIKE ? OR ")
+                        .append("CAST(PassengerID AS CHAR) LIKE ? OR ")
+                        .append("SubmissionDate LIKE ?)");
+            }
+            sqlBuilder.append(")");
+        }
+
+        // Add sorting condition
+        sqlBuilder.append(" ORDER BY SubmissionDate ");
+        sqlBuilder.append("oldest".equalsIgnoreCase(sortOrder) ? "ASC" : "DESC");
+
+        // Add pagination
+        sqlBuilder.append(" LIMIT ?, ?");
+
+        try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
+            int paramIndex = 2;
+
+            // Set search parameters
+            for (String term : searchTerms) {
+                String searchPattern = "%" + term + "%";
+                for (int i = 1; i < 4; i++) { // 4 parameters for each term
+                    st.setString(paramIndex++, searchPattern);
+                }
+            }
+
+            // Set pagination parameters
+            st.setInt(paramIndex++, (currentPage - 1) * recordsPerPage);
+            st.setInt(paramIndex, recordsPerPage);
+            st.setString(1, feedbacktype);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                feedbackList.add(extractFeedbackFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getFeedbackBySearchAndSort: " + e.getMessage());
+        }
+        return feedbackList;
+    }
     // Main method for testing purposes
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();

@@ -70,7 +70,7 @@
                     </div>
                     <div class="navbar-nav w-100">
                         <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                        <a href="Admin2.jsp" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Account Update</a>
+                        <a href="feedbackadmin" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bugs Report</a>
                     </div>
                 </nav>
             </div>      

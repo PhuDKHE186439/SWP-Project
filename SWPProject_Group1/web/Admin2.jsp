@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
 <%@page session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%
     AccountDAO accountDAO = new AccountDAO();
     List<account> accounts = accountDAO.getAllAccount(); // Make sure this retrieves the accounts list
@@ -80,7 +82,7 @@
                                                             <a href="element.html" class="dropdown-item">Other Elements</a>
                                                         </div>-->
                         </div>
-                        <a href="Admin2.jsp" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Update Account</a>
+                        <a href="Admin2.jsp" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Bugs Report</a>
                         <!--                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
                                                 <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
                                                 <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>-->
@@ -195,299 +197,91 @@
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Account Management</h6>
-                            <div class="d-flex align-items-center">
-                                <button class="btn btn-success me-2" onclick="openCreateAccountModal()">Create New Account</button>
-                                <button id="showAllBtn" class="btn btn-primary me-2" onclick="showAllAccounts()">Show All</button>
-                                <button id="returnToNormalBtn" class="btn btn-primary" style="display: none;" onclick="returnToNormal()">Return to Normal</button>
-                            </div>
+                            <h6 class="mb-0">Bugs Feedback</h6>
+                            <a href="feedback">Show All</a>
                         </div>
 
-                        <!-- Search Functionality -->
-                        <div class="mb-4">
-                            <div class="d-flex align-items-center">
-                                <select id="searchCriteria" class="form-select" aria-label="Search Criteria" style="width: auto; margin-right: 10px;">
-                                    <option value="username">Account Name</option>
-                                    <option value="email">Email</option>
-                                    <option value="phone">Phone Number</option>
-                                    <option value="role">Role</option>
-                                    <option value="status">Status</option>
-                                </select>
-                                <input type="text" id="searchInput" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
-                                <button class="btn btn-primary" onclick="searchAccounts()">Search</button>
+                        <!-- Search and Filter Section -->
+                        <form action="feedbackadmin" method="get" class="mb-4" id="searchForm">
+                            <div class="row mb-3 align-items-center">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Feedback" name="search" value="${param.search}">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <select name="sortOrder" class="form-select d-inline-block w-auto" onchange="document.getElementById('searchForm').submit();">
+                                        <option value="latest" ${param.sortOrder == 'latest' ? 'selected' : ''}>Latest</option>
+                                        <option value="oldest" ${param.sortOrder == 'oldest' ? 'selected' : ''}>Oldest</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        </form>
 
+                        <!-- Feedback Table -->
                         <div class="table-responsive">
                             <table class="table text-start align-middle table-bordered table-hover mb-0">
                                 <thead>
                                     <tr class="text-dark">
-                                        <th scope="col">Account Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Phone Number</th>
-                                        <th scope="col">Role</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Feedback ID</th>
+                                        <th scope="col">Message</th>
+                                        <th scope="col">Submission Date</th>
                                     </tr>
                                 </thead>
-                                <tbody id="accountList">
-                                    <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
-                                        account acc = accounts.get(i); 
-                                        String roleName = ""; // Replace with method to retrieve role name by roleID
-                                        for (role r : roles) {
-                                            if (r.getRoleID() == acc.getRoleID()) {
-                                                roleName = r.getRoleName();
-                                                break;
-                                            }
-                                        } %>
+                                <tbody>
+                                <c:forEach var="feedback" items="${feedbackList2}">
                                     <tr>
-                                        <td><%= acc.getUsername() %></td>
-                                        <td><%= acc.getEmail() %></td>
-                                        <td><%= acc.getPhoneNumber() %></td>
-                                        <td><%= roleName %></td>
-                                        <td><%= acc.getStatus() %></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
-                                            <form action="BanAccount" method="post" style="display:inline;">
-                                                <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
-                                                <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
-                                                <button type="submit" class="btn btn-sm btn-primary" 
-                                                        onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
-                                                    <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
-                                                </button>
-
-                                            </form>
-                                        </td>
+                                        <td>${feedback.feedbackID}</td>
+                                        <td>${feedback.message}</td>
+                                        <td>${feedback.submissionDate}</td>
                                     </tr>
-                                    <% } %>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
 
+                        <!-- Pagination Controls -->
+                        <div class="mt-4 text-center">
+                            <c:if test="${currentPage > 1}">
+                                <a href="feedbackadmin?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Previous</a>
+                            </c:if>
 
-                <!-- Create Account Modal -->
-                <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="createAccountForm" action="CreateAccountServlet" method="POST"> <!-- Ensure action points to the servlet -->
-                                    <div class="mb-3">
-                                        <label for="modalAccountName" class="form-label">Account Name</label>
-                                        <input type="text" class="form-control" name="username" id="modalAccountName" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalPassword" class="form-label">Password</label>
-                                        <input type="password" class="form-control" name="password" id="modalPassword" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" id="modalEmail" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalPhoneNumber" class="form-label">Phone Number</label>
-                                        <input type="text" class="form-control" name="phoneNumber" id="modalPhoneNumber" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalRole" class="form-label">Role</label>
-                                        <select class="form-select" name="roleID" id="modalRole" required>
-                                            <option value="">Select Role</option>
-                                            <% 
-                                            if (roles != null) {
-                                                for (role r : roles) { 
-                                            %>
-                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
-                                            <% 
-                                                }
-                                            } 
-                                            %>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Create Account</button>
-                                </form>
+                            <c:if test="${currentPage > 2}">
+                                <a href="feedbackadmin?page=1&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">1</a>
+                                <c:if test="${currentPage > 3}">
+                                    <span>...</span>
+                                </c:if>
+                            </c:if>
+
+                            <c:if test="${currentPage > 1}">
+                                <a href="feedbackadmin?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">${currentPage - 1}</a>
+                            </c:if>
+
+                            <span class="btn btn-primary">${currentPage}</span>
+
+                            <c:if test="${currentPage < totalPages}">
+                                <a href="feedbackadmin?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">${currentPage + 1}</a>
+                            </c:if>
+
+                            <c:if test="${currentPage < totalPages - 1}">
+                                <c:if test="${currentPage < totalPages - 2}">
+                                    <span>...</span>
+                                </c:if>
+                                <a href="feedbackadmin?page=${totalPages}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-outline-primary">${totalPages}</a>
+                            </c:if>
+
+                            <c:if test="${currentPage < totalPages}">
+                                <a href="feedbackadmin?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}" class="btn btn-primary">Next</a>
+                            </c:if>
+
+                            <div class="mt-2">
+                                Page ${currentPage} of ${totalPages}
                             </div>
                         </div>
+
                     </div>
                 </div>
-
-                <!-- Edit Account Modal -->
-                <div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editAccountModalLabel">Edit Account</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="editAccountForm" action="AccountEditServlet" method="POST">
-                                    <input type="hidden" id="editAccountID" name="accountID">
-                                    <div class="mb-3">
-                                        <label for="editAccountName" class="form-label">Account Name</label>
-                                        <input type="text" class="form-control" name="username" id="editAccountName" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="editEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" id="editEmail" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="editPhoneNumber" class="form-label">Phone Number</label>
-                                        <input type="text" class="form-control" name="phoneNumber" id="editPhoneNumber" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="modalRole" class="form-label">Role</label>
-                                        <select class="form-select" name="roleID" id="modalRole" required>
-                                            <option value="">Select Role</option>
-                                            <% 
-                                            if (roles != null) {
-                                                for (role r : roles) { 
-                                            %>
-                                            <option value="<%= r.getRoleID() %>"><%= r.getRoleName() %></option>
-                                            <% 
-                                                }
-                                            } 
-                                            %>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Update Account</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    // Create and Edit Account Modals
-                    function openCreateAccountModal() {
-                        const modal = new bootstrap.Modal(document.getElementById('createAccountModal'));
-                        modal.show();
-                    }
-
-                    function openEditAccountModal(accountID, username, email, phoneNumber, roleID) {
-                        document.getElementById('editAccountID').value = accountID;
-                        document.getElementById('editAccountName').value = username;
-                        document.getElementById('editEmail').value = email;
-                        document.getElementById('editPhoneNumber').value = phoneNumber;
-                        document.getElementById('modalRole').value = roleID;
-                        $('#editAccountModal').modal('show');
-                    }
-
-                    function createAccount() {
-                        const accountName = document.getElementById("modalAccountName").value;
-                        const password = document.getElementById("modalPassword").value;
-                        const email = document.getElementById("modalEmail").value;
-                        const phoneNumber = document.getElementById("modalPhoneNumber").value;
-                        const role = document.getElementById("modalRole").value;
-
-                        if (accountName && password && email && phoneNumber && role) {
-                            const formData = new FormData();
-                            formData.append("username", accountName);
-                            formData.append("password", password);
-                            formData.append("email", email);
-                            formData.append("phoneNumber", phoneNumber);
-                            formData.append("roleID", role);
-
-                            fetch("CreateAccountServlet", {
-                                method: "POST",
-                                body: formData
-                            })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            location.reload();
-                                        } else {
-                                            alert("Failed to create account");
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
-                        } else {
-                            alert("Please fill in all fields");
-                        }
-                    }
-
-// Search Accounts Function
-                    function searchAccounts() {
-                        const searchCriteria = document.getElementById("searchCriteria").value;
-                        const searchInput = document.getElementById("searchInput").value.toLowerCase();
-                        const accountList = document.getElementById("accountList");
-                        const rows = accountList.getElementsByTagName("tr");
-
-                        for (let i = 0; i < rows.length; i++) {
-                            const cells = rows[i].getElementsByTagName("td");
-                            let match = false;
-
-                            if (cells.length > 0) {
-                                switch (searchCriteria) {
-                                    case "username":
-                                        match = cells[0].textContent.toLowerCase().includes(searchInput);
-                                        break;
-                                    case "email":
-                                        match = cells[1].textContent.toLowerCase().includes(searchInput);
-                                        break;
-                                    case "phone":
-                                        match = cells[2].textContent.toLowerCase().includes(searchInput);
-                                        break;
-                                    case "role":
-                                        match = cells[3].textContent.toLowerCase().includes(searchInput);
-                                        break;
-                                }
-                            }
-
-                            rows[i].style.display = match ? "" : "none";
-                        }
-                    }
-
-// Show and Return Account Listings
-                    function toggleAccountList(accounts, showAll) {
-                        const accountList = document.getElementById("accountList");
-                        accountList.innerHTML = ""; // Clear existing accounts
-
-                        for (let i = 0; i < (showAll ? accounts.length : Math.min(10, accounts.length)); i++) {
-                            const acc = accounts[i];
-                            let roleName = ""; // Replace with method to retrieve role name by roleID
-                            for (let r of roles) {
-                                if (r.getRoleID() === acc.getRoleID()) {
-                                    roleName = r.getRoleName();
-                                    break;
-                                }
-                            }
-
-                            accountList.innerHTML += `
-        <tr>
-            <td>${acc.getUsername()}</td>
-            <td>${acc.getEmail()}</td>
-            <td>${acc.getPhoneNumber()}</td>
-            <td>${roleName}</td>
-            <td>
-                <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(${acc.getAccountID()}, '${acc.getUsername()}', '${acc.getEmail()}', '${acc.getPhoneNumber()}', ${acc.getRoleID()})">Edit</button>
-                <form action="AccountEditServlet" method="post" style="display:inline;">
-                    <input type="hidden" name="accountID" value="${acc.getAccountID()}">
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this account?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        `;
-                        }
-
-                        document.getElementById("showAllBtn").style.display = showAll ? "none" : "inline";
-                        document.getElementById("returnToNormalBtn").style.display = showAll ? "inline" : "none";
-                    }
-
-                    function showAllAccounts() {
-                        toggleAccountList(accounts, true);
-                    }
-
-                    function returnToNormal() {
-                        toggleAccountList(accounts, false);
-                    }
-
-
-
-                </script>
-
 
 
                 <!-- Account Update End -->
@@ -673,15 +467,6 @@
                 </div>
                 <!-- Widgets End -->
                 <!-- Footer Start -->
-                <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
-
-                <script>
-                    const iframe = document.getElementById('footer-frame');
-                    iframe.onload = function () {
-                        // Adjust the height of the iframe to fit its content
-                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-                    };
-                </script>
                 <!-- Footer End -->
             </div>
             <!-- Content End -->

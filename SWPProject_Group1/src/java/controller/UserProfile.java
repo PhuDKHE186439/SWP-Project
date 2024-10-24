@@ -73,7 +73,7 @@ public class UserProfile extends HttpServlet {
             passenger profilePassenger = passDAO.getPassengerByID(accDAO.getAccountByID(accountID).getPassengerID());
             request.setAttribute("profile", profilePassenger);
             int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
-            int recordsPerPage = 2;
+            int recordsPerPage = 5;
             int totalRecords = paymentDAO.getPaymentByPassengerID(accDAO.getAccountByID(accountID).getPassengerID()).size();
             int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
             request.setAttribute("currentPage", currentPage);
