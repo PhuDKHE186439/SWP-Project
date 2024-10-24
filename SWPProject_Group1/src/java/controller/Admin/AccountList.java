@@ -83,7 +83,14 @@ public class AccountList extends HttpServlet {
                 }
             }
         }
-
+        int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
+        int recordsPerPage = 5;
+        int totalRecords = accountDAO.getAllAccount().size();
+        int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("totalRecords", totalRecords);
+        request.setAttribute("AccountList", accountDAO.getAccountPaging(currentPage, recordsPerPage));
         // Store the accounts in request scope and forward to JSP
         request.setAttribute("accounts", accounts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/path/to/account-management.jsp");

@@ -13,7 +13,42 @@ import model.SendGoogle;
  * @author My Asus
  */
 public class AccountDAO extends DBContext {
+    
+    public List<account> getAccountPaging(int currentPage, int recordsPerPage) {
+        List<account> list = new ArrayList<>();
 
+
+        // Build dynamic SQL query based on search terms
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM trainproject.account");
+       
+        // Add pagination
+        sqlBuilder.append(" LIMIT ?, ?");
+
+        try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
+            int paramIndex = 1;
+            // Set pagination parameters
+            st.setInt(paramIndex++, (currentPage - 1) * recordsPerPage);
+            st.setInt(paramIndex, recordsPerPage);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new account(
+                        rs.getInt("AccountID"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getInt("RoleID"),
+                        rs.getInt("PassengerID"),
+                        rs.getString("Status") // Fetch status from the database
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getFeedbackBySearchAndSort: " + e.getMessage());
+        }
+        return list;
+    }
+    
     public List<account> getAllAccount() {
         List<account> list = new ArrayList<>();
         String sql = "SELECT * FROM trainproject.account"; // Ensure your SQL query includes the status field
