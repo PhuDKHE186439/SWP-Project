@@ -2,26 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller;
 
-import dal.AccountDAO;
-import dal.RoleDAO;
+import dal.TrainDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.account;
-import model.role;
+import model.train;
+import org.json.JSONObject;
 
 /**
  *
- * @author Laptop
+ * @author ThinkPro
  */
-public class CreateAccountServlet extends HttpServlet {
+public class TicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class CreateAccountServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateAccountServlet</title>");
+            out.println("<title>Servlet TicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateAccountServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,11 +58,46 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoleDAO roleDAO = new RoleDAO();
-        List<role> role = roleDAO.getAllRoles();
+        // Lấy các tham số từ URL
+        String action = request.getParameter("action");
+        String trainId = request.getParameter("trainId");
+        String seatType = request.getParameter("seatType");
+        String seatNumber = request.getParameter("seatNumber");
+        String price = request.getParameter("price");
+        String seatID = request.getParameter("seatID");
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        JSONObject jsonResponse = new JSONObject();
+        try {
+            if ("view".equals(action)) {
+                TrainDAO td = new TrainDAO();
+                train t = td.getTrainById(Integer.parseInt(trainId));
 
-        request.setAttribute("role", role);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response); // Forward to your JSP page
+                // Xây dựng đối tượng JSON để phản hồi lại JavaScript
+                jsonResponse.put("trainId", t.getTrainID());
+                jsonResponse.put("startLocation", t.getStartLocation().getLocationName());
+                jsonResponse.put("endLocation", t.getArrivalLocation().getLocationName());
+                jsonResponse.put("trainName", t.getTrainName());
+                jsonResponse.put("trainScheduleTime", t.getTrainScheduleTime());
+                jsonResponse.put("seatType", seatType);
+                jsonResponse.put("seatNumber", seatNumber);
+                jsonResponse.put("price", price);
+                jsonResponse.put("seatID", seatID);
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                jsonResponse.put("error", "Action không hợp lệ");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+
+        } catch (Exception e) {
+            jsonResponse.put("error", "Đã xảy ra lỗi trong quá trình xử lý dữ liệu: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        // Gửi phản hồi JSON về cho client
+        out.print(jsonResponse.toString());
+        out.flush();
+
     }
 
     /**
@@ -79,20 +111,7 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-
-        AccountDAO accountDAO = new AccountDAO();
-        accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID); // Use the retrieved passengerID
-
-        // Redirect back to Admin.jsp with success/failure message
-        HttpSession session = request.getSession();
-        session.setAttribute("message", "Account created successfully.");
-        response.sendRedirect("Admin.jsp");
+        processRequest(request, response);
     }
 
     /**

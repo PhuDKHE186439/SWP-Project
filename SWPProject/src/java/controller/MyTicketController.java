@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller;
 
-import dal.AccountDAO;
-import dal.RoleDAO;
+import dal.TicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +12,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.account;
-import model.role;
+import model.ticket;
 
 /**
  *
- * @author Laptop
+ * @author ThinkPro
  */
-public class CreateAccountServlet extends HttpServlet {
+public class MyTicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class CreateAccountServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateAccountServlet</title>");
+            out.println("<title>Servlet MyTicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateAccountServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MyTicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,11 +63,22 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoleDAO roleDAO = new RoleDAO();
-        List<role> role = roleDAO.getAllRoles();
-
-        request.setAttribute("role", role);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response); // Forward to your JSP page
+        HttpSession sesion = request.getSession();
+        if (sesion == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        } else {
+            account acc = (account) sesion.getAttribute("acc");
+            int userId = acc.getAccountID();
+            TicketDAO td = new TicketDAO();
+            try {
+                List<ticket> list = td.getTickets(userId);
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("myticket.jsp").forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(MyTicketController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -79,20 +92,7 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-
-        AccountDAO accountDAO = new AccountDAO();
-        accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID); // Use the retrieved passengerID
-
-        // Redirect back to Admin.jsp with success/failure message
-        HttpSession session = request.getSession();
-        session.setAttribute("message", "Account created successfully.");
-        response.sendRedirect("Admin.jsp");
+        processRequest(request, response);
     }
 
     /**

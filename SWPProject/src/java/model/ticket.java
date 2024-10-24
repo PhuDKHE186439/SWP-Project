@@ -11,22 +11,66 @@ package model;
 public class ticket {
     private int ticketID;
     private int passengerID;
-    private ticketClass ticketClass;
+    private int ticketClassID;
     private String purchaseDate;
     private double ticketPrice;
     private int compartmentID;
-    private seat seat;
+    private int seatID;
+    private int compartmentNumber;
     private String timeArrive;
+    public compartment compartment;
+    public seat seat;
+    
+    private int status;
 
-    public ticket(int ticketID, int passengerID, ticketClass ticketClassID, String purchaseDate, double ticketPrice, seat seat, String timeArrive) {
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+   
+    
+    
+
+    public seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(seat seat) {
+        this.seat = seat;
+    }
+    
+    
+
+    public compartment getCompartment() {
+        return compartment;
+    }
+
+    public void setCompartment(compartment compartment) {
+        this.compartment = compartment;
+    }
+    
+    
+    
+    public ticket(int ticketID, int passengerID, int ticketClassID, String purchaseDate, double ticketPrice, int compartmentID, int seatID, int compartmentNumber, String timeArrive) {
         this.ticketID = ticketID;
         this.passengerID = passengerID;
-        this.ticketClass = ticketClassID;
+        this.ticketClassID = ticketClassID;
         this.purchaseDate = purchaseDate;
         this.ticketPrice = ticketPrice;
-        this.seat = seat;
+        this.compartmentID = compartmentID;
+        this.seatID = seatID;
+        this.compartmentNumber = compartmentNumber;
         this.timeArrive = timeArrive;
     }
+
+    public ticket() {
+    }
+    
+    
 
     public int getTicketID() {
         return ticketID;
@@ -44,12 +88,12 @@ public class ticket {
         this.passengerID = passengerID;
     }
 
-    public ticketClass getTicketClass() {
-        return ticketClass;
+    public int getTicketClassID() {
+        return ticketClassID;
     }
 
-    public void setTicketClass(ticketClass ticketClassID) {
-        this.ticketClass = ticketClassID;
+    public void setTicketClassID(int ticketClassID) {
+        this.ticketClassID = ticketClassID;
     }
 
     public String getPurchaseDate() {
@@ -76,14 +120,21 @@ public class ticket {
         this.compartmentID = compartmentID;
     }
 
-    public seat getSeat() {
-        return seat;
+    public int getSeatID() {
+        return seatID;
     }
 
-    public void setSeat(seat seatID) {
-        this.seat = seatID;
+    public void setSeatID(int seatID) {
+        this.seatID = seatID;
     }
 
+    public int getCompartmentNumber() {
+        return compartmentNumber;
+    }
+
+    public void setCompartmentNumber(int compartmentNumber) {
+        this.compartmentNumber = compartmentNumber;
+    }
 
     public String getTimeArrive() {
         return timeArrive;
@@ -95,7 +146,7 @@ public class ticket {
 
     @Override
     public String toString() {
-        return "ticket{" + "ticketID=" + ticketID + ", passengerID=" + passengerID + ", ticketClassID=" + ticketClass + ", purchaseDate=" + purchaseDate + ", ticketPrice=" + ticketPrice + ", compartmentID=" + compartmentID + ", seatID=" + seat  + ", timeArrive=" + timeArrive + '}';
+        return "ticket{" + "ticketID=" + ticketID + ", passengerID=" + passengerID + ", ticketClassID=" + ticketClassID + ", purchaseDate=" + purchaseDate + ", ticketPrice=" + ticketPrice + ", compartmentID=" + compartmentID + ", seatID=" + seatID + ", compartmentNumber=" + compartmentNumber + ", timeArrive=" + timeArrive + '}';
     }
     
 }

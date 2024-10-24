@@ -10,16 +10,16 @@ package model;
  */
 public class payment {
     private int paymentID;
-    private ticket ticket;
-    private passenger passenger;
+    private int ticketID;
+    private int passengerID;
     private String paymentMethod;
     private String paymentDate;
     private double amount;
 
-    public payment(int paymentID, ticket ticket, passenger passenger, String paymentMethod, String paymentDate, double amount) {
+    public payment(int paymentID, int ticketID, int passengerID, String paymentMethod, String paymentDate, double amount) {
         this.paymentID = paymentID;
-        this.ticket = ticket;
-        this.passenger = passenger;
+        this.ticketID = ticketID;
+        this.passengerID = passengerID;
         this.paymentMethod = paymentMethod;
         this.paymentDate = paymentDate;
         this.amount = amount;
@@ -33,20 +33,20 @@ public class payment {
         this.paymentID = paymentID;
     }
 
-    public ticket getTicket() {
-        return ticket;
+    public int getTicketID() {
+        return ticketID;
     }
 
-    public void setTicket(ticket ticket) {
-        this.ticket = ticket;
+    public void setTicketID(int ticketID) {
+        this.ticketID = ticketID;
     }
 
-    public passenger getPassenger() {
-        return passenger;
+    public int getPassengerID() {
+        return passengerID;
     }
 
-    public void setPassenger(passenger passenger) {
-        this.passenger = passenger;
+    public void setPassengerID(int passengerID) {
+        this.passengerID = passengerID;
     }
 
     public String getPaymentMethod() {
@@ -75,7 +75,7 @@ public class payment {
 
     @Override
     public String toString() {
-        return "payment{" + "paymentID=" + paymentID + ", ticketID=" + ticket + ", passengerID=" + passenger + ", paymentMethod=" + paymentMethod + ", paymentDate=" + paymentDate + ", amount=" + amount + '}';
+        return "payment{" + "paymentID=" + paymentID + ", ticketID=" + ticketID + ", passengerID=" + passengerID + ", paymentMethod=" + paymentMethod + ", paymentDate=" + paymentDate + ", amount=" + amount + '}';
     }
     
 }

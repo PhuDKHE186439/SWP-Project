@@ -10,14 +10,28 @@ package model;
  */
 public class seat{
     private int seatID;
-    private compartment compartment;
-    private String seatNumber;
+    private int compartmentID;
+    private int seatNumber;
     private String seatType;
     private int availabilityStatus;
+    private compartment Compartment;
 
-    public seat(int seatID, compartment compartment, String seatNumber, String seatType, int availabilityStatus) {
+    public seat() {
+    }
+
+    public compartment getCompartment() {
+        return Compartment;
+    }
+
+    public void setCompartment(compartment Compartment) {
+        this.Compartment = Compartment;
+    }
+    
+    
+
+    public seat(int seatID, int compartmentID, int seatNumber, String seatType, int availabilityStatus) {
         this.seatID = seatID;
-        this.compartment = compartment;
+        this.compartmentID = compartmentID;
         this.seatNumber = seatNumber;
         this.seatType = seatType;
         this.availabilityStatus = availabilityStatus;
@@ -31,19 +45,19 @@ public class seat{
         this.seatID = seatID;
     }
 
-    public compartment getCompartment() {
-        return compartment;
+    public int getCompartmentID() {
+        return compartmentID;
     }
 
-    public void setCompartment(compartment compartment) {
-        this.compartment = compartment;
+    public void setCompartmentID(int compartmentID) {
+        this.compartmentID = compartmentID;
     }
 
-    public String getSeatNumber() {
+    public int getSeatNumber() {
         return seatNumber;
     }
 
-    public void setSeatNumber(String seatNumber) {
+    public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
 
@@ -65,7 +79,7 @@ public class seat{
 
     @Override
     public String toString() {
-        return "seat{" + "seatID=" + seatID + ", compartmentID=" + compartment + ", seatNumber=" + seatNumber + ", seatType=" + seatType + ", availabilityStatus=" + availabilityStatus + '}';
+        return "seat{" + "seatID=" + seatID + ", compartmentID=" + compartmentID + ", seatNumber=" + seatNumber + ", seatType=" + seatType + ", availabilityStatus=" + availabilityStatus + '}';
     }
     
     

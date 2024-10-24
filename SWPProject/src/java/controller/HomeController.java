@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller;
 
-import dal.AccountDAO;
-import dal.RoleDAO;
+import dal.TrainDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +12,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import model.account;
-import model.role;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.location;
+import model.train;
 
 /**
  *
- * @author Laptop
+ * @author ThinkPro
  */
-public class CreateAccountServlet extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +38,6 @@ public class CreateAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateAccountServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateAccountServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,11 +52,28 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoleDAO roleDAO = new RoleDAO();
-        List<role> role = roleDAO.getAllRoles();
+        TrainDAO td = new TrainDAO();
+        List<location> locations1 = new ArrayList();
+        List<location> locations2 = new ArrayList();
 
-        request.setAttribute("role", role);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response); // Forward to your JSP page
+        String locationId1_raw = request.getParameter("l1");
+        String locationId2_raw = request.getParameter("l2");
+
+        if (locationId1_raw == null || locationId1_raw.isEmpty() || locationId1_raw.equals("-1")) {
+            locations2 = td.getAllLocation();
+        } else {
+            locations2 = td.getLocations(Integer.parseInt(locationId1_raw));
+        }
+
+        if (locationId2_raw == null || locationId2_raw.isEmpty() || locationId2_raw.equals("-1")) {
+            locations1 = td.getAllLocation();
+        } else {
+            locations1 = td.getLocations(Integer.parseInt(locationId2_raw));
+        }
+        request.setAttribute("locations1", locations1);
+        request.setAttribute("locations2", locations2);
+
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     /**
@@ -79,20 +87,7 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-
-        AccountDAO accountDAO = new AccountDAO();
-        accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID); // Use the retrieved passengerID
-
-        // Redirect back to Admin.jsp with success/failure message
-        HttpSession session = request.getSession();
-        session.setAttribute("message", "Account created successfully.");
-        response.sendRedirect("Admin.jsp");
+      
     }
 
     /**
