@@ -112,6 +112,7 @@ public class LoginController extends HttpServlet {
         Cookie pass = new Cookie("passC", password);
         for (account o : list) {
             if (username.equals(o.getUsername()) && password.equals(o.getPassword())) {
+                session.setAttribute("acc", o);
                 role = o.getRoleID();
                 check = true;
                 session.setAttribute("AccID", o.getAccountID());
@@ -139,7 +140,7 @@ public class LoginController extends HttpServlet {
                     case 1 ->
                         response.sendRedirect("Admin.jsp");
                     case 2 ->
-                        response.sendRedirect("home.jsp");
+                        response.sendRedirect("home1");
                     case 3 ->
                         response.sendRedirect("userprofile");
                 }
