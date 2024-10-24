@@ -214,15 +214,15 @@
                                     </tr>
                                 </thead>
                                 <tbody id="accountList">
-                                    <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
-                                        account acc = accounts.get(i); 
-                                        String roleName = ""; // Replace with method to retrieve role name by roleID
+                                    <% for (account acc : accounts) { 
+                                        String roleName = ""; 
                                         for (role r : roles) {
                                             if (r.getRoleID() == acc.getRoleID()) {
                                                 roleName = r.getRoleName();
                                                 break;
                                             }
-                                        } %>
+                                        } 
+                                    %>
                                     <tr>
                                         <td><%= acc.getUsername() %></td>
                                         <td><%= acc.getEmail() %></td>
@@ -230,7 +230,7 @@
                                         <td><%= roleName %></td>
                                         <td><%= acc.getStatus() %></td>
                                         <td>
-                                            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal(<%= acc.getAccountID() %>, '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', <%= acc.getRoleID() %>)">Edit</button>
+                                            <button class="btn btn-sm btn-warning" onclick="openEditAccountModal('<%= acc.getAccountID() %>', '<%= acc.getUsername() %>', '<%= acc.getEmail() %>', '<%= acc.getPhoneNumber() %>', '<%= acc.getRoleID() %>')">Edit</button>
                                             <form action="BanAccount" method="post" style="display:inline;">
                                                 <input type="hidden" name="accountID" value="<%= acc.getAccountID() %>">
                                                 <input type="hidden" name="action" value="<%= acc.getStatus().equals("Active") ? "ban" : "unban" %>">
@@ -238,12 +238,12 @@
                                                         onclick="return confirm('Are you sure you want to <%= acc.getStatus().equals("Active") ? "ban" : "unban" %> this account?')">
                                                     <%= acc.getStatus().equals("Active") ? "Ban" : "Unban" %>
                                                 </button>
-
                                             </form>
                                         </td>
                                     </tr>
                                     <% } %>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -674,7 +674,7 @@
                 </div>
                 <!-- Widgets End -->
                 <!-- Footer Start -->
-                
+
                 <!-- Footer End -->
             </div>
             <!-- Content End -->

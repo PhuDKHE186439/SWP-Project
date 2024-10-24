@@ -5,6 +5,8 @@
 package controller.Admin;
 
 import dal.AccountDAO;
+import dal.RoleDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.account;
+import model.role;
 
 /**
  *
@@ -66,16 +69,26 @@ public class AccountList extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Fetching all accounts
+        // Retrieve accounts and roles from database or service
         List<account> accounts = accountDAO.getAllAccount();
-        
-        // Setting the account list in the request scope
-        request.setAttribute("accountList", accounts);
-        
-        // Forwarding to Admin.jsp
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
-    }
+        RoleDAO roleDAO = new RoleDAO();
+        List<role> roles = roleDAO.getAllRoles();
 
+        // Add role names to each account for easy display in JSP
+        for (account acc : accounts) {
+            for (role r : roles) {
+                if (r.getRoleID() == acc.getRoleID()) {
+                    r.setRoleName(r.getRoleID() == acc.getRoleID() ? r.getRoleName() : null);
+                    break;
+                }
+            }
+        }
+
+        // Store the accounts in request scope and forward to JSP
+        request.setAttribute("accounts", accounts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/path/to/account-management.jsp");
+        dispatcher.forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
