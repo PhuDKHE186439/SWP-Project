@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author My Asus
@@ -11,12 +13,38 @@ package model;
 public class compartment {
     private int compartmentID;
     private int compartmentNumber;
-    private train trainID;
+    private int trainID;
+    private train train;
+    public List<seat> Seats;
 
-    public compartment(int compartmentID, int compartmentNumber, train trainID) {
+    public train getTrain() {
+        return train;
+    }
+
+    public void setTrain(train Train) {
+        this.train = Train;
+    }
+
+    public List<seat> getSeats() {
+        return Seats;
+    }
+
+    public void setSeats(List<seat> Seats) {
+        this.Seats = Seats;
+    }
+
+    public compartment() {
+    }
+    
+    
+    
+
+   
+    
+     public compartment(int compartmentID, int compartmentNumber, train trainID) {
         this.compartmentID = compartmentID;
         this.compartmentNumber = compartmentNumber;
-        this.trainID = trainID;
+        this.train = trainID;
     }
 
     public int getCompartmentID() {
@@ -35,11 +63,11 @@ public class compartment {
         this.compartmentNumber = compartmentNumber;
     }
 
-    public train getTrainID() {
+    public int getTrainID() {
         return trainID;
     }
 
-    public void setTrainID(train trainID) {
+    public void setTrainID(int trainID) {
         this.trainID = trainID;
     }
 
