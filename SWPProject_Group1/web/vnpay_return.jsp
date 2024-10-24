@@ -27,6 +27,7 @@
         <!-- Custom styles for this template -->
         <link href="assets/jumbotron-narrow.css" rel="stylesheet"> 
         <script src="assets/jquery-1.11.3.min.js"></script>
+        <jsp:include page="header1.jsp" />
     </head>
     <body>
         <%
@@ -52,9 +53,9 @@
         %>
         <!--Begin display -->
         <div class="container">
-            <div class="header clearfix">
-                <h3 class="text-muted">KẾT QUẢ THANH TOÁN</h3>
-            </div>
+            <div class="header clearfix"></div>
+            <h3 class="text-center">KẾT QUẢ THANH TOÁN</h3>
+            <div class="header clearfix"></div>
             <div class="table-responsive">
                 <div class="form-group">
                     <label >Mã giao dịch thanh toán:</label>
@@ -100,13 +101,51 @@
                             }
                         %></label>
                 </div> 
+                <div class="form-group">
+                    <button class="btn btn-success me-2" onclick="window.location.href = 'vnpay_pay.jsp';">Return to Payment Page</button>
+                </div> 
             </div>
             <p>
                 &nbsp;
             </p>
-            <footer class="footer">
-                <p>&copy; VNPAY 2020</p>
-            </footer>
-        </div>  
+
+            <script>
+                $(document).ready(function () {
+
+                    /*****Fixed Menu******/
+                    var secondaryNav = $('.cd-secondary-nav'),
+                            secondaryNavTopPosition = secondaryNav.offset().top;
+                    $(window).on('scroll', function () {
+                        var navbar_height = document.querySelector('.navbar').offsetHeight;
+                        var top = 30;
+                        if ($(window).scrollTop() > secondaryNavTopPosition) {
+                            secondaryNav.addClass('is-fixed');
+                            $("body").css("padding-top", navbar_height);
+                        } else {
+                            secondaryNav.removeClass('is-fixed');
+                            $("body").css("padding-top", 0);
+                        }
+                    });
+
+                });
+                $("#menu-close").click(function (e) {
+                    e.preventDefault();
+                    $("#sidebar-wrapper").toggleClass("active");
+                });
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#sidebar-wrapper").toggleClass("active");
+                });
+
+                $(document).ready(function () {
+                    $('.ziehharmonika').ziehharmonika({
+                        collapsible: true,
+                        prefix: 'â˜…'
+                    });
+                });
+            </script>
+            <script src="js/ziehharmonika.js"></script>
+        </div>
     </body>
+    <jsp:include page="footer1.jsp" />
 </html>
