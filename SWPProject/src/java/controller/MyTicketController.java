@@ -72,7 +72,7 @@ public class MyTicketController extends HttpServlet {
             int userId = acc.getAccountID();
             TicketDAO td = new TicketDAO();
             try {
-                List<ticket> list = td.getTicketsStatus(userId);
+                List<ticket> list = td.getTickets(userId);
                 request.setAttribute("list", list);
                 request.getRequestDispatcher("myticket.jsp").forward(request, response);
             } catch (SQLException ex) {

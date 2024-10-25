@@ -79,7 +79,7 @@ public class TicketDAO extends DBContext {
 
     }
 
-    public List<ticket> getAllTicketStatus(int index, int recout_per_page,
+    public List<ticket> getAllTicket(int index, int recout_per_page,
             String key, int status) throws SQLException {
         List<ticket> list = new ArrayList<>();
 
@@ -190,7 +190,7 @@ public class TicketDAO extends DBContext {
         return list;
     }
 
-    public List<ticket> getTicketsStatus(int userId) throws SQLException {
+    public List<ticket> getTickets(int userId) throws SQLException {
         List<ticket> list = new ArrayList<>();
 
         TrainDAO td = new TrainDAO();
@@ -252,7 +252,7 @@ public class TicketDAO extends DBContext {
                                                 new location(rs.getInt("ArrivalLocationID"), 
                                                         rs.getString("ArrivalLocationName"), 
                                                         rs.getString("ArrivalLocationDescription")))),
-                               rs.getString("SeatNumber"), rs.getString("SeatType"),
+                                Integer.parseInt(rs.getString("SeatNumber")), rs.getString("SeatType"),
                                 rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive")));
             }
         } catch (Exception e) {

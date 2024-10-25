@@ -24,11 +24,11 @@
         <servlet-name>CreateAccountServlet</servlet-name>
         <servlet-class>controller.Admin.CreateAccountServlet</servlet-class>
     </servlet>
-    <servlet>
+       <servlet>
         <servlet-name>TrainController</servlet-name>
         <servlet-class>Ticket.TrainController</servlet-class>
     </servlet>
-    <servlet>
+        <servlet>
         <servlet-name>TicketController</servlet-name>
         <servlet-class>Ticket.TicketController</servlet-class>
     </servlet>
@@ -107,10 +107,6 @@
     <servlet>
         <servlet-name>feedbackadmin</servlet-name>
         <servlet-class>controller.feedbackadmin</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CompartmentDao</servlet-name>
-        <servlet-class>dal.CompartmentDao</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -204,28 +200,24 @@
         <servlet-name>feedbackadmin</servlet-name>
         <url-pattern>/feedbackadmin</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+        <servlet-mapping>
         <servlet-name>TicketController</servlet-name>
         <url-pattern>/tickets</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CompartmentDao</servlet-name>
-        <url-pattern>/CompartmentDao</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <servlet-mapping>
+        <servlet-mapping>
         <servlet-name>TrainController</servlet-name>
         <url-pattern>/trains</url-pattern>
     </servlet-mapping>
-    <servlet>
+        <servlet>
         <servlet-name>Home1Controller</servlet-name>
         <servlet-class>Ticket.Home1Controller</servlet-class>
     </servlet>
-    <servlet-mapping>
+        <servlet-mapping>
         <servlet-name>Home1Controller</servlet-name>
         <url-pattern>/home1</url-pattern>
     </servlet-mapping>

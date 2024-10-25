@@ -49,7 +49,7 @@ public class TrainDAO extends DBContext {
                 seat c = new seat();
                 c.setSeatID(rs.getInt(1));
                 c.setCompartmentID(rs.getInt(2));
-                c.setSeatNumber(rs.getString(3));
+                c.setSeatNumber(rs.getInt(3));
                 c.setAvailabilityStatus(rs.getInt(4));
                 c.setSeatType(rs.getString(5));
                 compartment cc = getCompartmentById(rs.getInt(2));
@@ -143,7 +143,7 @@ public class TrainDAO extends DBContext {
                 while (rs.next()) {
                     seat s = new seat();
                     s.setSeatID(rs.getInt(1));
-                    s.setSeatNumber(rs.getString(3));
+                    s.setSeatNumber(rs.getInt(3));
                     seats.add(s);
                 }
                 c.setSeats(seats);
