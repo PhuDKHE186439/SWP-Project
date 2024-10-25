@@ -20,39 +20,24 @@
         </head>
         <body>
             <div class="row" style="display: flex;
-                 justify-content: center; /* Horizontal centering */
-                 align-items: center;     /* Vertical centering */
-                 height: 50vh;  ">
+        justify-content: center; /* Horizontal centering */
+        align-items: center;     /* Vertical centering */
+        height: 50vh;  ">
                 <!-- Search Form Section -->
                 <div class="col-md-4 form-container w-50 border p-4 " style="border: 2px solid #000; /* Adjust the thickness and color as needed */
-                     padding: 15px;         /* Space inside the box */
-                     margin: 10px;         /* Space outside the box */
-                     border-radius: 5px;   /* Optional: rounded corners */
-                     background-color: #f9">
+    padding: 15px;         /* Space inside the box */
+    margin: 10px;         /* Space outside the box */
+    border-radius: 5px;   /* Optional: rounded corners */
+    background-color: #f9">
                     <h3 class="text-center mb-4">Tìm kiếm vé tàu</h3>
-                    <div class="profile-head">
-                        <p style="color: Red">${sessionScope.noti}</p>
-                </div>
-                <form id="formSearchTrain" action="trains" method="GET">
-                    <!-- Ngày đi -->
-                    <div class="mb-3">
-                        <label for="ngayDi" class="form-label">Ngày đi</label>
-                        <input type="date" name="ngayDi"  id="ngayDi" oninput="enableNextField(this, 'ngayVe')" required><br><br>
-                    </div>
-
-                    <!-- Ngày về -->
-                    <div class="mb-3">
-                        <label for="ngayVe" class="form-label">Ngày về</label>
-                        <input name="ngayVe" type="date" id="ngayVe" oninput="enableNextField(this, 'gaDi')" required><br><br>
-                    </div>
-
-                    <!-- Ga đi -->
-                    <div class="mb-3">
-                        <label for="gaDi" class="form-label">Ga đi</label>
-                        <select class="form-select" id="gaDi" name="l1" oninput="enableNextField(this, 'gaDen')" required>
-                            <option value="-1" selected>Chọn ga đi</option>
-                            <c:forEach items="${locations1}" var="l1">
-                                <option value="${l1.locationID}">${l1.locationName}</option>
+                    <form action="searchTrainResult.jsp" method="GET">
+                        <!-- Ga đi -->
+                        <div class="mb-3">
+                            <label for="gaDi" class="form-label">Ga đi</label>
+                            <select class="form-select" id="gaDi" style="width: 200px; height: 35px">
+                                <option selected>Chọn ga đi</option>
+                            <c:forEach var="i" items="${requestScope.location}">
+                                <option value="${i.locationID}">${i.locationName}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -60,14 +45,25 @@
                     <!-- Ga đến -->
                     <div class="mb-3">
                         <label for="gaDen" class="form-label">Ga đến</label>
-                        <select class="form-select" id="gaDen" name="l2" required>
-                            <option value="-1" selected>Chọn ga đến</option>
-                            <c:forEach items="${locations2}" var="l2">
-                                <option value="${l2.locationID}">${l2.locationName}</option>
+                        <select class="form-select" id="gaDen" style="width: 200px; height: 35px">
+                            <option selected>Chọn ga đến</option>
+                            <c:forEach var="i" items="${requestScope.location}">
+                                <option value="${i.locationID}">${i.locationName}</option>
                             </c:forEach>
                         </select>
                     </div>
 
+                    <!-- Ngày đi -->
+                    <div class="mb-3">
+                        <label for="ngayDi" class="form-label">Ngày đi</label>
+                        <input type="date" class="form-control" id="ngayDi">
+                    </div>
+
+                    <!-- Ngày về -->
+                    <div class="mb-3">
+                        <label for="ngayVe" class="form-label">Ngày về</label>
+                        <input type="date" class="form-control" id="ngayVe">
+                    </div>
 
                     <!-- Nút tìm kiếm -->
                     <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>

@@ -5,6 +5,7 @@
 package controller;
 
 import dal.AccountDAO;
+import dal.OtpQuestionDAO;
 import email.Email;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -78,6 +79,7 @@ public class ForgetPassword extends HttpServlet {
         HttpSession session = request.getSession();
         Email e = new Email();
         AccountDAO accDAO = new AccountDAO();
+        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
         if (accDAO.getAccountByUsername(username) != null) {
             session.setAttribute("AccIDOTP", accDAO.getAccountByUsername(username).getAccountID());
             String otp = new DecimalFormat("000000").format(new Random().nextInt(999999));

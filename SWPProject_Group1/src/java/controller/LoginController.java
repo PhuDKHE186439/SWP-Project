@@ -5,6 +5,7 @@
 package controller;
 
 import dal.AccountDAO;
+import dal.OtpQuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -104,6 +105,8 @@ public class LoginController extends HttpServlet {
         boolean check = false;
         String result = "Please check your username or password";
         list = dao.getAllAccount();
+        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
@@ -125,6 +128,14 @@ public class LoginController extends HttpServlet {
                 }
                 response.addCookie(user);
                 response.addCookie(pass);
+                if (session.getAttribute("AccID") != null) {
+                    int accountID = (int) session.getAttribute("AccID");
+                    if (otpDAO.getOTPByID(accountID).isEmpty()) {
+                        request.setAttribute("OTPCheck", false);
+                    } else {
+                        request.setAttribute("OTPCheck", true);
+                    }
+                }
 
                 switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
                     case 1 ->

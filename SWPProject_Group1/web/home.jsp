@@ -44,7 +44,7 @@
         <!-- Template Stylesheet -->
         <link href="bssets/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/css/Footer.css" />
-        
+
     </head>
     <body>   
         <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -211,7 +211,15 @@
                             </form>
                         </div>
                         <!-- Footer Start -->
+                        <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
 
+                        <script>
+                            const iframe = document.getElementById('footer-frame');
+                            iframe.onload = function () {
+                                // Adjust the height of the iframe to fit its content
+                                iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+                            };
+                        </script>
 
 
                         <!-- Footer End -->
@@ -237,13 +245,5 @@
                 <script src="bssets/js/main.js"></script>
                 <script src="assets/js/Admin.js"></script>
                 </body>
-                <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
 
-                <script>
-                    const iframe = document.getElementById('footer-frame');
-                    iframe.onload = function () {
-                        // Adjust the height of the iframe to fit its content
-                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-                    };
-                </script>
                 </html>

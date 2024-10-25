@@ -5,6 +5,7 @@
 package controller;
 
 import dal.AccountDAO;
+import dal.OtpQuestionDAO;
 import dal.PassengerDAO;
 import dal.PaymentDAO;
 import dal.TicketDAO;
@@ -15,6 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.otpQuestion;
 import model.passenger;
 
 /**
@@ -102,9 +105,15 @@ public class UserProfile extends HttpServlet {
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
+        OtpQuestionDAO otpDAO = new OtpQuestionDAO();
         TicketDAO ticketDAO = new TicketDAO();
         if (session.getAttribute("AccID") != null) {
             int accountID = (int) session.getAttribute("AccID");
+            if (otpDAO.getOTPByID(accountID).isEmpty()) {
+                request.setAttribute("OTPCheck", false);
+            } else {
+                request.setAttribute("OTPCheck", true);
+            }
             try {
                 if (name != null) {
                     passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);

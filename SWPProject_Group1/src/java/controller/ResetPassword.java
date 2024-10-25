@@ -5,6 +5,7 @@
 package controller;
 
 import dal.AccountDAO;
+import dal.OtpQuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.otpQuestion;
 import EnCrypt.BCrypt;
 /**
  *
@@ -79,7 +82,9 @@ public class ResetPassword extends HttpServlet {
             String answer2 = (String)session.getAttribute("OTPCode");
             String resetpass = request.getParameter("newpassreset");
             String repass = request.getParameter("repassreset");
+            OtpQuestionDAO otpDAO = new OtpQuestionDAO();
             AccountDAO accDAO = new AccountDAO();
+            List<otpQuestion> otplist = otpDAO.getOTPByID(AccID);
             if (answer1 != null) {
                 if (answer1.equals(answer2)) {
                     request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);

@@ -19,7 +19,7 @@
                     <div class="col-12 col-md-12 text-center">
                         <div class="tab-pane" id="Feedback">
                             <div class="text-center">
-                                <h3>Feedback</h3>
+                                <h3>Change Password</h3>
                             </div>
                             <p style="color: teal">${requestScope.message}</p>
                         <form class="" action="feedbackforcustomer" method="post">
