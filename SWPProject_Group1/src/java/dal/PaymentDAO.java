@@ -52,8 +52,8 @@ public class PaymentDAO extends DBContext {
                                 new seat(rs.getInt("SeatID"),
                                         new compartment(rs.getInt("CompartmentID"),
                                                 rs.getInt("CompartmentNumber"),
-                                                new train(rs.getInt("TrainID"), 
-                                                        rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive")),
+                                                new train(rs.getInt("TrainID"),
+                                                        rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"),rs.getInt("Status")),
                         new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
                         rs.getString("PaymentMethod"),
                         rs.getString("PaymentDate"),
@@ -64,10 +64,9 @@ public class PaymentDAO extends DBContext {
         }
         return list;
     }
-    
-        public List<payment> getPaymentPaging(int PassengerID, int currentPage, int recordsPerPage) {
-        List<payment> list = new ArrayList<>();
 
+    public List<payment> getPaymentPaging(int PassengerID, int currentPage, int recordsPerPage) {
+        List<payment> list = new ArrayList<>();
 
         // Build dynamic SQL query based on search terms
         StringBuilder sqlBuilder = new StringBuilder("""
@@ -83,7 +82,7 @@ public class PaymentDAO extends DBContext {
                      left join train tr on tr.TrainID=cm.TrainID 
                      left join location l on l.LocationID = tr.StartLocationID 
                      left join location z on z.LocationID = tr.ArrivalLocationID where p.PassengerID=?""");
-       
+
         // Add pagination
         sqlBuilder.append(" LIMIT ?, ?");
 
@@ -106,8 +105,18 @@ public class PaymentDAO extends DBContext {
                                 new seat(rs.getInt("SeatID"),
                                         new compartment(rs.getInt("CompartmentID"),
                                                 rs.getInt("CompartmentNumber"),
-                                                new train(rs.getInt("TrainID"), 
-                                                        rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive")),
+                                                new train(rs.getInt("TrainID"),
+                                                        rs.getString("TrainScheduleTime"),
+                                                        rs.getString("TrainName"),
+                                                        rs.getInt("NumberOfSeat"),
+                                                        new location(rs.getInt("StartLocationID"),
+                                                                rs.getString("StartLocationName"),
+                                                                rs.getString("StartLocationDescription")),
+                                                        new location(rs.getInt("ArrivalLocationID"),
+                                                                rs.getString("ArrivalLocationName"),
+                                                                rs.getString("ArrivalLocationDescription")))),
+                                        rs.getString("SeatNumber"), rs.getString("SeatType"),
+                                        rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"),rs.getInt("Status")),
                         new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
                         rs.getString("PaymentMethod"),
                         rs.getString("PaymentDate"),
@@ -118,6 +127,7 @@ public class PaymentDAO extends DBContext {
         }
         return list;
     }
+
     public static void main(String[] args) {
         PaymentDAO dao = new PaymentDAO();
         System.out.println(dao.getPaymentPaging(1, 1, 1));

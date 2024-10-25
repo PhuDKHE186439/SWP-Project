@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package Ticket;
 
 import dal.TicketDAO;
 import java.io.IOException;
@@ -69,15 +69,11 @@ public class MyTicketController extends HttpServlet {
             return;
         } else {
             account acc = (account) sesion.getAttribute("acc");
-            int userId = acc.getAccountID();
+            int userId = acc.getPassengerID();
             TicketDAO td = new TicketDAO();
-            try {
-                List<ticket> list = td.getTicketsStatus(userId);
-                request.setAttribute("list", list);
-                request.getRequestDispatcher("myticket.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(MyTicketController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            List<ticket> list = td.getTicketByPassengerID(userId);
+            request.setAttribute("list", list);
+            request.getRequestDispatcher("myticket.jsp").forward(request, response);
         }
     }
 

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package Ticket;
 
 import dal.TicketDAO;
 import java.io.IOException;
@@ -11,19 +11,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.account;
 import model.ticket;
 
 /**
  *
  * @author ThinkPro
  */
-public class MyTicketController extends HttpServlet {
+public class ApproveTicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +40,10 @@ public class MyTicketController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MyTicketController</title>");
+            out.println("<title>Servlet ApproveTicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet MyTicketController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ApproveTicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,22 +61,11 @@ public class MyTicketController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession sesion = request.getSession();
-        if (sesion == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        } else {
-            account acc = (account) sesion.getAttribute("acc");
-            int userId = acc.getAccountID();
-            TicketDAO td = new TicketDAO();
-            try {
-                List<ticket> list = td.getTicketsStatus(userId);
-                request.setAttribute("list", list);
-                request.getRequestDispatcher("myticket.jsp").forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(MyTicketController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        String ticket_id = request.getParameter("ticket_id");
+        String value_str = request.getParameter("value");
+        TicketDAO td = new TicketDAO();
+        td.UpdateTicket(ticket_id, value_str);
+        response.sendRedirect(request.getContextPath()+ "/manage-ticket?status=0");
     }
 
     /**

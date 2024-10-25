@@ -14,7 +14,7 @@
         <jsp:include page="header1.jsp"></jsp:include>
 
         </head>
-        <body m>
+        <body>
 
             <div class="page-content bg-white" style="margin: 30px">
                 <!-- inner page banner -->

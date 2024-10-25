@@ -12,7 +12,7 @@ public class seat {
 
     private int seatID;
     private int compartmentID;
-    private int seatNumber;
+    private String seatNumber;
     private String seatType;
     private int availabilityStatus;
     private compartment Compartment;
@@ -28,7 +28,7 @@ public class seat {
         this.Compartment = Compartment;
     }
 
-    public seat(int seatID, int compartmentID, int seatNumber, String seatType, int availabilityStatus) {
+    public seat(int seatID, int compartmentID, String seatNumber, String seatType, int availabilityStatus) {
         this.seatID = seatID;
         this.compartmentID = compartmentID;
         this.seatNumber = seatNumber;
@@ -36,7 +36,7 @@ public class seat {
         this.availabilityStatus = availabilityStatus;
     }
 
-    public seat(int seatID, compartment compartmentID, int seatNumber, String seatType, int availabilityStatus) {
+    public seat(int seatID, compartment compartmentID, String seatNumber, String seatType, int availabilityStatus) {
         this.seatID = seatID;
         this.Compartment = compartmentID;
         this.seatNumber = seatNumber;
@@ -62,11 +62,11 @@ public class seat {
         this.compartmentID = compartmentID;
     }
 
-    public int getSeatNumber() {
+    public String getSeatNumber() {
         return seatNumber;
     }
 
-    public void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
     }
 
