@@ -76,7 +76,7 @@ public class TrainController extends HttpServlet {
 
         if (ngayDi == null || ngayVe == null || gaDi == null || gaDen == null || gaDi.equals("-1") || gaDen.equals("-1")) {
             session.setAttribute("noti", "Vui lòng nhập đủ thông tin tìm kiếm");
-            response.sendRedirect("home1");
+            request.getRequestDispatcher("home1").forward(request, response);
         }
 
         TrainDAO td = new TrainDAO();
