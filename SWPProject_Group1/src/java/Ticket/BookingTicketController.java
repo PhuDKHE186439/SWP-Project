@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package Ticket;
 
-import dal.AccountDAO;
+import dal.TicketDAO;
+import dal.TrainDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,12 +13,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import EnCrypt.BCrypt;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.account;
+import model.seat;
+import model.train;
+
 /**
  *
- * @author My Asus
+ * @author ThinkPro
  */
-public class ResetPassword extends HttpServlet {
+public class BookingTicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +43,10 @@ public class ResetPassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ResetPassword</title>");
+            out.println("<title>Servlet BookingTicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ResetPassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BookingTicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,8 +64,8 @@ public class ResetPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
+        //processRequest(request, response);
+
     }
 
     /**
@@ -72,34 +79,36 @@ public class ResetPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("AccIDOTP") != null) {
-            int AccID = (int) session.getAttribute("AccIDOTP");
-            String answer1 = request.getParameter("answer1");
-            String answer2 = (String)session.getAttribute("OTPCode");
-            String resetpass = request.getParameter("newpassreset");
-            String repass = request.getParameter("repassreset");
-            AccountDAO accDAO = new AccountDAO();
-            if (answer1 != null) {
-                if (answer1.equals(answer2)) {
-                    request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("annoutment", "The Answer Is Not Correts");
-                    request.getRequestDispatcher("AnswerOTP.jsp").forward(request, response);
-                }
-            }
-            if (resetpass != null && resetpass.equals(repass)) {
-                String pass = BCrypt.hashpw(resetpass, BCrypt.gensalt());
-                accDAO.updateAccountPassword(AccID, pass);
-                request.setAttribute("annoutment", "Reset Password Successful, Please Login Again");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
-                request.setAttribute("annoutment", "Password and Re-Type Password not Corrects");
-                request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
-
-            }
+        String trainID = request.getParameter("trainId");
+        String price_raw = request.getParameter("price");
+        String seatID_raw = request.getParameter("seatID");
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        TrainDAO trd = new TrainDAO();
+        seat s = trd.getSeatById(Integer.parseInt(seatID_raw));
+        int cp = 1;
+        int cpn = 1;
+        if (s != null && s.getCompartment() != null) {
+            cp = s.getCompartment().getCompartmentID();
+            cpn = s.getCompartment().getCompartmentNumber();
         }
+        HttpSession sesssion = request.getSession();
+        account acc = (account) sesssion.getAttribute("acc");
+        if (acc == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+        } else {
+            TicketDAO td = new TicketDAO();
 
+            train t = null;
+            t = trd.getAllTrainByID(Integer.parseInt(trainID));
+            int tkid = td.CreateTicket(acc.getAccountID(), price_raw, seatID_raw,
+                    t.getTrainScheduleTime());
+            td.CreatePayment(tkid, "Bank", price_raw, fullName, email, phone);
+            HttpSession session = request.getSession();
+            session.setAttribute("noti", "Đăng ký đặt vé thành công, vui lòng chờ xác nhận!");
+            response.sendRedirect("home");
+        }
     }
 
     /**
