@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
 <%@page session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="Admin.jsp" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="BanAccount" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                         <div class="nav-item dropdown">
                             <!--                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
                                                         <div class="dropdown-menu bg-transparent border-0">

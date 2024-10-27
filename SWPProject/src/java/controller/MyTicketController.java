@@ -2,21 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller;
 
-import dal.AccountDAO;
+import dal.TicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.account;
+import model.ticket;
 
 /**
  *
- * @author Laptop
+ * @author ThinkPro
  */
-public class BanAccount extends HttpServlet {
+public class MyTicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +42,10 @@ public class BanAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BanAccount</title>");
+            out.println("<title>Servlet MyTicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BanAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MyTicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,9 +63,22 @@ public class BanAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-                request.getRequestDispatcher("Admin.jsp").forward(request, response);
-
+        HttpSession sesion = request.getSession();
+        if (sesion == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        } else {
+            account acc = (account) sesion.getAttribute("acc");
+            int userId = acc.getAccountID();
+            TicketDAO td = new TicketDAO();
+            try {
+                List<ticket> list = td.getTickets(userId);
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("myticket.jsp").forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(MyTicketController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -72,23 +92,7 @@ public class BanAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        int accountID = Integer.parseInt(request.getParameter("accountID"));
-        AccountDAO accountDAO = new AccountDAO();
-        String message;
-        if ("ban".equals(action)) {
-            accountDAO.updateAccountStatus(accountID, "Banned");
-            message = "Account banned successfully.";
-        } else if ("unban".equals(action)) {
-            accountDAO.updateAccountStatus(accountID, "Active");
-            message = "Account activated successfully.";
-        } else {
-            message = "Invalid action.";
-        }
-
-        // Store message in request attribute and redirect to Admin page
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

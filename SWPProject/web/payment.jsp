@@ -1,8 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
 <%@page session="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%
     AccountDAO accountDAO = new AccountDAO();
     List<account> accounts = accountDAO.getAllAccount(); // Make sure this retrieves the accounts list
@@ -44,7 +42,6 @@
         <!-- Template Stylesheet -->
         <link href="bssets/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/css/Footer.css" />
-        
     </head>
     <body>   
         <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -116,18 +113,42 @@
                     </form>
                     <div class="navbar-nav align-items-center ms-auto">
                         <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Make Feedback</span>
+                                <span class="d-none d-lg-inline-flex">Message</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">FeedBack Message</h6>
-                                    <form method="post" action="feedbackforcustomer">
-                                        <input name="feedback"  type="text">
-                                        <button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
-                                    </form>
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
                                 </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item text-center">See all message</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -156,87 +177,62 @@
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <span class="d-none d-lg-inline-flex">Profile</span>
+                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <span class="d-none d-lg-inline-flex">John Doe</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="userprofile" class="dropdown-item">My Profile</a>
-                                <a href="logout" class="dropdown-item">Log Out</a>
+                                <a href="#" class="dropdown-item">My Profile</a>
+                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>
                 </nav>
+                <% 
+    String trainId = request.getParameter("trainId");
+    String price = request.getParameter("price");
+    String seatID = request.getParameter("seatID");
+                %>
                 <!-- Navbar End -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- Search Form Section -->
-                        <div class="col-md-4 form-container w-50 border p-4 ">
-                            <h3 class="text-center mb-4">Tìm kiếm vé tàu</h3>
-                            <form action="searchTrainResult.jsp" method="GET">
-                                <!-- Ga đi -->
-                                <div class="mb-3">
-                                    <label for="gaDi" class="form-label">Ga đi</label>
-                                    <select class="form-select" id="gaDi">
-                                        <option selected>Chọn ga đi</option>
-                                        <c:forEach var="i" items="${requestScope.location}">
-                                            <option value="${i.locationID}">${i.locationName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-
-                                <!-- Ga đến -->
-                                <div class="mb-3">
-                                    <label for="gaDen" class="form-label">Ga đến</label>
-                                    <select class="form-select" id="gaDen">
-                                        <option selected>Chọn ga đến</option>
-                                        <c:forEach var="i" items="${requestScope.location}">
-                                            <option value="${i.locationID}">${i.locationName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-
-                                <!-- Ngày đi -->
-                                <div class="mb-3">
-                                    <label for="ngayDi" class="form-label">Ngày đi</label>
-                                    <input type="date" class="form-control" id="ngayDi">
-                                </div>
-
-                                <!-- Ngày về -->
-                                <div class="mb-3">
-                                    <label for="ngayVe" class="form-label">Ngày về</label>
-                                    <input type="date" class="form-control" id="ngayVe">
-                                </div>
-
-                                <!-- Nút tìm kiếm -->
-                                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
-                            </form>
+                <div class="payment-container">
+                    <h2 class="text-center">Thông Tin Thanh Toán</h2>
+                    <form action="/SWPProject/booking_ticket" method="post">
+                        <input type="hidden" name="trainId" value="<%= trainId %>">
+                        <input type="hidden" name="seatID" value="<%= seatID %>">
+                        <div class="form-group">
+                            <label for="fullName">Họ và Tên:</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
                         </div>
-                        <!-- Footer Start -->
-
-
-
-                        <!-- Footer End -->
-                    </div>
-
-
-                    <!-- Back to Top -->
-                    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số Điện Thoại:</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardNumber">Số Thẻ:</label>
+                            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expiryDate">Ngày Hết Hạn:</label>
+                            <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV:</label>
+                            <input type="text" class="form-control" id="cvv" name="cvv" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount:</label>
+                            <input type="text" class="form-control" id="amount" value="<%= price %>" name="price" readonly="" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- JavaScript Libraries -->
-                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-                <script src="bssets/lib/chart/chart.min.js"></script>
-                <script src="bssets/lib/easing/easing.min.js"></script>
-                <script src="bssets/lib/waypoints/waypoints.min.js"></script>
-                <script src="bssets/lib/owlcarousel/owl.carousel.min.js"></script>
-                <script src="bssets/lib/tempusdominus/js/moment.min.js"></script>
-                <script src="bssets/lib/tempusdominus/js/moment-timezone.min.js"></script>
-                <script src="bssets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-                <!-- Template Javascript -->
-                <script src="bssets/js/main.js"></script>
-                <script src="assets/js/Admin.js"></script>
-                </body>
+                <!-- Footer Start -->
                 <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>
 
                 <script>
@@ -246,4 +242,30 @@
                         iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
                     };
                 </script>
-                </html>
+
+
+                <!-- Footer End -->
+            </div>
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="bssets/lib/chart/chart.min.js"></script>
+        <script src="bssets/lib/easing/easing.min.js"></script>
+        <script src="bssets/lib/waypoints/waypoints.min.js"></script>
+        <script src="bssets/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="bssets/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="bssets/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="bssets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="bssets/js/main.js"></script>
+        <script src="assets/js/Admin.js"></script>
+    </body>
+
+</html>

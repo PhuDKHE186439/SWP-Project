@@ -81,12 +81,9 @@
                         </div>
 
                     </div>
-                    <c:if test="${sessionScope.acc ne null}">
-                        <div class="navbar-nav w-100">
-                            <a href="myticket" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Vé của tôi</a>
-                        </div>
-                    </c:if>
-
+                    <div class="navbar-nav w-100">
+                        <a href="myticket" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Vé của tôi</a>
+                    </div>
                 </nav>
             </div>      
             <!-- Sidebar End -->
@@ -119,47 +116,35 @@
                     </div>
                 </nav>
                 <!-- Navbar End -->
-                <div class="form-container w-25 border p-4 rounded shadow">
-                    <h3 class="text-center mb-4">Tìm kiếm vé tàu</h3>
-                    <form id="formSearchTrain" action="trains" method="GET">
-                        <!-- Ngày đi -->
-                        <div class="mb-3">
-                            <label for="ngayDi" class="form-label">Ngày đi</label>
-                            <input type="date" name="ngayDi" id="ngayDi" oninput="enableNextField(this, 'ngayVe')" required><br><br>
-                        </div>
-
-                        <!-- Ngày về -->
-                        <div class="mb-3">
-                            <label for="ngayVe" class="form-label">Ngày về</label>
-                            <input name="ngayVe" type="date" id="ngayVe" oninput="enableNextField(this, 'gaDi')" disabled required><br><br>
-                        </div>
-
-                        <!-- Ga đi -->
-                        <div class="mb-3">
-                            <label for="gaDi" class="form-label">Ga đi</label>
-                            <select class="form-select" id="gaDi" name="l1" oninput="enableNextField(this, 'gaDen')" disabled required>
-                                <option value="-1" selected>Chọn ga đi</option>
-                                <c:forEach items="${locations1}" var="l1">
-                                    <option value="${l1.locationID}">${l1.locationName}</option>
+                <div class="form-container border p-4 rounded shadow">
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0" style="width: 100%;">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">Ticket ID</th>
+                                    <th scope="col">Purchage Date</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">SeatID</th>
+                                    <th scope="col">TimeArrive</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountList">
+                                <c:forEach items="${list}" var="c" >
+                                    <tr>
+                                        <td>
+                                            <a href="ticket-detail?id=${c.ticketID}">
+                                                ${c.ticketID}</a>
+                                        </td>
+                                        <td>${c.purchaseDate}</td>
+                                        <td>${c.ticketPrice}</td>
+                                        <td>${c.seatID}</td>
+                                        <td>${c.timeArrive}</td>
+                                    </tr>
                                 </c:forEach>
-                            </select>
-                        </div>
+                            </tbody>
+                        </table>
 
-                        <!-- Ga đến -->
-                        <div class="mb-3">
-                            <label for="gaDen" class="form-label">Ga đến</label>
-                            <select class="form-select" id="gaDen" name="l2" disabled required>
-                                <option value="-1" selected>Chọn ga đến</option>
-                                <c:forEach items="${locations2}" var="l2">
-                                    <option value="${l2.locationID}">${l2.locationName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-
-                        <!-- Nút tìm kiếm -->
-                        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
-                    </form>
+                    </div>
                 </div>
                 <!-- Footer Start -->
                 <iframe id="footer-frame" src="Footer.jsp" style="width: 100%; border: none;" scrolling="no"></iframe>

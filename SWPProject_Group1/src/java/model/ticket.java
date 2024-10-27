@@ -17,8 +17,17 @@ public class ticket {
     private int compartmentID;
     private seat seat;
     private String timeArrive;
+    private int Status;
 
-    public ticket(int ticketID, int passengerID, ticketClass ticketClassID, String purchaseDate, double ticketPrice, seat seat, String timeArrive) {
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
+    public ticket(int ticketID, int passengerID, ticketClass ticketClassID, String purchaseDate, double ticketPrice, seat seat, String timeArrive, int status) {
         this.ticketID = ticketID;
         this.passengerID = passengerID;
         this.ticketClass = ticketClassID;
@@ -26,6 +35,7 @@ public class ticket {
         this.ticketPrice = ticketPrice;
         this.seat = seat;
         this.timeArrive = timeArrive;
+        this.Status = status;
     }
 
     public int getTicketID() {

@@ -2,21 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package Ticket;
 
-import dal.AccountDAO;
+import dal.TrainDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.train;
+import org.json.JSONObject;
 
 /**
  *
- * @author Laptop
+ * @author ThinkPro
  */
-public class BanAccount extends HttpServlet {
+public class TicketController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +37,10 @@ public class BanAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BanAccount</title>");
+            out.println("<title>Servlet TicketController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BanAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TicketController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,8 +58,45 @@ public class BanAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-                request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        // Lấy các tham số từ URL
+        String action = request.getParameter("action");
+        String trainId = request.getParameter("trainId");
+        String seatType = request.getParameter("seatType");
+        String seatNumber = request.getParameter("seatNumber");
+        String price = request.getParameter("price");
+        String seatID = request.getParameter("seatID");
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        JSONObject jsonResponse = new JSONObject();
+        try {
+            if ("view".equals(action)) {
+                TrainDAO td = new TrainDAO();
+                train t = td.getAllTrainByID(Integer.parseInt(trainId));
+
+                // Xây dựng đối tượng JSON để phản hồi lại JavaScript
+                jsonResponse.put("trainId", t.getTrainID());
+                jsonResponse.put("startLocation", t.getStartLocation().getLocationName());
+                jsonResponse.put("endLocation", t.getArrivalLocation().getLocationName());
+                jsonResponse.put("trainName", t.getTrainName());
+                jsonResponse.put("trainScheduleTime", t.getTrainScheduleTime());
+                jsonResponse.put("seatType", seatType);
+                jsonResponse.put("seatNumber", seatNumber);
+                jsonResponse.put("price", price);
+                jsonResponse.put("seatID", seatID);
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                jsonResponse.put("error", "Action không hợp lệ");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+
+        } catch (Exception e) {
+            jsonResponse.put("error", "Đã xảy ra lỗi trong quá trình xử lý dữ liệu: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        // Gửi phản hồi JSON về cho client
+        out.print(jsonResponse.toString());
+        out.flush();
 
     }
 
@@ -72,23 +111,7 @@ public class BanAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        int accountID = Integer.parseInt(request.getParameter("accountID"));
-        AccountDAO accountDAO = new AccountDAO();
-        String message;
-        if ("ban".equals(action)) {
-            accountDAO.updateAccountStatus(accountID, "Banned");
-            message = "Account banned successfully.";
-        } else if ("unban".equals(action)) {
-            accountDAO.updateAccountStatus(accountID, "Active");
-            message = "Account activated successfully.";
-        } else {
-            message = "Invalid action.";
-        }
-
-        // Store message in request attribute and redirect to Admin page
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
