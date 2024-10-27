@@ -51,7 +51,7 @@
                 line-height: 1.5em; /* Adjust line height */
                 text-overflow: ellipsis;
             }
-            
+
         </style>
 
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -62,20 +62,20 @@
                     <div class="col-sm-3 space_right">
                         <div class="center_home_1lm clearfix">
                             <div class="center_home_1lm1 clearfix">
-    <c:forEach var="newsItem" items="${newsList}" begin="0" end="4">
-        <c:if test="${newsItem.status != 2}">
-            <a href="?action=view&id=${newsItem.id}">
-                <img src="${newsItem.image}" class="iw" alt="${newsItem.title}" style="width: 280px; height: 180px;">
-            </a>
-            <h6 class="col_2">
-                <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
-            </h6>
-            <h5 class="bold">
-                <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
-            </h5>
-        </c:if>
-    </c:forEach>
-</div>
+                                <c:forEach var="newsItem" items="${newsList}" begin="0" end="4">
+                                    <c:if test="${newsItem.status != 2}">
+                                        <a href="?action=view&id=${newsItem.id}">
+                                            <img src="${newsItem.image}" class="iw" alt="${newsItem.title}" style="width: 280px; height: 180px;">
+                                        </a>
+                                        <h6 class="col_2">
+                                            <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
+                                        </h6>
+                                        <h5 class="bold">
+                                            <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
+                                        </h5>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -102,9 +102,9 @@
                             </c:forEach>
                         </div>
                     </div> 
-                                        <div class="center_home_1rm clearfix">
+                    <div class="center_home_1rm clearfix">
 
-                    <jsp:include page="sidebar1.jsp" />
+                        <jsp:include page="sidebar1.jsp" />
                     </div>
                 </div>
             </div>

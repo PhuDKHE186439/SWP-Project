@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "UserNewsController", urlPatterns = {"/Unews"})
@@ -24,7 +23,7 @@ public class UserNewsController extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
-            action = "random"; // Default action to show random news
+            action = "list"; // Default action to show list of news
         }
 
         switch (action) {
@@ -43,11 +42,16 @@ public class UserNewsController extends HttpServlet {
 
     private void latestNews(HttpServletRequest request, HttpServletResponse response, NewsDAO newsDAO)
             throws ServletException, IOException {
-        News latestNews = newsDAO.getLatestNews(); // Fetch latest news
-        request.setAttribute("latestNews", latestNews); // Set the latest news in the request scope
-        HttpSession session = request.getSession(); // Get session
-        session.setAttribute("latestNews", latestNews); // Store in session
-        request.getRequestDispatcher("/Unews.jsp").forward(request, response); // Forward to JSP
+        News latestNews = newsDAO.getLatestNews(); // Fetch the latest news
+        if (latestNews != null) {
+            request.setAttribute("latestNews", latestNews); // Set the latest news in the request scope
+            HttpSession session = request.getSession();
+            session.setAttribute("latestNews", latestNews); // Store in session
+            request.getRequestDispatcher("/Unews.jsp").forward(request, response); // Forward to JSP
+        } else {
+            // Handle case where no latest news is available
+            response.sendRedirect("error.jsp?message=No%20Latest%20News%20Found");
+        }
     }
 
     private void listNews(HttpServletRequest request, HttpServletResponse response, NewsDAO newsDAO)
@@ -58,22 +62,19 @@ public class UserNewsController extends HttpServlet {
         int page = 1;
         int recordsPerPage = 10;
 
-        // Get page number from request
         if (request.getParameter("page") != null) {
             try {
                 page = Integer.parseInt(request.getParameter("page"));
             } catch (NumberFormatException e) {
-                // Default to page 1 if parsing fails
-                page = 1;
+                page = 1; // Fallback to default page if invalid input
             }
         }
 
-        // Retrieve news based on search and sorting criteria
+        // Retrieve filtered news based on search and sorting
         List<News> newsList = newsDAO.getNewsBySearchAndSort(search, sortOrder, status, page, recordsPerPage);
         int noOfRecords = newsDAO.getTotalNewsCount(search, status);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-        // Set attributes for the JSP page
         request.setAttribute("newsList", newsList);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
@@ -81,9 +82,8 @@ public class UserNewsController extends HttpServlet {
         request.setAttribute("sortOrder", sortOrder);
         request.setAttribute("status", status);
 
-        HttpSession session = request.getSession(); // Get session
-        session.setAttribute("newsList", newsList); // Store in session for access later
-
+        HttpSession session = request.getSession();
+        session.setAttribute("newsList", newsList); // Store in session for pagination
         request.getRequestDispatcher("/Unews.jsp").forward(request, response);
     }
 
@@ -97,24 +97,23 @@ public class UserNewsController extends HttpServlet {
                 if (news != null) {
                     request.setAttribute("selectedNews", news);
 
-                    // Get a list of other news for the sidebar
+                    // Get additional news for the sidebar
                     List<News> otherNews = newsDAO.getAllNews();
-                    otherNews.removeIf(n -> n.getId() == id); // Exclude the selected news
+                    otherNews.removeIf(n -> n.getId() == id); // Exclude the selected news from the list
                     request.setAttribute("otherNews", otherNews);
-                    
-                    HttpSession session = request.getSession(); // Get session
+
+                    HttpSession session = request.getSession();
                     session.setAttribute("selectedNews", news); // Store selected news in session
-                    
                     request.getRequestDispatcher("/NewsDetails.jsp").forward(request, response);
                     return;
                 }
             } catch (NumberFormatException e) {
-                // Log the error
+                // Log invalid news ID
                 System.err.println("Invalid news ID: " + idParam);
             }
         }
-        // If we get here, either the ID was invalid or the news wasn't found
-        response.sendRedirect(request.getContextPath() + "/news");
+        // Redirect if news not found or invalid ID
+        response.sendRedirect(request.getContextPath() + "/Unews?action=list");
     }
 
     @Override
