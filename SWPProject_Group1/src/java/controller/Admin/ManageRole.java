@@ -90,13 +90,13 @@ public class ManageRole extends HttpServlet {
 
             if (roleName == null || roleName.trim().isEmpty()) {
                 request.setAttribute("errorMessage", "Role name cannot be empty");
-                request.getRequestDispatcher("Admin2.jsp").forward(request, response);
+                request.getRequestDispatcher("BanAccount").forward(request, response);
                 return;
             }
             roleDAO.updateRole(roleID, roleName);
         }
 
-        response.sendRedirect("Admin.jsp");
+        response.sendRedirect("BanAccount");
     }
 
     /**

@@ -68,7 +68,7 @@
                 <div class="account-container">
                     <div class="heading-bx left">
                         <h2 class="title-head">Login to your <span>Account</span></h2>
-                        <p>Don't have an account? <a href="register.jsp">Create one here</a></p>
+                        <p>Don't have an account? <a href="register">Create one here</a></p>
                         <p style="color: Red">${requestScope.key}</p>
                         <p style="color: greenyellow">${requestScope.annoutment}</p>
                     </div>	
@@ -94,7 +94,7 @@
                                         <input type="checkbox" class="custom-control-input" id="customControlAutosizing" name="remember" ${check}>
                                         <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                                     </div>
-                                    <a href="forgetPassword.jsp" class="ml-auto">Forgot Password?</a>
+                                    <a href="forgetpassword" class="ml-auto">Forgot Password?</a>
                                 </div>
                             </div>
                             <div class="col-lg-12 m-b30">

@@ -70,7 +70,7 @@ public class AccountEditServlet extends HttpServlet {
         List<role> roles = roleDAO.getAllRoles();
         request.setAttribute("account", acc);
         request.setAttribute("roles", roles);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        request.getRequestDispatcher("BanAccount").forward(request, response);
     }
 
     @Override
@@ -83,7 +83,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     if ("delete".equals(submitType)) {
         AccountDAO accountDAO = new AccountDAO();
         accountDAO.deleteAccount(accountID);
-        response.sendRedirect("Admin.jsp?success=delete");
+        response.sendRedirect("BanAccount?success=delete");
     } else {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -93,7 +93,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         account updatedAccount = new account(accountID, phoneNumber, username, null, email, roleID, 0, null); // Adjust constructor accordingly
         accountDAO.updateAccount(updatedAccount);
 
-        response.sendRedirect("Admin.jsp?success=update");
+        response.sendRedirect("BanAccount?success=update");
     }
 }
 

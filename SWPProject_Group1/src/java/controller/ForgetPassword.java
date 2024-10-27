@@ -86,7 +86,7 @@ public class ForgetPassword extends HttpServlet {
             request.getRequestDispatcher("AnswerOTP.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Please Enter Right Username");
-            request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
+            request.getRequestDispatcher("forgetPassword").forward(request, response);
 
         }
 

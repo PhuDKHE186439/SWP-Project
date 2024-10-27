@@ -19,14 +19,17 @@ import model.train;
  */
 public class SeatDAO extends DBContext {
 
-    public List<seat> getAllCompartmentFromTrain(int compartmentID) {
+    public List<seat> getAllSeatFromComaprt(int compartmentID) {
         List<seat> list = new ArrayList<>();
-        String sql = "select *,l.LocationName As StartLocationName, l.Description as StartLocationDescription,"
-                + "z.LocationName as ArrivalLocationName, z.Description as ArrivalLocationDescription "
-                + "from seat p left join compartment cm on p.CompartmentID = cm.CompartmentID"
-                + "left join train tr on tr.TrainID=cm.TrainID"
-                + " left join location l on l.LocationID = tr.StartLocationID "
-                + "left join location z on z.LocationID = tr.ArrivalLocationID Where tr.CompartmentID=?";
+        String sql = """
+                     select *, l.LocationName As StartLocationName, l.Description as StartLocationDescription,
+                      z.LocationName As ArrivalLocationName, z.Description as ArrivalLocationDescription
+                      
+                     from Seat p 
+                     left join compartment cm on p.compartmentID = cm.CompartmentID 
+                     left join train tr on tr.TrainID=cm.TrainID 
+                     left join location l on l.LocationID = tr.StartLocationID 
+                     left join location z on z.LocationID = tr.ArrivalLocationID Where p.CompartmentID=? ;""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, compartmentID);
@@ -52,5 +55,10 @@ public class SeatDAO extends DBContext {
             System.out.println(e);
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+        SeatDAO dao = new SeatDAO();
+        System.out.println(dao.getAllSeatFromComaprt(2));
     }
 }

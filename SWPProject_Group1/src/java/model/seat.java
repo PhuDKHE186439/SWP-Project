@@ -14,6 +14,7 @@ public class seat{
     private String seatNumber;
     private String seatType;
     private int availabilityStatus;
+    private int compartmentID;
 
     public seat(int seatID, compartment compartment, String seatNumber, String seatType, int availabilityStatus) {
         this.seatID = seatID;
@@ -22,7 +23,13 @@ public class seat{
         this.seatType = seatType;
         this.availabilityStatus = availabilityStatus;
     }
-
+    public seat(int seatID, int compartmentID, String seatNumber, String seatType, int availabilityStatus) {
+        this.seatID = seatID;
+        this.compartmentID = compartmentID;
+        this.seatNumber = seatNumber;
+        this.seatType = seatType;
+        this.availabilityStatus = availabilityStatus;
+    }
     public int getSeatID() {
         return seatID;
     }
@@ -61,6 +68,14 @@ public class seat{
 
     public void setAvailabilityStatus(int availabilityStatus) {
         this.availabilityStatus = availabilityStatus;
+    }
+
+    public int getCompartmentID() {
+        return compartmentID;
+    }
+
+    public void setCompartmentID(int compartmentID) {
+        this.compartmentID = compartmentID;
     }
 
     @Override

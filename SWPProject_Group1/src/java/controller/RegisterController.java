@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.account;
 import EnCrypt.BCrypt;
+
 /**
  *
  * @author My Asus
@@ -64,7 +65,9 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        request.getRequestDispatcher("register.jsp").forward(request, response);
+
     }
 
     /**
@@ -96,13 +99,13 @@ public class RegisterController extends HttpServlet {
                     request.getRequestDispatcher("register.jsp").forward(request, response);
                 }
             }
-            if(!password.endsWith(repassword)){
+            if (!password.endsWith(repassword)) {
                 request.setAttribute("annoutment", "Password and Re-Type Passsword does not match!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
             if (checkusername.equals(false) && password.equals(repassword)) {
                 passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
-                String cryptPassword = BCrypt.hashpw(password,BCrypt.gensalt());
+                String cryptPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                 accDAO.registerAccount(phone, username, cryptPassword, email, 3, passengerDAO.getLastPassenger().getPassengerID());
                 request.setAttribute("annoutment", "Register Successful");
             }

@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.feedback;
 
@@ -57,6 +58,8 @@ public class feedbackadmin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
                 FeedbackDAO dao = new FeedbackDAO();
         
         // Get current page, default to 1
@@ -83,6 +86,10 @@ public class feedbackadmin extends HttpServlet {
         // Forward to JSP page
         RequestDispatcher dispatcher = request.getRequestDispatcher("Admin2.jsp");
         dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login");
+        dispatcher.forward(request, response);
+        }
     } 
 
     /** 

@@ -65,7 +65,7 @@
                     <div class="account-container">
                         <div class="heading-bx left">
                             <h2 class="title-head">Sign Up <span>Now</span></h2>
-                            <p>Login Your Account <a href="login.jsp">Click here</a></p>
+                            <p>Login Your Account <a href="login">Click here</a></p>
                             <p style="color: Red">${requestScope.annoutment}</p>
                         </div>	
                         <form class="contact-bx" action="register" method="post" autocomplete="off" style="">
