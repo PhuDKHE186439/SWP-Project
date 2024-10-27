@@ -462,6 +462,7 @@
                         document.getElementById("showAllBtn").style.display = "none";
                         document.getElementById("returnToNormalBtn").style.display = "inline";
                     }
+
                     function returnToNormal() {
                         const accountList = document.getElementById("accountList");
                         accountList.innerHTML = ""; // Clear the full account list
@@ -502,6 +503,8 @@
                         document.getElementById("showAllBtn").style.display = "inline";
                         document.getElementById("returnToNormalBtn").style.display = "none";
                     }
+
+
                 </script>
                 <!-- Account Update End -->
 

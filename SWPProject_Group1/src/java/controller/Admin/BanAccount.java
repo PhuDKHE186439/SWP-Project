@@ -88,7 +88,6 @@ public class BanAccount extends HttpServlet {
         } else {
             // Proceed to create a new account
             accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-
             HttpSession session = request.getSession();
             session.setAttribute("message", "Account created successfully.");
             response.sendRedirect("Admin.jsp");
