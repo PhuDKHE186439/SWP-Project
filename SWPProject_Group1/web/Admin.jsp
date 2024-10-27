@@ -292,7 +292,11 @@
                                             %>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Create Account</button>
+                                    <button type="submit" class="btn btn-primary" 
+                                            onclick="return confirm('Are you sure you want to create this new account?')">
+                                        Create Account
+                                    </button>
+
                                 </form>
                             </div>
                         </div>
@@ -336,7 +340,10 @@
                                             %>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Update Account</button>
+                                    <button type="submit" class="btn btn-primary" 
+                                            onclick="return confirm('Are you sure you want to edit this account?')">
+                                        Update Account
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -416,7 +423,6 @@
                             rows[i].style.display = match ? "" : "none";
                         }
                     }
-
                     function showAllAccounts() {
                         const accountList = document.getElementById("accountList");
                         accountList.innerHTML = ""; // Clear existing accounts
@@ -456,7 +462,6 @@
                         document.getElementById("showAllBtn").style.display = "none";
                         document.getElementById("returnToNormalBtn").style.display = "inline";
                     }
-
                     function returnToNormal() {
                         const accountList = document.getElementById("accountList");
                         accountList.innerHTML = ""; // Clear the full account list
@@ -497,8 +502,6 @@
                         document.getElementById("showAllBtn").style.display = "inline";
                         document.getElementById("returnToNormalBtn").style.display = "none";
                     }
-
-
                 </script>
                 <!-- Account Update End -->
 
@@ -516,7 +519,9 @@
                                     <form action="ManageRole" method="post" class="d-flex align-items-center">
                                         <input class="form-control bg-transparent" type="text" placeholder="Enter role name" name="roleName" required>
                                         <input type="hidden" name="action" value="add">
-                                        <button type="submit" class="btn btn-primary ms-2">Add</button>
+                                        <button type="submit" class="btn btn-primary ms-2"  
+                                                onclick="return confirm('Are you sure you want to add new role ?')">Add
+                                        </button>
                                     </form>
                                 </div>
                                 <!-- Existing Roles -->

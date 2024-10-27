@@ -226,6 +226,25 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
+    
+    public boolean accountExists(String email, String phoneNumber) {
+    String sql = "SELECT COUNT(*) FROM accounts WHERE email = ? OR phoneNumber = ?";
+    try (PreparedStatement ae = connection.prepareStatement(sql)){
+        
+        ae.setString(1, email);
+        ae.setString(2, phoneNumber);
+        
+        ResultSet rs = ae.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            System.out.println("Duplicate check count: " + count); // Debug output
+            return count > 0;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 
     public SendGoogle GetEmail() {
         String sql = "Select * From  sendgmailaccount";
