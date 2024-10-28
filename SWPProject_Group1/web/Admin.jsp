@@ -301,7 +301,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>          
                 <!-- Edit Account Modal -->
                 <div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
