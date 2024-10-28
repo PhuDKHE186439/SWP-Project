@@ -85,9 +85,9 @@ public class CreateAccountServlet extends HttpServlet {
         String password = request.getParameter("password");
         int roleID = Integer.parseInt(request.getParameter("roleID"));
 
-        if (phoneNumber.length() < 8 || phoneNumber.length() > 12) {
+        if (phoneNumber.length() !=10) {
             HttpSession session = request.getSession();
-            session.setAttribute("message", "Phone number must be between 8 and 12 digits.");
+            session.setAttribute("message", "Phone number must be 10 digits.");
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
             return;
         }
