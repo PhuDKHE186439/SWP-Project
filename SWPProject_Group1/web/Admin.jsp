@@ -311,6 +311,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                                
                                 <form id="editAccountForm" action="AccountEditServlet" method="POST">
                                     <input type="hidden" id="editAccountID" name="accountID">
                                     <div class="mb-3">
@@ -425,11 +426,9 @@
                     }
                     function showAllAccounts() {
                         const accountList = document.getElementById("accountList");
-                        accountList.innerHTML = ""; // Clear existing accounts
-
-                        // Loop through all accounts and populate the table
+                        accountList.innerHTML = "";
                     <% for (account acc : accounts) { 
-        String roleName = ""; // Replace with method to retrieve role name by roleID
+        String roleName = "";
         for (role r : roles) {
             if (r.getRoleID() == acc.getRoleID()) {
                 roleName = r.getRoleName();
@@ -457,20 +456,15 @@
         </tr>
     `;
                     <% } %>
-
-                        // Hide "Show All" and display "Return to Normal" button
                         document.getElementById("showAllBtn").style.display = "none";
                         document.getElementById("returnToNormalBtn").style.display = "inline";
                     }
-
                     function returnToNormal() {
                         const accountList = document.getElementById("accountList");
-                        accountList.innerHTML = ""; // Clear the full account list
-
-                        // Show only the first 10 accounts (or fewer, depending on total)
+                        accountList.innerHTML = "";
                     <% for (int i = 0; i < Math.min(10, accounts.size()); i++) { 
         account acc = accounts.get(i); 
-        String roleName = ""; // Replace with method to retrieve role name by roleID
+        String roleName = "";
         for (role r : roles) {
             if (r.getRoleID() == acc.getRoleID()) {
                 roleName = r.getRoleName();
@@ -498,8 +492,6 @@
         </tr>
     `;
                     <% } %>
-
-                        // Display "Show All" and hide "Return to Normal" button
                         document.getElementById("showAllBtn").style.display = "inline";
                         document.getElementById("returnToNormalBtn").style.display = "none";
                     }
