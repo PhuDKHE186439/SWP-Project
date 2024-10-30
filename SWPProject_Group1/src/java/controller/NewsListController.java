@@ -28,9 +28,9 @@ public class NewsListController extends HttpServlet {
         }
 
         switch (action) {
-//            case "latest":
-//                latestNews(request, response, newsDAO);
-//                break;
+            case "latest":
+                latestNews(request, response, newsDAO);
+                break;
             case "view":
                 viewNews(request, response, newsDAO);
                 break;
@@ -41,14 +41,14 @@ public class NewsListController extends HttpServlet {
         }
     }
 
-//    private void latestNews(HttpServletRequest request, HttpServletResponse response, NewsDAO newsDAO)
-//            throws ServletException, IOException {
-//        News latestNews = newsDAO.getLatestNews(); // Fetch latest news
-//        request.setAttribute("latestNews", latestNews); // Set the latest news in the request scope
-//        HttpSession session = request.getSession(); // Get session
-//        session.setAttribute("latestNews", latestNews); // Store in session
-//        request.getRequestDispatcher("/NewsList.jsp").forward(request, response); // Forward to JSP
-//    }
+    private void latestNews(HttpServletRequest request, HttpServletResponse response, NewsDAO newsDAO)
+            throws ServletException, IOException {
+        News latestNews = newsDAO.getLatestNews(); // Fetch latest news
+        request.setAttribute("latestNews", latestNews); // Set the latest news in the request scope
+        HttpSession session = request.getSession(); // Get session
+        session.setAttribute("latestNews", latestNews); // Store in session
+        request.getRequestDispatcher("/NewsList.jsp").forward(request, response); // Forward to JSP
+    }
 
     private void listNews(HttpServletRequest request, HttpServletResponse response, NewsDAO newsDAO)
             throws ServletException, IOException {
