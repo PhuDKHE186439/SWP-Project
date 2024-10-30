@@ -3,21 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package controller.Train;
 
+import dal.CompartmentDAO;
+import dal.SeatDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author My Asus
  */
-public class Logout extends HttpServlet {
+public class AvailableSeats extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +35,10 @@ public class Logout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Logout</title>");  
+            out.println("<title>Servlet AvailableSeats</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Logout at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AvailableSeats at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,10 +55,7 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("AccID");
-        session.removeAttribute("account");
-        response.sendRedirect("login.jsp");
+        processRequest(request, response);
     } 
 
     /** 
@@ -70,7 +68,10 @@ public class Logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String compartID= request.getParameter("compartID");
+        SeatDAO seat = new SeatDAO();
+        request.setAttribute("seats", seat.getAllSeatFromComaprt(Integer.parseInt(compartID)));
+        request.getRequestDispatcher("listseattest.jsp").forward(request, response);
     }
 
     /** 

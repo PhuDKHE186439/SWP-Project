@@ -114,6 +114,7 @@ public class LoginController extends HttpServlet {
                 role = o.getRoleID();
                 check = true;
                 session.setAttribute("AccID", o.getAccountID());
+                session.setAttribute("account", role);
                 if (remember != null) {
                     user.setMaxAge(60);
                     pass.setMaxAge(60);
@@ -128,7 +129,7 @@ public class LoginController extends HttpServlet {
 
                 switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
                     case 1 ->
-                        response.sendRedirect("Admin.jsp");
+                        response.sendRedirect("BanAccount");
                     case 2 ->
                         response.sendRedirect("home.jsp");
                     case 3 ->

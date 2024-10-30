@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.Train;
 
-import dal.AccountDAO;
-import dal.PassengerDAO;
+import dal.SeatDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +12,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
-import model.account;
-import EnCrypt.BCrypt;
+import model.cartinfo;
+import model.seat;
+import model.compartment;
 
 /**
  *
  * @author My Asus
  */
-public class RegisterController extends HttpServlet {
+public class AddtoCart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +41,10 @@ public class RegisterController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegisterController</title>");
+            out.println("<title>Servlet AddtoCart</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RegisterController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddtoCart at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,16 +59,11 @@ public class RegisterController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    AccountDAO accDAO = new AccountDAO();
-    List<account> listacc = accDAO.getAllAccount();
-    PassengerDAO passengerDAO = new PassengerDAO();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        request.getRequestDispatcher("register.jsp").forward(request, response);
-
+        HttpSession session = request.getSession();
+        session.removeAttribute("cart");
     }
 
     /**
@@ -81,38 +77,49 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Boolean checkusername = false;
         HttpSession session = request.getSession();
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String age = request.getParameter("age");
-        String address = request.getParameter("address");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String repassword = request.getParameter("repassword");
-        try {
-            for (account o : listacc) {
-                if (username.equals(o.getUsername())) {
-                    request.setAttribute("annoutment", "Username Already Exsits");
-                    checkusername = true;
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
-                }
-            }
-            if (!password.endsWith(repassword)) {
-                request.setAttribute("annoutment", "Password and Re-Type Passsword does not match!");
-                request.getRequestDispatcher("register.jsp").forward(request, response);
-            }
-            if (checkusername.equals(false) && password.equals(repassword)) {
-                passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
-                String cryptPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-                accDAO.registerAccount(phone, username, cryptPassword, email, 3, passengerDAO.getLastPassenger().getPassengerID());
-                request.setAttribute("annoutment", "Register Successful");
+        if (session.getAttribute("AccID") == null) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
+            String seatId = request.getParameter("seatId");
+            String compartment = request.getParameter("compartment");
+            String seattype = request.getParameter("seatType");
+            String seatNumber = request.getParameter("seatNumber");
+            String Status = request.getParameter("availabilityStatus");
+            int AccID = (int) session.getAttribute("AccID");
+            boolean check = false;
+            int total = 0;
+            // Create a cart if it doesn't exist
+            List<cartinfo> cart = (List<cartinfo>) session.getAttribute("cart");
+            if (cart == null) {
+                cart = new ArrayList<>();
+                session.setAttribute("cart", cart);
             }
 
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } catch (ServletException | IOException | NumberFormatException e) {
-            System.out.println(e);
+            // Add the new item to the cart
+            seat newItem = new seat(Integer.parseInt(seatId), Integer.parseInt(compartment), seatNumber, seattype, Integer.parseInt(Status));
+            for (cartinfo cart1 : cart) {
+                if (cart1.getSeat().getSeatID() == Integer.parseInt(seatId)) {
+                    check = true;
+                }
+            }
+            if (check == false && newItem.getAvailabilityStatus()==1) {
+                cart.add(new cartinfo(newItem, AccID));
+                request.setAttribute("hello", "HELLO");
+
+            }
+            for (cartinfo cart1 : cart) {
+                if (cart1.getSeat().getSeatType().equals("Economy")) {
+                    total = total + 100;
+                } else {
+                    total = total + 150;
+                }
+            }
+            request.setAttribute("total", total);
+            SeatDAO seat = new SeatDAO();
+            request.setAttribute("seats", seat.getAllSeatFromComaprt(Integer.parseInt(compartment)));
+            // Redirect to cart view or confirmation page
+            request.getRequestDispatcher("listseattest.jsp").forward(request, response);
         }
     }
 

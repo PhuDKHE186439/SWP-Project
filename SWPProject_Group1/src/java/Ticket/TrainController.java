@@ -112,7 +112,7 @@ public class TrainController extends HttpServlet {
                 request.setAttribute("bookedSeats", bookedSeatsJson);
                 request.setAttribute("tickets", tickets);
                 request.setAttribute("trains", trains);
-                request.getRequestDispatcher("searchTrainResult.jsp").forward(request, response);
+                request.getRequestDispatcher("trainpagetest.jsp").forward(request, response);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TrainController.class.getName()).log(Level.SEVERE, null, ex);

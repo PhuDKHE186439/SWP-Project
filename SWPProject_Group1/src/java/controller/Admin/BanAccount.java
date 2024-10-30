@@ -58,7 +58,19 @@ public class BanAccount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
+            int role = (int) session.getAttribute("account");
+            if (role != 1) {
+                request.setAttribute("annoutment", session.getAttribute("account"));
+                request.getRequestDispatcher("login").forward(request, response);
+            } else {
+                request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            }
+        } else {
+            request.getRequestDispatcher("login").forward(request, response);
+
+        }
 
     }
 
@@ -73,25 +85,24 @@ public class BanAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
-
+        String action = request.getParameter("action");
+        int accountID = Integer.parseInt(request.getParameter("accountID"));
         AccountDAO accountDAO = new AccountDAO();
-        if (accountDAO.accountExists(email, phoneNumber)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Account with this email or phone number already exists.");
-            response.sendRedirect("Admin.jsp");
+        String message;
+        if ("ban".equals(action)) {
+            accountDAO.updateAccountStatus(accountID, "Banned");
+            message = "Account banned successfully.";
+        } else if ("unban".equals(action)) {
+            accountDAO.updateAccountStatus(accountID, "Active");
+            message = "Account activated successfully.";
         } else {
-            // Proceed to create a new account
-            accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Account created successfully.");
-            response.sendRedirect("Admin.jsp");
+            message = "Invalid action.";
         }
+
+        // Store message in request attribute and redirect to Admin page
+        request.setAttribute("message", message);
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+
     }
 
     /**

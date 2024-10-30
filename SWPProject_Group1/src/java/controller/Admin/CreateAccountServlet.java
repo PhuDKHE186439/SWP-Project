@@ -48,14 +48,14 @@ public class CreateAccountServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    
+
     private boolean isValidPassword(String password) {
-    return password.length() >= 8 && 
-           password.matches(".*[A-Z].*") && 
-           password.matches(".*[a-z].*") && 
-           password.matches(".*\\d.*") && 
-           password.matches("[a-zA-Z0-9]+");
-}
+        return password.length() >= 8
+                && password.matches(".*[A-Z].*")
+                && password.matches(".*[a-z].*")
+                && password.matches(".*\\d.*")
+                && password.matches("[a-zA-Z0-9]+");
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -85,30 +85,30 @@ public class CreateAccountServlet extends HttpServlet {
         String password = request.getParameter("password");
         int roleID = Integer.parseInt(request.getParameter("roleID"));
 
-        if (phoneNumber.length() < 8 || phoneNumber.length() > 12) {
+        if (phoneNumber.length() !=10) {
             HttpSession session = request.getSession();
-            session.setAttribute("message", "Phone number must be between 8 and 12 digits.");
-            response.sendRedirect("Admin.jsp");
+            session.setAttribute("message", "Phone number must be 10 digits.");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
             return;
         }
         if (!username.matches("[a-zA-Z0-9]+")) {
             HttpSession session = request.getSession();
             session.setAttribute("message", "Username can only contain letters and numbers.");
-            response.sendRedirect("Admin.jsp");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
             return;
         }
-         if (!isValidPassword(password)) {
-        HttpSession session = request.getSession();
-        session.setAttribute("message", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
-        response.sendRedirect("Admin.jsp");
-        return;
-    }
+        if (!isValidPassword(password)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("message", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            return;
+        }
 
         AccountDAO accountDAO = new AccountDAO();
         if (accountDAO.accountExists(email, phoneNumber)) {
             HttpSession session = request.getSession();
             session.setAttribute("message", "Account with this email or phone number already exists.");
-            response.sendRedirect("Admin.jsp");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
         } else {
             try {
                 accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
@@ -118,7 +118,7 @@ public class CreateAccountServlet extends HttpServlet {
             } catch (Exception e) {
                 HttpSession session = request.getSession();
                 session.setAttribute("message", "Error creating account: " + e.getMessage());
-                response.sendRedirect("Admin.jsp");
+                request.getRequestDispatcher("Admin.jsp").forward(request, response);
             }
         }
     }

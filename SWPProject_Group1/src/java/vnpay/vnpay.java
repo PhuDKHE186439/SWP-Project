@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package vnpay;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,13 +11,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import javax.mail.Session;
 
 /**
  *
  * @author My Asus
  */
-public class Logout extends HttpServlet {
+public class vnpay extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +34,10 @@ public class Logout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Logout</title>");  
+            out.println("<title>Servlet vnpay</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Logout at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet vnpay at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,10 +54,9 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("AccID");
-        session.removeAttribute("account");
-        response.sendRedirect("login.jsp");
+        String price = (String)request.getParameter("price");
+        request.setAttribute("prices", Integer.valueOf(price));
+        request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
     } 
 
     /** 
