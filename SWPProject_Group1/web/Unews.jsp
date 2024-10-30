@@ -1,11 +1,4 @@
-<%-- 
-    Document   : Unews
-    Created on : Oct 13, 2024, 11:53:58 PM
-    Author     : P C
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,39 +15,86 @@
         <script src="js/bootstrap.min.js"></script>
         <jsp:include page="header1.jsp" />
         <style>
+            /* Your existing styles */
             .center_home_1m1 img {
-                width: 560px;   /* Set the width of the image */
-                height: 430px;  /* Set the height of the image */
-                object-fit: cover; /* Ensures the image covers the area without distortion */
-                display: block; /* Ensure the image behaves as a block element */
-                margin: 0 auto; /* Center the image within its container */
+                width: 560px;
+                height: 430px;
+                object-fit: cover;
+                display: block;
+                margin: 0 auto;
             }
             .center_home_1m1 {
-                margin-bottom: 20px; /* Adds some spacing between news items */
+                margin-bottom: 20px;
             }
             .center_home_1lm1 img {
-                width: 280px;   /* Set the width of the image */
-                height: 180px;  /* Set the height of the image */
-                object-fit: cover; /* Ensures the image covers the area without distortion */
-                display: block; /* Ensure the image behaves as a block element */
-                margin: 0 auto; /* Center the image within its container */
+                width: 280px;
+                height: 180px;
+                object-fit: cover;
+                display: block;
+                margin: 0 auto;
             }
             .center_home_1lm1 {
-                margin-bottom: 15px; /* Adds spacing between news items */
+                margin-bottom: 15px;
             }
             .truncate {
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                -webkit-line-clamp: 2; /* Limit to 2 lines */
-                max-height: 3em; /* Adjust height according to line height */
-                line-height: 1.5em; /* Adjust line height */
+                -webkit-line-clamp: 2;
+                max-height: 3em;
+                line-height: 1.5em;
                 text-overflow: ellipsis;
             }
             
+            /* New styles for search box */
+            .search-container {
+                background: #f8f9fa;
+                padding: 20px 0;
+                margin-bottom: 30px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .search-box {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .search-box input[type="text"] {
+                height: 45px;
+                border-radius: 25px;
+                padding: 0 20px;
+                border: 1px solid #ddd;
+                width: calc(100% - 120px);
+                float: left;
+            }
+            
+            .search-box button {
+                height: 45px;
+                border-radius: 25px;
+                width: 100px;
+                margin-left: 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                float: left;
+            }
+            
+            .search-box button:hover {
+                background-color: #0056b3;
+            }
+            
+            .search-box::after {
+                content: '';
+                display: table;
+                clear: both;
+            }
         </style>
 
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
+    
+
     <section id="center" class="center_home">
         <div class="container">
             <div class="row">
@@ -62,20 +102,20 @@
                     <div class="col-sm-3 space_right">
                         <div class="center_home_1lm clearfix">
                             <div class="center_home_1lm1 clearfix">
-    <c:forEach var="newsItem" items="${newsList}" begin="0" end="4">
-        <c:if test="${newsItem.status != 2}">
-            <a href="?action=view&id=${newsItem.id}">
-                <img src="${newsItem.image}" class="iw" alt="${newsItem.title}" style="width: 280px; height: 180px;">
-            </a>
-            <h6 class="col_2">
-                <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
-            </h6>
-            <h5 class="bold">
-                <a href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
-            </h5>
-        </c:if>
-    </c:forEach>
-</div>
+                                <c:forEach var="newsItem" items="${newsList}" begin="0" end="4">
+                                    <c:if test="${newsItem.status != 2}">
+                                        <a href="Unews?action=view&id=${newsItem.id}">
+                                            <img src="${newsItem.image}" class="iw" alt="${newsItem.title}" style="width: 280px; height: 180px;">
+                                        </a>
+                                        <h6 class="col_2">
+                                            <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
+                                        </h6>
+                                        <h5 class="bold">
+                                            <a href="Unews?action=view&id=${newsItem.id}">${newsItem.title}</a>
+                                        </h5>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -84,7 +124,7 @@
                                 <c:if test="${newsItem.status != 2}">
                                     <div class="center_home_1m1 ${status.first ? 'mgt' : ''} clearfix">
                                         <div class="center_home_1m1i">
-                                            <a href="?action=view&id=${newsItem.id}">
+                                            <a href="Unews?action=view&id=${newsItem.id}">
                                                 <img src="${newsItem.image}" class="iw" alt="${newsItem.title}">
                                             </a>
                                         </div>
@@ -93,7 +133,7 @@
                                                 <span class="bold col_1">${newsItem.location}</span> / ${newsItem.created_at}
                                             </h6>
                                             <h${status.first ? '1' : '3'}>
-                                                <a class="col" href="?action=view&id=${newsItem.id}">${newsItem.title}</a>
+                                                <a class="col" href="Unews?action=view&id=${newsItem.id}">${newsItem.title}</a>
                                             </h${status.first ? '1' : '3'}>
                                             <p class="col_3 truncate">${newsItem.content}</p>
                                         </div>
@@ -102,9 +142,8 @@
                             </c:forEach>
                         </div>
                     </div> 
-                                        <div class="center_home_1rm clearfix">
-
-                    <jsp:include page="sidebar1.jsp" />
+                    <div class="center_home_1rm clearfix">
+                        <jsp:include page="sidebar1.jsp" />
                     </div>
                 </div>
             </div>
@@ -113,10 +152,9 @@
 
     <jsp:include page="footer1.jsp" />
 
-
+    <!-- Your existing scripts -->
     <script>
         $(document).ready(function () {
-
             /*****Fixed Menu******/
             var secondaryNav = $('.cd-secondary-nav'),
                     secondaryNavTopPosition = secondaryNav.offset().top;
@@ -131,7 +169,6 @@
                     $("body").css("padding-top", 0);
                 }
             });
-
         });
     </script>
 
@@ -158,5 +195,4 @@
     </script>
 
 </body>
-
 </html>

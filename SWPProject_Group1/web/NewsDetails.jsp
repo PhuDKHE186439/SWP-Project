@@ -1,11 +1,4 @@
-<%-- 
-    Document   : NewsDetails
-    Created on : Oct 14, 2024, 3:04:03 AM
-    Author     : P C
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,15 +8,13 @@
         <title>Apz News</title>
         <link href="dcss/css/bootstrap.min.css" rel="stylesheet">
         <link href="dcss/css/global.css" rel="stylesheet">
-        <link href="dcss/css/blog.css" rel="stylesheet">
         <link href="dcss/css/index.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="dcss/css/font-awesome.min.css" />
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
-        <script src="dcss/js/jquery-2.1.1.min.js"></script>
-        <script src="dcss/js/bootstrap.min.js"></script>
-    </head>
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <jsp:include page="header1.jsp" />
 
-<jsp:include page="header1.jsp" />
 
 
         <section id="center" class="center_detail">
@@ -89,6 +80,32 @@
                         </div> 
                     </div>
         </section>
-<jsp:include page="footer1.jsp" />
 
+</script>
+
+    <script>
+        $("#menu-close").click(function (e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+    </script>
+
+    <script src="js/ziehharmonika.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.ziehharmonika').ziehharmonika({
+                collapsible: true,
+                prefix: 'â˜…'
+            });
+        });
+    </script>
+
+</body>
+</html>
+<jsp:include page="footer1.jsp" />
         

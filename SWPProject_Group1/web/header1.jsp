@@ -131,11 +131,11 @@
 
                             <li><a class="m_tag" href="service.html">Services</a></li>
                             <li class="dropdown">
-                                <a class="m_tag" href="/SWPProject_Group1/Unews"  role="button" aria-expanded="false">News<span class=""></span></a>
-                                <!--                                <ul class="dropdown-menu drop_3" role="menu">
-                                                                    <li><a class="hvr-forward" href="blog.html">Blog</a></li>
-                                                                    <li><a class="border_none hvr-forward" href="blog_detail.html">Blog Detail</a></li>
-                                                                </ul>-->
+                                <a class="m_tag" href="/SWPProject_Group1/Unews" data-toggle="dropdown" role="button" aria-expanded="false">News<span class="caret"></span></a>
+                                                                <ul class="dropdown-menu drop_3" role="menu">
+                                                                    <li><a class="hvr-forward" href="/SWPProject_Group1/Unews">News Spotlight</a></li>
+                                                                    <li><a class="border_none hvr-forward" href="/SWPProject_Group1/UnewsList">All News</a></li>
+                                                                </ul>
                             </li>
                             <li class="dropdown">
                                 <a class="m_tag" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Pages<span class="caret"></span></a>
