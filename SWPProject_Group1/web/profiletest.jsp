@@ -226,7 +226,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- contact area END -->
             </div>
         </div>
     </body>

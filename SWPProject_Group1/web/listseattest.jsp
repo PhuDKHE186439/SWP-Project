@@ -160,7 +160,7 @@
                 <tr>
                     <td>${item.seat.seatNumber} </td>
                     <td>${item.seat.seatType}</td>
-                    <td>${item.seat.seatType=="Economy"?'100':'150'}</td>
+                    <td>${item.seat.seatType=="Economy"?'100000':'150000'}</td>
                 </tr>
             </c:forEach>
             <tr>
