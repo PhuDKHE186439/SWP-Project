@@ -15,7 +15,6 @@
 
         </head>
         <body>
-
             <div class="page-content bg-white" style="margin: 30px">
                 <!-- inner page banner -->
                 <!-- Breadcrumb row -->
@@ -229,7 +228,7 @@
                 </div>
                 <!-- contact area END -->
             </div>
-                                                </div>
+        </div>
     </body>
     <jsp:include page="footer1.jsp"></jsp:include>
     <style>

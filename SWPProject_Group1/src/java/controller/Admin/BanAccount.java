@@ -69,9 +69,7 @@ public class BanAccount extends HttpServlet {
             }
         } else {
             request.getRequestDispatcher("login").forward(request, response);
-
         }
-
     }
 
     /**
