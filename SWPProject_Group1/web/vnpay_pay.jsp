@@ -18,110 +18,105 @@
     </head>
 
     <body>
-
-        <div class="container">
-            <div class="header clearfix"></div>
-            <h3 class="text-center">Thanh toán đơn hàng</h3>
-            <div class="header clearfix"></div>
-            <div class="table-responsive">
-                <form action="ajaxServlet" id="frmCreateOrder" method="post">        
-                    <div class="form-group">
-                        <label for="amount">Số tiền</label>
-                        <input class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amount" type="number" value="${requestScope.prices}" readonly="true"/>
-                    </div>
-                    <h4>Chọn phương thức thanh toán</h4>
-                    <div class="form-group">
-                        <h5>Cách 1: Chuyển hướng sang Cổng VNPAY chọn phương thức thanh toán</h5>
-                        <input type="radio" Checked="True" id="bankCode" name="bankCode" value="">
-                        <label for="bankCode">Cổng thanh toán VNPAYQR</label><br>
-
-                        <h5>Cách 2: Phương thức thanh toán tại site</h5>
-
-                        <input type="radio" id="bankCode" name="bankCode" value="VNBANK">
-                        <label for="bankCode">Thanh toán qua thẻ ATM/Tài khoản nội địa</label><br>
-
-                        <input type="radio" id="bankCode" name="bankCode" value="INTCARD">
-                        <label for="bankCode">Thanh toán qua thẻ quốc tế</label><br>
-                    </div>
-                    <div class="form-group">
-                        <h5>Chọn ngôn ngữ giao diện thanh toán:</h5>
-                        <input type="radio" id="language" Checked="True" name="language" value="vn">
-                        <label for="language">Tiếng việt</label><br>
-                        <input type="radio" id="language" name="language" value="en">
-                        <label for="language">Tiếng anh</label><br>
-
-                    </div>
-                    <button type="submit" class="btn btn-default" href>Thanh toán</button>
-                </form>
-            </div>
-            <p>
-                &nbsp;
-            </p>
+    <div class="container" style="background-color: #f0f0f0; padding: 20px; border-radius: 10px;">
+        <div class="header clearfix"></div>
+        <h3 class="text-center" style="font-weight: bold;">Thanh toán đơn hàng</h3>
+        <div class="header clearfix"></div>
+        <div class="table-responsive">
+            <form action="ajaxServlet" id="frmCreateOrder" method="post" style="background-color: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                <div class="form-group">
+                    <label for="amount" style="font-weight: bold; color: #333;font-size: 1.5em; display: block; margin-bottom: 10px;">Số tiền</label>
+                    <input class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amount" type="number" value="${requestScope.prices}" readonly="true" style="border: 2px solid #ccc; border-radius: 5px; padding: 10px;"/>
+                </div>
+                <h4 style="margin-top: 20px; color: #5bc0de;">Chọn phương thức thanh toán</h4>
+                <div class="form-group">
+                    <h5 style="margin-bottom: 10px; color: #d9534f;">Phương thức 1: Qua Vnpay</h5>
+                    <input type="radio" Checked="True" id="bankCode" name="bankCode" value="">
+                    <label for="bankCode" style="margin-right: 20px;">Cổng thanh toán VNPAY</label>
+                    <br>
+                    <h5 style="margin-top: 20px; color: #d9534f;">Cách 2: Phương thức thanh toán trực tiếp</h5>
+                    <input type="radio" id="bankCode" name="bankCode" value="VNBANK">
+                    <label for="bankCode" style="margin-right: 20px;">Thanh toán qua thẻ ATM/Tài khoản nội địa</label>
+                    <br>
+                    <input type="radio" id="bankCode" name="bankCode" value="INTCARD">
+                    <label for="bankCode" style="margin-right: 20px;">Thanh toán qua thẻ quốc tế</label>
+                    <br>
+                </div>
+                <div class="form-group">
+                    <h5 style="margin-top: 20px; color: #f0ad4e;">Chọn ngôn ngữ giao diện thanh toán:</h5>
+                    <input type="radio" id="language" Checked="True" name="language" value="vn">
+                    <label for="language" style="margin-right: 20px;">Tiếng việt</label>
+                    <br>
+                    <input type="radio" id="language" name="language" value="en">
+                    <label for="language" style="margin-right: 20px;">Tiếng anh</label>
+                    <br>
+                </div>
+                <button type="submit" class="btn btn-default" style="background-color: #5bc0de; color: #fff; border: none; padding: 10px 20px; border-radius: 5px;">Thanh toán</button>
+            </form>
         </div>
-
-        <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
-        <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
-        <script type="text/javascript">
-            $("#frmCreateOrder").submit(function () {
-                var postData = $("#frmCreateOrder").serialize();
-                var submitUrl = $("#frmCreateOrder").attr("action");
-                $.ajax({
-                    type: "POST",
-                    url: submitUrl,
-                    data: postData,
-                    dataType: 'JSON',
-                    success: function (x) {
-                        if (x.code === '00') {
-                            if (window.vnpay) {
-                                vnpay.open({width: 768, height: 600, url: x.data});
-                            } else {
-                                location.href = x.data;
-                            }
-                            return false;
+        <p>&nbsp;</p>
+    </div>
+    <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
+    <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
+    <script type="text/javascript">
+        $("#frmCreateOrder").submit(function () {
+            var postData = $("#frmCreateOrder").serialize();
+            var submitUrl = $("#frmCreateOrder").attr("action");
+            $.ajax({
+                type: "POST",
+                url: submitUrl,
+                data: postData,
+                dataType: 'JSON',
+                success: function (x) {
+                    if (x.code === '00') {
+                        if (window.vnpay) {
+                            vnpay.open({width: 768, height: 600, url: x.data});
                         } else {
-                            alert(x.Message);
+                            location.href = x.data;
                         }
-                    }
-                });
-                return false;
-            });
-        </script>  
-        <script>
-            $(document).ready(function () {
-
-                /*****Fixed Menu******/
-                var secondaryNav = $('.cd-secondary-nav'),
-                        secondaryNavTopPosition = secondaryNav.offset().top;
-                $(window).on('scroll', function () {
-                    var navbar_height = document.querySelector('.navbar').offsetHeight;
-                    var top = 30;
-                    if ($(window).scrollTop() > secondaryNavTopPosition) {
-                        secondaryNav.addClass('is-fixed');
-                        $("body").css("padding-top", navbar_height);
+                        return false;
                     } else {
-                        secondaryNav.removeClass('is-fixed');
-                        $("body").css("padding-top", 0);
+                        alert(x.Message);
                     }
-                });
+                }
+            });
+            return false;
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            /*****Fixed Menu******/
+            var secondaryNav = $('.cd-secondary-nav'),
+                secondaryNavTopPosition = secondaryNav.offset().top;
+            $(window).on('scroll', function () {
+                var navbar_height = document.querySelector('.navbar').offsetHeight;
+                var top = 30;
+                if ($(window).scrollTop() > secondaryNavTopPosition) {
+                    secondaryNav.addClass('is-fixed');
+                    $("body").css("padding-top", navbar_height);
+                } else {
+                    secondaryNav.removeClass('is-fixed');
+                    $("body").css("padding-top", 0);
+                }
+            });
+        });
+        $("#menu-close").click(function (e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+        $(document).ready(function () {
+            $('.ziehharmonika').ziehharmonika({
+                collapsible: true,
+                prefix: '★'
+            });
+        });
+    </script>
+    <script src="js/ziehharmonika.js"></script>
+</body>
 
-            });
-            $("#menu-close").click(function (e) {
-                e.preventDefault();
-                $("#sidebar-wrapper").toggleClass("active");
-            });
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#sidebar-wrapper").toggleClass("active");
-            });
-
-            $(document).ready(function () {
-                $('.ziehharmonika').ziehharmonika({
-                    collapsible: true,
-                    prefix: 'â˜…'
-                });
-            });
-        </script>
-        <script src="js/ziehharmonika.js"></script>
-    </body>
     <jsp:include page="footer1.jsp" />
 </html>
