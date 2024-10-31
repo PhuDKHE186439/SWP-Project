@@ -168,8 +168,18 @@ public class FeedbackDAO extends DBContext {
             return false;
         }
     }
+    
+    public void updateFeedbackStatus(int FeedbackID, String status) {
+        String sql = "UPDATE trainproject.feedback SET Status = ? WHERE FeedbackID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, status);
+            st.setInt(2, FeedbackID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
-    // Method to delete a feedback record
     public boolean deleteFeedback(int feedbackID) {
         String sql = "DELETE FROM trainproject.feedback WHERE FeedbackID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -199,7 +209,8 @@ public class FeedbackDAO extends DBContext {
                 rs.getString("Message"),
                 rs.getInt("PassengerID"),
                 rs.getString("SubmissionDate"),
-                rs.getString("FeedbackType")
+                rs.getString("FeedbackType"),
+                rs.getBoolean("status")
         );
     }
 

@@ -83,7 +83,8 @@ public class FeedbackController extends HttpServlet {
         int passengerID = Integer.parseInt(request.getParameter("passengerID"));
         String submissionDate = request.getParameter("submissionDate");
         String feedbacktype = request.getParameter("feedbacktype");
-        feedback newFeedback = new feedback(0, message, passengerID, submissionDate,feedbacktype);
+        boolean status = Boolean.parseBoolean("status");
+        feedback newFeedback = new feedback(0, message, passengerID, submissionDate,feedbacktype,status);
         new FeedbackDAO().createFeedback(newFeedback);
     }
 
@@ -93,8 +94,9 @@ public class FeedbackController extends HttpServlet {
         int passengerID = Integer.parseInt(request.getParameter("passengerID"));
         String submissionDate = request.getParameter("submissionDate");
         String feedbacktype = request.getParameter("feedbacktype");
+        boolean status = Boolean.parseBoolean("status");
 
-        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate,feedbacktype);
+        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate,feedbacktype,status);
         new FeedbackDAO().updateFeedback(updatedFeedback);
     }
 

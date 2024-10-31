@@ -14,6 +14,7 @@
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <jsp:include page="header1.jsp" />
+    <body>
         <style>
             /* Your existing styles */
             .center_home_1m1 img {
