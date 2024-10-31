@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>FilterWeb</filter-name>
+        <filter-class>Filter.FilterWeb</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterWeb</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
@@ -125,8 +133,8 @@
         <servlet-class>controller.Train.AddtoCart</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>vnpayReturn</servlet-name>
-        <servlet-class>vnpay.vnpayReturn</servlet-class>
+        <servlet-name>refundc</servlet-name>
+        <servlet-class>controller.Train.refundc</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -241,8 +249,8 @@
         <url-pattern>/addtocart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>vnpayReturn</servlet-name>
-        <url-pattern>/vnpayReturn</url-pattern>
+        <servlet-name>refundc</servlet-name>
+        <url-pattern>/refundc</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

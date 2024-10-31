@@ -102,7 +102,7 @@
                         %></label>
                 </div> 
                 <div class="form-group">
-                    <button class="btn btn-success me-2" onclick="window.location.href = 'vnpay_pay.jsp';">Return to Payment Page</button>
+                    <button class="btn btn-success me-2" onclick="window.location.href = 'home1';">Return HomePage</button>
                 </div> 
             </div>
             <p>

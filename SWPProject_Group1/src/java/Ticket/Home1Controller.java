@@ -73,7 +73,7 @@ public class Home1Controller extends HttpServlet {
         request.setAttribute("locations1", locations1);
         request.setAttribute("locations2", locations2);
 
-        request.getRequestDispatcher("home1.jsp").forward(request, response);
+        request.getRequestDispatcher("home2.jsp").forward(request, response);
     }
 
     /**

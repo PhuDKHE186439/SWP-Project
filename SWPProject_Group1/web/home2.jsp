@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
+<%@page session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -41,7 +44,7 @@
         </div>
 
 
-        
+
 
 
 
@@ -60,30 +63,33 @@
                     <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                         <div class="booking-form">
                             <h3>Booking Your Ticket</h3>
-                            <form action="#">
+                            <form action="trains" method="GET">
                                 <div class="check-date">
-                                    <label for="date-in">Check In:</label>
-                                    <input type="text" class="date-input" id="date-in">
-                                    <i class="icon_calendar"></i>
+                                    <label for="ngayDi" class="form-label">Ngày đi</label>
+                                    <input type="date" name="ngayDi"  id="ngayDi" oninput="enableNextField(this, 'ngayVe')" required>
                                 </div>
                                 <div class="check-date">
-                                    <label for="date-out">Check Out:</label>
-                                    <input type="text" class="date-input" id="date-out">
-                                    <i class="icon_calendar"></i>
+                                    <label for="ngayVe" class="form-label">Ngày về</label>
+                                    <input name="ngayVe" type="date" id="ngayVe" oninput="enableNextField(this, 'gaDi')" required><br>
                                 </div>
                                 <div class="select-option">
-                                    <label for="guest">Guests:</label>
-                                    <select id="guest">
-                                        <option value="">2 Adults</option>
-                                        <option value="">3 Adults</option>
+                                    <label for="gaDi" class="form-label">Ga đi</label>
+                                    <select class="form-select" id="gaDi" name="l1" oninput="enableNextField(this, 'gaDen')" required>
+                                        <option value="-1" selected>Chọn ga đi</option>
+                                        <c:forEach items="${locations1}" var="l1">
+                                            <option value="${l1.locationID}">${l1.locationName}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class="select-option">
-                                    <label for="room">Room:</label>
-                                    <select id="room">
-                                        <option value="">1 Room</option>
-                                        <option value="">2 Room</option>
+                                    <label for="gaDen" class="form-label">Ga đến</label>
+                                    <select class="form-select" id="gaDen" name="l2" required>
+                                        <option value="-1" selected>Chọn ga đến</option>
+                                        <c:forEach items="${locations2}" var="l2">
+                                            <option value="${l2.locationID}">${l2.locationName}</option>
+                                        </c:forEach>
                                     </select>
+
                                 </div>
                                 <button type="submit">Check Availability</button>
                             </form>
@@ -119,7 +125,7 @@
 
 
 
-</p>
+                            </p>
                             <a href="#" class="primary-btn about-btn">Read More</a>
                         </div>
                     </div>
@@ -363,7 +369,7 @@
                             <div class="ts-item">
                                 <p>"We were in a hurry to visit family across the country, and TRS made everything so easy. My wife, our two kids, and I found the best seats on a high-speed train, and the booking process was a breeze. TRS saved us so much time, and we had a comfortable and memorable trip!"
 
-</p>
+                                </p>
                                 <div class="ti-author">
                                     <div class="rating">
                                         <i class="icon_star"></i>
@@ -471,12 +477,12 @@
         <script src="js/ziehharmonika.js"></script>
 
         <script>
-        $(document).ready(function () {
-            $('.ziehharmonika').ziehharmonika({
-                collapsible: true,
-                prefix: 'â˜…'
+            $(document).ready(function () {
+                $('.ziehharmonika').ziehharmonika({
+                    collapsible: true,
+                    prefix: 'â˜…'
+                });
             });
-        });
         </script>
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>

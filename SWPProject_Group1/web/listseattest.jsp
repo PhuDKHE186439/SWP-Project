@@ -135,8 +135,7 @@
                     <!-- Available and Booked Seats with onclick for available seats -->
                     <div 
                         class="seat ${t.availabilityStatus == 1 ? 'available' : 'booked'}" 
-                        onclick="${t.availabilityStatus == 1 ? '' : ''} if (${t.availabilityStatus} === 1)
-            submitForm(${t.seatID});">
+                        onclick="${t.availabilityStatus == 1 ? '' : ''} if (${t.availabilityStatus} === 1) submitForm(${t.seatID});">
                         ${t.seatNumber}
                     </div>                    <input type="hidden" name="seatId" value="${t.seatID}">
                     <input type="hidden" name="compartment" value="${t.compartment.compartmentID}">
@@ -146,63 +145,64 @@
                 </form>
             </div>
         </c:forEach>
-
-    </div>
-    <div class="seat-container">
-        <h2>Cart</h2>
-        <table>
-            <tr>
-                <th>Seat ID</th>
-                <th>seatType</th>
-                <th>Price</th>
-            </tr>
-            <c:forEach var="item" items="${cart}">
-                <tr>
-                    <td>${item.seat.seatNumber} </td>
-                    <td>${item.seat.seatType}</td>
-                    <td>${item.seat.seatType=="Economy"?'100000':'150000'}</td>
-                </tr>
-            </c:forEach>
-            <tr>
-                Total Amount: ${requestScope.total}
-            </tr>
-        </table>
-        <div class="checkout-container">
-            <button onclick="goToCheckout()" class="checkout-button">Process to Checkout</button>
+        <div class="seat booked">Booked </div>
+        <div class="seat available">available </div>
         </div>
+        <div class="seat-container">
+            <h2>Cart</h2>
+            <table>
+                <tr>
+                    <th>Seat ID</th>
+                    <th>seatType</th>
+                    <th>Price</th>
+                </tr>
+                <c:forEach var="item" items="${cart}">
+                    <tr>
+                        <td>${item.seat.seatNumber} </td>
+                        <td>${item.seat.seatType}</td>
+                        <td>${item.seat.seatType=="Economy"?'10000':'15000'}</td>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    Total Amount: ${requestScope.total}
+                </tr>
+            </table>
+            <div class="checkout-container">
+                <button onclick="goToCheckout()" class="checkout-button">Process to Checkout</button>
+            </div>
 
-        <!-- Styling -->
-        <style>
-            .checkout-container {
-                padding: 20px;
-                right: 20px;
-                bottom: 20px;
-            }
-            .checkout-button {
-                background-color: #28a745;
-                color: #fff;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-            .checkout-button:hover {
-                background-color: #218838;
-            }
-        </style>
+            <!-- Styling -->
+            <style>
+                .checkout-container {
+                    padding: 20px;
+                    right: 20px;
+                    bottom: 20px;
+                }
+                .checkout-button {
+                    background-color: #28a745;
+                    color: #fff;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+                .checkout-button:hover {
+                    background-color: #218838;
+                }
+            </style>
 
-        <!-- JavaScript for Redirection -->
-        <script>
-            function goToCheckout() {
-                // Set the checkout URL
-                const checkoutUrl = 'http://localhost:9999/SWPProject_Group1/vnpay?price=${requestScope.total}';
+            <!-- JavaScript for Redirection -->
+            <script>
+                function goToCheckout() {
+                    // Set the checkout URL
+                    const checkoutUrl = 'http://localhost:9999/SWPProject_Group1/vnpay?price=${requestScope.total}';
 
-                // Redirect to checkout page
-                window.location.href = checkoutUrl;
-            }
-        </script>
-    </div>
+                    // Redirect to checkout page
+                    window.location.href = checkoutUrl;
+                }
+            </script>
+        </div>
 
 </body>
 <jsp:include page = "footer1.jsp"/>

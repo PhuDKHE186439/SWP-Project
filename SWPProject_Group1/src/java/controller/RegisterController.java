@@ -83,20 +83,26 @@ public class RegisterController extends HttpServlet {
             throws ServletException, IOException {
         Boolean checkusername = false;
         HttpSession session = request.getSession();
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String age = request.getParameter("age");
-        String address = request.getParameter("address");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String repassword = request.getParameter("repassword");
+        String name = request.getParameter("name").trim();
+        String phone = request.getParameter("phone").trim();
+        String email = request.getParameter("email").trim();
+        String age = request.getParameter("age").trim();
+        String address = request.getParameter("address").trim();
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
+        String repassword = request.getParameter("repassword").trim();
         try {
             for (account o : listacc) {
                 if (username.equals(o.getUsername())) {
                     request.setAttribute("annoutment", "Username Already Exsits");
                     checkusername = true;
                     request.getRequestDispatcher("register.jsp").forward(request, response);
+                } else {
+                    if (email.equals(o.getEmail())) {
+                        request.setAttribute("annoutment", "Email already registered");
+                        checkusername = true;
+                        request.getRequestDispatcher("register.jsp").forward(request, response);
+                    }
                 }
             }
             if (!password.endsWith(repassword)) {

@@ -110,9 +110,9 @@ public class AddtoCart extends HttpServlet {
             }
             for (cartinfo cart1 : cart) {
                 if (cart1.getSeat().getSeatType().equals("Economy")) {
-                    total = total + 100;
+                    total = total + 10000;
                 } else {
-                    total = total + 150;
+                    total = total + 15000;
                 }
             }
             request.setAttribute("total", total);

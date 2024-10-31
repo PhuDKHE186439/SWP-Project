@@ -57,6 +57,7 @@
                                         <div class="tab-pane active" id="courses">
                                             <div class="profile-head">
                                                 <p style="color: Red">${requestScope.passwordChange}</p>
+                                                <p style="color: Red">${requestScope.announment}</p>
                                             </div>
                                             <form class="edit-profile" action="userprofile" method="post">
                                                 <div class="">
@@ -165,6 +166,7 @@
                                                         <th>Price</th>
                                                         <th>PruchaseDate</th>
                                                         <th>PurchaseMethod</th>
+                                                        <th>Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -179,15 +181,31 @@
                                                             <td>${i.ticket.ticketPrice}</td>
                                                             <td>${i.ticket.purchaseDate}</td>
                                                             <td>${i.paymentMethod}</td>
+                                                            <c:set var="status" value="${i.ticket.status}"/>  
+
+                                                            <td><form action="refundc" method="POST">
+                                                                    ${i.ticket.status == 1 ? '<button type="button" onclick="showModal()">Refund</button>' : 'Traveled'}
+                                                                    <input type="hidden" name="ticketid" value="${i.ticket.ticketID}">
+                                                                    <input type="hidden" name="passengerid" value="${i.ticket.passengerID}">
+                                                                    <input type="hidden" name="refundMessage" value="">
+                                                                </form></td>
+
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+                                            <div id="refundModal" style="display:none;">
+                                                <div class="modal-content">
+                                                    <span class="close" onclick="closeModal()">&times;</span>
+                                                    <h4>Refund Request</h4>
+                                                    <textarea name="message" id="refundMessageInput" placeholder="Enter your message here..."></textarea>
+                                                    <button id="submitRefund">Submit</button>
+                                                </div>
+                                            </div>
                                             <div class="mt-4 text-left">
                                                 <c:if test="${currentPage > 1}">
                                                     <a href="userprofile?page=${currentPage - 1}" class="btn btn-primary">Previous</a>
                                                 </c:if>
-
                                                 <c:if test="${currentPage > 2}">
                                                     <a href="userprofile?page=1" class="btn btn-outline-primary">1</a>
                                                     <c:if test="${currentPage > 3}">
@@ -227,10 +245,113 @@
                         </div>
                     </div>
                 </div>
+                <!-- contact area END -->
             </div>
-                                                </div>
+        </div>
     </body>
     <jsp:include page="footer1.jsp"></jsp:include>
+    <script>
+        function confirmRefund(form) {
+            var message = prompt("Please enter your refund request message:");
+            if (message !== null) {
+                var messageInput = document.createElement("input");
+                messageInput.type = "hidden";
+                messageInput.name = "refundMessage"; // Add this field to your form
+                messageInput.value = message;
+                form.appendChild(messageInput);
+                return true; // Allow form submission
+            }
+            return false; // Prevent form submission if user cancels
+        }
+    </script>
+
+    <style>
+        #refundModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Slightly darker background */
+            padding-top: 100px; /* Space from the top */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Centering */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 600px; /* Set width to 600px for larger size */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+        }
+
+        /* Close button style */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Textarea style */
+        #refundMessageInput {
+            width: 100%; /* Full width of the modal */
+            height: 120px; /* Set height for the textarea */
+            margin-top: 10px; /* Space above */
+            padding: 5px; /* Inner padding */
+            border: 1px solid #ccc; /* Border style */
+            border-radius: 3px; /* Rounded corners */
+            resize: none; /* Disable resizing */
+        }
+
+        /* Button style */
+        #submitRefund {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 15px; /* Padding */
+            border: none; /* No border */
+            border-radius: 3px; /* Rounded corners */
+            cursor: pointer; /* Pointer on hover */
+            margin-top: 10px; /* Space above */
+        }
+
+        #submitRefund:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    </style>
+    <script>
+        function showModal() {
+            document.getElementById("refundModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("refundModal").style.display = "none";
+        }
+
+        document.getElementById("submitRefund").onclick = function () {
+            var message = document.getElementById("refundMessageInput").value;
+            if (message) {
+                // Here you can handle form submission
+                var form = document.querySelector('form[action="refundc"]'); // Adjust if necessary
+                form.elements["refundMessage"].value = message; // Set the refund message
+                form.submit(); // Submit the form
+            } else {
+                alert("Please enter a message.");
+            }
+        };
+    </script>
     <style>
         #change-password {
             border: 2px solid #000; /* Adjust the thickness and color as needed */

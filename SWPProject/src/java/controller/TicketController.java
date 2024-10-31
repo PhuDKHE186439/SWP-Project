@@ -75,7 +75,7 @@ public class TicketController extends HttpServlet {
 
                 // Xây dựng đối tượng JSON để phản hồi lại JavaScript
                 jsonResponse.put("trainId", t.getTrainID());
-                jsonResponse.put("startLocation", t.getStartLocation().getLocationName());
+                jsonResponse.put("startLocation", t.getArrivalLocation().getLocationName());
                 jsonResponse.put("endLocation", t.getArrivalLocation().getLocationName());
                 jsonResponse.put("trainName", t.getTrainName());
                 jsonResponse.put("trainScheduleTime", t.getTrainScheduleTime());

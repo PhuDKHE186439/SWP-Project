@@ -80,7 +80,7 @@ public class LoginController extends HttpServlet {
         }
         String checklogout = request.getParameter("logout");
         HttpSession session = request.getSession();
-
+        session.removeAttribute("cart");
         if (checklogout != null) {
             session.removeAttribute("account");
             session.removeAttribute("AccID");

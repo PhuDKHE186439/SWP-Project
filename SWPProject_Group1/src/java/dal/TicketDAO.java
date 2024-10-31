@@ -248,8 +248,39 @@ public class TicketDAO extends DBContext {
         }
 
     }
-    public static void main(String[] args) {
+            public ticket getTicketbyTicketID(int ticketID) {
+        String sql = """
+                     select *, l.LocationName As StartLocationName, l.Description as StartLocationDescription,
+                      z.LocationName As ArrivalLocationName, z.Description as ArrivalLocationDescription
+                      
+                     from ticket t left Join ticketclass d On t.TicketClassID=d.TicketClassID 
+                     left join seat s on s.SeatID=t.SeatID 
+                     left join compartment cm on s.compartmentID = cm.CompartmentID 
+                     left join train tr on tr.TrainID=cm.TrainID 
+                     left join location l on l.LocationID = tr.StartLocationID 
+                     left join location z on z.LocationID = tr.ArrivalLocationID  Where TicketID=?""";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, ticketID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new ticket(rs.getInt("TicketID"),
+                        rs.getInt("PassengerID"),
+                        new ticketClass(rs.getInt("TicketClassID"),
+                                rs.getString("CategoryName")),
+                        rs.getString("PurchaseDate"),
+                        rs.getDouble("TicketPrice"),
+                        new seat(rs.getInt("SeatID"),
+                                new compartment(rs.getInt("CompartmentID"),
+                                        rs.getInt("CompartmentNumber"),
+                                        new train(rs.getInt("TrainID"), rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"), rs.getInt("Status"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    public static void main(String[] args) throws SQLException {
         TicketDAO dao = new TicketDAO();
-        System.out.println(dao.getAllTicketsStatus(1, 0, "", 0));
+        System.out.println(dao.getAllTicket(1));
     }
 }

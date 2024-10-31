@@ -8,6 +8,7 @@ import dal.TicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import model.ticket;
  *
  * @author ThinkPro
  */
+@WebServlet(name = "ManageTicketController", urlPatterns = "/manage-ticket")
+
 public class ManageTicketController extends HttpServlet {
 
     /**
@@ -73,7 +76,7 @@ public class ManageTicketController extends HttpServlet {
 //            request.setAttribute("historyKey", "&key=" + key);
 //        }
 //        int index = Integer.parseInt(indexPage);
-            int status = 0;
+            int status = 1;
             String str_status = request.getParameter("status");
             if (str_status != null) {
                 status = Integer.parseInt(str_status);
