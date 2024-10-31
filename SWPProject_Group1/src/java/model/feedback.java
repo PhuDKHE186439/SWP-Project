@@ -12,17 +12,19 @@ public class feedback {
     private int feedbackID;
     private String message;
     private int passengerID;
-    private String passengerName;    // New field
-    private String passengerPhone;   // New field
+    private String passengerName;
+    private String passengerPhone;
     private String submissionDate;
     private String feedbackType;
+    private boolean status;
 
-    public feedback(int feedbackID, String message, int passengerID, String submissionDate, String FeedbackType) {
+    public feedback(int feedbackID, String message, int passengerID, String submissionDate, String FeedbackType, boolean Status) {
         this.feedbackID = feedbackID;
         this.message = message;
         this.passengerID = passengerID;
         this.submissionDate = submissionDate;
         this.feedbackType = FeedbackType;
+        this.status = Status;
     }
 
     public String getFeedbackType() {
@@ -67,9 +69,23 @@ public class feedback {
         this.submissionDate = submissionDate;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "feedback{" + "feedbackID=" + feedbackID + ", message=" + message + ", passengerID=" + passengerID + ", submissionDate=" + submissionDate + ", FeedbackType=" + feedbackType + '}';
+        return "feedback{" 
+                + "feedbackID=" + feedbackID 
+                + ", message=" + message 
+                + ", passengerID=" + passengerID 
+                + ", submissionDate=" + submissionDate 
+                + ", FeedbackType=" + feedbackType 
+                + ", status=" + (status ? "Finish" : "In Order") + '}';
     }
 
 

@@ -1,4 +1,4 @@
-Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List, model.account, dal.AccountDAO, model.role, dal.RoleDAO"%>
 <%@page session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -59,12 +59,12 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
             <!-- Sidebar Start -->
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
-                    <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <a href="home1.jsp" class="navbar-brand mx-4 mb-3">
                         <h3 class="text-primary">Train Traveler</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">
-                            
+
                             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                         </div>
                         <div class="ms-3">
@@ -123,7 +123,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
-                                        
+
                                         <div class="ms-2">
                                             <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                             <small>15 minutes ago</small>
@@ -133,7 +133,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                 <hr class="dropdown-divider">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
-                                        
+
                                         <div class="ms-2">
                                             <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                             <small>15 minutes ago</small>
@@ -143,7 +143,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                 <hr class="dropdown-divider">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
-                                        
+
                                         <div class="ms-2">
                                             <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                             <small>15 minutes ago</small>
@@ -180,7 +180,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                
+
                                 <span class="d-none d-lg-inline-flex">John Doe</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -227,19 +227,34 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                         <th scope="col">Feedback ID</th>
                                         <th scope="col">Message</th>
                                         <th scope="col">Submission Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="feedback" items="${feedbackList2}">
-                                    <tr>
-                                        <td>${feedback.feedbackID}</td>
-                                        <td>${feedback.message}</td>
-                                        <td>${feedback.submissionDate}</td>
-                                    </tr>
-                                </c:forEach>
+                                    <c:forEach var="feedback" items="${feedbackList2}">
+                                        <tr>
+                                            <td>${feedback.feedbackID}</td>
+                                            <td>${feedback.message}</td>
+                                            <td>${feedback.submissionDate}</td>
+                                            <td>${feedback.status ? "Finish" : "In Order"}</td>
+                                            <td>
+                                                <form action="feedbackadmin" method="post" style="display:inline;">
+                                                    <input type="hidden" name="feedbackID" value="${feedback.feedbackID}" />
+                                                    <input type="hidden" name="action" 
+                                                           value="${feedback.status ? 'In Order' : 'Finish'}" />
+                                                    <button type="submit" class="btn btn-sm btn-primary" 
+                                                            onclick="return confirm('Are you sure you want to mark this feedback as ${feedback.status ? 'In Order' : 'Finish'}?')">
+                                                        ${feedback.status ? "In Order" : "Finish"}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>
+
 
                         <!-- Pagination Controls -->
                         <div class="mt-4 text-center">
