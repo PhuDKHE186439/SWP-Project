@@ -121,7 +121,7 @@ public class feedbackadmin extends HttpServlet {
         }
 
         request.setAttribute("message", message);
-        request.getRequestDispatcher("Admin2.jsp").forward(request, response);
+        request.getRequestDispatcher("feedbackadmin").forward(request, response);
     }
 
     /**
