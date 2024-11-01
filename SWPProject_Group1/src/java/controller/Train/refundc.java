@@ -70,7 +70,7 @@ public class refundc extends HttpServlet {
         //processRequest(request, response);
         String ticketidParam = request.getParameter("ticketid");
         String passengeridParam = request.getParameter("passengerid");
-        String message = request.getParameter("refundMessage");
+        String message = request.getParameter("refundMessage").replaceAll("\\s+", " ").trim();
         RefundDAO dao = new RefundDAO();
         try {
             int ticketID = Integer.parseInt(ticketidParam);

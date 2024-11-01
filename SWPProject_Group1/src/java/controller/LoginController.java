@@ -131,7 +131,7 @@ public class LoginController extends HttpServlet {
                     case 1 ->
                         response.sendRedirect("BanAccount");
                     case 2 ->
-                        response.sendRedirect("home.jsp");
+                        response.sendRedirect("manage-ticket");
                     case 3 ->
                         response.sendRedirect("userprofile");
                 }

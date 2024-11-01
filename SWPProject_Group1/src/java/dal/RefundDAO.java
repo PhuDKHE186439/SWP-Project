@@ -52,4 +52,14 @@ public class RefundDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public void UpdateRefundTicketStatus(int ticketid,int status) {
+        String sql = "UPDATE refundrequest Set status = ? WHERE ticketid=?";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setInt(1, status);
+            st.setInt(2, ticketid);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

@@ -83,14 +83,14 @@ public class RegisterController extends HttpServlet {
             throws ServletException, IOException {
         Boolean checkusername = false;
         HttpSession session = request.getSession();
-        String name = request.getParameter("name").trim();
+        String name = request.getParameter("name").replaceAll("\\s+", " ").trim();
         String phone = request.getParameter("phone").trim();
         String email = request.getParameter("email").trim();
         String age = request.getParameter("age").trim();
-        String address = request.getParameter("address").trim();
-        String username = request.getParameter("username").trim();
-        String password = request.getParameter("password").trim();
-        String repassword = request.getParameter("repassword").trim();
+        String address = request.getParameter("address").replaceAll("\\s+", " ").trim();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String repassword = request.getParameter("repassword");
         try {
             for (account o : listacc) {
                 if (username.equals(o.getUsername())) {
@@ -100,6 +100,10 @@ public class RegisterController extends HttpServlet {
                 } else {
                     if (email.equals(o.getEmail())) {
                         request.setAttribute("annoutment", "Email already registered");
+                        checkusername = true;
+                        request.getRequestDispatcher("register.jsp").forward(request, response);
+                    } else if (username.contains(" ")) {
+                        request.setAttribute("annoutment", "username cannot Contain White-Space Characters");
                         checkusername = true;
                         request.getRequestDispatcher("register.jsp").forward(request, response);
                     }
