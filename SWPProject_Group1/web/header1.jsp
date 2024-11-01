@@ -55,7 +55,7 @@
 
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a class="m_tag" href="home">Home</a></li>
+                            <li><a class="m_tag" href="home1">Home</a></li>
                             <li><a class="m_tag" href="/SWPProject_Group1/userprofile">Profile</a></li>
                             <c:if test="${sessionScope.AccID!=null}">
                                 <li><a class="m_tag" href="logout">LOGOUT</a></li>
@@ -96,11 +96,12 @@
                             <!-- Pages Dropdown -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle m_tag" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Pages<span class="caret"></span>
+                                    Account<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="team.html">Team</a></li>
-                                    <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="logout">Login</a></li>
+                                    <li><a href="logout">Logout</a></li>
+                                    <li><a href="/SWPProject_Group1/userprofile">Profile</a></li>
                                 </ul>
                             </li>
                         </ul>

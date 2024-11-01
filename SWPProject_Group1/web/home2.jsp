@@ -44,33 +44,21 @@
         <link rel="stylesheet" type="text/css" href="dcss/css/font-awesome.min.css" />
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
     </head>
-    <style>.testimonial-slider.owl-carousel .owl-item img {
-	width: auto;
-	margin: 0 auto;
+    <style>
+        .testimonial-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.testimonial-slider.owl-carousel .owl-nav button {
-	height: 44px;
-	width: 44px;
-	border: 1px solid #ebebeb;
-	font-size: 24px;
-	color: #707079;
-	background: #ffffff;
-	line-height: 48px;
-	text-align: center;
-	border-radius: 50%;
-	position: absolute;
-	left: -190px;
-	top: 50%;
-	-webkit-transform: translateY(-6px);
-	-ms-transform: translateY(-6px);
-	transform: translateY(-6px);
-	-webkit-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
+
+.testimonial-section .row {
+  width: 100%;
+  justify-content: center;
 }
-.testimonial-slider.owl-carousel .owl-nav button:hover {
-	border-color: #19191a;
-	color: #19191a;
+
+.testimonial-section .col-lg-8 {
+  max-width: 800px;
 }
     
     </style>
@@ -377,7 +365,9 @@
 
         <!-- Testimonial Section Begin -->
         <section class="testimonial-section spad">
-    <div class="container">
+            
+            
+    <div class="container"  >
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="section-title">
@@ -388,7 +378,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="testimonial-slider owl-carousel">
+                <div class="testimonial-slider owl-carousel" >
                     <div class="ts-item text-center">
                         <p>"When our plans changed last minute, TRS was a lifesaver! As frequent travelers, my husband, son, and I are familiar with various transportation options, but booking through TRS made our journey seamless. From finding the perfect train route to quick ticket confirmation, TRS exceeded our expectations!"</p>
                         <div class="ti-author">
