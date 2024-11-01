@@ -11,6 +11,9 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
+<%@page import="jakarta.servlet.http.HttpSession"%>
+<%@page import="dal.SeatDAO"%>
+<%@page import="model.*"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,6 +95,12 @@
                             if (signValue.equals(vnp_SecureHash)) {
                                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                                     out.print("Thành công");
+                                     List<cartinfo> cart = (List<cartinfo>) session.getAttribute("cart");
+                                      for (cartinfo cart1 : cart) {
+               //update status
+                           SeatDAO sdao = new SeatDAO();
+            sdao.updateStatusSeat(cart1.getSeat().getSeatID(), 0);
+            }
                                 } else {
                                     out.print("Không thành công");
                                 }
