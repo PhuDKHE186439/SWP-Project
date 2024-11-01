@@ -269,4 +269,37 @@
         <servlet-name>Home1Controller</servlet-name>
         <url-pattern>/home1</url-pattern>
     </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>ListTrainServlet</servlet-name>
+        <servlet-class>controller.Train.ListTrainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateNewTrain</servlet-name>
+        <servlet-class>controller.Train.CreateNewTrain</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateUpdateTrain</servlet-name>
+        <servlet-class>controller.Train.CreateUpdateTrain</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateDeleteTrain</servlet-name>
+        <servlet-class>controller.Train.CreateDeleteTrain</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>ListTrainServlet</servlet-name>
+        <url-pattern>/admin/trains</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateNewTrain</servlet-name>
+        <url-pattern>/admin/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateUpdateTrain</servlet-name>
+        <url-pattern>/admin/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateDeleteTrain</servlet-name>
+        <url-pattern>/admin/delete</url-pattern>
+    </servlet-mapping>
 </web-app>
