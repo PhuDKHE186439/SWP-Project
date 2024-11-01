@@ -73,7 +73,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="BanAccount" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="manage-ticket" class="nav-item nav-link" ><i class="fa fa-th me-2"></i>Quản lý tickets</a>
                         <div class="nav-item dropdown">
                         </div>
                         <a href="refundlist" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Refund Requests</a>
@@ -197,6 +197,8 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                         <th scope="col">Passenger ID</th>
                                         <th scope="col">Refund Status</th>
                                         <th scope="col">Message/Reason</th>
+                                        <th scope="col">Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -213,8 +215,19 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                                     ${feedback.passengerID}
                                                 </a>
                                             </td>
-                                            <td>${feedback.status}</td>
+                                            <td>${feedback.status==1? 'pending': (feedback.status == 0 ? 'Rejected' : 'Accepted')}</td>
                                             <td>${feedback.message}</td>
+                                            <td>
+                                                <form action="rejectrefund" method="post">
+                                                    <input type="hidden" name="ticketid" value="${feedback.ticketID}">
+                                                    <button type="submit">Reject</button>
+                                                </form>
+                                                <form  action="acceptrefund" method="post">
+                                                    <input type="hidden" name="ticketid" value="${feedback.ticketID}">
+                                                    <button type="submit">Accepted</button>
+                                                </form>
+
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

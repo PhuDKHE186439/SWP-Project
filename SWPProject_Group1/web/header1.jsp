@@ -55,7 +55,7 @@
 
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a class="m_tag" href="home">Home</a></li>
+                            <li><a class="m_tag" href="home1">Home</a></li>
                             <li><a class="m_tag" href="/SWPProject_Group1/userprofile">Profile</a></li>
                             <c:if test="${sessionScope.AccID!=null}">
                                 <li><a class="m_tag" href="logout">LOGOUT</a></li>

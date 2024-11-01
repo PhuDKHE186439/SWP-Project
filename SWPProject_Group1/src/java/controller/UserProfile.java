@@ -97,9 +97,9 @@ public class UserProfile extends HttpServlet {
         PassengerDAO passDAO = new PassengerDAO();
         HttpSession session = request.getSession();
         AccountDAO accDAO = new AccountDAO();
-        String name = request.getParameter("name");
+        String name = request.getParameter("name").replaceAll("\\s+", " ").trim();
         String age = request.getParameter("age");
-        String address = request.getParameter("address");
+        String address = request.getParameter("address").replaceAll("\\s+", " ").trim();
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         TicketDAO ticketDAO = new TicketDAO();

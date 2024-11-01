@@ -72,7 +72,7 @@
                     </div>
                     <div class="navbar-nav w-100">                        
                         <a href="manage-ticket" class="nav-item nav-link active" ><i class="fa fa-th me-2"></i>Quản lý tickets</a>
-                        <a href="refundc" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Refund Request</a>
+                        <a href="refundlist" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Refund Request</a>
                     </div>
                 </nav>
             </div>      
