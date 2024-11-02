@@ -100,6 +100,7 @@
                //update status
                            SeatDAO sdao = new SeatDAO();
             sdao.updateStatusSeat(cart1.getSeat().getSeatID(), 0);
+            session.removeAttribute("cart");
             }
                                 } else {
                                     out.print("Không thành công");
