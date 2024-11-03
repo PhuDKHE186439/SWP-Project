@@ -68,7 +68,7 @@
                 <div class="account-container">
                     <div class="heading-bx left">
                         <h2 class="title-head">Login to your <span>Account</span></h2>
-                        <p>Don't have an account? <a href="register.jsp">Create one here</a></p>
+                        <p>Don't have an account? <a href="register">Create one here</a></p>
                         <p style="color: Red">${requestScope.key}</p>
                         <p style="color: greenyellow">${requestScope.annoutment}</p>
                     </div>	
@@ -94,15 +94,17 @@
                                         <input type="checkbox" class="custom-control-input" id="customControlAutosizing" name="remember" ${check}>
                                         <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                                     </div>
-                                    <a href="forgetPassword.jsp" class="ml-auto">Forgot Password?</a>
+                                    <a href="forgetpassword" class="ml-auto">Forgot Password?</a>
                                 </div>
                             </div>
                             <div class="col-lg-12 m-b30">
                                 <button name="submit" type="submit" value="Submit" class="btn button-md">Login</button>
+                                
                             </div>
                         </div>
                     </form>
-
+<a href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:8080/SWP391/loginGoogle&response_type=code
+		   &client_id=251851195797-be94bjjk1t71t8p8ed3ngr6o9dvsg9q5.apps.googleusercontent.com&approval_prompt=force"><button id="register" class="hidden">Login with Google</button></a>
                 </div>
             </div>
         </div>

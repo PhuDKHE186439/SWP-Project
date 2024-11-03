@@ -2,7 +2,7 @@ package dto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import dal.UserDAO;
+import dal.AccountDAO;
 import dto.Constants;
 import dto.UserGoogleDTO;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.User;
-import org.apache.http.client.ClientProtocolException;
+import model.account;
+import org.apache.http.client;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Form;
 
