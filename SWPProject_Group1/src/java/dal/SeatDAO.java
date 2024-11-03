@@ -2,6 +2,7 @@ package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.compartment;
@@ -46,6 +47,23 @@ public class SeatDAO extends DBContext {
             System.out.println("Error getting seats: " + e.getMessage());
         }
         return list;
+    }
+    
+    public void updateStatusSeat(int seatId, int status) {
+        String sql = """
+                     UPDATE `trainproject`.`seat`
+                     SET
+                     `AvailabilityStatus` = ? 
+                                          WHERE `SeatID` = ?
+                                          """;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, status);
+            st.setInt(2, seatId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean updateSeatStatus(int seatId, int status) {
