@@ -17,6 +17,7 @@ public class train {
     private location startLocation;
     private location arrivalLocation;
     
+    
      private String status;
     private Time startTime;
     private Time estimatedEndTime;

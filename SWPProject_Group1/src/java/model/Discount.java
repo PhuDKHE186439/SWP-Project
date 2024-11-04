@@ -101,8 +101,8 @@ public class Discount {
     }
 
     // Thêm phương thức tính toán số tiền giảm giá
-    public double calculateDiscount(double originalPrice) {
-        return (originalPrice * discountPercent) / 100.0;
+    public int calculateDiscount(int originalPrice) {
+        return (int) ((originalPrice * discountPercent) / 100);
     }
     
 }

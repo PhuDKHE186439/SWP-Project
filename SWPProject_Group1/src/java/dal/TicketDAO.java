@@ -4,6 +4,10 @@
  */
 package dal;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import model.ticket;
@@ -13,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.cartinfo;
 import model.compartment;
 import model.location;
 import model.seat;
@@ -167,6 +172,38 @@ public class TicketDAO extends DBContext {
         return list;
     }
 
+    public ticket getNewestTicketCreated(int PassengerID) {
+        String sql = """
+                     select *, l.LocationName As StartLocationName, l.Description as StartLocationDescription,
+                      z.LocationName As ArrivalLocationName, z.Description as ArrivalLocationDescription
+                      
+                     from ticket t left Join ticketclass d On t.TicketClassID=d.TicketClassID 
+                     left join seat s on s.SeatID=t.SeatID 
+                     left join compartment cm on s.compartmentID = cm.CompartmentID 
+                     left join train tr on tr.TrainID=cm.TrainID 
+                     left join location l on l.LocationID = tr.StartLocationID 
+                     left join location z on z.LocationID = tr.ArrivalLocationID  Where PassengerID=? ORDER BY TicketID DESC LIMIT 1""";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, PassengerID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new ticket(rs.getInt("TicketID"),
+                        rs.getInt("PassengerID"),
+                        new ticketClass(rs.getInt("TicketClassID"),
+                                rs.getString("CategoryName")),
+                        rs.getString("PurchaseDate"),
+                        rs.getDouble("TicketPrice"),
+                        new seat(rs.getInt("SeatID"),
+                                new compartment(rs.getInt("CompartmentID"),
+                                        rs.getInt("CompartmentNumber"),
+                                        new train(rs.getInt("TrainID"), rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"), rs.getInt("Status"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public List<ticket> getAllTicket(int status) throws SQLException {
         List<ticket> list = new ArrayList<>();
         String sql = """
@@ -198,19 +235,20 @@ public class TicketDAO extends DBContext {
         return list;
     }
 
-        public int CreateTicket(int accountID, String price_raw,
-            String seatID_raw, String trainScheduleTime) {
+    public int CreateTicket(int accountID, String price_raw,
+            int seatID_raw, String trainScheduleTime, int ticketClass) {
         String sql = " INSERT INTO trainproject.ticket (PassengerID, TicketClassID, "
                 + "PurchaseDate, TicketPrice, SeatID, TimeArrive, status) "
-                + "VALUES (?, 1, NOW(), ?, ?, ?, 0,)";
+                + "VALUES (?, ?, NOW(), ?, ?, ?, 0)";
         int generatedTicketID = -1;
 
         // Use Statement.RETURN_GENERATED_KEYS to retrieve generated keys
         try (PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             st.setInt(1, accountID);
-            st.setDouble(2, Double.parseDouble(price_raw));
-            st.setInt(3, Integer.parseInt(seatID_raw));
-            st.setDate(4, java.sql.Date.valueOf(trainScheduleTime));
+            st.setInt(2, ticketClass);
+            st.setDouble(3, Double.parseDouble(price_raw));
+            st.setInt(4, seatID_raw);
+            st.setDate(5, Date.valueOf(trainScheduleTime));
             st.executeUpdate();
 
             // Get generated keys
@@ -225,21 +263,18 @@ public class TicketDAO extends DBContext {
 
         return generatedTicketID;
     }
-        
-            public void CreatePayment(int tkid, String bank,
-            String price_raw, String fullName, String email, String phone) {
-        String sql = " INSERT INTO trainproject.payment (TicketID, PaymentMethod, "
-                + "PaymentDate, Amount, "
-                + "Fullname, Phone, Email) "
-                + "VALUES (?, ?, NOW(), ?, ?, ?,?)";
+
+    public void CreatePayment(int tkid, String bank, int PassengerID,
+            String price_raw) {
+        String sql = " INSERT INTO trainproject.payment (TicketID,PassengerID, PaymentMethod, "
+                + "PaymentDate, Amount)"
+                + "VALUES (?,?, ?, NOW(), ?)";
 
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, tkid);
-            st.setString(2, bank);
-            st.setDouble(3, Double.parseDouble(price_raw));
-            st.setString(4, fullName);
-            st.setString(5, phone);
-            st.setString(6, email);
+            st.setInt(2, PassengerID);
+            st.setString(3, bank);
+            st.setDouble(4, Double.parseDouble(price_raw));
 
             st.executeUpdate();
 
@@ -248,7 +283,8 @@ public class TicketDAO extends DBContext {
         }
 
     }
-            public ticket getTicketbyTicketID(int ticketID) {
+
+    public ticket getTicketbyTicketID(int ticketID) {
         String sql = """
                      select *, l.LocationName As StartLocationName, l.Description as StartLocationDescription,
                       z.LocationName As ArrivalLocationName, z.Description as ArrivalLocationDescription
@@ -279,8 +315,9 @@ public class TicketDAO extends DBContext {
         }
         return null;
     }
+
     public static void main(String[] args) throws SQLException {
-        TicketDAO dao = new TicketDAO();
-        System.out.println(dao.getAllTicket(1));
+        TicketDAO ticketDAO = new TicketDAO();
+ticketDAO.CreateTicket(cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000", cart1.getSeat().getSeatID(), cart1.getSeat().getCompartment().getTrain().getTrainScheduleTime(), cart1.getSeat().getSeatType().equals("Economy") ? 2 : 1);
     }
 }

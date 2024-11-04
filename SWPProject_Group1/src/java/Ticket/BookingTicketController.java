@@ -4,6 +4,7 @@
  */
 package Ticket;
 
+import dal.SeatDAO;
 import dal.TicketDAO;
 import dal.TrainDAO;
 import java.io.IOException;
@@ -14,9 +15,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.account;
+import model.cartinfo;
 import model.seat;
 import model.train;
 
@@ -65,6 +68,7 @@ public class BookingTicketController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        
 
     }
 
@@ -99,12 +103,11 @@ public class BookingTicketController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
             TicketDAO td = new TicketDAO();
-
             train t = null;
             t = trd.getAllTrainByID(Integer.parseInt(trainID));
-            int tkid = td.CreateTicket(acc.getAccountID(), price_raw, seatID_raw,
-                    t.getTrainScheduleTime());
-            td.CreatePayment(tkid, "Bank", price_raw, fullName, email, phone);
+            int tkid = td.CreateTicket(acc.getAccountID(), price_raw, Integer.parseInt(seatID_raw),
+                    t.getTrainScheduleTime(), 1);
+//            td.CreatePayment(tkid, "Bank", price_raw, fullName, email, phone);
             HttpSession session = request.getSession();
             session.setAttribute("noti", "Đăng ký đặt vé thành công, vui lòng chờ xác nhận!");
             response.sendRedirect("home");
@@ -120,5 +123,6 @@ public class BookingTicketController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

@@ -11,10 +11,20 @@ package model;
 public class cartinfo {
     private seat seat;
     private int accountID;
+    private account acc;
 
-    public cartinfo(seat seat, int accountID) {
+    public cartinfo(seat seat, int accountID, account acc) {
         this.seat = seat;
         this.accountID = accountID;
+        this.acc = acc;
+    }
+
+    public account getAcc() {
+        return acc;
+    }
+
+    public void setAcc(account acc) {
+        this.acc = acc;
     }
 
     public seat getSeat() {
@@ -35,7 +45,9 @@ public class cartinfo {
 
     @Override
     public String toString() {
-        return "cartinfo{" + "seat=" + seat + ", accountID=" + accountID + '}';
+        return "cartinfo{" + "seat=" + seat + ", accountID=" + accountID + ", acc=" + acc + '}';
     }
+
+
     
 }

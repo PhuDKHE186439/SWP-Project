@@ -386,6 +386,6 @@ public class TrainDAO extends DBContext {
 
     public static void main(String[] args) throws SQLException {
         TrainDAO dao = new TrainDAO();
-        System.out.println(dao.getTrains("2024-09-17", "2024-09-17", "1", "2"));
+        System.out.println(dao.getAll());
     }
 }

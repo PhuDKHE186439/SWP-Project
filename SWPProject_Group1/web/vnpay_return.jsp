@@ -13,6 +13,7 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="jakarta.servlet.http.HttpSession"%>
 <%@page import="dal.SeatDAO"%>
+<%@page import="dal.TicketDAO"%>
 <%@page import="model.*"%>
 
 <!DOCTYPE html>
@@ -98,10 +99,15 @@
                                      List<cartinfo> cart = (List<cartinfo>) session.getAttribute("cart");
                                       for (cartinfo cart1 : cart) {
                //update status
+               
                            SeatDAO sdao = new SeatDAO();
+                           TicketDAO ticketDAO = new TicketDAO();
             sdao.updateStatusSeat(cart1.getSeat().getSeatID(), 0);
-            session.removeAttribute("cart");
-            }
+                           ticketDAO.CreateTicket(cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000", cart1.getSeat().getSeatID(), cart1.getSeat().getCompartment().getTrain().getTrainScheduleTime(), cart1.getSeat().getSeatType().equals("Economy") ? 2 : 1);
+            ticketDAO.CreatePayment(ticketDAO.getNewestTicketCreated(cart1.getAcc().getPassengerID()).getTicketID(), "Bank", cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000");
+   %><%
+
+            }session.removeAttribute("cart");
                                 } else {
                                     out.print("Không thành công");
                                 }

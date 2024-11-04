@@ -301,10 +301,14 @@
             </c:if>
 
             <div class="total-section">
-                <h3>Final Total: ${String.format("%,.0f VNĐ", discountedTotal != null ? discountedTotal : total)}</h3>
+                <h3>Final Total: ${requestScope.total}</h3>
             </div>
-
+                <c:if test="${requestScope.total!=null}">
             <button onclick="goToCheckout()" class="checkout-button">Proceed to Checkout</button>
+            </c:if>
+            <c:if test="${requestScope.total==null}">
+                <button onclick="goToCheckout()" class="checkout-button" disabled="true">Proceed to Checkout</button>
+            </c:if>
         </div>
     </div>
 

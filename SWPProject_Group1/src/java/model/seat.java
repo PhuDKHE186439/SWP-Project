@@ -23,6 +23,17 @@ public class seat{
         this.seatType = seatType;
         this.availabilityStatus = availabilityStatus;
     }
+
+    public seat(int seatID, compartment compartment, String seatNumber, String seatType, int availabilityStatus, int compartmentID) {
+        this.seatID = seatID;
+        this.compartment = compartment;
+        this.seatNumber = seatNumber;
+        this.seatType = seatType;
+        this.availabilityStatus = availabilityStatus;
+        this.compartmentID = compartmentID;
+    }
+    
+    
     public seat(int seatID, int compartmentID, String seatNumber, String seatType, int availabilityStatus) {
         this.seatID = seatID;
         this.compartmentID = compartmentID;

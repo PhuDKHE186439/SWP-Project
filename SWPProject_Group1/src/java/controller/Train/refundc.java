@@ -77,7 +77,7 @@ public class refundc extends HttpServlet {
             int passsengerID = Integer.parseInt(passengeridParam);
             dao.AddRefundRequest(passsengerID, ticketID, 1, message);
             request.setAttribute("announment", "Request sent!");
-            request.getRequestDispatcher("userprofile").forward(request, response);
+            response.sendRedirect("userprofile");
         } catch (Exception e) {
         }
     }

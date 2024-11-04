@@ -49,6 +49,35 @@ public class CompartmentDAO extends DBContext {
         return list;
     }
 
+    public compartment getCompartbyID(int ID) {
+        String sql = "select *,l.LocationName As StartLocationName, l.Description as StartLocationDescription,"
+                + "z.LocationName as ArrivalLocationName, z.Description as ArrivalLocationDescription "
+                + "from compartment p left join train tr on tr.TrainID=p.TrainID"
+                + " left join location l on l.LocationID = tr.StartLocationID "
+                + "left join location z on z.LocationID = tr.ArrivalLocationID Where p.CompartmentID=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, ID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new compartment(rs.getInt("CompartmentID"),
+                        rs.getInt("CompartmentNumber"),
+                        new train(rs.getInt("TrainID"),
+                                rs.getString("TrainScheduleTime"),
+                                rs.getString("TrainName"),
+                                rs.getInt("NumberOfSeat"),
+                                new location(rs.getInt("StartLocationID"),
+                                        rs.getString("StartLocationName"),
+                                        rs.getString("StartLocationDescription")),
+                                new location(rs.getInt("ArrivalLocationID"),
+                                        rs.getString("ArrivalLocationName"),
+                                        rs.getString("ArrivalLocationDescription"))));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     public static void main(String[] args) {
         CompartmentDAO dao = new CompartmentDAO();
         System.out.println(dao.getAllCompartmentFromTrain(1));
