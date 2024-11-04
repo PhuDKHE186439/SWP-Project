@@ -34,7 +34,15 @@ public class AddtoCart extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-
+        String compartment = request.getParameter("compartment");
+        if (compartment != null && !compartment.isEmpty()) {
+            try {
+                SeatDAO seatDAO = new SeatDAO();
+                session.setAttribute("seats", seatDAO.getAllSeatFromComaprt(Integer.parseInt(compartment)));
+            } catch (NumberFormatException e) {
+                System.out.println("Error parsing compartment: " + e.getMessage());
+            }
+        }
         // Get parameters
         String discountCode = request.getParameter("discountCode");
 
@@ -48,20 +56,14 @@ public class AddtoCart extends HttpServlet {
         // Handle discount
         if (discountCode != null && !discountCode.trim().isEmpty()) {
             handleDiscount(discountCode, total, request, session);
+        } else {
+            request.setAttribute("total", total);
         }
 
-        request.setAttribute("total", total);
+        
 
         // Forward to JSP
-        String compartment = request.getParameter("compartment");
-        if (compartment != null && !compartment.isEmpty()) {
-            try {
-                SeatDAO seatDAO = new SeatDAO();
-                request.setAttribute("seats", seatDAO.getAllSeatFromComaprt(Integer.parseInt(compartment)));
-            } catch (NumberFormatException e) {
-                System.out.println("Error parsing compartment: " + e.getMessage());
-            }
-        }
+        
 
         request.getRequestDispatcher("listseattest.jsp").forward(request, response);
     }
