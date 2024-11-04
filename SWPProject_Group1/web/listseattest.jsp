@@ -231,61 +231,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-            <div class="train-layout">
-                <c:forEach items="${seats}" var="t" varStatus="status">
-                    <form action="addtocart" method="Post" id="form${t.seatID}">
-                        <div class="seat ${t.availabilityStatus == 1 ? 
-                            (status.index % 4 == 0 || status.index % 4 == 3 ? 'window' : 
-                             status.index % 4 == 1 || status.index % 4 == 2 ? 'aisle' : 'available') 
-                            : 'booked'}"
-                            onclick="if (${t.availabilityStatus} === 1) submitForm(${t.seatID});">
-                            ${t.seatNumber}
-                            <span class="seat-info">
-                                ${status.index % 4 == 0 || status.index % 4 == 3 ? 'Window' : 
-                                 status.index % 4 == 1 || status.index % 4 == 2 ? 'Aisle' : ''}
-                            </span>
-                        </div>
-                        <input type="hidden" name="seatId" value="${t.seatID}">
-                        <input type="hidden" name="compartment" value="${t.compartment.compartmentID}">
-                        <input type="hidden" name="seatType" value="${t.seatType}">
-                        <input type="hidden" name="seatNumber" value="${t.seatNumber}">
-                        <input type="hidden" name="availabilityStatus" value="${t.availabilityStatus}">
-                    </form>
-                </c:forEach>
-            </div>
-        </div>
-
-        <div class="cart-container">
-            <h2>Your Selected Seats</h2>
-            
-            <c:if test="${not empty cart}">
-                <table class="cart-table">
-                    <tr>
-                        <th>Seat Number</th>
-                        <th>Type</th>
-                        <th>Price</th>
-                                                <th>Time Remaining</th>
-
-                        <th>Action</th>
-                    </tr>
-                    <c:forEach var="item" items="${cart}">
-                        <tr id="seat-row-${item.seat.seatID}">
-                            <td>${item.seat.seatNumber}</td>
-                            <td>${item.seat.seatType}</td>
- <td>${item.seat.seatType=="Economy"?'10000':'15000'}</td>                            <td>
-                                <div class="countdown">
-        <div class="time-unit">
-            <span id="seconds">300</span>
-        </div>
-    </div>
-                            </td>
-                            
-                            <td>
-                                <button class="remove-button" onclick="removeSeat(${item.seat.seatID})">Remove</button>
-                            </td>
-                        </tr>
-=======
                 <div class="train-layout">
                     <c:forEach items="${seats}" var="t" varStatus="status">
                         <form action="addtocart" method="Post" id="form${t.seatID}">
@@ -307,7 +252,6 @@
                             <input type="hidden" name="seatNumber" value="${t.seatNumber}">
                             <input type="hidden" name="availabilityStatus" value="${t.availabilityStatus}">
                         </form>
->>>>>>> 7ad1af8317d99afa6d3fbc6b4600967486176ce4
                     </c:forEach>
                 </div>
             </div>
@@ -333,7 +277,12 @@
                                 <td>${item.seat.seatType}</td>
                                 <td>${item.seat.seatType=="Economy"?'10000':'15000'}</td>                           
                                 <td>
-                                    <span class="countdown" id="countdown-${item.seat.seatID}">5:00</span>
+                                    <div class="countdown">
+        <div class="time-unit">
+            <span id="seconds">60</span>
+            <span class="label">Giây</span>
+        </div>
+    </div>
                                 </td>
                                 <td>
                                     <form action="removecart" method="post">
@@ -432,43 +381,12 @@
                                     body: `seatId=${seatId}`
                                 });
 
-<<<<<<< HEAD
-                    // Refresh the page to update the seat availability
-                    location.reload();
-                } else {
-                    console.error('Failed to remove seat from cart');
-                }
-            } catch (error) {
-                console.error('Error removing seat:', error);
-            }
-        }
-        let timeLeft = 300; // Thay đổi số này để set thời gian đếm ngược mong muốn
-
-        function updateCountdown() {
-            document.getElementById('seconds').innerText = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(countdownTimer);
-                document.querySelector('.countdown').innerHTML = '<h2>Đã hết thời gian!</h2>';
-                return;
-            }
-            
-            timeLeft -= 1;
-        }
-
-        // Cập nhật đồng hồ mỗi giây
-        const countdownTimer = setInterval(updateCountdown, 1000);
-
-        // Khởi tạo đồng hồ
-        updateCountdown();
-=======
                                 if (response.ok) {
                                     // Clear the timer
                                     if (seatTimers[seatId]) {
                                         clearInterval(seatTimers[seatId]);
                                         delete seatTimers[seatId];
                                     }
->>>>>>> 7ad1af8317d99afa6d3fbc6b4600967486176ce4
 
                                     // Remove the row from the table
                                     const row = document.getElementById(`seat-row-${seatId}`);
@@ -494,5 +412,28 @@
                             window.location.href = 'http://localhost:9999/SWPProject_Group1/vnpay?price=${requestScope.total}';
                         }
         </script>
+        <script>
+        // Đặt thời gian đếm ngược (giây)
+        let timeLeft = 60; // Thay đổi số này để set thời gian đếm ngược mong muốn
+
+        function updateCountdown() {
+            document.getElementById('seconds').innerText = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                document.querySelector('.countdown').innerHTML = '<h2>Đã hết thời gian!</h2>';
+                return;
+            }
+            
+            timeLeft -= 1;
+        }
+
+        // Cập nhật đồng hồ mỗi giây
+        const countdownTimer = setInterval(updateCountdown, 1000);
+
+        // Khởi tạo đồng hồ
+        updateCountdown();
+    </script>
+
     </body>
 </html>
