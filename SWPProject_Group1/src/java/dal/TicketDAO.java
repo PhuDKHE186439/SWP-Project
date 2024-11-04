@@ -318,6 +318,5 @@ public class TicketDAO extends DBContext {
 
     public static void main(String[] args) throws SQLException {
         TicketDAO ticketDAO = new TicketDAO();
-ticketDAO.CreateTicket(cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000", cart1.getSeat().getSeatID(), cart1.getSeat().getCompartment().getTrain().getTrainScheduleTime(), cart1.getSeat().getSeatType().equals("Economy") ? 2 : 1);
     }
 }
