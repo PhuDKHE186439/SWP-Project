@@ -273,8 +273,13 @@
                             <td>${item.seat.seatNumber}</td>
                             <td>${item.seat.seatType}</td>
  <td>${item.seat.seatType=="Economy"?'10000':'15000'}</td>                            <td>
-                                <span class="countdown" id="countdown-${item.seat.seatID}">5:00</span>
+                                <div class="countdown">
+        <div class="time-unit">
+            <span id="seconds">300</span>
+        </div>
+    </div>
                             </td>
+                            
                             <td>
                                 <button class="remove-button" onclick="removeSeat(${item.seat.seatID})">Remove</button>
                             </td>
@@ -388,6 +393,25 @@
                 console.error('Error removing seat:', error);
             }
         }
+        let timeLeft = 300; // Thay đổi số này để set thời gian đếm ngược mong muốn
+
+        function updateCountdown() {
+            document.getElementById('seconds').innerText = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                document.querySelector('.countdown').innerHTML = '<h2>Đã hết thời gian!</h2>';
+                return;
+            }
+            
+            timeLeft -= 1;
+        }
+
+        // Cập nhật đồng hồ mỗi giây
+        const countdownTimer = setInterval(updateCountdown, 1000);
+
+        // Khởi tạo đồng hồ
+        updateCountdown();
 
         function submitForm(id) {
             document.getElementById('form' + id).submit();
