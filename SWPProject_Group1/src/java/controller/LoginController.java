@@ -115,6 +115,7 @@ public class LoginController extends HttpServlet {
                 check = true;
                 session.setAttribute("AccID", o.getAccountID());
                 session.setAttribute("account", role);
+                session.setAttribute("accInfo", o);
                 if (remember != null) {
                     user.setMaxAge(60);
                     pass.setMaxAge(60);
