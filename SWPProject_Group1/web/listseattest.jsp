@@ -300,20 +300,20 @@
 
 
 
-                <div class="discount-section">
-                    <form action="addtocart" method="post">
-                        <label for="discountCode">Discount Code:</label>
-                        <input type="text" name="discountCode" id="discountCode">
-                        <button type="submit" class="checkout-button">Apply Code</button>
-                    </form>
-                </div>
+                <div class="discount-section" style="<c:if test='${not empty discountMessage}'>display: none;</c:if>">
+    <form action="addtocart" method="post">
+        <label for="discountCode">Discount Code:</label>
+        <input type="text" name="discountCode" id="discountCode">
+        <button type="submit" class="checkout-button">Apply Code</button>
+    </form>
+</div>
 
-                <c:if test="${not empty discountMessage}">
-                    <div class="alert alert-success">${discountMessage}</div>
-                </c:if>
-                <c:if test="${not empty discountError}">
-                    <div class="alert alert-danger">${discountError}</div>
-                </c:if>
+<c:if test="${not empty discountMessage}">
+    <div class="alert alert-success">${discountMessage}</div>
+</c:if>
+<c:if test="${not empty discountError}">
+    <div class="alert alert-danger">${discountError}</div>
+</c:if>
 
                 <div class="total-section">
                     <h3>Final Total: ${requestScope.total}</h3>
