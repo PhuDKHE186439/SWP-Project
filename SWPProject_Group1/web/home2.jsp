@@ -132,9 +132,7 @@
             </div>
             
             <!-- Nút đổi ga -->
-            <button type="button" class="swap-btn" onclick="swapStations()">
-                <i class="fas fa-exchange-alt"></i>
-            </button>
+            
 
             <div class="form-group">
                 <label for="arrivalStation" class="form-label">Ga đến</label>
