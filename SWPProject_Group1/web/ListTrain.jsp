@@ -19,6 +19,9 @@
 
         <div class="container mt-3">
             <h2>List Train</h2>
+            <c:if test="${error != null}">
+                <p style="color: red">${error}</p>
+            </c:if>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTrain">
                 Add Train
             </button>        
@@ -58,7 +61,7 @@
                                     Update
                                 </button> 
                             </td>
-                            <td><a href="${pageContext.request.contextPath}/admin/delete?id=${item.trainID}">Delete</a></td>
+                            <td><a href="${pageContext.request.contextPath}/tm/delete?id=${item.trainID}" onclick="return confirmDelete();">Delete</a></td>
                     <div class="modal fade" id="updateTrain${item.trainID}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -66,7 +69,7 @@
                                     <h5 class="modal-title" id="exampleModalLabel">Update Train</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/admin/update" method="post">
+                                <form action="${pageContext.request.contextPath}/tm/update" method="post">
                                     <div class="modal-body">
                                         <input type="hidden" name="id" value="${item.trainID}" >
                                         <div class="mb-3">
@@ -147,7 +150,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Add New Train</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="${pageContext.request.contextPath}/admin/create" method="post">
+                    <form action="${pageContext.request.contextPath}/tm/create" method="post">
                         <div class="modal-body">
                             <input type="hidden" name="id" value="${size + 1}" >
                             <div class="mb-3">
@@ -205,5 +208,10 @@
                 </div>
             </div>
         </div>
+                            <script>
+                                function confirmDelete(){
+                                    return confirm("Are you sure you want to delete this item?")
+                                }
+                            </script>       
     </body>
 </html>

@@ -288,18 +288,18 @@
     </servlet>
      <servlet-mapping>
         <servlet-name>ListTrainServlet</servlet-name>
-        <url-pattern>/admin/trains</url-pattern>
+        <url-pattern>/tm/trains</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateNewTrain</servlet-name>
-        <url-pattern>/admin/create</url-pattern>
+        <url-pattern>/tm/create</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateUpdateTrain</servlet-name>
-        <url-pattern>/admin/update</url-pattern>
+        <url-pattern>/tm/update</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateDeleteTrain</servlet-name>
-        <url-pattern>/admin/delete</url-pattern>
+        <url-pattern>/tm/delete</url-pattern>
     </servlet-mapping>
 </web-app>

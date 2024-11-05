@@ -64,8 +64,8 @@ public class CreateNewTrain extends HttpServlet {
                     throw new IllegalArgumentException("Estimated end time must be after the start time.");
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // Handle parsing exceptions
-                return;
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("trains").forward(request, response);
             }
 
             // Convert numberOfCarriages to int
