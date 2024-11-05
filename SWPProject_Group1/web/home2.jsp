@@ -699,6 +699,7 @@ function showError(inputId, message) {
     input.parentNode.appendChild(errorDiv);
     input.parentNode.classList.add('error');
 }
+
     </script>
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>

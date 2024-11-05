@@ -266,6 +266,30 @@ public List<location> searchLocations(String keyword) {
     }
     return list;
 }
+public class TrainSearchResult {
+    private List<train> outboundTrains;
+    private List<train> returnTrains;
+    
+    public TrainSearchResult(List<train> outboundTrains, List<train> returnTrains) {
+        this.outboundTrains = outboundTrains;
+        this.returnTrains = returnTrains;
+    }
+    
+    // Add getters
+    public List<train> getOutboundTrains() { return outboundTrains; }
+    public List<train> getReturnTrains() { return returnTrains; }
+}
+
+public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
+    // Get outbound trains (from gaDi to gaDen on ngayDi)
+    List<train> outboundTrains = getTrains(ngayDi, null, gaDi, gaDen);
+    
+    // Get return trains (from gaDen to gaDi on ngayVe)
+    List<train> returnTrains = getTrains(ngayVe, null, gaDen, gaDi);
+    
+    return new TrainSearchResult(outboundTrains, returnTrains);
+}
+
     public List<ticket> getTickets(String ngayDi, String ngayVe) throws SQLException {
         List<ticket> list = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng phù hợp với định dạng ngày nhập vào
@@ -490,37 +514,45 @@ public List<location> searchLocations(String keyword) {
         }
     }
 
-    public static void main(String[] args) {
-        // Test data
-        String ngayDi = "2024-12-01";
-        String ngayVe = "2024-12-15"; // for round-trip case, set this to null for one-way
-        String gaDi = "1"; // Mock StartLocationID
-        String gaDen = "2"; // Mock ArrivalLocationID
-        String keyword = "New York"; // Keyword to search in locations
+     public static void main(String[] args) {
+        // Create an instance of your DAO class
+        TrainDAO trainDAO = new TrainDAO();
 
-        // Mock getTrains output
-        List<train> mockTrains = List.of(
-            new train(1, "2024-12-01 08:00:00", "Express A", 100, 
-                      new location(1, "Station A", "Main Station A"), 
-                      new location(2, "Station B", "Main Station B")),
-            new train(2, "2024-12-01 09:30:00", "Express B", 120, 
-                      new location(1, "Station A", "Main Station A"), 
-                      new location(2, "Station B", "Main Station B"))
-        );
+        // Test getTrains method
+        try {
+            String departureDate = "2024-11-10"; // example date
+            String returnDate = "2024-11-12"; // example return date
+            String departureStation = "1"; // example station ID
+            String arrivalStation = "2"; // example station ID
 
-        System.out.println("Trains:");
-        for (train tr : mockTrains) {
-            System.out.println(tr);
+            List<train> outboundTrains = trainDAO.getTrains(departureDate, returnDate, departureStation, arrivalStation);
+            System.out.println("Outbound Trains:");
+            for (train t : outboundTrains) {
+                System.out.println(t);
+            }
+
+            TrainSearchResult roundTripResult = trainDAO.getTrainsRoundTrip(departureDate, returnDate, departureStation, arrivalStation);
+            System.out.println("Round Trip Trains:");
+            System.out.println("Outbound Trains:");
+            for (train t : roundTripResult.getOutboundTrains()) {
+                System.out.println(t);
+            }
+            System.out.println("Return Trains:");
+            for (train t : roundTripResult.getReturnTrains()) {
+                System.out.println(t);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("SQL Exception: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Validation Error: " + e.getMessage());
         }
 
-        // Mock searchLocations output
-        List<location> mockLocations = List.of(
-            new location(3, "New York Central", "The main hub in New York"),
-            new location(4, "New York Downtown", "Located in the heart of the city")
-        );
-
-        System.out.println("\nLocations matching keyword:");
-        for (location loc : mockLocations) {
+        // Test searchLocations method
+        String keyword = "Hà Nội"; // example keyword
+        List<location> locations = trainDAO.searchLocations(keyword);
+        System.out.println("Location Suggestions:");
+        for (location loc : locations) {
             System.out.println(loc);
         }
     }
