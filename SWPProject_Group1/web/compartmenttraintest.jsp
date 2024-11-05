@@ -1,133 +1,180 @@
-<%-- 
-    Document   : compartmenttraintest
-    Created on : Oct 27, 2024, 4:07:55 PM
-    Author     : My Asus
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.util.List, model.account, model.train, dal.AccountDAO, model.role, dal.RoleDAO, java.util.ArrayList"%>
-<%@page session="true"%>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List, model.account, model.train, dal.AccountDAO, model.role, dal.RoleDAO, java.util.ArrayList"%>
+<%@ page session="true"%>
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <jsp:include page="header1.jsp"/>
-
-    </head>
-    <body>
-        <div class="compartment-list">
-            <h2>Available Train Compartments</h2>
-            <c:forEach items="${comparts}" var="t">
-                <form action="seats" method="Post">
-
-                    <div class="compartment-card">
-                        <div class="compartment-info">
-                            <h3 class="compartment-type">Compartment ID: ${t.compartmentID}</h3>
-                            <p class="seats-info">Compartment Number: ${t.compartmentNumber}</p>
-                        </div>
-                        <input type="hidden" name="compartID" value="${t.compartmentID}">
-
-                        <div class="compartment-action">
-                            <button class="book-button">Choose now</button>
-                        </div>
-                    </div>
-                </form>
-            </c:forEach>
-            <!-- Add more compartment cards as needed -->
-        </div>
-
-    </body>
-    <jsp:include page="footer1.jsp"/>
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Compartment Selection</title>
+    <jsp:include page="header1.jsp"/>
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f3f4f6;
+            --card-background: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
 
-        /* Main Container */
-        .compartment-list {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f1f1f1;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        body {
+            background-color: var(--background-color);
+            min-height: 100vh;
         }
 
-        /* Heading */
-        .compartment-list h2 {
-            font-size: 1.8rem;
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .page-title {
             text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+            color: var(--text-primary);
+            margin: 2rem 0;
+            font-size: 2.5rem;
+            font-weight: 600;
         }
 
-        /* Compartment Card */
+        .trip-info {
+            background-color: var(--card-background);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .trip-info p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        .compartment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
         .compartment-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            margin-bottom: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            background-color: var(--card-background);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
         }
 
         .compartment-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-4px);
         }
 
-        /* Compartment Information */
+        .compartment-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .compartment-body {
+            padding: 1.5rem;
+        }
+
         .compartment-info {
-            flex-grow: 1;
+            margin-bottom: 1rem;
         }
 
-        .compartment-type {
-            font-size: 1.4rem;
-            color: #007BFF;
-            margin-bottom: 5px;
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
         }
 
-        .seats-info, .amenities {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 3px;
-        }
-
-        /* Action Section */
-        .compartment-action {
-            text-align: right;
-        }
-
-        .compartment-action .price {
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        /* Book Button */
         .book-button {
-            padding: 8px 12px;
-            font-size: 0.9rem;
-            color: #fff;
-            background-color: #007BFF;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s ease;
         }
 
         .book-button:hover {
-            background-color: #0056b3;
+            background-color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .compartment-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Select Your Compartment</h1>
+        
+        <div class="trip-info">
+            <p><strong>Trip Type:</strong> ${sessionScope.tripType}</p>
+            <p><strong>Departure Date:</strong> ${sessionScope.ngayDi}</p>
+            <c:if test="${sessionScope.tripType eq 'roundtrip'}">
+                <p><strong>Return Date:</strong> ${sessionScope.ngayVe}</p>
+            </c:if>
+        </div>
+
+        <div class="compartment-grid">
+            <c:forEach items="${comparts}" var="t">
+                <form action="seats" method="Post">
+                    <div class="compartment-card">
+                        <div class="compartment-header">
+                            <h3>Compartment ${t.compartmentNumber}</h3>
+                        </div>
+                        <div class="compartment-body">
+                            <div class="compartment-info">
+                                <div class="info-item">
+                                    <span>Compartment ID:</span>
+                                    <span>${t.compartmentID}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Class:</span>
+                                    <span>Standard</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Status:</span>
+                                    <span class="status-available">Available</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="compartID" value="${t.compartmentID}">
+                            <button type="submit" class="book-button">Select Seats</button>
+                        </div>
+                    </div>
+                </form>
+            </c:forEach>
+        </div>
+    </div>
+
+    <jsp:include page="footer1.jsp"/>
+</body>
 </html>

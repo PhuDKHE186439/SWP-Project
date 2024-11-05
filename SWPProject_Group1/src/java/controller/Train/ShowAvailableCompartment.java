@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -64,15 +65,24 @@ public class ShowAvailableCompartment extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        //processRequest(request, response);
-        String trainID= request.getParameter("trainId");
-        CompartmentDAO comDAO = new CompartmentDAO();
-        request.setAttribute("comparts", comDAO.getAllCompartmentFromTrain(Integer.parseInt(trainID)));
-        request.getRequestDispatcher("compartmenttraintest.jsp").forward(request, response);
-    }
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String trainID = request.getParameter("trainId");
+    String tripType = request.getParameter("tripType");
+    String ngayDi = request.getParameter("ngayDi");
+    String ngayVe = request.getParameter("ngayVe");
+    
+    // Lưu thông tin chuyến đi vào session để có thể sử dụng sau này
+    HttpSession session = request.getSession();
+    session.setAttribute("tripType", tripType);
+    session.setAttribute("ngayDi", ngayDi);
+    session.setAttribute("ngayVe", ngayVe);
+    
+    CompartmentDAO comDAO = new CompartmentDAO();
+    request.setAttribute("comparts", comDAO.getAllCompartmentFromTrain(Integer.parseInt(trainID)));
+    request.getRequestDispatcher("compartmenttraintest.jsp").forward(request, response);
+}
 
     /** 
      * Returns a short description of the servlet.

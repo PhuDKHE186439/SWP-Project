@@ -44,6 +44,7 @@
         <link rel="stylesheet" type="text/css" href="dcss/css/font-awesome.min.css" />
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
     </head>
+    
     <style>
         .testimonial-section {
   display: flex;
@@ -89,35 +90,70 @@
                     <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                         <div class="booking-form">
     <h3>Booking Your Ticket</h3>
-    <form action="trains" method="GET">
-        <div class="check-date">
-            <label for="ngayDi" class="form-label">Ngày đi</label>
-            <input type="date" name="ngayDi"  id="ngayDi" oninput="enableNextField(this, 'ngayVe')" required>
+    <form action="trains" method="GET" class="search-form" id="trainSearchForm" onsubmit="return validateForm()">
+    <div class="form-container">
+        <!-- Loại vé -->
+        <div class="form-group">
+            <label class="form-label">Loại vé:</label>
+            <div class="radio-group">
+                <input type="radio" id="oneWay" name="tripType" value="oneWay" checked onchange="toggleReturnDate()">
+                <label for="oneWay">Một chiều</label>
+                <input type="radio" id="roundTrip" name="tripType" value="roundTrip" onchange="toggleReturnDate()">
+                <label for="roundTrip">Khứ hồi</label>
+            </div>
         </div>
-        <div class="check-date">
-            <label for="ngayVe" class="form-label">Ngày về</label>
-            <input name="ngayVe" type="date" id="ngayVe" oninput="enableNextField(this, 'gaDi')" required><br>
+
+        <!-- Ngày đi và về -->
+        <div class="date-container">
+            <div class="form-group">
+                <label for="departDate" class="form-label">Ngày đi</label>
+                <input type="date" name="ngayDi" id="departDate" class="form-control" 
+                       min="" required>
+            </div>
+            <div class="form-group" id="returnDateGroup" style="display: none;">
+                <label for="returnDate" class="form-label">Ngày về</label>
+                <input type="date" name="ngayVe" id="returnDate" class="form-control" 
+                       min="">
+            </div>
         </div>
-        <div class="select-option">
-            <label for="gaDi" class="form-label">Ga đi</label>
-            <select class="form-select" id="gaDi" name="l1" oninput="enableNextField(this, 'gaDen')" required>
-                <option value="-1" selected>Chọn ga đi</option>
-                <c:forEach items="${locations1}" var="l1">
-                    <option value="${l1.locationID}">${l1.locationName}</option>
-                </c:forEach>
-            </select>
+
+        <!-- Ga đi và đến -->
+        <div class="stations-container">
+            <div class="form-group">
+                <label for="departStation" class="form-label">Ga đi</label>
+                <div class="input-with-suggestions">
+                    <input type="text" id="departStation" class="form-control" 
+                           placeholder="Nhập ga đi..." 
+                           oninput="suggest(this, 'departSuggestions')"
+                           autocomplete="off">
+                    <input type="hidden" name="l1" id="departStationId">
+                    <div id="departSuggestions" class="suggestion-box"></div>
+                </div>
+            </div>
+            
+            <!-- Nút đổi ga -->
+            <button type="button" class="swap-btn" onclick="swapStations()">
+                <i class="fas fa-exchange-alt"></i>
+            </button>
+
+            <div class="form-group">
+                <label for="arrivalStation" class="form-label">Ga đến</label>
+                <div class="input-with-suggestions">
+                    <input type="text" id="arrivalStation" class="form-control" 
+                           placeholder="Nhập ga đến..." 
+                           oninput="suggest(this, 'arrivalSuggestions')"
+                           autocomplete="off">
+                    <input type="hidden" name="l2" id="arrivalStationId">
+                    <div id="arrivalSuggestions" class="suggestion-box"></div>
+                </div>
+            </div>
         </div>
-        <div class="select-option">
-            <label for="gaDen" class="form-label">Ga đến</label>
-            <select class="form-select" id="gaDen" name="l2" required>
-                <option value="-1" selected>Chọn ga đến</option>
-                <c:forEach items="${locations2}" var="l2">
-                    <option value="${l2.locationID}">${l2.locationName}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" style="color: darkred; border: 2px solid black;">Check Availability</button>
-    </form>
+
+        <button type="submit" class="submit-btn">
+            <i class="fas fa-search"></i> Tìm kiếm
+        </button>
+    </div>
+</form>
 </div>
                     </div>
                 </div>
@@ -510,6 +546,162 @@
                 });
             });
         </script>
+        <script>
+        // Set min date to today
+window.onload = function() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('departDate').min = today;
+    document.getElementById('returnDate').min = today;
+};
+
+function toggleReturnDate() {
+    const returnDateGroup = document.getElementById('returnDateGroup');
+    const returnDate = document.getElementById('returnDate');
+    const isRoundTrip = document.getElementById('roundTrip').checked;
+    
+    returnDateGroup.style.display = isRoundTrip ? 'block' : 'none';
+    returnDate.required = isRoundTrip;
+    
+    // Update return date min value when depart date changes
+    const departDate = document.getElementById('departDate');
+    departDate.addEventListener('change', function() {
+        returnDate.min = this.value;
+        if (returnDate.value && returnDate.value < this.value) {
+            returnDate.value = this.value;
+        }
+    });
+}
+
+function swapStations() {
+    // Swap display values
+    const departStation = document.getElementById('departStation');
+    const arrivalStation = document.getElementById('arrivalStation');
+    [departStation.value, arrivalStation.value] = [arrivalStation.value, departStation.value];
+    
+    // Swap hidden ID values
+    const departStationId = document.getElementById('departStationId');
+    const arrivalStationId = document.getElementById('arrivalStationId');
+    [departStationId.value, arrivalStationId.value] = [arrivalStationId.value, departStationId.value];
+}
+
+let suggestionTimeout;
+
+function suggest(input, suggestionBoxId) {
+    clearTimeout(suggestionTimeout);
+    
+    const keyword = input.value.trim();
+    const suggestionBox = document.getElementById(suggestionBoxId);
+    
+    if (keyword.length < 2) {
+        suggestionBox.innerHTML = '';
+        return;
+    }
+    
+    // Add loading indicator
+    suggestionBox.innerHTML = '<div class="suggestion-item">Đang tìm kiếm...</div>';
+    
+    // Delay the API call by 300ms to prevent too many requests
+    suggestionTimeout = setTimeout(() => {
+        fetch('searchLocation?keyword=' + encodeURIComponent(keyword))
+            .then(response => response.json())
+            .then(data => {
+                suggestionBox.innerHTML = '';
+                if (data.length === 0) {
+                    suggestionBox.innerHTML = '<div class="suggestion-item">Không tìm thấy kết quả</div>';
+                    return;
+                }
+                
+                data.forEach(location => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.textContent = location.name;
+                    div.onclick = function() {
+                        input.value = location.name;
+                        if (suggestionBoxId === 'departSuggestions') {
+                            document.getElementById('departStationId').value = location.id;
+                        } else {
+                            document.getElementById('arrivalStationId').value = location.id;
+                        }
+                        suggestionBox.innerHTML = '';
+                    };
+                    suggestionBox.appendChild(div);
+                });
+            })
+            .catch(error => {
+                suggestionBox.innerHTML = '<div class="suggestion-item">Có lỗi xảy ra</div>';
+                console.error('Error:', error);
+            });
+    }, 300);
+}
+
+// Close suggestion box when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.matches('.form-control')) {
+        document.querySelectorAll('.suggestion-box').forEach(box => {
+            box.innerHTML = '';
+        });
+    }
+});
+
+function validateForm() {
+    let isValid = true;
+    const departStationId = document.getElementById('departStationId').value;
+    const arrivalStationId = document.getElementById('arrivalStationId').value;
+    const departDate = document.getElementById('departDate').value;
+    const isRoundTrip = document.getElementById('roundTrip').checked;
+    const returnDate = document.getElementById('returnDate').value;
+    
+    // Reset previous errors
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+    
+    // Validate departure station
+    if (!departStationId) {
+        showError('departStation', 'Vui lòng chọn ga đi');
+        isValid = false;
+    }
+    
+    // Validate arrival station
+    if (!arrivalStationId) {
+        showError('arrivalStation', 'Vui lòng chọn ga đến');
+        isValid = false;
+    }
+    
+    // Validate stations are different
+    if (departStationId && arrivalStationId && departStationId === arrivalStationId) {
+        showError('arrivalStation', 'Ga đi và ga đến không được trùng nhau');
+        isValid = false;
+    }
+    
+    // Validate departure date
+    if (!departDate) {
+        showError('departDate', 'Vui lòng chọn ngày đi');
+        isValid = false;
+    }
+    
+    // Validate return date for round trip
+    if (isRoundTrip) {
+        if (!returnDate) {
+            showError('returnDate', 'Vui lòng chọn ngày về');
+            isValid = false;
+        } else if (returnDate < departDate) {
+            showError('returnDate', 'Ngày về phải sau ngày đi');
+            isValid = false;
+        }
+    }
+    
+    return isValid;
+}
+
+function showError(inputId, message) {
+    const input = document.getElementById(inputId);
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    input.parentNode.appendChild(errorDiv);
+    input.parentNode.classList.add('error');
+}
+    </script>
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
