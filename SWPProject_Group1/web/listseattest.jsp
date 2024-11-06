@@ -277,7 +277,8 @@
                                 <td>${item.seat.seatType}</td>
                                 <td>${item.seat.seatType=="Economy"?'10000':'15000'}</td>                           
                                 <td>
-                                    <div class="countdown">
+                                    
+    <div class="countdown">
         <div class="time-unit">
             <span id="seconds">360</span>
             <span class="label">Giây</span>
@@ -341,26 +342,106 @@
                         }
         </script>
         <script>
-        // Đặt thời gian đếm ngược (giây)
-        let timeLeft = 360; // Thay đổi số này để set thời gian đếm ngược mong muốn
+        // Store countdown data in session storage to persist across reloads
+var seatTimers = {};
 
-        function updateCountdown() {
-            document.getElementById('seconds').innerText = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(countdownTimer);
-                document.querySelector('.countdown').innerHTML = '<h2>Đã hết thời gian!</h2>';
-                return;
-            }
-            
-            timeLeft -= 1;
+function initializeCountdown(seatId) {
+    // Check if there's existing timer data in session storage
+    let storedTimer = sessionStorage.getItem('timer_' + seatId);
+    let initialTime;
+    
+    if (storedTimer) {
+        // If timer exists in storage, calculate remaining time
+        let storedData = JSON.parse(storedTimer);
+        let elapsedTime = Math.floor((Date.now() - storedData.startTime) / 1000);
+        initialTime = Math.max(0, storedData.initialTime - elapsedTime);
+    } else {
+        // If no stored timer, start new countdown from 360 seconds
+        initialTime = 360;
+        // Store initial timer data
+        sessionStorage.setItem('timer_' + seatId, JSON.stringify({
+            startTime: Date.now(),
+            initialTime: initialTime
+        }));
+    }
+    
+    if (seatTimers[seatId]) {
+        clearInterval(seatTimers[seatId].timer);
+    }
+    
+    seatTimers[seatId] = {
+        timeLeft: initialTime,
+        timer: null
+    };
+    
+    function updateCountdown() {
+        var timerElement = document.querySelector('#seat-row-' + seatId + ' .countdown #seconds');
+        if (!timerElement) {
+            clearInterval(seatTimers[seatId].timer);
+            return;
         }
+        
+        timerElement.innerText = seatTimers[seatId].timeLeft;
+        
+        if (seatTimers[seatId].timeLeft <= 0) {
+            clearInterval(seatTimers[seatId].timer);
+            var countdownElement = document.querySelector('#seat-row-' + seatId + ' .countdown');
+            if (countdownElement) {
+                countdownElement.innerHTML = '<h2>Timeout</h2>';
+            }
+            // Clear the stored timer when it expires
+            sessionStorage.removeItem('timer_' + seatId);
+            // You might want to add an AJAX call here to notify the server about the timeout
+            return;
+        }
+        
+        seatTimers[seatId].timeLeft -= 1;
+        
+        // Update stored timer data
+        sessionStorage.setItem('timer_' + seatId, JSON.stringify({
+            startTime: Date.now() - ((360 - seatTimers[seatId].timeLeft) * 1000),
+            initialTime: 360
+        }));
+    }
+    
+    // Start the countdown
+    updateCountdown();
+    seatTimers[seatId].timer = setInterval(updateCountdown, 1000);
+}
 
-        // Cập nhật đồng hồ mỗi giây
-        const countdownTimer = setInterval(updateCountdown, 1000);
+// Initialize countdown for all existing seats when page loads
+window.onload = function() {
+    var seatRows = document.querySelectorAll('[id^="seat-row-"]');
+    for(var i = 0; i < seatRows.length; i++) {
+        var seatId = seatRows[i].id.replace('seat-row-', '');
+        initializeCountdown(seatId);
+    }
+};
 
-        // Khởi tạo đồng hồ
-        updateCountdown();
+function submitForm(id) {
+    document.getElementById('form' + id).submit();
+}
+
+function goToCheckout() {
+    window.location.href = 'http://localhost:9999/SWPProject_Group1/vnpay?price=${requestScope.total}';
+}
+
+// Clean up function to remove expired timers from session storage
+function cleanupExpiredTimers() {
+    for (let i = 0; i < sessionStorage.length; i++) {
+        let key = sessionStorage.key(i);
+        if (key.startsWith('timer_')) {
+            let storedData = JSON.parse(sessionStorage.getItem(key));
+            let elapsedTime = Math.floor((Date.now() - storedData.startTime) / 1000);
+            if (elapsedTime >= storedData.initialTime) {
+                sessionStorage.removeItem(key);
+            }
+        }
+    }
+}
+
+// Run cleanup on page load
+cleanupExpiredTimers();
     </script>
 
     </body>

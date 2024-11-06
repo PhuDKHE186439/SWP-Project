@@ -103,8 +103,7 @@
                             </div>
                         </div>
                     </form>
-<a href="https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:8080/SWP391/loginGoogle&response_type=code
-		   &client_id=251851195797-be94bjjk1t71t8p8ed3ngr6o9dvsg9q5.apps.googleusercontent.com&approval_prompt=force"><button id="register" class="hidden">Login with Google</button></a>
+
                 </div>
             </div>
         </div>
