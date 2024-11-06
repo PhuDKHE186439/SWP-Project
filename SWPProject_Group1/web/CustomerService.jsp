@@ -73,8 +73,7 @@
                         <a href="http://localhost:9999/SWPProject_Group1/feedback" class="nav-item nav-link active" style="white-space: nowrap;"><i class="fa fa-tachometer-alt me-2"></i>Feedback Management</a>
                         <a href="http://localhost:9999/SWPProject_Group1/news" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-th me-2"></i>News Management</a>
                         <a href="http://localhost:9999/SWPProject_Group1/discount-manage" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-keyboard me-2"></i>Discount Management</a>
-                        <a href="table.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-table me-2"></i>Tables</a>
-                        <a href="chart.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                        
                     </div>
                 </nav>
             </div>

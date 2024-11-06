@@ -136,7 +136,7 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect("userprofile");
                     case 4 ->
                         //Role ID 4 ở đây
-                        response.sendRedirect("userprofile");
+                        response.sendRedirect("feedback");
                     case 5 ->
                         //Role ID 5 o day
                         response.sendRedirect("userprofile");
