@@ -302,4 +302,7 @@
         <servlet-name>CreateDeleteTrain</servlet-name>
         <url-pattern>/tm/delete</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>home1.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
