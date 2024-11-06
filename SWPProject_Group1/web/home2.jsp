@@ -192,10 +192,10 @@
                             <div class="about-pic">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <img src="img/about/about-1.jpg" alt="">
+                                        <img src="https://i.pinimg.com/474x/7b/42/3e/7b423edaf3a775eb41f10c78359bbd5f.jpg" alt="">
                                     </div>
                                     <div class="col-sm-6">
-                                        <img src="img/about/about-2.jpg" alt="">
+                                        <img src="https://wallpaper.forfun.com/fetch/80/809da23edc8d89bcc7838af84b2ff285.jpeg" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -211,8 +211,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section-title">
-                                <span style="color: darkred;">What We Do</span>
-                                <h2>Discover Our Services</h2>
+                                <span style="color: darkred;">Why Choose Us</span>
+                                <h2>Explore the Benefits</h2>
                             </div>
                         </div>
                     </div>
@@ -220,49 +220,43 @@
                         <div class="col-lg-4 col-sm-6">
                             <div class="service-item">
                                 <i class="flaticon-036-parking" style="color: darkred;"></i>
-                                <h4>Travel Plan</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>Easy Ticket Booking</h4>
+                                <p>Our website offers a simple and user-friendly interface, allowing you to book train tickets easily</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6">
                             <div class="service-item">
                                 <i class="flaticon-033-dinner" style="color: darkred;"></i>
-                                <h4>Catering Service</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>Multiple Payment Options</h4>
+                                <p>We support a variety of payment methods, making it easy and convenient to pay securely online.</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6">
                             <div class="service-item">
                                 <i class="flaticon-026-bed" style="color: darkred;"></i>
-                                <h4>Babysitting</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>Real-Time Seat Availability</h4>
+                                <p>Check real-time seat availability and book the best seats for your journey instantly.</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6">
                             <div class="service-item">
                                 <i class="flaticon-024-towel" style="color: darkred;"></i>
-                                <h4>Laundry</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>Flexible Booking Options</h4>
+                                <p>Whether it’s a single journey or a round trip, our platform offers flexibility to suit your travel needs.</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6">
                             <div class="service-item">
                                 <i class="flaticon-044-clock-1" style="color: darkred;"></i>
-                                <h4>Hire Driver</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>Instant Confirmation</h4>
+                                <p>Receive instant booking confirmations and ticket details right to your email.</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6">
                             <div class="service-item">
                                 <i class="flaticon-012-cocktail" style="color: darkred;"></i>
-                                <h4>Bar & Drink</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>24/7 Customer Support</h4>
+                                <p>Our support team is available around the clock to assist you with any booking inquiries or travel issues.</p>
                             </div>
                         </div>
                     </div>
@@ -270,184 +264,10 @@
             </section><!--
              Services Section End 
     
-             Home Room Section Begin 
--->            <section class="hp-room-section">
-                <div class="container-fluid">
-                    <div class="hp-room-items">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="hp-room-item set-bg" data-setbg="img/room/room-b1.jpg">
-                                    <div class="hr-text">
-                                        <h3 style="color: darkseagreen;">Double Room</h3>
-                                        <h2 style="color: darkred;">199$<span>/Pernight</span></h2>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="r-o">Size:</td>
-                                                    <td>30 ft</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Capacity:</td>
-                                                    <td>Max persion 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Bed:</td>
-                                                    <td>King Beds</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Services:</td>
-                                                    <td>Wifi, Television, Bathroom,...</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <a href="#" class="primary-btn">More Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="hp-room-item set-bg" data-setbg="img/room/room-b2.jpg">
-                                    <div class="hr-text">
-                                        <h3 style="color: darkseagreen;">Premium King Room</h3>
-                                        <h2 style="color: darkred;">159$<span>/Pernight</span></h2>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="r-o">Size:</td>
-                                                    <td>30 ft</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Capacity:</td>
-                                                    <td>Max persion 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Bed:</td>
-                                                    <td>King Beds</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Services:</td>
-                                                    <td>Wifi, Television, Bathroom,...</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <a href="#" class="primary-btn">More Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="hp-room-item set-bg" data-setbg="img/room/room-b3.jpg">
-                                    <div class="hr-text">
-                                        <h3 style="color: darkseagreen;">Deluxe Room</h3>
-                                        <h2 style="color: darkred;">198$<span>/Pernight</span></h2>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="r-o">Size:</td>
-                                                    <td>30 ft</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Capacity:</td>
-                                                    <td>Max persion 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Bed:</td>
-                                                    <td>King Beds</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Services:</td>
-                                                    <td>Wifi, Television, Bathroom,...</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <a href="#" class="primary-btn">More Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="hp-room-item set-bg" data-setbg="img/room/room-b4.jpg">
-                                    <div class="hr-text">
-                                        <h3 style="color: darkseagreen;">Family Room</h3>
-                                        <h2  style="color: darkred;">299$<span>/Pernight</span></h2>
-                                        <table>
-                                            <tbody style="color: black;">
-                                                <tr>
-                                                    <td class="r-o">Size:</td>
-                                                    <td>30 ft</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Capacity:</td>
-                                                    <td>Max persion 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Bed:</td>
-                                                    <td>King Beds</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="r-o">Services:</td>
-                                                    <td>Wifi, Television, Bathroom,...</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <a href="#" class="primary-btn">More Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Home Room Section End -->
+                         <!-- Home Room Section End -->
 
             <!-- Testimonial Section Begin -->
-            <section class="testimonial-section spad">
-
-
-                <div class="container"  >
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <div class="section-title">
-                                <span style="color: darkred;">Testimonials</span>
-                                <h2>What Customers Say?</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="testimonial-slider owl-carousel" >
-                                <div class="ts-item text-center">
-                                    <p>"When our plans changed last minute, TRS was a lifesaver! As frequent travelers, my husband, son, and I are familiar with various transportation options, but booking through TRS made our journey seamless. From finding the perfect train route to quick ticket confirmation, TRS exceeded our expectations!"</p>
-                                    <div class="ti-author">
-                                        <div class="rating" style="color: darkred;">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star-half_alt"></i>
-                                        </div>
-                                        <h5> - Eimi Fukada</h5>
-                                    </div>
-                                    <img src="img/testimonial-logo.png" alt="">
-                                </div>
-                                <div class="ts-item text-center">
-                                    <p>"We were in a hurry to visit family across the country, and TRS made everything so easy. My wife, our two kids, and I found the best seats on a high-speed train, and the booking process was a breeze. TRS saved us so much time, and we had a comfortable and memorable trip!"
-                                    </p>
-                                    <div class="ti-author">
-                                        <div class="rating" style="color: darkred;">
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                            <i class="icon_star"></i>
-                                        </div>
-                                        <h5> - Yua Mikami</h5>
-                                    </div>
-                                    <img src="img/testimonial-logo.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Testimonial Section End -->
+            
 
             <!-- Blog Section Begin -->
             <section class="blog-section spad">
@@ -462,46 +282,46 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <div class="blog-item set-bg" data-setbg="img/blog/blog-1.jpg">
+                            <div class="blog-item set-bg" data-setbg="https://i1-kinhdoanh.vnecdn.net/2024/05/02/tauxeHNSG-11-JPG-1137-1714617275.jpg?w=1020&h=0&q=100&dpr=1&fit=crop&s=XajgJ--U--bE7UmjtMbvPA">
                                 <div class="bi-text">
-                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Travel Trip</span>
-                                    <h4><a href="#">Tremblant In Canada</a></h4>
-                                    <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Da Nang</span>
+                                    <h4><a href="http://localhost:8080/SWPProject_Group1/UnewsList?action=view&id=17">Ngành đường sắt lãi đậm</a></h4>
+                                    <div class="b-time"><i class="icon_clock_alt"></i> 2024-10-13</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
                                 <div class="bi-text">
-                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Camping</span>
-                                    <h4><a href="#">Choosing A Static Caravan</a></h4>
-                                    <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Ha Noi</span>
+                                    <h4><a href="http://localhost:8080/SWPProject_Group1/UnewsList?action=view&id=15">Cấm cầu Long Biên</a></h4>
+                                    <div class="b-time"><i class="icon_clock_alt"></i>  2024-10-13</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
+                            <div class="blog-item set-bg" data-setbg="https://i1-dulich.vnecdn.net/2021/09/29/1-DQP-BEM-091219TRAIN-12JPG-9164-1632884620.jpg?w=1020&h=0&q=100&dpr=1&fit=crop&s=1-1iOXkbvpFzrgyp0tF7fA">
                                 <div class="bi-text">
-                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Event</span>
-                                    <h4><a href="#">Copper Canyon</a></h4>
-                                    <div class="b-time"><i class="icon_clock_alt"></i> 21th April, 2019</div>
+                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Anh</span>
+                                    <h4><a href="http://localhost:8080/SWPProject_Group1/UnewsList?action=view&id=28">Khách tố bị bỏ đói trên khoang hạng nhất tàu hỏa?</a></h4>
+                                    <div class="b-time"><i class="icon_clock_alt"></i> 2024-10-13</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
-                            <div class="blog-item small-size set-bg" data-setbg="img/blog/blog-wide.jpg">
+                            <div class="blog-item small-size set-bg" data-setbg="https://i1-dulich.vnecdn.net/2024/03/01/7d9eb18334199947c008-1842-1709299941.jpg?w=1020&h=0&q=100&dpr=1&fit=crop&s=EZNkJBMkg6FTqjAxQdFNfQ">
                                 <div class="bi-text">
-                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Event</span>
-                                    <h4><a href="#">Trip To Iqaluit In Nunavut A Canadian Arctic City</a></h4>
-                                    <div class="b-time"><i class="icon_clock_alt"></i> 08th April, 2019</div>
+                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Hue - Da Nang</span>
+                                    <h4><a href="http://localhost:8080/SWPProject_Group1/UnewsList?action=view&id=25">Mở tuyến tàu hỏa du lịch Huế - Đà Nẵng</a></h4>
+                                    <div class="b-time"><i class="icon_clock_alt"></i> 2024-10-13</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="blog-item small-size set-bg" data-setbg="img/blog/blog-10.jpg">
+                            <div class="blog-item small-size set-bg" data-setbg="https://i1-dulich.vnecdn.net/2024/05/17/tauxeHNSG-16-JPG-4810-1715913598.jpg?w=1020&h=0&q=100&dpr=1&fit=crop&s=vqwN_768nOHfbNuFJGHy5A">
                                 <div class="bi-text">
-                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Travel</span>
-                                    <h4><a href="#">Traveling To Barcelona</a></h4>
+                                    <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">World</span>
+                                    <h4><a href="http://localhost:9999/SWPProject_Group1/UnewsList?action=view&id=24">Du lịch nội 'không thể chỉ sống nhờ đường bộ, đường sắt'</a></h4>
                                     <div class="b-time"><i class="icon_clock_alt"></i> 12th April, 2019</div>
                                 </div>
                             </div>
