@@ -63,22 +63,9 @@
                         
                         <li><a class="m_tag" href="feedbackforcustomer">Make FeedBack</a></li>
                         
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle m_tag" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Politics<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-large row">
-                                <li class="col-sm-2 space_all">
-                                    <ul>
-                                        <li><a href="#"><img src="img/3.jpg" class="iw" alt="abc"></a></li>
-                                        <li><a href="#">Minim Veniam</a></li>
-                                        <li><a class="col_2" href="#"><i class="fa fa-calendar col_1"></i> March 29, 2019</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li><a class="m_tag" href="service.html">Services</a></li>
+                        
+<li><a class="m_tag" href="home1">Booking</a></li>
+                        
                         
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle m_tag" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -113,14 +100,7 @@
                             </a>
                             <ul class="dropdown-menu" style="min-width: 300px; padding: 10px;">
                                 <li>
-                                    <form class="navbar-form" role="search">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="button">Search</button>
-                                            </span>
-                                        </div>
-                                    </form>
+                                    
                                 </li>
                             </ul>
                         </li>

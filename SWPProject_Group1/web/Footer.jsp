@@ -105,7 +105,7 @@
         <div class="row">
             <div class="footer_b text-center clearfix">
                 <div class="col-sm-12">
-                    <p class="mgt col_2">© 2024 Train Ticket Hub. All Rights Reserved | Designed by <a class="col_1" href="http://www.templateonweb.com">TemplateOnWeb</a></p>
+                    <p class="mgt col_2">© 2024 Train Ticket Hub. All Rights Reserved </a></p>
                 </div>
             </div>
         </div>

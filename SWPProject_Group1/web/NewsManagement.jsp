@@ -175,7 +175,7 @@
         <c:if test="${not empty newsList}">
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
-                    <thead class="table-dark">
+                    <thead class="">
                         <tr>
                             <th>ID</th>
                             <th>Title</th>

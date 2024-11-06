@@ -115,11 +115,11 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
   <form action="discount-manage" method="GET" class="d-flex align-items-center g-3" id="searchForm">
     <div class="me-3">
-      <label class="form-label">Search discount code</label>
+      <label class="form-label">.</label>
       <input type="text" class="form-control" name="searchCode" value="${searchCode}" placeholder="Enter code...">
     </div>
     <div class="me-3">
-      <label class="form-label">Status</label>
+      <label class="form-label">.</label>
       <select class="form-select" name="status">
         <option value="">Tất cả</option>
         <option value="1" ${status == '1' ? 'selected' : ''}>Active</option>
@@ -314,6 +314,11 @@
                 '${discount.code}'${!status.last ? ',' : ''}
             </c:forEach>
         ];
+        window.onload = function() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('startDate').min = today;
+    document.getElementById('endDate').min = today;
+};
 
         function editDiscount(id, code, percent, startDate, endDate, maxUsage) {
     document.getElementById('modalTitle').textContent = 'Edit Discount';
