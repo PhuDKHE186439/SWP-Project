@@ -73,6 +73,8 @@ public class TrainController extends HttpServlet {
         String ngayVe = request.getParameter("ngayVe");
         String gaDi = request.getParameter("l1");
         String gaDen = request.getParameter("l2");
+           System.out.println("Ngay ve"+ngayVe);
+           System.out.println("Ngay di"+ngayDi);
 
         if (ngayDi == null || ngayVe == null || gaDi == null || gaDen == null || gaDi.equals("-1") || gaDen.equals("-1")) {
             session.setAttribute("noti", "Vui lòng nhập đủ thông tin tìm kiếm");
@@ -86,6 +88,7 @@ public class TrainController extends HttpServlet {
                 session.setAttribute("noti", "Không tìm thấy kết quả nào");
                 response.sendRedirect("home1");
             } else {
+             
                 List<ticket> tickets = td.getTickets(ngayDi, ngayVe);
                 int[] usedSeatNumber = new int[10000];
                 //Map<Integer, List<Integer>> bookedSeats = new HashMap<>();
