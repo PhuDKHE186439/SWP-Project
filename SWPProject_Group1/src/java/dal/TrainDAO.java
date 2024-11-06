@@ -124,40 +124,40 @@ public class TrainDAO extends DBContext {
 
     //tu day la phan cua Hung
     public List<train> getTrains(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
-    List<train> list = new ArrayList<>();
-    
-    // Validate input parameters
-    if (ngayDi == null || ngayDi.trim().isEmpty()) {
-        throw new IllegalArgumentException("Ngày đi không được để trống");
-    }
-    if (gaDi == null || gaDi.trim().isEmpty()) {
-        throw new IllegalArgumentException("Ga đi không được để trống");
-    }
-    if (gaDen == null || gaDen.trim().isEmpty()) {
-        throw new IllegalArgumentException("Ga đến không được để trống");
-    }
+        List<train> list = new ArrayList<>();
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    PreparedStatement st = null;
-    ResultSet rs = null;
-    
-    try {
-        Date ngayDiDate = dateFormat.parse(ngayDi);
-        int gaDiInt = Integer.parseInt(gaDi);
-        int gaDenInt = Integer.parseInt(gaDen);
-        
-        String sql;
-        
-        if (ngayVe != null && !ngayVe.trim().isEmpty()) {
-            // Trường hợp khứ hồi
-            Date ngayVeDate = dateFormat.parse(ngayVe);
-            
-            // Validate ngày về phải sau ngày đi
-            if (ngayVeDate.before(ngayDiDate)) {
-                throw new IllegalArgumentException("Ngày về phải sau ngày đi");
-            }
-            
-            sql = """
+        // Validate input parameters
+        if (ngayDi == null || ngayDi.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ngày đi không được để trống");
+        }
+        if (gaDi == null || gaDi.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ga đi không được để trống");
+        }
+        if (gaDen == null || gaDen.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ga đến không được để trống");
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            Date ngayDiDate = dateFormat.parse(ngayDi);
+            int gaDiInt = Integer.parseInt(gaDi);
+            int gaDenInt = Integer.parseInt(gaDen);
+
+            String sql;
+
+            if (ngayVe != null && !ngayVe.trim().isEmpty()) {
+                // Trường hợp khứ hồi
+                Date ngayVeDate = dateFormat.parse(ngayVe);
+
+                // Validate ngày về phải sau ngày đi
+                if (ngayVeDate.before(ngayDiDate)) {
+                    throw new IllegalArgumentException("Ngày về phải sau ngày đi");
+                }
+
+                sql = """
                   SELECT t.*, 
                          l1.LocationName AS StartLocationName, 
                          l1.Description AS StartLocationDescription,
@@ -167,21 +167,23 @@ public class TrainDAO extends DBContext {
                   LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID 
                   LEFT JOIN location l2 ON l2.LocationID = t.ArrivalLocationID
                   WHERE t.TrainScheduleTime BETWEEN ? AND ?
-                  AND t.StartLocationID = ? 
-                  AND t.ArrivalLocationID = ?
+                  AND t.StartLocationID = ? or t.ArrivalLocationID = ?
+                  AND t.ArrivalLocationID = ? or t.StartLocationID = ?
                   AND t.NumberOfSeat > 0
                   ORDER BY t.TrainScheduleTime ASC
                   """;
-                  
-            st = connection.prepareStatement(sql);
-            st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
-            st.setDate(2, new java.sql.Date(ngayVeDate.getTime()));
-            st.setInt(3, gaDiInt);
-            st.setInt(4, gaDenInt);
-            
-        } else {
-            // Trường hợp một chiều
-            sql = """
+
+                st = connection.prepareStatement(sql);
+                st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
+                st.setDate(2, new java.sql.Date(ngayVeDate.getTime()));
+                st.setDate(3, new java.sql.Date(ngayDiDate.getTime()));
+                st.setDate(4, new java.sql.Date(ngayVeDate.getTime()));
+                st.setInt(5, gaDiInt);
+                st.setInt(6, gaDenInt);
+
+            } else {
+                // Trường hợp một chiều
+                sql = """
                   SELECT t.*, 
                          l1.LocationName AS StartLocationName, 
                          l1.Description AS StartLocationDescription,
@@ -196,99 +198,107 @@ public class TrainDAO extends DBContext {
                   AND t.NumberOfSeat > 0
                   ORDER BY t.TrainScheduleTime ASC
                   """;
-                  
-            st = connection.prepareStatement(sql);
-            st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
-            st.setInt(2, gaDiInt);
-            st.setInt(3, gaDenInt);
-        }
-        
-        rs = st.executeQuery();
-        
-        while (rs.next()) {
-            train t = new train(
-                rs.getInt("TrainID"),
-                rs.getString("TrainScheduleTime"),
-                rs.getString("TrainName"),
-                rs.getInt("NumberOfSeat"),
-                new location(
-                    rs.getInt("StartLocationID"),
-                    rs.getString("StartLocationName"),
-                    rs.getString("StartLocationDescription")
-                ),
-                new location(
-                    rs.getInt("ArrivalLocationID"),
-                    rs.getString("ArrivalLocationName"),
-                    rs.getString("ArrivalLocationDescription")
-                )
-            );
-            list.add(t);
-        }
-        
-    } catch (ParseException e) {
-        throw new IllegalArgumentException("Định dạng ngày không hợp lệ: " + e.getMessage(), e);
-    } catch (NumberFormatException e) {
-        throw new IllegalArgumentException("Định dạng ID ga không hợp lệ: " + e.getMessage(), e);
-    } finally {
-        // Đóng các resource
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (st != null) {
-            try {
-                st.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    return list;
-}
-public List<location> searchLocations(String keyword) {
-    List<location> list = new ArrayList<>();
-    String sql = "SELECT * FROM location WHERE LocationName LIKE ?";
-    try {
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.setString(1, "%" + keyword + "%");
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            list.add(new location(rs.getInt("LocationID"), 
-                                rs.getString("LocationName"), 
-                                rs.getString("Description")));
-        }
-    } catch (SQLException e) {
-        System.out.println(e);
-    }
-    return list;
-}
-public class TrainSearchResult {
-    private List<train> outboundTrains;
-    private List<train> returnTrains;
-    
-    public TrainSearchResult(List<train> outboundTrains, List<train> returnTrains) {
-        this.outboundTrains = outboundTrains;
-        this.returnTrains = returnTrains;
-    }
-    
-    // Add getters
-    public List<train> getOutboundTrains() { return outboundTrains; }
-    public List<train> getReturnTrains() { return returnTrains; }
-}
 
-public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
-    // Get outbound trains (from gaDi to gaDen on ngayDi)
-    List<train> outboundTrains = getTrains(ngayDi, null, gaDi, gaDen);
-    
-    // Get return trains (from gaDen to gaDi on ngayVe)
-    List<train> returnTrains = getTrains(ngayVe, null, gaDen, gaDi);
-    
-    return new TrainSearchResult(outboundTrains, returnTrains);
-}
+                st = connection.prepareStatement(sql);
+                st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
+                st.setInt(2, gaDiInt);
+                st.setInt(3, gaDenInt);
+            }
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                train t = new train(
+                        rs.getInt("TrainID"),
+                        rs.getString("TrainScheduleTime"),
+                        rs.getString("TrainName"),
+                        rs.getInt("NumberOfSeat"),
+                        new location(
+                                rs.getInt("StartLocationID"),
+                                rs.getString("StartLocationName"),
+                                rs.getString("StartLocationDescription")
+                        ),
+                        new location(
+                                rs.getInt("ArrivalLocationID"),
+                                rs.getString("ArrivalLocationName"),
+                                rs.getString("ArrivalLocationDescription")
+                        )
+                );
+                list.add(t);
+            }
+
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Định dạng ngày không hợp lệ: " + e.getMessage(), e);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Định dạng ID ga không hợp lệ: " + e.getMessage(), e);
+        } finally {
+            // Đóng các resource
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public List<location> searchLocations(String keyword) {
+        List<location> list = new ArrayList<>();
+        String sql = "SELECT * FROM location WHERE LocationName LIKE ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + keyword + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new location(rs.getInt("LocationID"),
+                        rs.getString("LocationName"),
+                        rs.getString("Description")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public class TrainSearchResult {
+
+        private List<train> outboundTrains;
+        private List<train> returnTrains;
+
+        public TrainSearchResult(List<train> outboundTrains, List<train> returnTrains) {
+            this.outboundTrains = outboundTrains;
+            this.returnTrains = returnTrains;
+        }
+
+        // Add getters
+        public List<train> getOutboundTrains() {
+            return outboundTrains;
+        }
+
+        public List<train> getReturnTrains() {
+            return returnTrains;
+        }
+    }
+
+    public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
+        // Get outbound trains (from gaDi to gaDen on ngayDi)
+        List<train> outboundTrains = getTrains(ngayDi, null, gaDi, gaDen);
+
+        // Get return trains (from gaDen to gaDi on ngayVe)
+        List<train> returnTrains = getTrains(ngayVe, null, gaDen, gaDi);
+
+        return new TrainSearchResult(outboundTrains, returnTrains);
+    }
 
     public List<ticket> getTickets(String ngayDi, String ngayVe) throws SQLException {
         List<ticket> list = new ArrayList<>();
@@ -497,8 +507,8 @@ public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String
             System.out.println(e);
         }
     }
-    
-      public void deleteTrain(int id) {
+
+    public void deleteTrain(int id) {
         String sql = """
                      UPDATE `trainproject`.`train`
                      SET
@@ -514,7 +524,7 @@ public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String
         }
     }
 
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         // Create an instance of your DAO class
         TrainDAO trainDAO = new TrainDAO();
 
@@ -557,4 +567,3 @@ public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String
         }
     }
 }
-

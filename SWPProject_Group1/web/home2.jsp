@@ -546,7 +546,11 @@
             </script>
             <script>
                 // Set min date to today
-
+window.onload = function() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('departDate').min = today;
+    document.getElementById('returnDate').min = today;
+};
 
                 function toggleReturnDate() {
                     const returnDateGroup = document.getElementById('returnDateGroup');
