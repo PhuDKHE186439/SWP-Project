@@ -88,6 +88,8 @@ public class CreateAccountServlet extends HttpServlet {
         if (phoneNumber.length() !=10) {
             HttpSession session = request.getSession();
             session.setAttribute("message", "Phone number must be 10 digits.");
+                            request.setAttribute("message", "Error creating account: Invalid Phone Format");
+
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
             return;
         }
@@ -95,11 +97,13 @@ public class CreateAccountServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("message", "Username can only contain letters and numbers.");
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            request.setAttribute("message", "Error creating account: Invalid Username");
             return;
         }
         if (!isValidPassword(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("message", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
+            request.setAttribute("message", "Error creating account: Invalid Password");
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
             return;
         }
@@ -108,6 +112,7 @@ public class CreateAccountServlet extends HttpServlet {
         if (accountDAO.accountExists(email, phoneNumber)) {
             HttpSession session = request.getSession();
             session.setAttribute("message", "Account with this email or phone number already exists.");
+            request.setAttribute("message", "Error creating account: Invalid Email");
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
         } else {
             try {
@@ -118,6 +123,7 @@ public class CreateAccountServlet extends HttpServlet {
             } catch (Exception e) {
                 HttpSession session = request.getSession();
                 session.setAttribute("message", "Error creating account: " + e.getMessage());
+                request.setAttribute("message", "Error creating account: " + e.getMessage());
                 request.getRequestDispatcher("Admin.jsp").forward(request, response);
             }
         }
