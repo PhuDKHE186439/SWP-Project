@@ -26,7 +26,7 @@
             <form action="ajaxServlet" id="frmCreateOrder" method="post" style="background-color: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
                 <div class="form-group">
                     <label for="amount" style="font-weight: bold; color: #333;font-size: 1.5em; display: block; margin-bottom: 10px;">Số tiền</label>
-                    <input class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amount" type="number" value="${requestScope.prices}" readonly="true" style="border: 2px solid #ccc; border-radius: 5px; padding: 10px;"/>
+                    <input class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amountPRICE" type="number" value="${requestScope.prices}" readonly="true" style="border: 2px solid #ccc; border-radius: 5px; padding: 10px;"/>
                 </div>
                 <h4 style="margin-top: 20px; color: #5bc0de;">Chọn phương thức thanh toán</h4>
                 <div class="form-group">

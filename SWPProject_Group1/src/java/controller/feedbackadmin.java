@@ -66,7 +66,7 @@ public class feedbackadmin extends HttpServlet {
 
             // Get current page, default to 1
             int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
-            int recordsPerPage = 5;
+            int recordsPerPage = 10;
             // Get search and sort parameters with trimming
             String search = request.getParameter("search");
             search = (search != null) ? search.trim() : "";
@@ -106,21 +106,27 @@ public class feedbackadmin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
-        FeedbackDAO dao = new FeedbackDAO();
-        String message;
+        try {
 
-        if ("In Order".equals(action)) {
-            dao.updateFeedbackStatus(feedbackID, "In Order");
-            message = "Feedback marked as In Order.";
-        } else if ("Finish".equals(action)) {
-            dao.updateFeedbackStatus(feedbackID, "Finish");
-            message = "Feedback marked as Finished.";
-        } else {
-            message = "Invalid action.";
+            int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
+            FeedbackDAO dao = new FeedbackDAO();
+            String message;
+
+            if ("In Order".equals(action)) {
+                dao.updateFeedbackStatus(feedbackID, "In Order");
+                message = "Feedback marked as In Order.";
+            } else if ("Finish".equals(action)) {
+                dao.updateFeedbackStatus(feedbackID, "Finish");
+                message = "Feedback marked as Finished.";
+            } else {
+                message = "Invalid action.";
+            }
+            
+            request.setAttribute("message", message);
+        } catch (Exception e) {
         }
 
-        request.setAttribute("message", message);
+        
         request.getRequestDispatcher("feedbackadmin").forward(request, response);
     }
 
