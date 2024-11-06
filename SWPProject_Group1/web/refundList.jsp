@@ -197,6 +197,8 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                         <th scope="col">Passenger ID</th>
                                         <th scope="col">Refund Status</th>
                                         <th scope="col">Message/Reason</th>
+                                        <th scope="col">Percent Refund</th>
+
                                         <th scope="col">Action</th>
 
                                     </tr>
@@ -217,6 +219,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                             </td>
                                             <td>${feedback.status==1? 'pending': (feedback.status == 0 ? 'Rejected' : 'Accepted')}</td>
                                             <td>${feedback.message}</td>
+                                            <td>${feedback.percent}%</td>
                                             <td>
                                                 <form action="rejectrefund" method="post">
                                                     <input type="hidden" name="ticketid" value="${feedback.ticketID}">

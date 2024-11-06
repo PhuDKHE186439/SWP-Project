@@ -68,7 +68,7 @@
                 </div>    
                 <div class="form-group">
                     <label >Số tiền:</label>
-                    <label><%=request.getParameter("vnp_Amount")%></label>
+                    <label><%=request.getParameter("vnp_Amount").substring(0,request.getParameter("vnp_Amount").length()-2)%></label>
                 </div>  
                 <div class="form-group">
                     <label >Mô tả giao dịch:</label>

@@ -205,7 +205,7 @@
         </section>
         <!-- About Us Section End -->
 
-        <!-- Services Section End -->
+<!--         Services Section End 
         <section class="services-section spad">
             <div class="container">
     <div class="row">
@@ -268,9 +268,9 @@
     </div>
 </div>
         </section>
-        <!-- Services Section End -->
+         Services Section End 
 
-        <!-- Home Room Section Begin -->
+         Home Room Section Begin 
         <section class="hp-room-section">
             <div class="container-fluid">
                 <div class="hp-room-items">
@@ -394,11 +394,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!-- Home Room Section End -->
 
         <!-- Testimonial Section Begin -->
-        <section class="testimonial-section spad">
+<!--        <section class="testimonial-section spad">
             
             
     <div class="container"  >
@@ -446,7 +446,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
         <!-- Testimonial Section End -->
 
         <!-- Blog Section Begin -->

@@ -72,21 +72,6 @@
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Make Feedback</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a class="dropdown-item">
-                                <h6 class="fw-normal mb-0">FeedBack Message</h6>
-                                <form method="post" action="feedbackforcustomer">
-                                    <input name="feedback"  type="text">
-                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Submit</button>
-                                </form>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Notificatin</span>
@@ -115,8 +100,6 @@
                             <span class="d-none d-lg-inline-flex">Profile</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="userprofile" class="dropdown-item">My Profile</a>
-                            <a href="ticketHistory" class="dropdown-item">Ticket History</a> 
                             <a href="logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>

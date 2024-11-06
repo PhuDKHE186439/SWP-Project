@@ -22,7 +22,7 @@ public class RefundDAO extends DBContext {
         try (PreparedStatement st = connection.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                list.add(new refundRequest(rs.getInt("refundID"), rs.getInt("passengerID"), rs.getInt("ticketid"), rs.getInt("status"), rs.getString("message")));
+                list.add(new refundRequest(rs.getInt("refundID"), rs.getInt("passengerID"), rs.getInt("ticketid"), rs.getInt("status"), rs.getString("message"),rs.getInt("refundpercent")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -30,13 +30,14 @@ public class RefundDAO extends DBContext {
         return list;
     }
 
-    public void AddRefundRequest(int passengerid, int ticketid, int status, String message) {
-        String sql = "INSERT INTO refundrequest (passengerID, ticketid, status, message) VALUES (?,?,?,?)";
+    public void AddRefundRequest(int passengerid, int ticketid, int status, String message, int refundpercent) {
+        String sql = "INSERT INTO refundrequest (passengerID, ticketid, status, message, refundpercent) VALUES (?,?,?,?,?)";
         try (PreparedStatement st = connection.prepareStatement(sql);) {
             st.setInt(1, passengerid);
             st.setInt(2, ticketid);
             st.setInt(3, status);
             st.setString(4, message);
+            st.setFloat(5, refundpercent);
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

@@ -14,15 +14,24 @@ public class refundRequest {
     private int passengerID;
     private int status;
     private String message;
-
-    public refundRequest(int refundID, int ticketID, int passengerID, int status, String message) {
+    private int percent;
+    public refundRequest(int refundID, int ticketID, int passengerID, int status, String message, int percent) {
         this.refundID = refundID;
         this.ticketID = ticketID;
         this.passengerID = passengerID;
         this.status = status;
         this.message = message;
+        this.percent = percent;
     }
 
+    public float getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+    
     public String getMessage() {
         return message;
     }

@@ -70,9 +70,9 @@
                         </div>
                     </div>
                     <div class="navbar-nav w-100">
-                        <a href="http://localhost:8080/SWPProject_Group1/feedback" class="nav-item nav-link active" style="white-space: nowrap;"><i class="fa fa-tachometer-alt me-2"></i>Feedback Management</a>
-                        <a href="http://localhost:8080/SWPProject_Group1/news" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-th me-2"></i>News Management</a>
-                        <a href="http://localhost:8080/SWPProject_Group1/discount-manage" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-keyboard me-2"></i>Discount Management</a>
+                        <a href="http://localhost:9999/SWPProject_Group1/feedback" class="nav-item nav-link active" style="white-space: nowrap;"><i class="fa fa-tachometer-alt me-2"></i>Feedback Management</a>
+                        <a href="http://localhost:9999/SWPProject_Group1/news" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-th me-2"></i>News Management</a>
+                        <a href="http://localhost:9999/SWPProject_Group1/discount-manage" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-keyboard me-2"></i>Discount Management</a>
                         <a href="table.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-table me-2"></i>Tables</a>
                         <a href="chart.html" class="nav-item nav-link" style="white-space: nowrap;"><i class="fa fa-chart-bar me-2"></i>Charts</a>
                     </div>
@@ -105,7 +105,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 
-                                <a href="#" class="dropdown-item">Log Out</a>
+                                <a href="logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>
