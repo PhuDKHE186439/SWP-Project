@@ -84,7 +84,7 @@
                                 <h1 style="color: #0bc193;">TRS - Better Price</h1>
                                 <p >Here are the best Train Ticket Booking sites, including recommendations for in-national
                                     travel and for finding low-priced tickets.</p>
-                                <a href="#" class="primary-btn">Discover Now</a>
+                                <a href="http://localhost:9999/SWPProject_Group1/home1" class="primary-btn">Discover Now</a>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
@@ -294,7 +294,7 @@
                             <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
                                 <div class="bi-text">
                                     <span class="b-tag" style="background-color: darkred; color: white; padding: 5px; border-radius: 5px;">Ha Noi</span>
-                                    <h4><a href="http://localhost:8080/SWPProject_Group1/UnewsList?action=view&id=15">Cấm cầu Long Biên</a></h4>
+                                    <h4><a href="http://localhost:9999/SWPProject_Group1/UnewsList?action=view&id=14">Cấm cầu Long Biên</a></h4>
                                     <div class="b-time"><i class="icon_clock_alt"></i>  2024-10-13</div>
                                 </div>
                             </div>
