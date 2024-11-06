@@ -94,24 +94,24 @@
     <div class="form-container">
         <!-- Loại vé -->
         <div class="form-group">
-            <label class="form-label">Loại vé:</label>
+            <label class="form-label">Type:</label>
             <div class="radio-group">
                 <input type="radio" id="oneWay" name="tripType" value="oneWay" checked onchange="toggleReturnDate()">
-                <label for="oneWay">Một chiều</label>
+                <label for="oneWay">One way</label>
                 <input type="radio" id="roundTrip" name="tripType" value="roundTrip" onchange="toggleReturnDate()">
-                <label for="roundTrip">Khứ hồi</label>
+                <label for="roundTrip">Round Trip</label>
             </div>
         </div>
 
         <!-- Ngày đi và về -->
         <div class="date-container">
             <div class="form-group">
-                <label for="departDate" class="form-label">Ngày đi</label>
+                <label for="departDate" class="form-label">Departure Date</label>
                 <input type="date" name="ngayDi" id="departDate" class="form-control" 
                        min="" required>
             </div>
             <div class="form-group" id="returnDateGroup" style="display: none;">
-                <label for="returnDate" class="form-label">Ngày về</label>
+                <label for="returnDate" class="form-label">Return Date</label>
                 <input type="date" name="ngayVe" id="returnDate" class="form-control" 
                        min="">
             </div>
@@ -120,10 +120,10 @@
         <!-- Ga đi và đến -->
         <div class="stations-container">
             <div class="form-group">
-                <label for="departStation" class="form-label">Ga đi</label>
+                <label for="departStation" class="form-label">Depart Station</label>
                 <div class="input-with-suggestions">
                     <input type="text" id="departStation" class="form-control" 
-                           placeholder="Nhập ga đi..." 
+                           placeholder="Please enter Depart Station..." 
                            oninput="suggest(this, 'departSuggestions')"
                            autocomplete="off">
                     <input type="hidden" name="l1" id="departStationId">
@@ -135,10 +135,10 @@
             
 
             <div class="form-group">
-                <label for="arrivalStation" class="form-label">Ga đến</label>
+                <label for="arrivalStation" class="form-label">Arrival Station</label>
                 <div class="input-with-suggestions">
                     <input type="text" id="arrivalStation" class="form-control" 
-                           placeholder="Nhập ga đến..." 
+                           placeholder="Please enter Arrival Station..." 
                            oninput="suggest(this, 'arrivalSuggestions')"
                            autocomplete="off">
                     <input type="hidden" name="l2" id="arrivalStationId">
@@ -148,7 +148,7 @@
         </div>
 
         <button type="submit" class="submit-btn">
-            <i class="fas fa-search"></i> Tìm kiếm
+             Search
         </button>
     </div>
 </form>
@@ -546,11 +546,7 @@
         </script>
         <script>
         // Set min date to today
-window.onload = function() {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('departDate').min = today;
-    document.getElementById('returnDate').min = today;
-};
+
 
 function toggleReturnDate() {
     const returnDateGroup = document.getElementById('returnDateGroup');

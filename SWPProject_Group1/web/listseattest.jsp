@@ -279,7 +279,7 @@
                                 <td>
                                     <div class="countdown">
         <div class="time-unit">
-            <span id="seconds">60</span>
+            <span id="seconds">360</span>
             <span class="label">Giây</span>
         </div>
     </div>
@@ -330,79 +330,7 @@
         <jsp:include page="footer1.jsp"/>
 
         <script>
-            // Store timers for each seat
-            const seatTimers = {};
-
-            // Initialize countdown timers for each seat
-            function initializeCountdown(seatId) {
-                let timeLeft = 10; // 5 minutes in seconds
-
-                function updateTimer() {
-                    const minutes = Math.floor(timeLeft / 60);
-                    const seconds = timeLeft % 60;
-                    const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-                                const countdownElement = document.getElementById(`countdown-${seatId}`);
-                                if (countdownElement) {
-                                    countdownElement.textContent = display;
-                                }
-
-                                if (timeLeft === 0) {
-                                    clearInterval(seatTimers[seatId]);
-                                    removeSeat(seatId);
-                                } else {
-                                    timeLeft--;
-                                }
-                            }
-
-                            // Update immediately and then every second
-                            updateTimer();
-                            seatTimers[seatId] = setInterval(updateTimer, 1000);
-                        }
-
-                        // Initialize timers for all seats in cart
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const seatRows = document.querySelectorAll('[id^="seat-row-"]');
-                            seatRows.forEach(row => {
-                                const seatId = row.id.replace('seat-row-', '');
-                                initializeCountdown(seatId);
-                            });
-                        });
-
-                        // Function to remove seat from cart
-                        async function removeSeat(seatId) {
-                            try {
-                                // Make an AJAX call to remove the seat from the server-side cart
-                                const response = await fetch('removefromcart', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: `seatId=${seatId}`
-                                });
-
-                                if (response.ok) {
-                                    // Clear the timer
-                                    if (seatTimers[seatId]) {
-                                        clearInterval(seatTimers[seatId]);
-                                        delete seatTimers[seatId];
-                                    }
-
-                                    // Remove the row from the table
-                                    const row = document.getElementById(`seat-row-${seatId}`);
-                                    if (row) {
-                                        row.remove();
-                                    }
-
-                                    // Refresh the page to update the seat availability
-                                    location.reload();
-                                } else {
-                                    console.error('Failed to remove seat from cart');
-                                }
-                            } catch (error) {
-                                console.error('Error removing seat:', error);
-                            }
-                        }
+            
 
                         function submitForm(id) {
                             document.getElementById('form' + id).submit();
@@ -414,7 +342,7 @@
         </script>
         <script>
         // Đặt thời gian đếm ngược (giây)
-        let timeLeft = 60; // Thay đổi số này để set thời gian đếm ngược mong muốn
+        let timeLeft = 360; // Thay đổi số này để set thời gian đếm ngược mong muốn
 
         function updateCountdown() {
             document.getElementById('seconds').innerText = timeLeft;

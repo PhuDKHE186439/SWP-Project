@@ -15,6 +15,7 @@
 <%@page import="dal.SeatDAO"%>
 <%@page import="dal.TicketDAO"%>
 <%@page import="model.*"%>
+<%@page import="email.Email"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +97,12 @@
                             if (signValue.equals(vnp_SecureHash)) {
                                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                                     out.print("Thành công");
+                                    
+                                    //send mail;Bạn
+Email e = new Email();
+account acc = (account)session.getAttribute("accInfo");
+e.sendEmail(acc.getEmail(), "Bạn đã book vé thành công, mã booking của bạn là #123456");
+
                                      List<cartinfo> cart = (List<cartinfo>) session.getAttribute("cart");
                                       for (cartinfo cart1 : cart) {
                //update status
@@ -107,7 +114,9 @@
             ticketDAO.CreatePayment(ticketDAO.getNewestTicketCreated(cart1.getAcc().getPassengerID()).getTicketID(), "Bank", cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000");
    %><%
 
-            }session.removeAttribute("cart");
+            }
+//clear cart
+session.removeAttribute("cart");
                                 } else {
                                     out.print("Không thành công");
                                 }

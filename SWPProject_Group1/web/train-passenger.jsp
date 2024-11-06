@@ -77,6 +77,7 @@
                                     <th>Number Of Carriages</th>
                                     <th>Number Of Seats</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,7 +94,7 @@
                                         <td>${item.numberOfCarriages}</td>
                                         <td>${item.numberOfSeat}</td>
                                         <td>${item.status}</td>
-
+                                        <td><a href="trains?tripType=oneWay&ngayDi=${item.trainScheduleTime}&ngayVe=&l1=${item.startLocationID}&l2=${item.arrivalLocationID}" class="btn btn-primary">Booking</a></td>
 
                                     </tr>
                                 </c:forEach>
