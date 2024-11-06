@@ -302,12 +302,19 @@
 
 
                 <div class="discount-section">
-                    <form action="addtocart" method="post">
-                        <label for="discountCode">Discount Code:</label>
-                        <input type="text" name="discountCode" id="discountCode">
-                        <button type="submit" class="checkout-button">Apply Code</button>
-                    </form>
-                </div>
+    <form action="addtocart" method="post" id="discountForm" onsubmit="return validateDiscountCode()">
+        <label for="discountCode">Discount Code:</label>
+        <input type="text" 
+               name="discountCode" 
+               id="discountCode" 
+               pattern="^[A-Za-z0-9]+$"
+               title="Discount code should only contain letters and numbers"
+               oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '')"
+               maxlength="20">
+        <div id="discountError" class="alert alert-danger" style="display: none;"></div>
+        <button type="submit" class="checkout-button">Apply Code</button>
+    </form>
+</div>
 
                 <c:if test="${not empty discountMessage}">
                     <div class="alert alert-success">${discountMessage}</div>
@@ -342,6 +349,42 @@
                         }
         </script>
         <script>
+            
+            function validateDiscountCode() {
+    const discountInput = document.getElementById('discountCode');
+    const errorDiv = document.getElementById('discountError');
+    
+    // Trim any whitespace
+    const code = discountInput.value.trim();
+    
+    // Update the input value without spaces
+    discountInput.value = code;
+    
+    // Check if empty after trimming
+    if (!code) {
+        errorDiv.textContent = "Please enter a discount code";
+        errorDiv.style.display = "block";
+        return false;
+    }
+    
+    // Check for valid characters (letters and numbers only)
+    if (!/^[A-Za-z0-9]+$/.test(code)) {
+        errorDiv.textContent = "Discount code should only contain letters and numbers";
+        errorDiv.style.display = "block";
+        return false;
+    }
+    
+    // Hide error message if validation passes
+    errorDiv.style.display = "none";
+    return true;
+}
+
+// Clean input as user types
+document.getElementById('discountCode').addEventListener('input', function(e) {
+    // Remove spaces and special characters immediately
+    this.value = this.value.replace(/[^A-Za-z0-9]/g, '');
+});
+
         // Store countdown data in session storage to persist across reloads
 var seatTimers = {};
 
