@@ -18,7 +18,6 @@ import java.util.List;
 import model.account;
 import EnCrypt.BCrypt;
 
-
 /**
  *
  * @author My Asus
@@ -134,6 +133,12 @@ public class LoginController extends HttpServlet {
                     case 2 ->
                         response.sendRedirect("manage-ticket");
                     case 3 ->
+                        response.sendRedirect("userprofile");
+                    case 4 ->
+                        //Role ID 4 ở đây
+                        response.sendRedirect("userprofile");
+                    case 5 ->
+                        //Role ID 5 o day
                         response.sendRedirect("userprofile");
                 }
             }
