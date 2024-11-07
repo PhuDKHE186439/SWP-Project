@@ -74,7 +74,14 @@ public class rejectrefund extends HttpServlet {
         String ticketid = request.getParameter("ticketid");
         RefundDAO dao = new RefundDAO();
         dao.UpdateRefundTicketStatus(Integer.parseInt(ticketid), 0);
-        request.setAttribute("refundlist", dao.getAllRefundRequest());
+        int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
+            int recordsPerPage = 5;
+            int totalRecords = dao.getAllRefundRequest().size();
+            int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("totalRecords", totalRecords);
+        request.setAttribute("refundlist", dao.getRefundPaging(currentPage, recordsPerPage));
         request.getRequestDispatcher("refundList.jsp").forward(request, response);
         
     }

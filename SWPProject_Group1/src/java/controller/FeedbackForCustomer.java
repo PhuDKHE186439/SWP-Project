@@ -86,6 +86,12 @@ public class FeedbackForCustomer extends HttpServlet {
             try {
                 if (feedbacktype.isEmpty()) {
                     request.setAttribute("message", "Please Choose Your Type of feed");
+                    request.getRequestDispatcher("MakeFeedBackForCustomer.jsp").forward(request, response);
+
+                } else if (message.isEmpty()) {
+                    request.setAttribute("message", "You cant sent Empty Feedback");
+                    request.getRequestDispatcher("MakeFeedBackForCustomer.jsp").forward(request, response);
+
                 } else {
                     int accID = (int) session.getAttribute("AccID");
                     feedDAO.createFeedback(message, accDAO.getAccountByID(accID).getPassengerID(), currentDateTime.toString(), feedbacktype);

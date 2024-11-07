@@ -57,7 +57,7 @@
                                         <div class="tab-pane active" id="courses">
                                             <div class="profile-head">
                                                 <p style="color: Red">${requestScope.passwordChange}</p>
-                                                <p style="color: Red">${requestScope.announment}</p>
+                                                <p style="color: Red">${sessionScope.mess}</p>
                                             </div>
                                             <form class="edit-profile" action="userprofile" method="post">
                                                 <div class="">
@@ -198,7 +198,7 @@
                                                 <div class="modal-content">
                                                     <span class="close" onclick="closeModal()">&times;</span>
                                                     <h4>Refund Request</h4>
-                                                    <textarea name="message" id="refundMessageInput" placeholder="Enter your message here..."></textarea>
+                                                    <textarea name="message" id="refundMessageInput" placeholder="Enter your message here...Please Also include your Bank Account/ Digital Wallet so we can Refund You"></textarea>
                                                     <button id="submitRefund">Submit</button>
                                                 </div>
                                             </div>
@@ -252,7 +252,7 @@
     <jsp:include page="footer1.jsp"></jsp:include>
     <script>
         function confirmRefund(form) {
-            var message = prompt("Please enter your refund request message:");
+            var message = prompt("Please enter your refund request message/Please indluce your bank account so we can able to refund you:");
             if (message !== null) {
                 var messageInput = document.createElement("input");
                 messageInput.type = "hidden";

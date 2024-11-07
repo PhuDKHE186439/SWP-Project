@@ -137,37 +137,13 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa fa-bell me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Notificatin</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">Profile updated</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">New user added</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">Password changed</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all notifications</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 
                                 <span class="d-none d-lg-inline-flex">Manager</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 <a href="#" class="dropdown-item">My Profile</a>
                                 <a href="#" class="dropdown-item">Settings</a>
-                                <a href="#" class="dropdown-item">Log Out</a>
+                                <a href="logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>
@@ -221,21 +197,57 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                             <td>${feedback.message}</td>
                                             <td>${feedback.percent}%</td>
                                             <td>
-                                                <form action="rejectrefund" method="post">
+                                                <form  action="acceptrefund" method="post" style="display: inline-block; margin-right: 10px;">
+                                                    <input type="hidden" name="ticketid" value="${feedback.ticketID}">
+                                                    <button type="submit">Accept</button>
+                                                </form>
+                                                <form action="rejectrefund" method="post" style="display: inline-block; ">
                                                     <input type="hidden" name="ticketid" value="${feedback.ticketID}">
                                                     <button type="submit">Reject</button>
                                                 </form>
-                                                <form  action="acceptrefund" method="post">
-                                                    <input type="hidden" name="ticketid" value="${feedback.ticketID}">
-                                                    <button type="submit">Accepted</button>
-                                                </form>
-
+                                                
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
                         </div>
+                        <div class="mt-4 text-left">
+                                                <c:if test="${currentPage > 1}">
+                                                    <a href="refundlist?page=${currentPage - 1}" class="btn btn-primary">Previous</a>
+                                                </c:if>
+                                                <c:if test="${currentPage > 2}">
+                                                    <a href="refundlist?page=1" class="btn btn-outline-primary">1</a>
+                                                    <c:if test="${currentPage > 3}">
+                                                        <span>...</span>
+                                                    </c:if>
+                                                </c:if>
+
+                                                <c:if test="${currentPage > 1}">
+                                                    <a href="refundlist?page=${currentPage - 1}" class="btn btn-outline-primary">${currentPage - 1}</a>
+                                                </c:if>
+
+                                                <span class="btn btn-primary">${currentPage}</span>
+
+                                                <c:if test="${currentPage < totalPages}">
+                                                    <a href="refundlist?page=${currentPage + 1}" class="btn btn-outline-primary">${currentPage + 1}</a>
+                                                </c:if>
+
+                                                <c:if test="${currentPage < totalPages - 1}">
+                                                    <c:if test="${currentPage < totalPages - 2}">
+                                                        <span>...</span>
+                                                    </c:if>
+                                                    <a href="refundlist?page=${totalPages}" class="btn btn-outline-primary">${totalPages}</a>
+                                                </c:if>
+
+                                                <c:if test="${currentPage < totalPages}">
+                                                    <a href="refundlist?page=${totalPages}" class="btn btn-primary">Next</a>
+                                                </c:if>
+
+                                                <div class="mt-2">
+                                                    Page ${currentPage} of ${totalPages}
+                                                </div>
+                                            </div>
                         <div class="modal fade" id="passengerInfoModal" tabindex="-1" aria-labelledby="passengerInfoModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
