@@ -127,7 +127,7 @@ public class LoginController extends HttpServlet {
                 response.addCookie(user);
                 response.addCookie(pass);
 
-                switch (role) { //1. case 1 for admin page // 2. case 2 for ticket manager page //3. case 3 for passenger Page
+                switch (role) {
                     case 1 ->
                         response.sendRedirect("BanAccount");
                     case 2 ->
@@ -139,7 +139,7 @@ public class LoginController extends HttpServlet {
                         response.sendRedirect("feedback");
                     case 5 ->
                         //Role ID 5 o day
-                        response.sendRedirect("userprofile");
+                        response.sendRedirect("tm/trains");
 
                 }
             }
