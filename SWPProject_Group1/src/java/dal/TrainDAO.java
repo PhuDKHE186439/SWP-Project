@@ -149,39 +149,41 @@ public class TrainDAO extends DBContext {
             String sql;
 
             if (ngayVe != null && !ngayVe.trim().isEmpty()) {
-                // Trường hợp khứ hồi
-                Date ngayVeDate = dateFormat.parse(ngayVe);
+    // Trường hợp khứ hồi
+    Date ngayVeDate = dateFormat.parse(ngayVe);
 
-                // Validate ngày về phải sau ngày đi
-                if (ngayVeDate.before(ngayDiDate)) {
-                    throw new IllegalArgumentException("Ngày về phải sau ngày đi");
-                }
+    // Validate ngày về phải sau ngày đi
+    if (ngayVeDate.before(ngayDiDate)) {
+        throw new IllegalArgumentException("Ngày về phải sau ngày đi");
+    }
 
-                sql = """
-                  SELECT t.*, 
-                         l1.LocationName AS StartLocationName, 
-                         l1.Description AS StartLocationDescription,
-                         l2.LocationName AS ArrivalLocationName, 
-                         l2.Description AS ArrivalLocationDescription 
-                  FROM train t 
-                  LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID 
-                  LEFT JOIN location l2 ON l2.LocationID = t.ArrivalLocationID
-                  WHERE t.TrainScheduleTime BETWEEN ? AND ?
-                  AND t.StartLocationID = ? or t.ArrivalLocationID = ?
-                  AND t.ArrivalLocationID = ? or t.StartLocationID = ?
-                  AND t.NumberOfSeat > 0
-                  ORDER BY t.TrainScheduleTime ASC
-                  """;
+    sql = """
+        SELECT t.*, 
+               l1.LocationName AS StartLocationName, 
+               l1.Description AS StartLocationDescription,
+               l2.LocationName AS ArrivalLocationName, 
+               l2.Description AS ArrivalLocationDescription 
+        FROM train t
+        LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID
+        LEFT JOIN location l2 ON l2.LocationID = t.ArrivalLocationID
+        WHERE DATE(t.TrainScheduleTime) = ? 
+           OR DATE(t.TrainScheduleTime) = ?
+        AND (
+            (t.StartLocationID = ? AND t.ArrivalLocationID = ?) 
+            OR (t.StartLocationID = ? AND t.ArrivalLocationID = ?)
+        )
+        AND t.NumberOfSeat > 0
+        ORDER BY t.TrainScheduleTime ASC
+    """;
 
-                st = connection.prepareStatement(sql);
-                st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
-                st.setDate(2, new java.sql.Date(ngayVeDate.getTime()));
-                st.setDate(3, new java.sql.Date(ngayDiDate.getTime()));
-                st.setDate(4, new java.sql.Date(ngayVeDate.getTime()));
-                st.setInt(5, gaDiInt);
-                st.setInt(6, gaDenInt);
-
-            } else {
+    st = connection.prepareStatement(sql);
+    st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
+    st.setDate(2, new java.sql.Date(ngayVeDate.getTime()));
+    st.setInt(3, gaDiInt);
+    st.setInt(4, gaDenInt);
+    st.setInt(5, gaDenInt);
+    st.setInt(6, gaDiInt);
+} else {
                 // Trường hợp một chiều
                 sql = """
                   SELECT t.*, 
