@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import model.ticket;
 import model.train;
@@ -76,6 +77,8 @@ public class refundc extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+                HttpSession session = request.getSession();
+
         String ticketidParam = request.getParameter("ticketid");
         String passengeridParam = request.getParameter("passengerid");
         String message = request.getParameter("refundMessage").replaceAll("\\s+", " ").trim();
@@ -83,23 +86,29 @@ public class refundc extends HttpServlet {
         TrainDAO trainDAO = new TrainDAO();
         TicketDAO ticketDAO = new TicketDAO();
         try {
-            int ticketID = Integer.parseInt(ticketidParam);
-            ticket ticketRequest = ticketDAO.getTicketbyTicketID(ticketID);
-            train trainTicket = trainDAO.getAllTrainByID(ticketRequest.getSeat().getCompartment().getTrain().getTrainID());
-            LocalDate refundreqdate = LocalDate.now();
-            LocalDate trainDate = LocalDate.parse(trainTicket.getTrainScheduleTime());
-            LocalDate twoDaysBefore = trainDate.minusDays(2);
-            int passsengerID = Integer.parseInt(passengeridParam);
-            if (refundreqdate.isBefore(twoDaysBefore)) {
-                dao.AddRefundRequest(passsengerID, ticketID, 1, message, 75);
-            } else if (refundreqdate.isAfter(trainDate)) {
-                dao.AddRefundRequest(passsengerID, ticketID, 1, message, 25);
-            } else {
-                dao.AddRefundRequest(passsengerID, ticketID, 1, message, 50);
+            if (message.isEmpty()) {
+                session.setAttribute("mess", "Cannt Enter Empty Message");
+                response.sendRedirect("userprofile");
 
+            } else {
+                int ticketID = Integer.parseInt(ticketidParam);
+                ticket ticketRequest = ticketDAO.getTicketbyTicketID(ticketID);
+                train trainTicket = trainDAO.getAllTrainByID(ticketRequest.getSeat().getCompartment().getTrain().getTrainID());
+                LocalDate refundreqdate = LocalDate.now();
+                LocalDate trainDate = LocalDate.parse(trainTicket.getTrainScheduleTime());
+                LocalDate twoDaysBefore = trainDate.minusDays(2);
+                int passsengerID = Integer.parseInt(passengeridParam);
+                if (refundreqdate.isBefore(twoDaysBefore)) {
+                    dao.AddRefundRequest(passsengerID, ticketID, 1, message, 75);
+                } else if (refundreqdate.isAfter(trainDate)) {
+                    dao.AddRefundRequest(passsengerID, ticketID, 1, message, 25);
+                } else {
+                    dao.AddRefundRequest(passsengerID, ticketID, 1, message, 50);
+
+                }
+                session.setAttribute("mess", "Request sent!");
+                response.sendRedirect("userprofile");
             }
-            request.setAttribute("announment", "Request sent!");
-            response.sendRedirect("userprofile");
         } catch (Exception e) {
         }
     }

@@ -63,4 +63,54 @@ public class RefundDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public List<refundRequest> getRefundPaging(int currentPage, int recordsPerPage) {
+        List<refundRequest> list = new ArrayList<>();
+
+        // Build dynamic SQL query based on search terms
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM trainproject.refundrequest");
+
+        // Add pagination
+        sqlBuilder.append(" LIMIT ?, ?");
+
+        try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
+            int paramIndex = 1;
+            // Set pagination parameters
+            st.setInt(paramIndex++, (currentPage - 1) * recordsPerPage);
+            st.setInt(paramIndex, recordsPerPage);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new refundRequest(rs.getInt("refundID"), rs.getInt("passengerID"), rs.getInt("ticketid"), rs.getInt("status"), rs.getString("message"),rs.getInt("refundpercent")));
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getFeedbackBySearchAndSort: " + e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<refundRequest> getRefundPagingstatus(int status, int currentPage, int recordsPerPage) {
+        List<refundRequest> list = new ArrayList<>();
+
+        // Build dynamic SQL query based on search terms
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM trainproject.refundrequest where status = ?");
+
+        // Add pagination
+        sqlBuilder.append(" LIMIT ?, ?");
+
+        try (PreparedStatement st = connection.prepareStatement(sqlBuilder.toString())) {
+            int paramIndex = 1;
+            // Set pagination parameters
+            st.setInt(paramIndex++, status);
+            st.setInt(paramIndex++, (currentPage - 1) * recordsPerPage);
+            st.setInt(paramIndex, recordsPerPage);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new refundRequest(rs.getInt("refundID"), rs.getInt("passengerID"), rs.getInt("ticketid"), rs.getInt("status"), rs.getString("message"),rs.getInt("refundpercent")));
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getFeedbackBySearchAndSort: " + e.getMessage());
+        }
+        return list;
+    }
 }

@@ -97,17 +97,20 @@ public class RegisterController extends HttpServlet {
                     request.setAttribute("annoutment", "Username Already Exsits");
                     checkusername = true;
                     request.getRequestDispatcher("register.jsp").forward(request, response);
-                } else {
-                    if (email.equals(o.getEmail())) {
-                        request.setAttribute("annoutment", "Email already registered");
-                        checkusername = true;
-                        request.getRequestDispatcher("register.jsp").forward(request, response);
-                    } else if (username.contains(" ")) {
-                        request.setAttribute("annoutment", "username cannot Contain White-Space Characters");
-                        checkusername = true;
-                        request.getRequestDispatcher("register.jsp").forward(request, response);
-                    }
+                } else if (email.equals(o.getEmail())) {
+                    request.setAttribute("annoutment", "Email already registered");
+                    checkusername = true;
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                } else if (username.contains(" ")) {
+                    request.setAttribute("annoutment", "username cannot Contain White-Space Characters");
+                    checkusername = true;
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                } else if(phone.equals(o.getPhoneNumber())){
+                    request.setAttribute("annoutment", "Phone Number is already Registered");
+                    checkusername = true;
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
                 }
+
             }
             if (!password.endsWith(repassword)) {
                 request.setAttribute("annoutment", "Password and Re-Type Passsword does not match!");

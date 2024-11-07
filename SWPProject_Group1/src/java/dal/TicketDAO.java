@@ -73,11 +73,8 @@ public class TicketDAO extends DBContext {
                      left join compartment cm on s.compartmentID = cm.CompartmentID 
                      left join train tr on tr.TrainID=cm.TrainID 
                      left join location l on l.LocationID = tr.StartLocationID 
-                     left join location z on z.LocationID = tr.ArrivalLocationID Where Status = ?""";
-        if (key != null && !key.isEmpty()) {
-            sql += " AND TicketPrice LIKE ?";
-        }
-        sql += " LIMIT ? OFFSET ?;";
+                     left join location z on z.LocationID = tr.ArrivalLocationID Where t.Status = ?""";
+
         try (PreparedStatement st = connection.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -99,7 +96,7 @@ public class TicketDAO extends DBContext {
 
     public int countByCondition(String key, int status) {
         String sql = " SELECT count(*) FROM trainproject.ticket "
-                + " WHERE status = ?";
+                + " WHERE Status = ?";
         if (key != null && !key.isEmpty()) {
             sql += " and TicketPrice like ?";
         }
@@ -215,7 +212,7 @@ public class TicketDAO extends DBContext {
                      left join compartment cm on s.compartmentID = cm.CompartmentID 
                      left join train tr on tr.TrainID=cm.TrainID 
                      left join location l on l.LocationID = tr.StartLocationID 
-                     left join location z on z.LocationID = tr.ArrivalLocationID  Where Status = ?""";
+                     left join location z on z.LocationID = tr.ArrivalLocationID  Where t.Status = ?""";
 
         PreparedStatement st = connection.prepareStatement(sql);
         st.setInt(1, status);
@@ -318,5 +315,6 @@ public class TicketDAO extends DBContext {
 
     public static void main(String[] args) throws SQLException {
         TicketDAO ticketDAO = new TicketDAO();
+        ticketDAO.getAllTicket(1);
     }
 }

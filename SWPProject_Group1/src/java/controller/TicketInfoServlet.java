@@ -77,7 +77,6 @@ public class TicketInfoServlet extends HttpServlet {
         }
 
         // Call DAO to retrieve passenger information
-        AccountDAO dao = new AccountDAO();
         TicketDAO ticketDAO = new TicketDAO();
         ticket ticket = ticketDAO.getTicketbyTicketID(TicketID);
 
@@ -88,6 +87,7 @@ public class TicketInfoServlet extends HttpServlet {
             htmlResponse.append("<div><strong>Ticket Price</strong> ").append(ticket.getTicketPrice()).append("</div>");
             htmlResponse.append("<div><strong>Status</strong> ").append(ticket.getStatus()==1? "Available":"Traveled").append("</div>");
             htmlResponse.append("<div><strong>Ticket Class</strong> ").append(ticket.getTicketClass().getCategoryName()).append("</div>");
+            htmlResponse.append("<div><strong>Ticket Prices</strong> ").append(ticket.getTicketPrice()).append("</div>");
 
             // Add more fields as necessary
 

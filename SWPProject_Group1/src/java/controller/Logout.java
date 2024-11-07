@@ -60,6 +60,7 @@ public class Logout extends HttpServlet {
         session.removeAttribute("AccID");
         session.removeAttribute("account");
         session.removeAttribute("cart");
+                session.removeAttribute("mess");
 
         response.sendRedirect("login.jsp");
     }
