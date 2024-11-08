@@ -393,14 +393,7 @@ public ticket getTicketByCodeAndPhone(String ticketCode, String phone) {
         TicketDAO ticketDAO = new TicketDAO();
         
         // Fetch the ticket
-        ticket ticket = ticketDAO.getTicketByCodeAndPhone(ticketCode, phone);
-        
-        // Check if a ticket was found and print the result
-        if (ticket != null) {
-            System.out.println("Ticket found: " + ticket);
-        } else {
-            System.out.println("No ticket found with the provided ticket code and phone number.");
-        }
+        ticketDAO.CreateTicket(1, "000000000", 1, "2000-11-11", 0);
     }
 }
 
