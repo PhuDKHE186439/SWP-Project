@@ -124,133 +124,133 @@ public class TrainDAO extends DBContext {
 
     //tu day la phan cua Hung
     public List<train> getTrains(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
-        List<train> list = new ArrayList<>();
+    List<train> list = new ArrayList<>();
 
-        // Validate input parameters
-        if (ngayDi == null || ngayDi.trim().isEmpty()) {
-            throw new IllegalArgumentException("Ngày đi không được để trống");
-        }
-        if (gaDi == null || gaDi.trim().isEmpty()) {
-            throw new IllegalArgumentException("Ga đi không được để trống");
-        }
-        if (gaDen == null || gaDen.trim().isEmpty()) {
-            throw new IllegalArgumentException("Ga đến không được để trống");
-        }
+    // Validate input parameters
+    if (ngayDi == null || ngayDi.trim().isEmpty()) {
+        throw new IllegalArgumentException("Ngày đi không được để trống");
+    }
+    if (gaDi == null || gaDi.trim().isEmpty()) {
+        throw new IllegalArgumentException("Ga đi không được để trống");
+    }
+    if (gaDen == null || gaDen.trim().isEmpty()) {
+        throw new IllegalArgumentException("Ga đến không được để trống");
+    }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        PreparedStatement st = null;
-        ResultSet rs = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    PreparedStatement st = null;
+    ResultSet rs = null;
 
-        try {
-            Date ngayDiDate = dateFormat.parse(ngayDi);
-            int gaDiInt = Integer.parseInt(gaDi);
-            int gaDenInt = Integer.parseInt(gaDen);
+    try {
+        Date ngayDiDate = dateFormat.parse(ngayDi);
+        int gaDiInt = Integer.parseInt(gaDi);
+        int gaDenInt = Integer.parseInt(gaDen);
 
-            String sql;
+        String sql;
 
-            if (ngayVe != null && !ngayVe.trim().isEmpty()) {
-                // Trường hợp khứ hồi
-                Date ngayVeDate = dateFormat.parse(ngayVe);
+        if (ngayVe != null && !ngayVe.trim().isEmpty()) {
+            // Trường hợp khứ hồi
+            Date ngayVeDate = dateFormat.parse(ngayVe);
 
-                // Validate ngày về phải sau ngày đi
-                if (ngayVeDate.before(ngayDiDate)) {
-                    throw new IllegalArgumentException("Ngày về phải sau ngày đi");
-                }
+            // Validate ngày về phải sau ngày đi
+            if (ngayVeDate.before(ngayDiDate)) {
+                throw new IllegalArgumentException("Ngày về phải sau ngày đi");
+            }
 
-                sql = """
+            sql = """
                   SELECT t.*, 
                          l1.LocationName AS StartLocationName, 
                          l1.Description AS StartLocationDescription,
                          l2.LocationName AS ArrivalLocationName, 
-                         l2.Description AS ArrivalLocationDescription 
-                  FROM train t 
-                  LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID 
+                         l2.Description AS ArrivalLocationDescription
+                  FROM train t
+                  LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID
                   LEFT JOIN location l2 ON l2.LocationID = t.ArrivalLocationID
-                  WHERE t.TrainScheduleTime BETWEEN ? AND ?
-                  AND t.StartLocationID = ? or t.ArrivalLocationID = ?
-                  AND t.ArrivalLocationID = ? or t.StartLocationID = ?
+                  WHERE DATE(t.TrainScheduleTime) = ?
+                     OR DATE(t.TrainScheduleTime) = ?
+                  AND ((t.StartLocationID = ? AND t.ArrivalLocationID = ?)
+                       OR (t.StartLocationID = ? AND t.ArrivalLocationID = ?))
                   AND t.NumberOfSeat > 0
                   ORDER BY t.TrainScheduleTime ASC
                   """;
 
-                st = connection.prepareStatement(sql);
-                st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
-                st.setDate(2, new java.sql.Date(ngayVeDate.getTime()));
-                st.setDate(3, new java.sql.Date(ngayDiDate.getTime()));
-                st.setDate(4, new java.sql.Date(ngayVeDate.getTime()));
-                st.setInt(5, gaDiInt);
-                st.setInt(6, gaDenInt);
-
-            } else {
-                // Trường hợp một chiều
-                sql = """
+            st = connection.prepareStatement(sql);
+            st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
+            st.setDate(2, new java.sql.Date(ngayVeDate.getTime()));
+            st.setInt(3, gaDiInt);
+            st.setInt(4, gaDenInt);
+            st.setInt(5, gaDenInt);
+            st.setInt(6, gaDiInt);
+        } else {
+            // Trường hợp một chiều
+            sql = """
                   SELECT t.*, 
                          l1.LocationName AS StartLocationName, 
                          l1.Description AS StartLocationDescription,
                          l2.LocationName AS ArrivalLocationName, 
-                         l2.Description AS ArrivalLocationDescription 
-                  FROM train t 
-                  LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID 
+                         l2.Description AS ArrivalLocationDescription
+                  FROM train t
+                  LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID
                   LEFT JOIN location l2 ON l2.LocationID = t.ArrivalLocationID
                   WHERE DATE(t.TrainScheduleTime) = ?
-                  AND t.StartLocationID = ? 
+                  AND t.StartLocationID = ?
                   AND t.ArrivalLocationID = ?
                   AND t.NumberOfSeat > 0
                   ORDER BY t.TrainScheduleTime ASC
                   """;
 
-                st = connection.prepareStatement(sql);
-                st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
-                st.setInt(2, gaDiInt);
-                st.setInt(3, gaDenInt);
-            }
-
-            rs = st.executeQuery();
-
-            while (rs.next()) {
-                train t = new train(
-                        rs.getInt("TrainID"),
-                        rs.getString("TrainScheduleTime"),
-                        rs.getString("TrainName"),
-                        rs.getInt("NumberOfSeat"),
-                        new location(
-                                rs.getInt("StartLocationID"),
-                                rs.getString("StartLocationName"),
-                                rs.getString("StartLocationDescription")
-                        ),
-                        new location(
-                                rs.getInt("ArrivalLocationID"),
-                                rs.getString("ArrivalLocationName"),
-                                rs.getString("ArrivalLocationDescription")
-                        )
-                );
-                list.add(t);
-            }
-
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Định dạng ngày không hợp lệ: " + e.getMessage(), e);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Định dạng ID ga không hợp lệ: " + e.getMessage(), e);
-        } finally {
-            // Đóng các resource
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (st != null) {
-                try {
-                    st.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            st = connection.prepareStatement(sql);
+            st.setDate(1, new java.sql.Date(ngayDiDate.getTime()));
+            st.setInt(2, gaDiInt);
+            st.setInt(3, gaDenInt);
         }
 
-        return list;
+        rs = st.executeQuery();
+
+        while (rs.next()) {
+            train t = new train(
+                    rs.getInt("TrainID"),
+                    rs.getString("TrainScheduleTime"),
+                    rs.getString("TrainName"),
+                    rs.getInt("NumberOfSeat"),
+                    new location(
+                            rs.getInt("StartLocationID"),
+                            rs.getString("StartLocationName"),
+                            rs.getString("StartLocationDescription")
+                    ),
+                    new location(
+                            rs.getInt("ArrivalLocationID"),
+                            rs.getString("ArrivalLocationName"),
+                            rs.getString("ArrivalLocationDescription")
+                    )
+            );
+            list.add(t);
+        }
+
+    } catch (ParseException e) {
+        throw new IllegalArgumentException("Định dạng ngày không hợp lệ: " + e.getMessage(), e);
+    } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("Định dạng ID ga không hợp lệ: " + e.getMessage(), e);
+    } finally {
+        // Đóng các resource
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (st != null) {
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+    return list;
+}
 
     public List<location> searchLocations(String keyword) {
         List<location> list = new ArrayList<>();
@@ -291,14 +291,14 @@ public class TrainDAO extends DBContext {
     }
 
     public TrainSearchResult getTrainsRoundTrip(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
-        // Get outbound trains (from gaDi to gaDen on ngayDi)
-        List<train> outboundTrains = getTrains(ngayDi, null, gaDi, gaDen);
+    // Get outbound trains (from gaDi to gaDen on ngayDi)
+    List<train> outboundTrains = getTrains(ngayDi, null, gaDi, gaDen);
 
-        // Get return trains (from gaDen to gaDi on ngayVe)
-        List<train> returnTrains = getTrains(ngayVe, null, gaDen, gaDi);
+    // Get return trains (from gaDen to gaDi on ngayVe)
+    List<train> returnTrains = getTrains(ngayVe, null, gaDen, gaDi);
 
-        return new TrainSearchResult(outboundTrains, returnTrains);
-    }
+    return new TrainSearchResult(outboundTrains, returnTrains);
+}
 
     public List<ticket> getTickets(String ngayDi, String ngayVe) throws SQLException {
         List<ticket> list = new ArrayList<>();
