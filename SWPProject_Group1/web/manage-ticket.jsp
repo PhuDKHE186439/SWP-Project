@@ -88,37 +88,6 @@
                     </a>
                     <a href="#" class="sidebar-toggler flex-shrink-0">
                         <i class="fa fa-bars"></i>
-                    </a>
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search">
-                    </form>
-                    <div class="navbar-nav align-items-center ms-auto">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                                <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Message</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle me-lg-2" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all message</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" >
-                                <i class="fa fa-bell me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Notificatin</span>
-                            </a>
                             
                         </div>
                         <div class="nav-item dropdown">
@@ -147,8 +116,8 @@
                             <div class="d-flex align-items-center">
                                 <select id="searchCriteria" class="form-select" onchange="location = this.value;" 
                                         aria-label="Search Criteria" style="width: auto; margin-right: 10px;">
-                                    <option value="manage-ticket?status=0" ${status eq 0 ? "Selected" : ""}>Trống</option>
-                                    <option value="manage-ticket?status=1" ${status eq 1 ? "Selected" : ""}>Đã Đặt</option>
+                                    <option value="manage-ticket?status=0" ${status eq 0 ? "Selected" : ""}>Not confirm</option>
+                                    <option value="manage-ticket?status=1" ${status eq 1 ? "Selected" : ""}>Confirmed</option>
                                 </select>
                                 <form action="manage-ticket" method="get">
                                     <input type="text" id="searchInput" name="key" value="${key}" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
@@ -187,12 +156,12 @@
                                             <td>
                                                 <c:if test="${c.status == 0}">
                                                     <div class="row">
-                                                        <a onclick="return confirm('Xác nhận?')" href="approve-ticket?ticket_id=${c.ticketID}&value=1" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Xác nhận</a>
+                                                        <a onclick="return confirm('Confirm?')" href="approve-ticket?ticket_id=${c.ticketID}&value=1" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Confirm</a>
                                                     </div>
                                                 </c:if>
                                                 <c:if test="${c.status == 1}">
                                                     <div class="row">
-                                                        <a onclick="return confirm('Hủy?')" href="approve-ticket?ticket_id=${c.ticketID}&value=0" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Hủy</a>
+                                                        <a onclick="return confirm('Decline?')" href="approve-ticket?ticket_id=${c.ticketID}&value=0" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Decline</a>
                                                     </div>
                                                 </c:if>
                                             </td>
