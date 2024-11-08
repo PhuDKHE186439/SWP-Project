@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import model.ticket;
 import model.train;
 
@@ -59,6 +61,8 @@ public class refundc extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final List<String> badword = Arrays.asList("fuck", "bitch", "dmm", "dcm", "me may");
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -77,7 +81,7 @@ public class refundc extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-                HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
         String ticketidParam = request.getParameter("ticketid");
         String passengeridParam = request.getParameter("passengerid");
@@ -85,29 +89,41 @@ public class refundc extends HttpServlet {
         RefundDAO dao = new RefundDAO();
         TrainDAO trainDAO = new TrainDAO();
         TicketDAO ticketDAO = new TicketDAO();
+        boolean checkword = false;
         try {
+
             if (message.isEmpty()) {
                 session.setAttribute("mess", "Cannt Enter Empty Message");
                 response.sendRedirect("userprofile");
 
             } else {
-                int ticketID = Integer.parseInt(ticketidParam);
-                ticket ticketRequest = ticketDAO.getTicketbyTicketID(ticketID);
-                train trainTicket = trainDAO.getAllTrainByID(ticketRequest.getSeat().getCompartment().getTrain().getTrainID());
-                LocalDate refundreqdate = LocalDate.now();
-                LocalDate trainDate = LocalDate.parse(trainTicket.getTrainScheduleTime());
-                LocalDate twoDaysBefore = trainDate.minusDays(2);
-                int passsengerID = Integer.parseInt(passengeridParam);
-                if (refundreqdate.isBefore(twoDaysBefore)) {
-                    dao.AddRefundRequest(passsengerID, ticketID, 1, message, 75);
-                } else if (refundreqdate.isAfter(trainDate)) {
-                    dao.AddRefundRequest(passsengerID, ticketID, 1, message, 25);
-                } else {
-                    dao.AddRefundRequest(passsengerID, ticketID, 1, message, 50);
-
+                for (String words : badword) {
+                    if (message.toLowerCase().contains(words.toLowerCase())) {
+                        checkword = true;
+                    }
                 }
-                session.setAttribute("mess", "Request sent!");
-                response.sendRedirect("userprofile");
+                if (checkword == true) {
+                    session.setAttribute("mess", "Please dont use Badword/Swear word in Message");
+                    response.sendRedirect("userprofile");
+                } else {
+                    int ticketID = Integer.parseInt(ticketidParam);
+                    ticket ticketRequest = ticketDAO.getTicketbyTicketID(ticketID);
+                    train trainTicket = trainDAO.getAllTrainByID(ticketRequest.getSeat().getCompartment().getTrain().getTrainID());
+                    LocalDate refundreqdate = LocalDate.now();
+                    LocalDate trainDate = LocalDate.parse(trainTicket.getTrainScheduleTime());
+                    LocalDate twoDaysBefore = trainDate.minusDays(2);
+                    int passsengerID = Integer.parseInt(passengeridParam);
+                    if (refundreqdate.isBefore(twoDaysBefore)) {
+                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 75);
+                    } else if (refundreqdate.isAfter(trainDate)) {
+                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 25);
+                    } else {
+                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 50);
+
+                    }
+                    session.setAttribute("mess", "Request sent!");
+                    response.sendRedirect("userprofile");
+                }
             }
         } catch (Exception e) {
         }

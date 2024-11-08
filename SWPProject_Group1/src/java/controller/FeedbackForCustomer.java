@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -56,6 +59,8 @@ public class FeedbackForCustomer extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final List<String> badword = Arrays.asList("fuck", "bitch", "dmm", "dcm", "me may");
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -82,8 +87,14 @@ public class FeedbackForCustomer extends HttpServlet {
         LocalDate currentDateTime = LocalDate.now();
         String feedbacktype = request.getParameter("feedbacktype");
         String message = request.getParameter("feedback").replaceAll("\\s+", " ").trim();
+        boolean checkword = false;
         if (session.getAttribute("AccID") != null) {
             try {
+                for (String words : badword) {
+                    if (message.toLowerCase().contains(words.toLowerCase())) {
+                        checkword = true;
+                    }
+                }
                 if (feedbacktype.isEmpty()) {
                     request.setAttribute("message", "Please Choose Your Type of feed");
                     request.getRequestDispatcher("MakeFeedBackForCustomer.jsp").forward(request, response);
@@ -92,7 +103,11 @@ public class FeedbackForCustomer extends HttpServlet {
                     request.setAttribute("message", "You cant sent Empty Feedback");
                     request.getRequestDispatcher("MakeFeedBackForCustomer.jsp").forward(request, response);
 
-                } else {
+                } else if (checkword == true) {
+                    request.setAttribute("message", "You cant sent Message containing bad words!");
+                    request.getRequestDispatcher("MakeFeedBackForCustomer.jsp").forward(request, response);
+
+                } else if (checkword == false) {
                     int accID = (int) session.getAttribute("AccID");
                     feedDAO.createFeedback(message, accDAO.getAccountByID(accID).getPassengerID(), currentDateTime.toString(), feedbacktype);
                     request.setAttribute("message", "Feedback has been Sent");
