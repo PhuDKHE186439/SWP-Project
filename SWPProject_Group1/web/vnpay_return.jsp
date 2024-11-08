@@ -101,7 +101,34 @@
                                     //send mail;Bạn
 Email e = new Email();
 account acc = (account)session.getAttribute("accInfo");
-e.sendEmail(acc.getEmail(), "Bạn đã book vé thành công, mã booking của bạn là #123456");
+e.sendEmail2(acc.getEmail(), "Bạn đã book vé thành công <br>" +" <div class=\"form-group\">\n" +
+"                    <label >Mã giao dịch thanh toán:</label>\n" +
+"                    <label>" + request.getParameter("vnp_TxnRef")+"</label>\n" +
+"                </div>    \n" +
+"                <div class=\"form-group\">\n" +
+"                    <label >Số tiền:</label>\n" +
+"                    <label>" + request.getParameter("vnp_Amount").substring(0,request.getParameter("vnp_Amount").length()-2)+ "</label>\n" +
+"                </div>  \n" +
+"                <div class=\"form-group\">\n" +
+"                    <label >Mô tả giao dịch:</label>\n" +
+"                    <label>"+request.getParameter("vnp_OrderInfo")+"</label>\n" +
+"                </div> \n" +
+"                <div class=\"form-group\">\n" +
+"                    <label >Mã lỗi thanh toán:</label>\n" +
+"                    <label>"+request.getParameter("vnp_ResponseCode")+"</label>\n" +
+"                </div> \n" +
+"                <div class=\"form-group\">\n" +
+"                    <label >Mã giao dịch tại CTT VNPAY-QR:</label>\n" +
+"                    <label>"+request.getParameter("vnp_TransactionNo")+"</label>\n" +
+"                </div> \n" +
+"                <div class=\"form-group\">\n" +
+"                    <label >Mã ngân hàng thanh toán:</label>\n" +
+"                    <label>"+request.getParameter("vnp_BankCode")+"</label>\n" +
+"                </div> \n" +
+"                <div class=\"form-group\">\n" +
+"                    <label >Thời gian thanh toán:</label>\n" +
+"                    <label>"+request.getParameter("vnp_PayDate")+"</label>\n" +
+"                </div> ");
 
                                      List<cartinfo> cart = (List<cartinfo>) session.getAttribute("cart");
                                       for (cartinfo cart1 : cart) {
@@ -112,7 +139,7 @@ e.sendEmail(acc.getEmail(), "Bạn đã book vé thành công, mã booking của
             sdao.updateStatusSeat(cart1.getSeat().getSeatID(), 0);
                            ticketDAO.CreateTicket(cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000", cart1.getSeat().getSeatID(), cart1.getSeat().getCompartment().getTrain().getTrainScheduleTime(), cart1.getSeat().getSeatType().equals("Economy") ? 2 : 1);
             ticketDAO.CreatePayment(ticketDAO.getNewestTicketCreated(cart1.getAcc().getPassengerID()).getTicketID(), "Bank", cart1.getAcc().getPassengerID(), cart1.getSeat().getSeatType().equals("Economy") ? "10000" : "15000");
-   %><%
+                        %><%
 
             }
 //clear cart

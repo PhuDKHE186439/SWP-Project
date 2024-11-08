@@ -22,7 +22,7 @@
             <div class="row" style="display: flex;
                  justify-content: center; /* Horizontal centering */
                  align-items: center;     /* Vertical centering */
-                 height: 50vh;  ">
+                 ">
               
             <!-- Footer Start -->
     <div class="page-wrapper"> 
@@ -100,7 +100,24 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        
                     </div></div>
+                    
+                    <div class="row">
+                                <div class="col-12">
+                                    <nav aria-label="navigation">
+                                        <ul class="pagination justify-content-end mt-50" id="paging">
+                                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                                <li class="page-item ${i == pageIndex ? 'active' : ''}">
+                                                    <a href="trains-schedule?pageIndex=${i}&startID=${startID}&endID=${endID}" data-page="${i}" class="page-link">${i}</a>
+                                                </li>
+
+                                            </c:forEach>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                    
             </div>
         </div>
 

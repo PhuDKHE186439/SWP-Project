@@ -37,22 +37,40 @@ public class TrainsScheduleController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            int numberTrainPerPage = 5;
             TrainDAO trainDAO = new TrainDAO();
             LocationDAO locationDAO = new LocationDAO();
             List<location> locations = locationDAO.getAllLocation();
             String startID = request.getParameter("startID") == null ? "" : request.getParameter("startID");
             String endID = request.getParameter("endID") == null ? "" :  request.getParameter("endID");
 
-            List<train> list = trainDAO.getAllByLocation(startID, endID);
+            int totalPage = getPageSize(numberTrainPerPage, trainDAO.getAllByLocation(startID, endID, null, null).size());
+            String index = request.getParameter("pageIndex");
+            int pageIndex = 1;
+            if (index != null) {
+                pageIndex = Integer.parseInt(index);
+            }
+            List<train> list = trainDAO.getAllByLocation(startID, endID, pageIndex, numberTrainPerPage);
             request.setAttribute("list", list);
             request.setAttribute("locations", locations);
             request.setAttribute("startID", startID);
             request.setAttribute("endID", endID);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("pageIndex", pageIndex);
 
             request.getRequestDispatcher("train-passenger.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public int getPageSize(int numberProduct, int allProduct) {
+        int pageSize = allProduct / numberProduct;
+        if (allProduct % numberProduct != 0) {
+            pageSize = (allProduct / numberProduct) + 1;
+        }
+        return pageSize;
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

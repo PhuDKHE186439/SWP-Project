@@ -390,15 +390,22 @@ public class TrainDAO extends DBContext {
         return null;
     }
 
-    public List<train> getAllByLocation(String startId, String endId) {
+    public List<train> getAllByLocation(String startId, String endId, Integer pageIndex, Integer pageSize) {
         List<train> list = new ArrayList<>();
         String sql = "select * from train where `isDelete` = 0 and (? = '' or StartLocationID = ?) and (? = '' or ArrivalLocationID = ?)";
+                if(pageIndex != null && pageSize != null){
+                sql+= " order by TrainID LIMIT ?,?";
+                }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, startId);
             st.setString(2, startId);
             st.setString(3, endId);
             st.setString(4, endId);
+            if(pageIndex != null && pageSize != null){
+                st.setInt(5, pageIndex * pageSize - pageSize);
+                st.setInt(6, pageSize);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 String status = rs.getString("status");  // Thêm cột status
