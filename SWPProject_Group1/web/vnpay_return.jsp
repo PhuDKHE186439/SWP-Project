@@ -101,7 +101,7 @@
                                     //send mail;Bạn
 Email e = new Email();
 account acc = (account)session.getAttribute("accInfo");
-e.sendEmail2(acc.getEmail(), "Bạn đã book vé thành công <br>" +" <div class=\"form-group\">\n" +
+e.sendEmail2(acc.getEmail(), "BẠN ĐÃ BOOK VÉ THÀNH CÔNG <br>" +" <div class=\"form-group\">\n" +
 "                    <label >Mã giao dịch thanh toán:</label>\n" +
 "                    <label>" + request.getParameter("vnp_TxnRef")+"</label>\n" +
 "                </div>    \n" +
