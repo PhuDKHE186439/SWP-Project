@@ -151,7 +151,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
                 message = "Create new account successfully!";
                 session.setAttribute("message", message);
                 session.setAttribute("messageType", "success"); // You can use this to style the message differently
-                response.sendRedirect("Admin.jsp");
+                response.sendRedirect("BanAccount");
             }
         } catch (Exception e) {
             message = "Error creating account: " + e.getMessage();
