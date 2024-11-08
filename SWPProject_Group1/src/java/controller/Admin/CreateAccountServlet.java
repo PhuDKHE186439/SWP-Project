@@ -50,12 +50,29 @@ public class CreateAccountServlet extends HttpServlet {
     }
 
     private boolean isValidPassword(String password) {
-        return password.length() >= 8
-                && password.matches(".*[A-Z].*")
-                && password.matches(".*[a-z].*")
-                && password.matches(".*\\d.*")
-                && password.matches("[a-zA-Z0-9]+");
+    System.out.println("Checking password: " + password);
+    if (password.length() < 8) {
+        System.out.println("Password length is less than 8");
+        return false;
     }
+    if (!password.matches(".*[A-Z].*")) {
+        System.out.println("Password missing uppercase letter");
+        return false;
+    }
+    if (!password.matches(".*[a-z].*")) {
+        System.out.println("Password missing lowercase letter");
+        return false;
+    }
+    if (!password.matches(".*\\d.*")) {
+        System.out.println("Password missing digit");
+        return false;
+    }
+    if (!password.matches("[a-zA-Z0-9]+")) {
+        System.out.println("Password has special characters");
+        return false;
+    }
+    return true;
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -77,57 +94,73 @@ public class CreateAccountServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        int roleID = Integer.parseInt(request.getParameter("roleID"));
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String email = request.getParameter("email");
+    String phoneNumber = request.getParameter("phoneNumber");
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    int roleID = Integer.parseInt(request.getParameter("roleID"));
+    HttpSession session = request.getSession();
+    boolean isValid = true;
+    String message = "";
 
-        if (phoneNumber.length() !=10) {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Phone number must be 10 digits.");
-                            request.setAttribute("message", "Error creating account: Invalid Phone Format");
+    // Check phone number
+    if (phoneNumber.length() != 10) {
+        isValid = false;
+        message = "Phone number must be 10 digits.";
+        session.setAttribute("message", message);
+        request.setAttribute("message", "Error creating account: Invalid Phone Format");
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        return;
+    }
 
-            request.getRequestDispatcher("Admin.jsp").forward(request, response);
-            return;
-        }
-        if (!username.matches("[a-zA-Z0-9]+")) {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Username can only contain letters and numbers.");
-            request.getRequestDispatcher("Admin.jsp").forward(request, response);
-            request.setAttribute("message", "Error creating account: Invalid Username");
-            return;
-        }
-        if (!isValidPassword(password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
-            request.setAttribute("message", "Error creating account: Invalid Password");
-            request.getRequestDispatcher("Admin.jsp").forward(request, response);
-            return;
-        }
+    // Check username
+    if (!username.matches("[a-zA-Z0-9]+")) {
+        isValid = false;
+        message = "Username can only contain letters and numbers.";
+        session.setAttribute("message", message);
+        request.setAttribute("message", "Error creating account: Invalid Username");
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        return;
+    }
 
-        AccountDAO accountDAO = new AccountDAO();
-        if (accountDAO.accountExists(email, phoneNumber)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("message", "Account with this email or phone number already exists.");
-            request.setAttribute("message", "Error creating account: Invalid Email");
-            request.getRequestDispatcher("Admin.jsp").forward(request, response);
-        } else {
-            try {
-                accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-                HttpSession session = request.getSession();
-                session.setAttribute("message", "Account created successfully.");
+    // Check password
+    if (!isValidPassword(password)) {
+        isValid = false;
+        message = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.";
+        session.setAttribute("message", message);
+        request.setAttribute("message", "Error creating account: Invalid Password");
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        return;
+    }
+
+    AccountDAO accountDAO = new AccountDAO();
+    if (accountDAO.accountExists(email, phoneNumber)) {
+        isValid = false;
+        message = "Account with this email or phone number already exists.";
+        session.setAttribute("message", message);
+        request.setAttribute("message", "Error creating account: Invalid Email");
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+    } else {
+        try {
+            accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
+            
+            // All requirements met - set success message
+            if (isValid) {
+                message = "Create new account successfully!";
+                session.setAttribute("message", message);
+                session.setAttribute("messageType", "success"); // You can use this to style the message differently
                 response.sendRedirect("Admin.jsp");
-            } catch (Exception e) {
-                HttpSession session = request.getSession();
-                session.setAttribute("message", "Error creating account: " + e.getMessage());
-                request.setAttribute("message", "Error creating account: " + e.getMessage());
-                request.getRequestDispatcher("Admin.jsp").forward(request, response);
             }
+        } catch (Exception e) {
+            message = "Error creating account: " + e.getMessage();
+            session.setAttribute("message", message);
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
         }
     }
+}
 
     /**
      * Returns a short description of the servlet.

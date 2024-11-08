@@ -53,7 +53,7 @@
             <!-- Sidebar Start -->
             <div class="sidebar pe-4 pb-3" style="width: 330px;"> <!-- Adjust width as needed -->
                 <nav class="navbar bg-light navbar-light">
-                    <a href="/SWPProject/feedback" class="navbar-brand mx-4 mb-3" style="white-space: nowrap;"> <!-- Prevent wrapping -->
+                    <a href="/SWPProject_Group1/feedback" class="navbar-brand mx-4 mb-3" style="white-space: nowrap;"> <!-- Prevent wrapping -->
                         <h3 class="text-primary" style="display: inline; margin: 0;"> <!-- Inline display to avoid line breaks -->
                             CUSTOMER SERVICES <!-- Removed the hashtag icon -->
                         </h3>
@@ -103,7 +103,6 @@
                                 <span class="d-none d-lg-inline-flex">Customer Service</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                
                                 <a href="logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
