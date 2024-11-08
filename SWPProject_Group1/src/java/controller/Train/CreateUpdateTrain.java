@@ -36,7 +36,7 @@ public class CreateUpdateTrain extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String id = request.getParameter("id");
             String schedule = request.getParameter("schedule");
-            String name = request.getParameter("name");
+            String name = request.getParameter("name").trim().replaceAll("\\s{2,}", " ");
             String seats = request.getParameter("seats");
             String startID = request.getParameter("startID");
             String endID = request.getParameter("endID");
