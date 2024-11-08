@@ -36,14 +36,34 @@ public class ListTrainServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             TrainDAO trainDAO = new TrainDAO();
             LocationDAO locationDAO = new LocationDAO();
+            int numberTrainPerPage = 5;
+            int totalPage = getPageSize(numberTrainPerPage, trainDAO.getAllByLocation("", "", null, null).size());
+            String index = request.getParameter("pageIndex");
+            int pageIndex = 1;
+            if (index != null) {
+                pageIndex = Integer.parseInt(index);
+            }
+            List<train> list = trainDAO.getAllByLocation("", "", pageIndex, numberTrainPerPage);
+            
             List<location> locations = locationDAO.getAllLocation();
-            List<train> list = trainDAO.getAll();
+//            List<train> list = trainDAO.getAll();
             request.setAttribute("list", list);
             request.setAttribute("locations", locations);
             request.setAttribute("size", trainDAO.getSize());
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("pageIndex", pageIndex);
             request.getRequestDispatcher("../ListTrain.jsp").forward(request, response);
         }
     } 
+    
+     public int getPageSize(int numberProduct, int allProduct) {
+        int pageSize = allProduct / numberProduct;
+        if (allProduct % numberProduct != 0) {
+            pageSize = (allProduct / numberProduct) + 1;
+        }
+        return pageSize;
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
