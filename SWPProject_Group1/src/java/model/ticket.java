@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author My Asus
- */
 public class ticket {
     private int ticketID;
     private int passengerID;
@@ -18,16 +10,11 @@ public class ticket {
     private seat seat;
     private String timeArrive;
     private int Status;
+    private String TicketCode;
 
-    public int getStatus() {
-        return Status;
-    }
-
-    public void setStatus(int Status) {
-        this.Status = Status;
-    }
-
-    public ticket(int ticketID, int passengerID, ticketClass ticketClassID, String purchaseDate, double ticketPrice, seat seat, String timeArrive, int status) {
+    // Constructor cũ cần được cập nhật để bao gồm TicketCode
+    public ticket(int ticketID, int passengerID, ticketClass ticketClassID, String purchaseDate, 
+            double ticketPrice, seat seat, String timeArrive, int status) {
         this.ticketID = ticketID;
         this.passengerID = passengerID;
         this.ticketClass = ticketClassID;
@@ -36,6 +23,31 @@ public class ticket {
         this.seat = seat;
         this.timeArrive = timeArrive;
         this.Status = status;
+        this.TicketCode = ""; // Thêm giá trị mặc định cho TicketCode
+    }
+
+    // Constructor đầy đủ (đã có)
+    public ticket(int ticketID, int passengerID, ticketClass ticketClass, String purchaseDate, 
+            double ticketPrice, int compartmentID, seat seat, String timeArrive, int Status, String TicketCode) {
+        this.ticketID = ticketID;
+        this.passengerID = passengerID;
+        this.ticketClass = ticketClass;
+        this.purchaseDate = purchaseDate;
+        this.ticketPrice = ticketPrice;
+        this.compartmentID = compartmentID;
+        this.seat = seat;
+        this.timeArrive = timeArrive;
+        this.Status = Status;
+        this.TicketCode = TicketCode;
+    }
+
+    // Các getter và setter (giữ nguyên)
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
     }
 
     public int getTicketID() {
@@ -94,7 +106,6 @@ public class ticket {
         this.seat = seatID;
     }
 
-
     public String getTimeArrive() {
         return timeArrive;
     }
@@ -103,9 +114,27 @@ public class ticket {
         this.timeArrive = timeArrive;
     }
 
+    public String getTicketCode() {
+        return TicketCode;
+    }
+
+    public void setTicketCode(String TicketCode) {
+        this.TicketCode = TicketCode;
+    }
+
     @Override
     public String toString() {
-        return "ticket{" + "ticketID=" + ticketID + ", passengerID=" + passengerID + ", ticketClassID=" + ticketClass + ", purchaseDate=" + purchaseDate + ", ticketPrice=" + ticketPrice + ", compartmentID=" + compartmentID + ", seatID=" + seat  + ", timeArrive=" + timeArrive + '}';
+        return "ticket{" + 
+               "ticketID=" + ticketID + 
+               ", passengerID=" + passengerID + 
+               ", ticketClassID=" + ticketClass + 
+               ", purchaseDate=" + purchaseDate + 
+               ", ticketPrice=" + ticketPrice + 
+               ", compartmentID=" + compartmentID + 
+               ", seatID=" + seat + 
+               ", timeArrive=" + timeArrive + 
+               ", status=" + Status +
+               ", ticketCode=" + TicketCode +
+               '}';
     }
-    
 }

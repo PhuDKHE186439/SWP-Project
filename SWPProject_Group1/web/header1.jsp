@@ -57,6 +57,8 @@
                     <ul class="nav navbar-nav">
                         <li><a class="m_tag" href="home1">Home</a></li>
                         <li><a class="m_tag" href="trains-schedule">Train Schedule</a></li>
+                                                <li><a class="m_tag" href="track-ticket">Train Schedule</a></li>
+
                         <c:if test="${sessionScope.AccID!=null}">
                             <li><a class="m_tag" href="userprofile">Profile</a></li>
                         </c:if>

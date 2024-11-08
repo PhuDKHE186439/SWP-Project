@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Ticket;
 
 import dal.SeatDAO;
@@ -22,27 +18,14 @@ import model.account;
 import model.cartinfo;
 import model.seat;
 import model.train;
+import model.ticket;
 
-/**
- *
- * @author ThinkPro
- */
 public class BookingTicketController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -55,74 +38,92 @@ public class BookingTicketController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
-
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String trainID = request.getParameter("trainId");
-        String price_raw = request.getParameter("price");
-        String seatID_raw = request.getParameter("seatID");
-        String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        TrainDAO trd = new TrainDAO();
-        seat s = trd.getSeatById(Integer.parseInt(seatID_raw));
-        int cp = 1;
-        int cpn = 1;
-        if (s != null && s.getCompartment() != null) {
-            cp = s.getCompartment().getCompartmentID();
-            cpn = s.getCompartment().getCompartmentNumber();
-        }
-        HttpSession sesssion = request.getSession();
-        account acc = (account) sesssion.getAttribute("acc");
-        if (acc == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-        } else {
+        try {
+            // Lấy các tham số từ request
+            String trainID = request.getParameter("trainId");
+            String price_raw = request.getParameter("price");
+            String seatID_raw = request.getParameter("seatID");
+            String fullName = request.getParameter("fullName");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+
+            // Khởi tạo các DAO
+            TrainDAO trd = new TrainDAO();
             TicketDAO td = new TicketDAO();
-            train t = null;
-            t = trd.getAllTrainByID(Integer.parseInt(trainID));
-            int tkid = td.CreateTicket(acc.getAccountID(), price_raw, Integer.parseInt(seatID_raw),
-                    t.getTrainScheduleTime(), 1);
-//            td.CreatePayment(tkid, "Bank", price_raw, fullName, email, phone);
+
+            // Lấy thông tin ghế
+            seat s = trd.getSeatById(Integer.parseInt(seatID_raw));
+            int compartmentID = 1;
+            int compartmentNumber = 1;
+            if (s != null && s.getCompartment() != null) {
+                compartmentID = s.getCompartment().getCompartmentID();
+                compartmentNumber = s.getCompartment().getCompartmentNumber();
+            }
+
+            // Kiểm tra đăng nhập
             HttpSession session = request.getSession();
-            session.setAttribute("noti", "Đăng ký đặt vé thành công, vui lòng chờ xác nhận!");
+            account acc = (account) session.getAttribute("acc");
+            if (acc == null) {
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+
+            // Lấy thông tin tàu
+            train t = trd.getAllTrainByID(Integer.parseInt(trainID));
+            if (t == null) {
+                session.setAttribute("noti", "Không tìm thấy thông tin tàu!");
+                response.sendRedirect("home");
+                return;
+            }
+
+            // Tạo vé mới (đã bao gồm TicketCode)
+            int ticketID = td.CreateTicket(
+                acc.getAccountID(), 
+                price_raw, 
+                Integer.parseInt(seatID_raw),
+                t.getTrainScheduleTime(),
+                1  // ticketClass
+            );
+
+            if (ticketID == -1) {
+                session.setAttribute("noti", "Có lỗi xảy ra khi tạo vé!");
+                response.sendRedirect("home");
+                return;
+            }
+
+            // Lấy thông tin vé vừa tạo để hiển thị mã vé
+            ticket newTicket = td.getTicketbyTicketID(ticketID);
+            if (newTicket != null) {
+                session.setAttribute("noti", "Đăng ký đặt vé thành công! Mã vé của bạn là: " + 
+                                           newTicket.getTicketCode());
+            } else {
+                session.setAttribute("noti", "Đăng ký đặt vé thành công, vui lòng chờ xác nhận!");
+            }
+
+            response.sendRedirect("home");
+
+        } catch (NumberFormatException e) {
+            Logger.getLogger(BookingTicketController.class.getName()).log(Level.SEVERE, "Lỗi xử lý số", e);
+            request.getSession().setAttribute("noti", "Có lỗi xảy ra trong quá trình xử lý!");
+            response.sendRedirect("home");
+        } catch (Exception e) {
+            Logger.getLogger(BookingTicketController.class.getName()).log(Level.SEVERE, "Lỗi không xác định", e);
+            request.getSession().setAttribute("noti", "Có lỗi xảy ra trong quá trình xử lý!");
             response.sendRedirect("home");
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
-
+    }
 }
