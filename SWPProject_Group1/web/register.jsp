@@ -94,7 +94,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input name="age" type="tel" required="" class="form-control" pattern="[1-2]{1}[0-9]{3}" placeholder="Your Year of Birth">
+                                            <input name="age" type="date" required="" class="form-control" placeholder="Date Of Birth" max="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
                                         </div>
                                     </div>
                                 </div>

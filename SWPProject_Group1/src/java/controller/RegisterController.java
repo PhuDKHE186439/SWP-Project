@@ -116,8 +116,16 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("annoutment", "Password and Re-Type Passsword does not match!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
-            if (checkusername.equals(false) && password.equals(repassword)) {
-                passengerDAO.insertPassengerInformation(name, email, Integer.parseInt(age), address, phone);
+            if(password.length()<8){
+                request.setAttribute("annoutment", "Password Much have the lenght of 8 or more");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            if( !password.matches(".*[A-Za-z].*")){
+                request.setAttribute("annoutment", "Password much contain atleast 1 character");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            if (checkusername.equals(false) && password.equals(repassword) && password.length()>=8  && password.matches(".*[A-Za-z].*")) {
+                passengerDAO.insertPassengerInformation(name, email, age, address, phone);
                 String cryptPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                 accDAO.registerAccount(phone, username, cryptPassword, email, 3, passengerDAO.getLastPassenger().getPassengerID());
                 request.setAttribute("annoutment", "Register Successful");

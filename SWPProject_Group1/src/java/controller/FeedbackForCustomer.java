@@ -59,7 +59,7 @@ public class FeedbackForCustomer extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final List<String> badword = Arrays.asList("fuck", "bitch", "dmm", "dcm", "me may");
+    private final List<String> badword = Arrays.asList("fuck", "bitch", "dmm", "dcm", "me may","ngu","lon","oc cho");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

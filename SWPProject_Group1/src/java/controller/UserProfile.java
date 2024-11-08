@@ -107,7 +107,7 @@ public class UserProfile extends HttpServlet {
             int accountID = (int) session.getAttribute("AccID");
             try {
                 if (name != null) {
-                    passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, Integer.parseInt(age), address, phone);
+                    passDAO.updatePassengerInform(accDAO.getAccountByID(accountID).getPassengerID(), name, age, address, phone);
                 }
                 if (email != null) {
                     passDAO.updatePassengerInformEmail(accDAO.getAccountByID(accountID).getPassengerID(), email);

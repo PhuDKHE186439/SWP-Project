@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -65,7 +66,13 @@ public class ManageTicketController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        TicketDAO td = new TicketDAO();
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
+            int role = (int) session.getAttribute("account");
+            if (role != 2) {
+                request.getRequestDispatcher("login").forward(request, response);
+            } else {
+               TicketDAO td = new TicketDAO();
         try {
             //        String key = request.getParameter("key");
 //        String indexPage = request.getParameter("index");
@@ -109,6 +116,12 @@ public class ManageTicketController extends HttpServlet {
         }
 
         request.getRequestDispatcher("manage-ticket.jsp").forward(request, response);
+            }
+        } else {
+            request.getRequestDispatcher("login").forward(request, response);
+
+        }
+        
     }
 
     /**

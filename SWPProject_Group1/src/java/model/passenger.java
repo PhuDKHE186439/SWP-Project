@@ -12,11 +12,11 @@ public class passenger {
     private int passengerID;
     private String name;
     private String email;
-    private int age;
+    private String age;
     private String Address;
     private String phoneNumber;
 
-    public passenger(int passengerID, String name, String email, int age, String Address, String phoneNumber) {
+    public passenger(int passengerID, String name, String email, String age, String Address, String phoneNumber) {
         this.passengerID = passengerID;
         this.name = name;
         this.email = email;
@@ -52,11 +52,11 @@ public class passenger {
         this.email = email;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

@@ -54,7 +54,7 @@ public class PaymentDAO extends DBContext {
                                                 rs.getInt("CompartmentNumber"),
                                                 new train(rs.getInt("TrainID"),
                                                         rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"),rs.getInt("Status")),
-                        new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
+                        new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getString("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
                         rs.getString("PaymentMethod"),
                         rs.getString("PaymentDate"),
                         rs.getDouble("Amount")));
@@ -117,7 +117,7 @@ public class PaymentDAO extends DBContext {
                                                                 rs.getString("ArrivalLocationDescription")))),
                                         rs.getString("SeatNumber"), rs.getString("SeatType"),
                                         rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"),rs.getInt("Status")),
-                        new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
+                        new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getString("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
                         rs.getString("PaymentMethod"),
                         rs.getString("PaymentDate"),
                         rs.getDouble("Amount")));
