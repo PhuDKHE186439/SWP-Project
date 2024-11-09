@@ -213,17 +213,14 @@
                 <h2>Select Your Seat</h2>
 
                 <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #4CAF50;"></div>
-                        <span>Available</span>
-                    </div>
+                    
                     <div class="legend-item">
                         <div class="legend-color" style="background: #2196F3;"></div>
-                        <span>Window Seat</span>
+                        <span>First Class</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background: #9C27B0;"></div>
-                        <span>Aisle Seat</span>
+                        <span>Economy</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background: #f44336;"></div>
