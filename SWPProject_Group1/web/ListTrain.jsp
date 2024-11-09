@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="navbar-nav w-100">                        
-                        <a href="tm/trains" class="nav-item nav-link active" ><i class="fa fa-th me-2"></i>Train Manager</a>
+                        <a href="tm/trains" class="nav-item nav-link active" ><i class="fa fa-th me-2"></i>List Train</a>
                     </div>
                 </nav>
             </div>      
@@ -93,7 +93,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                                 
-                                <hr class="dropdown-divider">
+<!--                                <hr class="dropdown-divider">
                                 <a href="#" class="dropdown-item">
                                     <div class="d-flex align-items-center">
                                         <img class="rounded-circle me-lg-2" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
@@ -102,18 +102,18 @@
                                             <small>15 minutes ago</small>
                                         </div>
                                     </div>
-                                </a>
+                                </a>-->
                                 <hr class="dropdown-divider">
                                 <a href="#" class="dropdown-item text-center">See all message</a>
                             </div>
                         </div>
-                        <div class="nav-item dropdown">
+<!--                        <div class="nav-item dropdown">
                             <a href="#" class="nav-link" >
                                 <i class="fa fa-bell me-lg-2"></i>
                                 <span class="d-none d-lg-inline-flex">Notification</span>
                             </a>
                             
-                        </div>
+                        </div>-->
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <img class="rounded-circle me-lg-2" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
@@ -359,7 +359,7 @@
         <script src="assets/js/Admin.js"></script>
          <script>
                                 function confirmDelete(){
-                                    return confirm("Are you sure you want to delete this item?")
+                                    return confirm("Are you sure you want to delete this item?");
                                 }
                             </script>    
     </body>
