@@ -46,6 +46,48 @@
     </head>
 
     <style>
+        
+        .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.search-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+    border-color: #dc3545;
+}
+
+.suggestion-box {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f8f9fa;
+}
         .testimonial-section {
             display: flex;
             flex-direction: column;
@@ -372,153 +414,180 @@ window.onload = function() {
     document.getElementById('returnDate').min = today;
 };
 
-                function toggleReturnDate() {
-                    const returnDateGroup = document.getElementById('returnDateGroup');
-                    const returnDate = document.getElementById('returnDate');
-                    const isRoundTrip = document.getElementById('roundTrip').checked;
+function toggleReturnDate() {
+    const returnDateGroup = document.getElementById('returnDateGroup');
+    const returnDate = document.getElementById('returnDate');
+    const isRoundTrip = document.getElementById('roundTrip').checked;
 
-                    returnDateGroup.style.display = isRoundTrip ? 'block' : 'none';
-                    returnDate.required = isRoundTrip;
+    returnDateGroup.style.display = isRoundTrip ? 'block' : 'none';
+    returnDate.required = isRoundTrip;
 
-                    // Update return date min value when depart date changes
-                    const departDate = document.getElementById('departDate');
-                    departDate.addEventListener('change', function () {
-                        returnDate.min = this.value;
-                        if (returnDate.value && returnDate.value < this.value) {
-                            returnDate.value = this.value;
+    // Update return date min value when depart date changes
+    const departDate = document.getElementById('departDate');
+    departDate.addEventListener('change', function () {
+        returnDate.min = this.value;
+        if (returnDate.value && returnDate.value < this.value) {
+            returnDate.value = this.value;
+        }
+    });
+}
+
+function swapStations() {
+    // Swap display values
+    const departStation = document.getElementById('departStation');
+    const arrivalStation = document.getElementById('arrivalStation');
+    [departStation.value, arrivalStation.value] = [arrivalStation.value, departStation.value];
+
+    // Swap hidden ID values
+    const departStationId = document.getElementById('departStationId');
+    const arrivalStationId = document.getElementById('arrivalStationId');
+    [departStationId.value, arrivalStationId.value] = [arrivalStationId.value, departStationId.value];
+}
+
+let suggestionTimeout;
+
+function suggest(input, suggestionBoxId) {
+    clearTimeout(suggestionTimeout);
+
+    const keyword = input.value.trim();
+    const suggestionBox = document.getElementById(suggestionBoxId);
+
+    if (keyword.length < 2) {
+        suggestionBox.innerHTML = '';
+        return;
+    }
+
+    // Add loading indicator
+    suggestionBox.innerHTML = '<div class="suggestion-item">Searching...</div>';
+
+    // Delay the API call by 300ms to prevent too many requests
+    suggestionTimeout = setTimeout(() => {
+        fetch('searchLocation?keyword=' + encodeURIComponent(keyword))
+            .then(response => response.json())
+            .then(data => {
+                suggestionBox.innerHTML = '';
+                if (data.length === 0) {
+                    suggestionBox.innerHTML = '<div class="suggestion-item">No results found</div>';
+                    return;
+                }
+
+                data.forEach(location => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.textContent = location.name;
+                    div.onclick = function () {
+                        input.value = location.name;
+                        if (suggestionBoxId === 'departSuggestions') {
+                            document.getElementById('departStationId').value = location.id;
+                        } else {
+                            document.getElementById('arrivalStationId').value = location.id;
                         }
-                    });
-                }
-
-                function swapStations() {
-                    // Swap display values
-                    const departStation = document.getElementById('departStation');
-                    const arrivalStation = document.getElementById('arrivalStation');
-                    [departStation.value, arrivalStation.value] = [arrivalStation.value, departStation.value];
-
-                    // Swap hidden ID values
-                    const departStationId = document.getElementById('departStationId');
-                    const arrivalStationId = document.getElementById('arrivalStationId');
-                    [departStationId.value, arrivalStationId.value] = [arrivalStationId.value, departStationId.value];
-                }
-
-                let suggestionTimeout;
-
-                function suggest(input, suggestionBoxId) {
-                    clearTimeout(suggestionTimeout);
-
-                    const keyword = input.value.trim();
-                    const suggestionBox = document.getElementById(suggestionBoxId);
-
-                    if (keyword.length < 2) {
                         suggestionBox.innerHTML = '';
-                        return;
-                    }
-
-                    // Add loading indicator
-                    suggestionBox.innerHTML = '<div class="suggestion-item">Đang tìm kiếm...</div>';
-
-                    // Delay the API call by 300ms to prevent too many requests
-                    suggestionTimeout = setTimeout(() => {
-                        fetch('searchLocation?keyword=' + encodeURIComponent(keyword))
-                                .then(response => response.json())
-                                .then(data => {
-                                    suggestionBox.innerHTML = '';
-                                    if (data.length === 0) {
-                                        suggestionBox.innerHTML = '<div class="suggestion-item">Không tìm thấy kết quả</div>';
-                                        return;
-                                    }
-
-                                    data.forEach(location => {
-                                        const div = document.createElement('div');
-                                        div.className = 'suggestion-item';
-                                        div.textContent = location.name;
-                                        div.onclick = function () {
-                                            input.value = location.name;
-                                            if (suggestionBoxId === 'departSuggestions') {
-                                                document.getElementById('departStationId').value = location.id;
-                                            } else {
-                                                document.getElementById('arrivalStationId').value = location.id;
-                                            }
-                                            suggestionBox.innerHTML = '';
-                                        };
-                                        suggestionBox.appendChild(div);
-                                    });
-                                })
-                                .catch(error => {
-                                    suggestionBox.innerHTML = '<div class="suggestion-item">Có lỗi xảy ra</div>';
-                                    console.error('Error:', error);
-                                });
-                    }, 300);
-                }
-
-                // Close suggestion box when clicking outside
-                document.addEventListener('click', function (e) {
-                    if (!e.target.matches('.form-control')) {
-                        document.querySelectorAll('.suggestion-box').forEach(box => {
-                            box.innerHTML = '';
-                        });
-                    }
+                    };
+                    suggestionBox.appendChild(div);
                 });
+            })
+            .catch(error => {
+                suggestionBox.innerHTML = '<div class="suggestion-item">An error occurred</div>';
+                console.error('Error:', error);
+            });
+    }, 300);
+}
 
-                function validateForm() {
-                    let isValid = true;
-                    const departStationId = document.getElementById('departStationId').value;
-                    const arrivalStationId = document.getElementById('arrivalStationId').value;
-                    const departDate = document.getElementById('departDate').value;
-                    const isRoundTrip = document.getElementById('roundTrip').checked;
-                    const returnDate = document.getElementById('returnDate').value;
+// Close suggestion box when clicking outside
+document.addEventListener('click', function (e) {
+    if (!e.target.matches('.form-control')) {
+        document.querySelectorAll('.suggestion-box').forEach(box => {
+            box.innerHTML = '';
+        });
+    }
+});
 
-                    // Reset previous errors
-                    document.querySelectorAll('.error-message').forEach(el => el.remove());
-                    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+function validateForm() {
+    let isValid = true;
+    const departStationId = document.getElementById('departStationId').value;
+    const arrivalStationId = document.getElementById('arrivalStationId').value;
+    const departDate = document.getElementById('departDate').value;
+    const isRoundTrip = document.getElementById('roundTrip').checked;
+    const returnDate = document.getElementById('returnDate').value;
 
-                    // Validate departure station
-                    if (!departStationId) {
-                        showError('departStation', 'Vui lòng chọn ga đi');
-                        isValid = false;
-                    }
+    // Reset previous errors
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
 
-                    // Validate arrival station
-                    if (!arrivalStationId) {
-                        showError('arrivalStation', 'Vui lòng chọn ga đến');
-                        isValid = false;
-                    }
+    // Validate departure station
+    if (!departStationId) {
+        showError('departStation', 'Please select departure station');
+        isValid = false;
+    }
 
-                    // Validate stations are different
-                    if (departStationId && arrivalStationId && departStationId === arrivalStationId) {
-                        showError('arrivalStation', 'Ga đi và ga đến không được trùng nhau');
-                        isValid = false;
-                    }
+    // Validate arrival station
+    if (!arrivalStationId) {
+        showError('arrivalStation', 'Please select arrival station');
+        isValid = false;
+    }
 
-                    // Validate departure date
-                    if (!departDate) {
-                        showError('departDate', 'Vui lòng chọn ngày đi');
-                        isValid = false;
-                    }
+    // Validate stations are different
+    if (departStationId && arrivalStationId && departStationId === arrivalStationId) {
+        showError('arrivalStation', 'Departure and arrival stations cannot be the same');
+        isValid = false;
+    }
 
-                    // Validate return date for round trip
-                    if (isRoundTrip) {
-                        if (!returnDate) {
-                            showError('returnDate', 'Vui lòng chọn ngày về');
-                            isValid = false;
-                        } else if (returnDate < departDate) {
-                            showError('returnDate', 'Ngày về phải sau ngày đi');
-                            isValid = false;
-                        }
-                    }
+    // Validate departure date
+    if (!departDate) {
+        showError('departDate', 'Please select departure date');
+        isValid = false;
+    }
 
-                    return isValid;
+    // Validate return date for round trip
+    if (isRoundTrip) {
+        if (!returnDate) {
+            showError('returnDate', 'Please select return date');
+            isValid = false;
+        } else if (returnDate < departDate) {
+            showError('returnDate', 'Return date must be after departure date');
+            isValid = false;
+        }
+    }
+
+    // If the form is valid, show loading message
+    if (isValid) {
+        const searchForm = document.getElementById('trainSearchForm');
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'search-loading';
+        loadingDiv.innerHTML = '<p>Searching for available trains...</p>';
+        searchForm.appendChild(loadingDiv);
+
+        // Handle no results after search
+        fetch('trains?' + new URLSearchParams(new FormData(searchForm)))
+            .then(response => response.json())
+            .then(data => {
+                if (!data || data.length === 0) {
+                    showError('searchResults', 'No trains found for the selected route and dates. Please try different dates or stations.');
+                    return false;
                 }
+            })
+            .catch(error => {
+                showError('searchResults', 'An error occurred while searching for trains. Please try again.');
+                console.error('Error:', error);
+                return false;
+            })
+            .finally(() => {
+                loadingDiv.remove();
+            });
+    }
 
-                function showError(inputId, message) {
-                    const input = document.getElementById(inputId);
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.textContent = message;
-                    input.parentNode.appendChild(errorDiv);
-                    input.parentNode.classList.add('error');
-                }
+    return isValid;
+}
+
+function showError(inputId, message) {
+    const input = document.getElementById(inputId);
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    input.parentNode.appendChild(errorDiv);
+    input.parentNode.classList.add('error');
+}
 
             </script>
             <!-- Js Plugins -->

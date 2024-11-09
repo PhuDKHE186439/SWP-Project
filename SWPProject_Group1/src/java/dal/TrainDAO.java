@@ -126,15 +126,15 @@ public class TrainDAO extends DBContext {
     public List<train> getTrains(String ngayDi, String ngayVe, String gaDi, String gaDen) throws SQLException {
     List<train> list = new ArrayList<>();
 
-    // Validate input parameters
+    // Validate input parameters with English error messages
     if (ngayDi == null || ngayDi.trim().isEmpty()) {
-        throw new IllegalArgumentException("Ngày đi không được để trống");
+        throw new IllegalArgumentException("Departure date cannot be empty");
     }
     if (gaDi == null || gaDi.trim().isEmpty()) {
-        throw new IllegalArgumentException("Ga đi không được để trống");
+        throw new IllegalArgumentException("Departure station cannot be empty");
     }
     if (gaDen == null || gaDen.trim().isEmpty()) {
-        throw new IllegalArgumentException("Ga đến không được để trống");
+        throw new IllegalArgumentException("Arrival station cannot be empty");
     }
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -149,12 +149,12 @@ public class TrainDAO extends DBContext {
         String sql;
 
         if (ngayVe != null && !ngayVe.trim().isEmpty()) {
-            // Trường hợp khứ hồi
+            // Round trip case
             Date ngayVeDate = dateFormat.parse(ngayVe);
 
-            // Validate ngày về phải sau ngày đi
+            // Validate return date must be after departure date
             if (ngayVeDate.before(ngayDiDate)) {
-                throw new IllegalArgumentException("Ngày về phải sau ngày đi");
+                throw new IllegalArgumentException("Return date must be after departure date");
             }
 
             sql = """
@@ -166,11 +166,12 @@ public class TrainDAO extends DBContext {
                   FROM train t
                   LEFT JOIN location l1 ON l1.LocationID = t.StartLocationID
                   LEFT JOIN location l2 ON l2.LocationID = t.ArrivalLocationID
-                  WHERE DATE(t.TrainScheduleTime) = ?
-                     OR DATE(t.TrainScheduleTime) = ?
+                  WHERE (DATE(t.TrainScheduleTime) = ?
+                     OR DATE(t.TrainScheduleTime) = ?)
                   AND ((t.StartLocationID = ? AND t.ArrivalLocationID = ?)
                        OR (t.StartLocationID = ? AND t.ArrivalLocationID = ?))
                   AND t.NumberOfSeat > 0
+                  AND t.Status = 'active'
                   ORDER BY t.TrainScheduleTime ASC
                   """;
 
@@ -182,7 +183,7 @@ public class TrainDAO extends DBContext {
             st.setInt(5, gaDenInt);
             st.setInt(6, gaDiInt);
         } else {
-            // Trường hợp một chiều
+            // One-way trip case
             sql = """
                   SELECT t.*, 
                          l1.LocationName AS StartLocationName, 
@@ -196,6 +197,7 @@ public class TrainDAO extends DBContext {
                   AND t.StartLocationID = ?
                   AND t.ArrivalLocationID = ?
                   AND t.NumberOfSeat > 0
+                  AND t.Status = 'active'
                   ORDER BY t.TrainScheduleTime ASC
                   """;
 
@@ -228,11 +230,11 @@ public class TrainDAO extends DBContext {
         }
 
     } catch (ParseException e) {
-        throw new IllegalArgumentException("Định dạng ngày không hợp lệ: " + e.getMessage(), e);
+        throw new IllegalArgumentException("Invalid date format: " + e.getMessage(), e);
     } catch (NumberFormatException e) {
-        throw new IllegalArgumentException("Định dạng ID ga không hợp lệ: " + e.getMessage(), e);
+        throw new IllegalArgumentException("Invalid station ID format: " + e.getMessage(), e);
     } finally {
-        // Đóng các resource
+        // Close resources
         if (rs != null) {
             try {
                 rs.close();
