@@ -95,11 +95,11 @@
                                             <td>${item.numberOfSeat}</td>
                                             <td>${item.status}</td>
                                             <c:if test="${item.status != 'Active'}">
-                                                <td><a href="#" class="btn btn-primary">Booking</a></td>
-                                            </c:if>
-                                                <c:if test="${item.status == 'Active'}">
-                                                <td><a href="trains?tripType=oneWay&ngayDi=${item.trainScheduleTime}&ngayVe=&l1=${item.startLocationID}&l2=${item.arrivalLocationID}" class="btn btn-primary">Booking</a></td>
-                                            </c:if>
+    <td><span class="btn btn-danger" style="pointer-events: none; opacity: 0.65;">Booking</span></td>
+</c:if>
+<c:if test="${item.status == 'Active'}">
+    <td><a href="trains?tripType=oneWay&ngayDi=${item.trainScheduleTime}&ngayVe=&l1=${item.startLocationID}&l2=${item.arrivalLocationID}" class="btn btn-primary">Booking</a></td>
+</c:if>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
