@@ -69,121 +69,110 @@ public class CreateAccountServlet extends HttpServlet {
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    // Trim all input fields to remove leading and trailing spaces
-    String email = request.getParameter("email").trim();
-    String phoneNumber = request.getParameter("phoneNumber").trim();
-    String username = request.getParameter("username").trim();
-    String password = request.getParameter("password").trim();
-    int roleID = Integer.parseInt(request.getParameter("roleID"));
-    HttpSession session = request.getSession();
-    boolean isValid = true;
-    String message = "";
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String email = request.getParameter("email").trim();
+        String phoneNumber = request.getParameter("phoneNumber").trim();
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
+        int roleID = Integer.parseInt(request.getParameter("roleID"));
+        HttpSession session = request.getSession();
+        boolean isValid = true;
+        String message = "";
 
-    // Check for empty fields after trimming
-    if (email.isEmpty() || phoneNumber.isEmpty() || username.isEmpty() || password.isEmpty()) {
-        isValid = false;
-        message = "All fields are required.";
-        session.setAttribute("message", message);
-        request.setAttribute("message", "Error creating account: Empty Fields");
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
-        return;
-    }
-
-    // Check phone number
-    if (phoneNumber.length() != 10) {
-        isValid = false;
-        message = "Phone number must be 10 digits.";
-        session.setAttribute("message", message);
-        request.setAttribute("message", "Error creating account: Invalid Phone Format");
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
-        return;
-    }
-
-    // Check username (after trimming)
-    if (!username.matches("[a-zA-Z0-9]+")) {
-        isValid = false;
-        message = "Username can only contain letters and numbers.";
-        session.setAttribute("message", message);
-        request.setAttribute("message", "Error creating account: Invalid Username");
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
-        return;
-    }
-
-    // Check password (after trimming)
-    if (!isValidPassword(password)) {
-        isValid = false;
-        message = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.";
-        session.setAttribute("message", message);
-        request.setAttribute("message", "Error creating account: Invalid Password");
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
-        return;
-    }
-
-    AccountDAO accountDAO = new AccountDAO();
-    if (accountDAO.accountExists(email, phoneNumber)) {
-        isValid = false;
-        message = "Account with this email or phone number already exists.";
-        session.setAttribute("message", message);
-        request.setAttribute("message", "Error creating account: Invalid Email");
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
-    } else {
-        try {
-            accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
-            
-            // All requirements met - set success message
-            if (isValid) {
-                message = "Create new account successfully!";
-                session.setAttribute("message", message);
-                session.setAttribute("messageType", "success");
-                response.sendRedirect("BanAccount");
-            }
-        } catch (Exception e) {
-            message = "Error creating account: " + e.getMessage();
+        if (email.isEmpty() || phoneNumber.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            isValid = false;
+            message = "All fields are required.";
             session.setAttribute("message", message);
-            request.setAttribute("message", message);
+            request.setAttribute("message", "Error creating account: Empty Fields");
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            return;
+        }
+        if (phoneNumber.length() != 10) {
+            isValid = false;
+            message = "Phone number must be 10 digits.";
+            session.setAttribute("message", message);
+            request.setAttribute("message", "Error creating account: Invalid Phone Format");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            return;
+        }
+        if (!username.matches("[a-zA-Z0-9]+")) {
+            isValid = false;
+            message = "Username can only contain letters and numbers.";
+            session.setAttribute("message", message);
+            request.setAttribute("message", "Error creating account: Invalid Username");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            return;
+        }
+        if (!isValidPassword(password)) {
+            isValid = false;
+            message = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.";
+            session.setAttribute("message", message);
+            request.setAttribute("message", "Error creating account: Invalid Password");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            return;
+        }
+
+        AccountDAO accountDAO = new AccountDAO();
+        if (accountDAO.accountExists(email, phoneNumber)) {
+            isValid = false;
+            message = "Account with this email or phone number already exists.";
+            session.setAttribute("message", message);
+            request.setAttribute("message", "Error creating account: Invalid Email");
+            request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        } else {
+            try {
+                accountDAO.registerAccountAD(phoneNumber, username, password, email, roleID);
+                if (isValid) {
+                    message = "Create new account successfully!";
+                    session.setAttribute("message", message);
+                    session.setAttribute("messageType", "success");
+                    response.sendRedirect("BanAccount");
+                }
+            } catch (Exception e) {
+                message = "Error creating account: " + e.getMessage();
+                session.setAttribute("message", message);
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("Admin.jsp").forward(request, response);
+            }
         }
     }
-}
 
-private boolean isValidPassword(String password) {
-    System.out.println("Checking password: " + password);
-    // Password is already trimmed before being passed to this method
-    
-    if (password.length() < 8) {
-        System.out.println("Password length is less than 8");
-        return false;
+    private boolean isValidPassword(String password) {
+        System.out.println("Checking password: " + password);
+
+        if (password.length() < 8) {
+            System.out.println("Password length is less than 8");
+            return false;
+        }
+
+        if (password.contains(" ")) {
+            System.out.println("Password contains spaces");
+            return false;
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            System.out.println("Password missing uppercase letter");
+            return false;
+        }
+
+        if (!password.matches(".*[a-z].*")) {
+            System.out.println("Password missing lowercase letter");
+            return false;
+        }
+
+        if (!password.matches(".*\\d.*")) {
+            System.out.println("Password missing digit");
+            return false;
+        }
+
+        if (!password.matches("[a-zA-Z0-9]+")) {
+            System.out.println("Password has special characters");
+            return false;
+        }
+
+        return true;
     }
-    
-    if (password.contains(" ")) {
-        System.out.println("Password contains spaces");
-        return false;
-    }
-    
-    if (!password.matches(".*[A-Z].*")) {
-        System.out.println("Password missing uppercase letter");
-        return false;
-    }
-    
-    if (!password.matches(".*[a-z].*")) {
-        System.out.println("Password missing lowercase letter");
-        return false;
-    }
-    
-    if (!password.matches(".*\\d.*")) {
-        System.out.println("Password missing digit");
-        return false;
-    }
-    
-    if (!password.matches("[a-zA-Z0-9]+")) {
-        System.out.println("Password has special characters");
-        return false;
-    }
-    
-    return true;
-}
 
     /**
      * Returns a short description of the servlet.
