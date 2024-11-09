@@ -413,7 +413,7 @@ public ticket getTicketByCodeAndPhone(String ticketCode, String phone) {
         TicketDAO ticketDAO = new TicketDAO();
         
         // Fetch the ticket
-        System.out.println(ticketDAO.getTicketByPassengerID(7));
+        System.out.println(ticketDAO.generateTicketCode(1, 1, 2));
     }
 }
 
