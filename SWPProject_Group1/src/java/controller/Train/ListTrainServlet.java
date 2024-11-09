@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.location;
 import model.train;
@@ -76,7 +77,19 @@ public class ListTrainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
+            int role = (int) session.getAttribute("account");
+            if (role != 5) {
+                response.sendRedirect(request.getContextPath()+"/login");
+            } else {
+               processRequest(request, response);
+            }
+        } else {
+            response.sendRedirect(request.getContextPath()+"/login");
+
+        }
     } 
 
     /** 
