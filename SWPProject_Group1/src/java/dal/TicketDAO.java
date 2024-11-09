@@ -265,22 +265,42 @@ public class TicketDAO extends DBContext {
 
 // Thêm phương thức mới để tạo TicketCode
 private String generateTicketCode(int accountID, int seatID, int ticketClass) {
-    // Lấy timestamp hiện tại
-    long timestamp = System.currentTimeMillis();
+    // Get current timestamp
+    java.util.Calendar cal = java.util.Calendar.getInstance();
     
-    // Format: TKyyMMddXXX where:
-    // TK: prefix cho Ticket
-    // yyMMdd: năm, tháng, ngày
-    // XXX: 3 số cuối được tạo từ combination của accountID, seatID và ticketClass
+    // Format different components:
+    // TK: prefix (2 chars)
+    // YYMMDDHHmmss: timestamp (12 chars)
+    // ACC: last 2 digits of accountID (2 chars)
+    // S: last 2 digits of seatID (2 chars)
+    // C: ticketClass (1 char)
+    // R: random char to ensure uniqueness (1 char)
     
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyMMdd");
-    String dateStr = sdf.format(new java.util.Date());
+    // Format date and time components
+    String year = String.format("%02d", cal.get(java.util.Calendar.YEAR) % 100);
+    String month = String.format("%02d", cal.get(java.util.Calendar.MONTH) + 1);
+    String day = String.format("%02d", cal.get(java.util.Calendar.DAY_OF_MONTH));
+    String hour = String.format("%02d", cal.get(java.util.Calendar.HOUR_OF_DAY));
+    String minute = String.format("%02d", cal.get(java.util.Calendar.MINUTE));
+    String second = String.format("%02d", cal.get(java.util.Calendar.SECOND));
     
-    // Tạo 3 số cuối bằng cách kết hợp các ID
-    String uniqueEnd = String.format("%03d", (accountID + seatID + ticketClass) % 1000);
+    // Format account, seat and class components
+    String accStr = String.format("%02d", accountID % 100);
+    String seatStr = String.format("%02d", seatID % 100);
+    String classStr = String.format("%d", ticketClass % 10);
     
-    // Kết hợp tất cả để tạo mã 10 ký tự
-    String ticketCode = "TK" + dateStr + uniqueEnd;
+    // Generate a random character (A-Z)
+    char randomChar = (char) ('A' + Math.random() * 26);
+    
+    // Combine all components to create the 20-character code
+    // Format: TK + YYMMDDHHmmss + ACC + S + C + R
+    String ticketCode = String.format("TK%s%s%s%s%s%s%s%s%s%c",
+            year, month, day,     // Date (6 chars)
+            hour, minute, second, // Time (6 chars)
+            accStr,              // Account (2 chars)
+            seatStr,             // Seat (2 chars)
+            classStr,            // Class (1 char)
+            randomChar);         // Random char (1 char)
     
     return ticketCode;
 }
