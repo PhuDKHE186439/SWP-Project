@@ -42,7 +42,6 @@
                     <label for="bankCode" style="margin-right: 20px;">Thanh toán qua thẻ quốc tế</label>
                     <br>
                 </div>
-                
                 <button type="submit" class="btn btn-default" style="background-color: #5bc0de; color: #fff; border: none; padding: 10px 20px; border-radius: 5px;">Thanh toán</button>
             </form>
         </div>

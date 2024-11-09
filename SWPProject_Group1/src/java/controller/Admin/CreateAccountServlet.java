@@ -49,31 +49,6 @@ public class CreateAccountServlet extends HttpServlet {
         }
     }
 
-    private boolean isValidPassword(String password) {
-    System.out.println("Checking password: " + password);
-    if (password.length() < 8) {
-        System.out.println("Password length is less than 8");
-        return false;
-    }
-    if (!password.matches(".*[A-Z].*")) {
-        System.out.println("Password missing uppercase letter");
-        return false;
-    }
-    if (!password.matches(".*[a-z].*")) {
-        System.out.println("Password missing lowercase letter");
-        return false;
-    }
-    if (!password.matches(".*\\d.*")) {
-        System.out.println("Password missing digit");
-        return false;
-    }
-    if (!password.matches("[a-zA-Z0-9]+")) {
-        System.out.println("Password has special characters");
-        return false;
-    }
-    return true;
-}
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -96,14 +71,25 @@ public class CreateAccountServlet extends HttpServlet {
     @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    String email = request.getParameter("email");
-    String phoneNumber = request.getParameter("phoneNumber");
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
+    // Trim all input fields to remove leading and trailing spaces
+    String email = request.getParameter("email").trim();
+    String phoneNumber = request.getParameter("phoneNumber").trim();
+    String username = request.getParameter("username").trim();
+    String password = request.getParameter("password").trim();
     int roleID = Integer.parseInt(request.getParameter("roleID"));
     HttpSession session = request.getSession();
     boolean isValid = true;
     String message = "";
+
+    // Check for empty fields after trimming
+    if (email.isEmpty() || phoneNumber.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        isValid = false;
+        message = "All fields are required.";
+        session.setAttribute("message", message);
+        request.setAttribute("message", "Error creating account: Empty Fields");
+        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        return;
+    }
 
     // Check phone number
     if (phoneNumber.length() != 10) {
@@ -115,7 +101,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         return;
     }
 
-    // Check username
+    // Check username (after trimming)
     if (!username.matches("[a-zA-Z0-9]+")) {
         isValid = false;
         message = "Username can only contain letters and numbers.";
@@ -125,7 +111,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         return;
     }
 
-    // Check password
+    // Check password (after trimming)
     if (!isValidPassword(password)) {
         isValid = false;
         message = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.";
@@ -150,7 +136,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             if (isValid) {
                 message = "Create new account successfully!";
                 session.setAttribute("message", message);
-                session.setAttribute("messageType", "success"); // You can use this to style the message differently
+                session.setAttribute("messageType", "success");
                 response.sendRedirect("BanAccount");
             }
         } catch (Exception e) {
@@ -160,6 +146,43 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             request.getRequestDispatcher("Admin.jsp").forward(request, response);
         }
     }
+}
+
+private boolean isValidPassword(String password) {
+    System.out.println("Checking password: " + password);
+    // Password is already trimmed before being passed to this method
+    
+    if (password.length() < 8) {
+        System.out.println("Password length is less than 8");
+        return false;
+    }
+    
+    if (password.contains(" ")) {
+        System.out.println("Password contains spaces");
+        return false;
+    }
+    
+    if (!password.matches(".*[A-Z].*")) {
+        System.out.println("Password missing uppercase letter");
+        return false;
+    }
+    
+    if (!password.matches(".*[a-z].*")) {
+        System.out.println("Password missing lowercase letter");
+        return false;
+    }
+    
+    if (!password.matches(".*\\d.*")) {
+        System.out.println("Password missing digit");
+        return false;
+    }
+    
+    if (!password.matches("[a-zA-Z0-9]+")) {
+        System.out.println("Password has special characters");
+        return false;
+    }
+    
+    return true;
 }
 
     /**
