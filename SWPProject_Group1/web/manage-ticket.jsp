@@ -16,7 +16,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Ticket Manager</title>
+        <title>DASHMIN - Bootstrap Admin Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -57,16 +57,16 @@
             <!-- Sidebar Start -->
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
-                    <a href="#" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Manager</h3>
+                    <a href="index.html" class="navbar-brand mx-4 mb-3">
+                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">
-                            <img class="rounded-circle me-lg-2" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
                             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                         </div>
                         <div class="ms-3">
-                            <h6 class="mb-0">Ticket Manager</h6>
+                            <h6 class="mb-0">Jhon Doe</h6>
                             <span>Admin</span>
                         </div>
                     </div>
@@ -88,11 +88,77 @@
                     </a>
                     <a href="#" class="sidebar-toggler flex-shrink-0">
                         <i class="fa fa-bars"></i>
-                            
+                    </a>
+                    <form class="d-none d-md-flex ms-4">
+                        <input class="form-control border-0" type="search" placeholder="Search">
+                    </form>
+                    <div class="navbar-nav align-items-center ms-auto">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fa fa-envelope me-lg-2"></i>
+                                <span class="d-none d-lg-inline-flex">Message</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item text-center">See all message</a>
+                            </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src="bssets/img/user2.png" alt="" style="width: 40px; height: 40px;">
+                                <i class="fa fa-bell me-lg-2"></i>
+                                <span class="d-none d-lg-inline-flex">Notificatin</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href="#" class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">Profile updated</h6>
+                                    <small>15 minutes ago</small>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">New user added</h6>
+                                    <small>15 minutes ago</small>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">Password changed</h6>
+                                    <small>15 minutes ago</small>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item text-center">See all notifications</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                 <span class="d-none d-lg-inline-flex">Ticket Manager</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -116,8 +182,8 @@
                             <div class="d-flex align-items-center">
                                 <select id="searchCriteria" class="form-select" onchange="location = this.value;" 
                                         aria-label="Search Criteria" style="width: auto; margin-right: 10px;">
-                                    <option value="manage-ticket?status=0" ${status eq 0 ? "Selected" : ""}>Not confirm</option>
-                                    <option value="manage-ticket?status=1" ${status eq 1 ? "Selected" : ""}>Confirmed</option>
+                                    <option value="manage-ticket?status=0" ${status eq 0 ? "Selected" : ""}>Trống</option>
+                                    <option value="manage-ticket?status=1" ${status eq 1 ? "Selected" : ""}>Đã Đặt</option>
                                 </select>
                                 <form action="manage-ticket" method="get">
                                     <input type="text" id="searchInput" name="key" value="${key}" placeholder="Search..." class="form-control" style="width: auto; margin-right: 10px;">
@@ -156,12 +222,12 @@
                                             <td>
                                                 <c:if test="${c.status == 0}">
                                                     <div class="row">
-                                                        <a onclick="return confirm('Confirm?')" href="approve-ticket?ticket_id=${c.ticketID}&value=1" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Confirm</a>
+                                                        <a onclick="return confirm('Xác nhận?')" href="approve-ticket?ticket_id=${c.ticketID}&value=1" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Xác nhận</a>
                                                     </div>
                                                 </c:if>
                                                 <c:if test="${c.status == 1}">
                                                     <div class="row">
-                                                        <a onclick="return confirm('Decline?')" href="approve-ticket?ticket_id=${c.ticketID}&value=0" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Decline</a>
+                                                        <a onclick="return confirm('Hủy?')" href="approve-ticket?ticket_id=${c.ticketID}&value=0" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" style="font-size: 12px">Hủy</a>
                                                     </div>
                                                 </c:if>
                                             </td>
