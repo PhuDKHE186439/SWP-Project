@@ -42,15 +42,7 @@
                     <label for="bankCode" style="margin-right: 20px;">Thanh toán qua thẻ quốc tế</label>
                     <br>
                 </div>
-                <div class="form-group">
-                    <h5 style="margin-top: 20px; color: #f0ad4e;">Chọn ngôn ngữ giao diện thanh toán:</h5>
-                    <input type="radio" id="language" Checked="True" name="language" value="vn">
-                    <label for="language" style="margin-right: 20px;">Tiếng việt</label>
-                    <br>
-                    <input type="radio" id="language" name="language" value="en">
-                    <label for="language" style="margin-right: 20px;">Tiếng anh</label>
-                    <br>
-                </div>
+                
                 <button type="submit" class="btn btn-default" style="background-color: #5bc0de; color: #fff; border: none; padding: 10px 20px; border-radius: 5px;">Thanh toán</button>
             </form>
         </div>
