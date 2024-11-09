@@ -36,7 +36,7 @@ public class ListTrainServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             TrainDAO trainDAO = new TrainDAO();
             LocationDAO locationDAO = new LocationDAO();
-            int numberTrainPerPage = 5;
+            int numberTrainPerPage = 10;
             int totalPage = getPageSize(numberTrainPerPage, trainDAO.getAllByLocation("", "", null, null).size());
             String index = request.getParameter("pageIndex");
             int pageIndex = 1;
