@@ -158,6 +158,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>TicketID</th>
+                                                        <th>TicketCode</th>
                                                         <th>TicketClass</th>
                                                         <<th>Train</th>
                                                         <th>Compartment</th>
@@ -173,6 +174,7 @@
                                                     <c:forEach var="i" items="${requestScope.CustomerHistory}">
                                                         <tr>
                                                             <td>${i.ticket.ticketID}</td>
+                                                            <td>${i.ticket.ticketCode}</td>
                                                             <td>${i.ticket.ticketClass.categoryName}</td>
                                                             <td>${i.ticket.seat.compartment.train.trainName}</td>
                                                             <td>${i.ticket.seat.compartment.compartmentNumber}</td>
@@ -380,7 +382,7 @@
             margin: 10px;         /* Space outside the box */
             border-radius: 5px;   /* Optional: rounded corners */
             background-color: #f9f9f9;
-            width: 900px;           /* Set the desired width */
+            width: 1050px;           /* Set the desired width */
             height: 500px;/* Optional: background color */
         }
         :root {

@@ -114,12 +114,9 @@ public class refundc extends HttpServlet {
                     LocalDate twoDaysBefore = trainDate.minusDays(2);
                     int passsengerID = Integer.parseInt(passengeridParam);
                     if (refundreqdate.isBefore(twoDaysBefore)) {
-                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 75);
-                    } else if (refundreqdate.isAfter(trainDate)) {
-                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 25);
+                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 40);
                     } else {
-                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 50);
-
+                        dao.AddRefundRequest(passsengerID, ticketID, 1, message, 25);
                     }
                     session.setAttribute("mess", "Request sent!");
                     response.sendRedirect("userprofile");

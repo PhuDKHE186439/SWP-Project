@@ -364,7 +364,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
                                 contentDiv.innerHTML = 'Loading passenger information...';
 
-                                fetch('viewPassengerInfo?passengerID=' + passengerID)
+                                fetch('passengerInfo?passengerID=' + passengerID)
                                         .then(response => {
                                             if (!response.ok) {
                                                 throw new Error('HTTP error ' + response.status);

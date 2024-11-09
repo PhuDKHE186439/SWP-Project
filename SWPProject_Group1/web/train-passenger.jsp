@@ -23,103 +23,107 @@
                  justify-content: center; /* Horizontal centering */
                  align-items: center;     /* Vertical centering */
                  ">
-              
-            <!-- Footer Start -->
-    <div class="page-wrapper"> 
-                <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="dash_nav-bar w-nav"></div>
-                <div class="dash_content">
-                    <div class="dash_header">
-                        <div>
-                            <h1 class="dash_h1">Trains Schedule</h1>
-                        </div>
 
-                    </div>
-                    <form action="trains-schedule" method="get">
-                        <div style="display: flex; margin-bottom: 20px;align-items: flex-end;">
+                <!-- Footer Start -->
+                <div class="page-wrapper"> 
+                    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="dash_nav-bar w-nav"></div>
+                    <div class="dash_content">
+                        <div class="dash_header">
                             <div>
-                                <label for="recipient-seats" class="col-form-label">Location Start</label>
-                                <select name="startID" class="form-control">
-                                    <option value="">All</option>
-                                <c:forEach items="${locations}" var="i">
-                                    <option value="${i.locationID}" ${startID == i.locationID ? 'selected' : ''}>${i.locationName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div style="margin-left: 16px">
-                            <label for="recipient-seats" class="col-form-label">Location End</label>
-                            <select name="endID" class="form-control">
-                                <option value="">All</option>
-                                <c:forEach items="${locations}" var="i">
-                                    <option value="${i.locationID}" ${endID == i.locationID ? 'selected' : ''}>${i.locationName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <div style="margin-left: 16px">
-                            <button type="submit" class="btn btn_get btn_get_two" class="form-control">Search</button>
-                        </div>
-
-                    </div>
-                </form>
-                <div class="dash_contain">
-                    <div class="relative">
-                        
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Schedule Time</th>
-                                    <th>Name</th>
-                                    <th>Location Start</th>
-                                    <th>Location Arrival</th>
-                                    <th>Start Time</th>
-                                    <th>Estimated End Time</th>
-                                    <th>Number Of Carriages</th>
-                                    <th>Number Of Seats</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${list}" var="item">
-                                    <tr>
-                                        <td>${item.trainID}</td>
-                                        <td>${item.trainScheduleTime}</td>
-                                        <td>${item.trainName}</td>
-                                        <td>${item.startLocation.locationName}</td>
-                                        <td>${item.arrivalLocation.locationName}</td>
-
-                                        <td>${item.startTime}</td>
-                                        <td>${item.estimatedEndTime}</td>
-                                        <td>${item.numberOfCarriages}</td>
-                                        <td>${item.numberOfSeat}</td>
-                                        <td>${item.status}</td>
-                                        <td><a href="trains?tripType=oneWay&ngayDi=${item.trainScheduleTime}&ngayVe=&l1=${item.startLocationID}&l2=${item.arrivalLocationID}" class="btn btn-primary">Booking</a></td>
-
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        
-                    </div></div>
-                    
-                    <div class="row">
-                                <div class="col-12">
-                                    <nav aria-label="navigation">
-                                        <ul class="pagination justify-content-end mt-50" id="paging">
-                                            <c:forEach begin="1" end="${totalPage}" var="i">
-                                                <li class="page-item ${i == pageIndex ? 'active' : ''}">
-                                                    <a href="trains-schedule?pageIndex=${i}&startID=${startID}&endID=${endID}" data-page="${i}" class="page-link">${i}</a>
-                                                </li>
-
-                                            </c:forEach>
-                                        </ul>
-                                    </nav>
-                                </div>
+                                <h1 class="dash_h1">Trains Schedule</h1>
                             </div>
-                    
+
+                        </div>
+                        <form action="trains-schedule" method="get">
+                            <div style="display: flex; margin-bottom: 20px;align-items: flex-end;">
+                                <div>
+                                    <label for="recipient-seats" class="col-form-label">Location Start</label>
+                                    <select name="startID" class="form-control">
+                                        <option value="">All</option>
+                                    <c:forEach items="${locations}" var="i">
+                                        <option value="${i.locationID}" ${startID == i.locationID ? 'selected' : ''}>${i.locationName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div style="margin-left: 16px">
+                                <label for="recipient-seats" class="col-form-label">Location End</label>
+                                <select name="endID" class="form-control">
+                                    <option value="">All</option>
+                                    <c:forEach items="${locations}" var="i">
+                                        <option value="${i.locationID}" ${endID == i.locationID ? 'selected' : ''}>${i.locationName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <div style="margin-left: 16px">
+                                <button type="submit" class="btn btn_get btn_get_two" class="form-control">Search</button>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="dash_contain">
+                        <div class="relative">
+
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Schedule Time</th>
+                                        <th>Name</th>
+                                        <th>Location Start</th>
+                                        <th>Location Arrival</th>
+                                        <th>Start Time</th>
+                                        <th>Estimated End Time</th>
+                                        <th>Number Of Carriages</th>
+                                        <th>Number Of Seats</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${list}" var="item">
+                                        <tr>
+                                            <td>${item.trainID}</td>
+                                            <td>${item.trainScheduleTime}</td>
+                                            <td>${item.trainName}</td>
+                                            <td>${item.startLocation.locationName}</td>
+                                            <td>${item.arrivalLocation.locationName}</td>
+
+                                            <td>${item.startTime}</td>
+                                            <td>${item.estimatedEndTime}</td>
+                                            <td>${item.numberOfCarriages}</td>
+                                            <td>${item.numberOfSeat}</td>
+                                            <td>${item.status}</td>
+                                            <c:if test="${item.status != 'Active'}">
+                                                <td><a href="#" class="btn btn-primary">Booking</a></td>
+                                            </c:if>
+                                                <c:if test="${item.status == 'Active'}">
+                                                <td><a href="trains?tripType=oneWay&ngayDi=${item.trainScheduleTime}&ngayVe=&l1=${item.startLocationID}&l2=${item.arrivalLocationID}" class="btn btn-primary">Booking</a></td>
+                                            </c:if>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+                        </div></div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <nav aria-label="navigation">
+                                <ul class="pagination justify-content-end mt-50" id="paging">
+                                    <c:forEach begin="1" end="${totalPage}" var="i">
+                                        <li class="page-item ${i == pageIndex ? 'active' : ''}">
+                                            <a href="trains-schedule?pageIndex=${i}&startID=${startID}&endID=${endID}" data-page="${i}" class="page-link">${i}</a>
+                                        </li>
+
+                                    </c:forEach>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
 
             <!-- Footer End -->

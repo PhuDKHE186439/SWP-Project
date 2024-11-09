@@ -161,7 +161,7 @@ public class TicketDAO extends DBContext {
                         new seat(rs.getInt("SeatID"),
                                 new compartment(rs.getInt("CompartmentID"),
                                         rs.getInt("CompartmentNumber"),
-                                        new train(rs.getInt("TrainID"), rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"), rs.getInt("Status")));
+                                        new train(rs.getInt("TrainID"), rs.getString("TrainScheduleTime"), rs.getString("TrainName"), rs.getInt("NumberOfSeat"), new location(rs.getInt("StartLocationID"), rs.getString("StartLocationName"), rs.getString("StartLocationDescription")), new location(rs.getInt("ArrivalLocationID"), rs.getString("ArrivalLocationName"), rs.getString("ArrivalLocationDescription")))), rs.getString("SeatNumber"), rs.getString("SeatType"), rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"), rs.getInt("Status"),rs.getString("TicketCode")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -413,7 +413,7 @@ public ticket getTicketByCodeAndPhone(String ticketCode, String phone) {
         TicketDAO ticketDAO = new TicketDAO();
         
         // Fetch the ticket
-        ticketDAO.CreateTicket(1, "000000000", 1, "2000-11-11", 0);
+        System.out.println(ticketDAO.getTicketByPassengerID(7));
     }
 }
 

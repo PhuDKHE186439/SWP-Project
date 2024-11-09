@@ -11,8 +11,8 @@ import java.io.IOException;
 import model.account;
 import model.passenger;
 
-@WebServlet("/viewPassengerInfo")
-public class PassengerInfoServlet extends HttpServlet {
+@WebServlet("/passengerInfo")
+public class passengerInfo extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +45,6 @@ public class PassengerInfoServlet extends HttpServlet {
             htmlResponse.append("<div><strong>Name:</strong> ").append(passenger.getName()).append("</div>");
             htmlResponse.append("<div><strong>Email:</strong> ").append(passenger.getEmail()).append("</div>");
             htmlResponse.append("<div><strong>Phone:</strong> ").append(passenger.getPhoneNumber()).append("</div>");
-          htmlResponse.append("<div><strong>Age:</strong> ").append(passenger.getAge()).append("</div>");
 
             // Add more fields as necessary
 

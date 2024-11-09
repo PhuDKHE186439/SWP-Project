@@ -116,7 +116,7 @@ public class PaymentDAO extends DBContext {
                                                                 rs.getString("ArrivalLocationName"),
                                                                 rs.getString("ArrivalLocationDescription")))),
                                         rs.getString("SeatNumber"), rs.getString("SeatType"),
-                                        rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"),rs.getInt("Status")),
+                                        rs.getInt("AvailabilityStatus")), rs.getString("TimeArrive"),rs.getInt("Status"),rs.getString("TicketCode")),
                         new passenger(PassengerID, rs.getString("Name"), rs.getString("Email"), rs.getString("Age"), rs.getString("Address"), rs.getString("PhoneNumber")),
                         rs.getString("PaymentMethod"),
                         rs.getString("PaymentDate"),
