@@ -238,7 +238,7 @@ public class TicketDAO extends DBContext {
     
     String sql = " INSERT INTO trainproject.ticket (PassengerID, TicketClassID, "
             + "PurchaseDate, TicketPrice, SeatID, TimeArrive, status, TicketCode) "
-            + "VALUES (?, ?, NOW(), ?, ?, ?, 0, ?)";
+            + "VALUES (?, ?, NOW(), ?, ?, ?, 1, ?)";
     int generatedTicketID = -1;
 
     try (PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {

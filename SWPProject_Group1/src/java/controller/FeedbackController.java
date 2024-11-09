@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.feedback;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class FeedbackController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         FeedbackDAO dao = new FeedbackDAO();
-        
+
         // Get current page, default to 1
         int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
         int recordsPerPage = 5;
@@ -27,7 +28,7 @@ public class FeedbackController extends HttpServlet {
         // Get search and sort parameters with trimming
         String search = request.getParameter("search");
         search = (search != null) ? search.trim() : "";
-        
+
         String sortOrder = request.getParameter("sortOrder");
         sortOrder = (sortOrder != null) ? sortOrder : "latest";
 
@@ -52,7 +53,18 @@ public class FeedbackController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
+            int role = (int) session.getAttribute("account");
+            if (role != 4) {
+                request.getRequestDispatcher("login").forward(request, response);
+            } else {
+                processRequest(request, response);
+            }
+        } else {
+            request.getRequestDispatcher("login").forward(request, response);
+
+        }
     }
 
     // Handle POST request for add, update, and delete operations
@@ -84,7 +96,7 @@ public class FeedbackController extends HttpServlet {
         String submissionDate = request.getParameter("submissionDate");
         String feedbacktype = request.getParameter("feedbacktype");
         boolean status = Boolean.parseBoolean("status");
-        feedback newFeedback = new feedback(0, message, passengerID, submissionDate,feedbacktype,status);
+        feedback newFeedback = new feedback(0, message, passengerID, submissionDate, feedbacktype, status);
         new FeedbackDAO().createFeedback(newFeedback);
     }
 
@@ -96,7 +108,7 @@ public class FeedbackController extends HttpServlet {
         String feedbacktype = request.getParameter("feedbacktype");
         boolean status = Boolean.parseBoolean("status");
 
-        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate,feedbacktype,status);
+        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate, feedbacktype, status);
         new FeedbackDAO().updateFeedback(updatedFeedback);
     }
 
@@ -109,7 +121,7 @@ public class FeedbackController extends HttpServlet {
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
         List<feedback> list = dao.getAllFeedback(); // For testing purposes
-        
+
         // Print all feedback items
         for (int i = 0; i < list.size(); i++) {
             System.out.println(i + ": " + list.get(i)); // Ensure Feedback class has a proper toString() method

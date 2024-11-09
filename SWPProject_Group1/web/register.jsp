@@ -119,7 +119,8 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <input name="age" type="date" required class="form-control" 
-                                                   placeholder="Date Of Birth" value="${param.age}">
+                                                   placeholder="Date Of Birth" value="${param.age}" max="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(System.currentTimeMillis() - 13L * 365 * 24 * 60 * 60 * 1000)) %>">
+                                            
                                         </div>
                                         <div class="error-message" id="ageError"></div>
                                     </div>
