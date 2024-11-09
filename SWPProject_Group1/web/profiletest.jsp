@@ -76,7 +76,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">Date Of Birth</label>
                                                         <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                            <input class="form-control" name="age" value="${profile.age}"  placeholder="${profile.age}" type="date"  required="" max="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
+                                                            <input class="form-control" name="age" value="${profile.age}"  placeholder="${profile.age}" type="date"  required="" max="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(System.currentTimeMillis() - 13L * 365 * 24 * 60 * 60 * 1000)) %>">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">

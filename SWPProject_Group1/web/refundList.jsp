@@ -193,7 +193,7 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                                     ${feedback.passengerID}
                                                 </a>
                                             </td>
-                                            <td>${feedback.status==1? 'pending': (feedback.status == 0 ? 'Rejected' : 'Accepted')}</td>
+                                            <td class="${feedback.status == 1 ? 'status-pending' : (feedback.status == 0 ? 'status-rejected' : 'status-accepted')}">${feedback.status==1? 'pending...': (feedback.status == 0 ? 'Rejected' : 'Accepted')}</td>
                                             <td>${feedback.message}</td>
                                             <td>${feedback.percent}%</td>
                                             <td>
@@ -408,6 +408,41 @@ Admin.jsp<%@page contentType="text/html" pageEncoding="UTF-8"%>
                         });
                     });
     </script>
+    <style>
+        button {
+    padding: 8px 16px;
+    background-color: #4CAF50; /* Green for "Accept" */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+form:last-child button {
+    background-color: #f44336; /* Red for "Reject" */
+}
+
+button:hover {
+    opacity: 0.8;
+}
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: red;
+    font-weight: bold;
+}
+
+.status-accepted {
+    color: green;
+    font-weight: bold;
+}
+    </style>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

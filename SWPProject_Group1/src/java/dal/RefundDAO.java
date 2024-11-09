@@ -80,7 +80,7 @@ public class RefundDAO extends DBContext {
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                list.add(new refundRequest(rs.getInt("refundID"), rs.getInt("passengerID"), rs.getInt("ticketid"), rs.getInt("status"), rs.getString("message"),rs.getInt("refundpercent")));
+                list.add(new refundRequest(rs.getInt("refundID"),rs.getInt("ticketid") , rs.getInt("passengerID"), rs.getInt("status"), rs.getString("message"),rs.getInt("refundpercent")));
             }
         } catch (Exception e) {
             System.out.println("Error in getFeedbackBySearchAndSort: " + e.getMessage());
