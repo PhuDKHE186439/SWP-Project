@@ -40,7 +40,18 @@ public class ticket {
         this.Status = Status;
         this.TicketCode = TicketCode;
     }
-
+    public ticket(int ticketID, int passengerID, ticketClass ticketClass, String purchaseDate, 
+            double ticketPrice, seat seat, String timeArrive, int Status, String TicketCode) {
+        this.ticketID = ticketID;
+        this.passengerID = passengerID;
+        this.ticketClass = ticketClass;
+        this.purchaseDate = purchaseDate;
+        this.ticketPrice = ticketPrice;
+        this.seat = seat;
+        this.timeArrive = timeArrive;
+        this.Status = Status;
+        this.TicketCode = TicketCode;
+    }
     // Các getter và setter (giữ nguyên)
     public int getStatus() {
         return Status;
