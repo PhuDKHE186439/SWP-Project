@@ -74,15 +74,11 @@ public class FeedbackController extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action) {
-            case "addFeedback":
-                addFeedback(request);
-                break;
+            
             case "updateFeedback":
                 updateFeedback(request);
                 break;
-            case "deleteFeedback":
-                deleteFeedback(request);
-                break;
+            
             default:
                 break;
         }
@@ -101,21 +97,16 @@ public class FeedbackController extends HttpServlet {
     }
 
     private void updateFeedback(HttpServletRequest request) {
-        int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
-        String message = request.getParameter("message");
-        int passengerID = Integer.parseInt(request.getParameter("passengerID"));
-        String submissionDate = request.getParameter("submissionDate");
-        String feedbacktype = request.getParameter("feedbacktype");
-        boolean status = Boolean.parseBoolean("status");
-
-        feedback updatedFeedback = new feedback(feedbackID, message, passengerID, submissionDate, feedbacktype, status);
-        new FeedbackDAO().updateFeedback(updatedFeedback);
-    }
+    int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
+    boolean status = Boolean.parseBoolean(request.getParameter("status"));
+    new FeedbackDAO().updateFeedbackStatus(feedbackID, status);
+}
 
     private void deleteFeedback(HttpServletRequest request) {
         int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
         new FeedbackDAO().deleteFeedback(feedbackID);
     }
+    
 
     // Main method for testing purposes
     public static void main(String[] args) {

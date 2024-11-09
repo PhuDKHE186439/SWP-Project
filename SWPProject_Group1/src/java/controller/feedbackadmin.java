@@ -106,28 +106,48 @@ public class feedbackadmin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        String message = "";
+
         try {
-
-            int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
-            FeedbackDAO dao = new FeedbackDAO();
-            String message;
-
-            if ("In Order".equals(action)) {
-                dao.updateFeedbackStatus(feedbackID, "In Order");
-                message = "Feedback marked as In Order.";
-            } else if ("Finish".equals(action)) {
-                dao.updateFeedbackStatus(feedbackID, "Finish");
-                message = "Feedback marked as Finished.";
-            } else {
-                message = "Invalid action.";
+            if (action != null) {
+                int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
+                FeedbackDAO dao = new FeedbackDAO();
+                
+                switch (action) {
+                    case "In Order":
+                        dao.updateFeedbackStatus(feedbackID, true); // Assuming true represents "In Order"
+                        message = "Feedback marked as In Order.";
+                        break;
+                    case "Finish":
+                        dao.updateFeedbackStatus(feedbackID, false); // Assuming false represents "Finished"
+                        message = "Feedback marked as Finished.";
+                        break;
+                    case "updateFeedback":
+                        updateFeedback(request);
+                        message = "Feedback updated successfully.";
+                        break;
+                    default:
+                        message = "Invalid action.";
+                        break;
+                }
             }
             
             request.setAttribute("message", message);
+            
+        } catch (NumberFormatException e) {
+            request.setAttribute("message", "Invalid feedback ID format.");
         } catch (Exception e) {
+            request.setAttribute("message", "An error occurred while processing the request.");
         }
 
-        
-        request.getRequestDispatcher("feedbackadmin").forward(request, response);
+        // Redirect back to the feedback page
+        response.sendRedirect("feedback");
+    }
+
+    private void updateFeedback(HttpServletRequest request) {
+        int feedbackID = Integer.parseInt(request.getParameter("feedbackID"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+        new FeedbackDAO().updateFeedbackStatus(feedbackID, status);
     }
 
     /**

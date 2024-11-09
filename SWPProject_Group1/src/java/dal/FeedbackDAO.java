@@ -169,17 +169,33 @@ public class FeedbackDAO extends DBContext {
         }
     }
     
-    public void updateFeedbackStatus(int FeedbackID, String status) {
-        String sql = "UPDATE trainproject.feedback SET Status = ? WHERE FeedbackID = ?";
+    public void updateFeedbackStatus(int feedbackID, boolean status) {
+        String sql = "UPDATE feedback SET status = ? WHERE feedbackID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, status);
-            st.setInt(2, FeedbackID);
-            st.executeUpdate();
+            st.setBoolean(1, status);
+            st.setInt(2, feedbackID);
+            int rowsUpdated = st.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Feedback status updated successfully.");
+            } else {
+                System.out.println("Feedback ID not found.");
+            }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error updating feedback status: " + e.getMessage());
         }
     }
 
+    public static void main(String[] args) {
+        // Assuming `connection` is already initialized elsewhere
+        
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+
+        // Test the updateFeedbackStatus method
+        int feedbackID = 6; // Replace with an existing feedback ID in your database
+        boolean status = true; // Set the desired status
+
+        feedbackDAO.updateFeedbackStatus(feedbackID, status);
+    }
     public boolean deleteFeedback(int feedbackID) {
         String sql = "DELETE FROM trainproject.feedback WHERE FeedbackID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -268,25 +284,5 @@ public class FeedbackDAO extends DBContext {
         return feedbackList;
     }
     // Main method for testing purposes
-    public static void main(String[] args) {
-        FeedbackDAO dao = new FeedbackDAO();
-
-        // Test search functionality
-//        System.out.println("Testing search functionality:");
-        List<feedback> searchResults = dao.getFeedbackBySearchAndSort("", "latest", 1, 5);
-//        for (feedback f : searchResults) {
-System.out.println(searchResults);
-//            System.out.println(f);
-//        }
-//        
-//        // Test counting with search
-//        System.out.println("\nTesting count functionality:");
-//        int count = dao.getTotalFeedbackCount("test search");
-//        System.out.println("Total records found: " + count);
-//        dao.createFeedback("Hello", 3, LocalDate.now().toString());
-//        System.out.println(dao.getAllFeedback());
-    
-
-
-    }
+  
 }

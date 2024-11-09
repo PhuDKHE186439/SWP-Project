@@ -143,6 +143,8 @@
                                         <th scope="col">Message</th>
                                         <th scope="col">Submission Date</th>
                                         <th scope="col">Status</th>
+                                                                <th scope="col">Actions</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -152,6 +154,25 @@
                                             <td>${feedback.message}</td>
                                             <td>${feedback.submissionDate}</td>
                                             <td>${feedback.status ? "Finish" : "In Order"}</td>
+                                            <td>
+                                <form action="feedback" method="post" style="display: inline;">
+                                    <input type="hidden" name="feedbackID" value="${feedback.feedbackID}">
+                                    <c:choose>
+                                        <c:when test="${!feedback.status}">
+                                            <button type="submit" name="action" value="Finish" 
+                                                    class="btn btn-sm btn-success">
+                                                Mark as Finish
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="submit" name="action" value="In Order" 
+                                                    class="btn btn-sm btn-warning">
+                                                Mark as In Order
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </form>
+                            </td>
                                             
                                         </tr>
                                     </c:forEach>

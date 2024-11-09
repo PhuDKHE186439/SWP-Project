@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.News;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @WebServlet("/news/*")
 public class NewsController extends HttpServlet {
-
     private NewsDAO newsDAO;
 
     @Override
@@ -27,41 +25,28 @@ public class NewsController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        if (session.getAttribute("account") != null) {
-            int role = (int) session.getAttribute("account");
-            if (role != 4) {
-                request.getRequestDispatcher("login").forward(request, response);
-            } else {
-                String action = request.getPathInfo();
-                if (action == null) {
-                    action = "/";
-                }
-
-                try {
-                    switch (action) {
-                        case "/list":
-                        case "/":
-                        case "/search":
-                            searchNews(request, response);
-                            break;
-                        case "/view":
-                            viewNews(request, response);
-                            break;
-                        default:
-                            searchNews(request, response);
-                            break;
-                    }
-                } catch (SQLException ex) {
-                    throw new ServletException(ex);
-                }
-            }
-        } else {
-            request.getRequestDispatcher("login").forward(request, response);
-
+        String action = request.getPathInfo();
+        if (action == null) {
+            action = "/";
         }
 
+        try {
+            switch (action) {
+                case "/list":
+                case "/":
+                case "/search":
+                    searchNews(request, response);
+                    break;
+                case "/view":
+                    viewNews(request, response);
+                    break;
+                default:
+                    searchNews(request, response);
+                    break;
+            }
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        }
     }
 
     @Override
@@ -92,34 +77,35 @@ public class NewsController extends HttpServlet {
     }
 
     private void searchNews(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        String search = request.getParameter("search");
-        String sortOrder = request.getParameter("sortOrder");
-        String status = request.getParameter("status"); // Get status filter from request
+    String search = request.getParameter("search");
+    String sortOrder = request.getParameter("sortOrder");
+    String status = request.getParameter("status"); // Get status filter from request
 
-        if (sortOrder == null) {
-            sortOrder = "latest"; // Default sort order
-        }
-        int page = 1;
-        try {
-            page = Integer.parseInt(request.getParameter("page"));
-        } catch (NumberFormatException e) {
-            // If page is not a valid number, default to 1
-        }
-        int recordsPerPage = 5; // You can make this configurable
-
-        // Pass the status parameter to the DAO method
-        List<News> searchResults = newsDAO.getNewsBySearchAndSort(search, sortOrder, status, page, recordsPerPage);
-        int totalRecords = newsDAO.getTotalNewsCount(search, status); // Update total count query to consider status
-
-        request.setAttribute("newsList", searchResults);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
-        request.setAttribute("search", search);
-        request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("status", status); // Set status in the request
-
-        request.getRequestDispatcher("/NewsManagement.jsp").forward(request, response);
+    if (sortOrder == null) {
+        sortOrder = "latest"; // Default sort order
     }
+    int page = 1;
+    try {
+        page = Integer.parseInt(request.getParameter("page"));
+    } catch (NumberFormatException e) {
+        // If page is not a valid number, default to 1
+    }
+    int recordsPerPage = 5; // You can make this configurable
+
+    // Pass the status parameter to the DAO method
+    List<News> searchResults = newsDAO.getNewsBySearchAndSort(search, sortOrder, status, page, recordsPerPage);
+    int totalRecords = newsDAO.getTotalNewsCount(search, status); // Update total count query to consider status
+
+    request.setAttribute("newsList", searchResults);
+    request.setAttribute("currentPage", page);
+    request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
+    request.setAttribute("search", search);
+    request.setAttribute("sortOrder", sortOrder);
+    request.setAttribute("status", status); // Set status in the request
+
+    request.getRequestDispatcher("/NewsManagement.jsp").forward(request, response);
+}
+
 
     private void viewNews(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -135,7 +121,7 @@ public class NewsController extends HttpServlet {
         String image = request.getParameter("image");
         String location = request.getParameter("location");
         int status = Integer.parseInt(request.getParameter("status"));
-
+        
         News news = new News();
         news.setTitle(title);
         news.setContent(content);
@@ -144,7 +130,7 @@ public class NewsController extends HttpServlet {
         news.setStatus(status);
         news.setCreated_at(new Timestamp(System.currentTimeMillis()));
         news.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-
+        
         newsDAO.create(news);
         response.sendRedirect(request.getContextPath() + "/news/list");
     }
@@ -156,7 +142,7 @@ public class NewsController extends HttpServlet {
         String image = request.getParameter("image");
         String location = request.getParameter("location");
         int status = Integer.parseInt(request.getParameter("status"));
-
+        
         News news = newsDAO.read(id);
         news.setTitle(title);
         news.setContent(content);
@@ -164,7 +150,7 @@ public class NewsController extends HttpServlet {
         news.setLocation(location);
         news.setStatus(status);
         news.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-
+        
         newsDAO.update(news);
         response.sendRedirect(request.getContextPath() + "/news/list");
     }
@@ -177,15 +163,15 @@ public class NewsController extends HttpServlet {
 
     private String convertNewsToJson(News news) {
         return String.format(
-                "{\"id\": %d, \"title\": \"%s\", \"content\": \"%s\", \"image\": \"%s\", \"location\": \"%s\", \"status\": %d, \"created_at\": \"%s\", \"updated_at\": \"%s\"}",
-                news.getId(),
-                escapeJson(news.getTitle()),
-                escapeJson(news.getContent()),
-                escapeJson(news.getImage()),
-                escapeJson(news.getLocation()),
-                news.getStatus(),
-                news.getCreated_at().toString(),
-                news.getUpdated_at().toString()
+            "{\"id\": %d, \"title\": \"%s\", \"content\": \"%s\", \"image\": \"%s\", \"location\": \"%s\", \"status\": %d, \"created_at\": \"%s\", \"updated_at\": \"%s\"}",
+            news.getId(),
+            escapeJson(news.getTitle()),
+            escapeJson(news.getContent()),
+            escapeJson(news.getImage()),
+            escapeJson(news.getLocation()),
+            news.getStatus(),
+            news.getCreated_at().toString(),
+            news.getUpdated_at().toString()
         );
     }
 

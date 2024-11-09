@@ -3,7 +3,9 @@
     Created on : Sep 23, 2024, 5:35:56 PM
     Author     : My Asus
 --%>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -142,20 +144,20 @@
         </c:if>
 
         <!-- Search Form -->
-<form action="${pageContext.request.contextPath}/news/search" method="get" class="mb-4" id="searchForm">
+<form action="${pageContext.request.contextPath}/news" method="get" class="mb-4" id="searchForm">
     <div class="row g-3 align-items-center">
         <div class="col-auto">
             <input type="text" class="form-control" placeholder="Search News" name="search" value="${param.search}">
         </div>
         <div class="col-auto">
-            <select name="sortOrder" class="form-select" onchange="document.getElementById('searchForm').submit();">
+            <select name="sortOrder" class="form-select">
                 <option value="latest" ${param.sortOrder == 'latest' ? 'selected' : ''}>Latest</option>
                 <option value="oldest" ${param.sortOrder == 'oldest' ? 'selected' : ''}>Oldest</option>
             </select>
         </div>
         <div class="col-auto">
-            <select name="status"  class="form-select" onchange="document.getElementById('searchForm').submit();">
-                <option value="" ${empty param.status ? 'selected' : '' }>All Status</option>
+            <select name="status" class="form-select">
+                <option value="" ${empty param.status ? 'selected' : ''}>All Status</option>
                 <option value="1" ${param.status == '1' ? 'selected' : ''}>Active</option>
                 <option value="2" ${param.status == '2' ? 'selected' : ''}>Inactive</option>
             </select>
@@ -164,8 +166,7 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
         <div class="col-auto">
-            <!-- Show All Button -->
-            <a href="${pageContext.request.contextPath}/news/showAll" class="btn btn-secondary">Show All</a>
+            <a href="${pageContext.request.contextPath}/news" class="btn btn-secondary">Show All</a>
         </div>
     </div>
 </form>
@@ -173,9 +174,9 @@
 
         <!-- News List -->
         <c:if test="${not empty newsList}">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
@@ -186,63 +187,81 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <c:forEach var="news" items="${newsList}">
-                            <tr>
-                                <td>${news.id}</td>
-                                <td>${news.title}</td>
-                                <td>${news.location}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${news.status == 1}">
-                                            <span class="badge bg-success">Active</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="badge bg-danger">Inactive</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td><fmt:formatDate value="${news.created_at}" pattern="yyyy-MM-dd    HH:mm"/></td>
-                                <td><fmt:formatDate value="${news.updated_at}" pattern="yyyy-MM-dd     HH:mm"/></td>
-                                <td>
-                                <button class="btn btn-info btn-sm view-news" data-id="${news.id}">
-                                        <i class="fas fa-eye"></i> View
-                                    </button>
-                                    <button class="btn btn-warning btn-sm edit-news" data-id="${news.id}">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </button>
-                                    <form action="${pageContext.request.contextPath}/news/delete" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" value="${news.id}">
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this news?')">
-                                            <i class="fas fa-trash-alt"></i> Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
+            <tbody>
+                <c:forEach var="news" items="${newsList}">
+                    <tr>
+                        <td>${news.id}</td>
+                        <td>${news.title}</td>
+                        <td>${news.location}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${news.status == 1}">
+                                    <span class="badge bg-success">Active</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="badge bg-danger">Inactive</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td><fmt:formatDate value="${news.created_at}" pattern="yyyy-MM-dd HH:mm"/></td>
+                        <td><fmt:formatDate value="${news.updated_at}" pattern="yyyy-MM-dd HH:mm"/></td>
+                        <td>
+                            <button class="btn btn-info btn-sm view-news" data-bs-toggle="modal" data-bs-target="#viewNewsModal" data-id="${news.id}">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn btn-warning btn-sm edit-news" data-id="${news.id}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <form action="${pageContext.request.contextPath}/news/delete" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this news?');">
+                                <input type="hidden" name="id" value="${news.id}">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 
             <!-- Pagination -->
             <c:if test="${totalPages > 1}">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
-                            <a class="page-link" href="news/search?page=${currentPage - 1}&search=${param.search}&sortOrder=${param.sortOrder}">Previous</a>
-                        </li>
-                        <c:forEach begin="1" end="${totalPages}" var="i">
-                            <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                <a class="page-link" href="news/search?page=${i}&search=${param.search}&sortOrder=${param.sortOrder}">${i}</a>
-                            </li>
-                        </c:forEach>
-                        <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
-                            <a class="page-link" href="news/search?page=${currentPage + 1}&search=${param.search}&sortOrder=${param.sortOrder}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </c:if>
-        </c:if>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <c:url value="/news" var="prevUrl">
+                    <c:param name="page" value="${currentPage - 1}"/>
+                    <c:param name="search" value="${param.search}"/>
+                    <c:param name="sortOrder" value="${param.sortOrder}"/>
+                    <c:param name="status" value="${param.status}"/>
+                </c:url>
+                <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="${prevUrl}">Previous</a>
+                </li>
+                <c:forEach begin="1" end="${totalPages}" var="i">
+                    <c:url value="/news" var="pageUrl">
+                        <c:param name="page" value="${i}"/>
+                        <c:param name="search" value="${param.search}"/>
+                        <c:param name="sortOrder" value="${param.sortOrder}"/>
+                        <c:param name="status" value="${param.status}"/>
+                    </c:url>
+                    <li class="page-item ${currentPage == i ? 'active' : ''}">
+                        <a class="page-link" href="${pageUrl}">${i}</a>
+                    </li>
+                </c:forEach>
+                <c:url value="/news" var="nextUrl">
+                    <c:param name="page" value="${currentPage + 1}"/>
+                    <c:param name="search" value="${param.search}"/>
+                    <c:param name="sortOrder" value="${param.sortOrder}"/>
+                    <c:param name="status" value="${param.status}"/>
+                </c:url>
+                <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="${nextUrl}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </c:if>
+</c:if>
 
         <!-- Add New News Button -->
         <button class="btn btn-primary mb-4" id="addNewsBtn">Add New News</button>
@@ -294,8 +313,208 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
+        // Validation rules
+const validationRules = {
+    title: {
+        minLength: 10,
+        maxLength: 200,
+        pattern: /^[a-zA-Z0-9\s\-_,.!?()'"]+$/,
+        required: true
+    },
+    content: {
+        minLength: 50,
+        maxLength: 10000,
+        required: true
+    },
+    image: {
+        pattern: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i,
+        required: false
+    },
+    location: {
+        minLength: 2,
+        maxLength: 100,
+        pattern: /^[a-zA-Z0-9\s\-_,()]+$/,
+        required: true
+    }
+};
+
+const errorMessages = {
+    title: {
+        required: 'Title is required',
+        minLength: 'Title must be at least 10 characters long',
+        maxLength: 'Title cannot exceed 200 characters',
+        pattern: 'Title contains invalid characters'
+    },
+    content: {
+        required: 'Content is required',
+        minLength: 'Content must be at least 50 characters long',
+        maxLength: 'Content cannot exceed 10000 characters'
+    },
+    image: {
+        pattern: 'Please enter a valid image URL (http/https)'
+    },
+    location: {
+        required: 'Location is required',
+        minLength: 'Location must be at least 2 characters long',
+        maxLength: 'Location cannot exceed 100 characters',
+        pattern: 'Location contains invalid characters'
+    }
+};
+
+// Function to validate a single field
+function validateField(field, value) {
+    const rules = validationRules[field];
+    const errors = [];
+
+    if (rules.required && !value.trim()) {
+        errors.push(errorMessages[field].required);
+    }
+
+    if (value.trim()) {
+        if (rules.minLength && value.length < rules.minLength) {
+            errors.push(errorMessages[field].minLength);
+        }
+
+        if (rules.maxLength && value.length > rules.maxLength) {
+            errors.push(errorMessages[field].maxLength);
+        }
+
+        if (rules.pattern && !rules.pattern.test(value)) {
+            errors.push(errorMessages[field].pattern);
+        }
+    }
+
+    return errors;
+}
+
+// Function to show error message
+function showError(inputElement, message) {
+    // Remove any existing error message
+    const existingError = inputElement.parentNode.querySelector('.invalid-feedback');
+    if (existingError) {
+        existingError.remove();
+    }
+
+    // Add error class to input
+    inputElement.classList.add('is-invalid');
+
+    // Create and append error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'invalid-feedback';
+    errorDiv.textContent = message;
+    inputElement.parentNode.appendChild(errorDiv);
+}
+
+// Function to clear error message
+function clearError(inputElement) {
+    inputElement.classList.remove('is-invalid');
+    const errorDiv = inputElement.parentNode.querySelector('.invalid-feedback');
+    if (errorDiv) {
+        errorDiv.remove();
+    }
+}
+
+// Function to validate entire form
+function validateForm(formData) {
+    let isValid = true;
+    const errors = {};
+
+    // Clear all previous errors
+    document.querySelectorAll('.is-invalid').forEach(el => clearError(el));
+
+    // Validate each field
+    for (const [field, value] of formData.entries()) {
+        if (validationRules[field]) {
+            const fieldErrors = validateField(field, value);
+            if (fieldErrors.length > 0) {
+                isValid = false;
+                errors[field] = fieldErrors;
+                const inputElement = document.getElementById(field);
+                showError(inputElement, fieldErrors.join('. '));
+            }
+        }
+    }
+
+    return isValid;
+}
+
+// Add character counters
+function addCharacterCounter(inputElement, maxLength) {
+    inputElement.addEventListener('input', function() {
+        const remaining = maxLength - this.value.length;
+        let counter = this.parentNode.querySelector('.char-counter');
+        if (!counter) {
+            counter = document.createElement('small');
+            counter.className = 'text-muted char-counter';
+            this.parentNode.appendChild(counter);
+        }
+        counter.textContent = `${remaining} characters remaining`;
+    });
+}
+
+// Initialize form handling
+$(document).ready(function() {
+    const newsForm = $('#newsForm');
+    
+    // Add character counters
+    addCharacterCounter(document.getElementById('title'), validationRules.title.maxLength);
+    addCharacterCounter(document.getElementById('content'), validationRules.content.maxLength);
+
+    // Handle real-time validation
+    Object.keys(validationRules).forEach(field => {
+        const inputElement = document.getElementById(field);
+        if (inputElement) {
+            inputElement.addEventListener('input', function() {
+                const errors = validateField(field, this.value);
+                if (errors.length > 0) {
+                    showError(this, errors.join('. '));
+                } else {
+                    clearError(this);
+                }
+            });
+        }
+    });
+
+    // Handle form submission
+    newsForm.on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        // Validate form before submission
+        if (!validateForm(formData)) {
+            // Show error alert
+            alert('Please fix the errors in the form before submitting.');
+            return false;
+        }
+
+        // If validation passes, proceed with AJAX submission
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#newsModal').modal('hide');
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred: ' + error);
+            }
+        });
+    });
+
+    // Reset validation when modal is hidden
+    $('#newsModal').on('hidden.bs.modal', function() {
+        newsForm[0].reset();
+        document.querySelectorAll('.is-invalid').forEach(el => clearError(el));
+        document.querySelectorAll('.char-counter').forEach(el => el.remove());
+    });
+});
+    </script>
+    <script>
+        
+        
         $(document).ready(function () {
             // Add New News
             $('#addNewsBtn').click(function () {
@@ -342,6 +561,54 @@ $('.view-news').click(function() {
         $('#viewNewsModal').modal('show');
     });
 });
+$(document).ready(function () {
+    // Handle form submissions with AJAX
+    $('#newsForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#newsModal').modal('hide');
+                // Reload the page to show updated data
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred: ' + error);
+            }
+        });
+    });
+
+    // Handle edit button clicks
+    $('.edit-news').click(function() {
+        var newsId = $(this).data('id');
+        $.ajax({
+            url: '${pageContext.request.contextPath}/news/view',
+            method: 'GET',
+            data: { id: newsId },
+            success: function(news) {
+                $('#newsId').val(news.id);
+                $('#title').val(news.title);
+                $('#content').val(news.content);
+                $('#image').val(news.image);
+                $('#location').val(news.location);
+                $('#status').val(news.status);
+                $('#newsForm').attr('action', '${pageContext.request.contextPath}/news/update');
+                $('#newsModalLabel').text('Edit News');
+                $('#newsModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                alert('Error loading news details: ' + error);
+            }
+        });
+    });
+
+    
+});
+
+
+
 
     </script>
     <!-- View News Modal -->

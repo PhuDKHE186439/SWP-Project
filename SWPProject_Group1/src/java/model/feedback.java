@@ -18,6 +18,13 @@ public class feedback {
     private String feedbackType;
     private boolean status;
 
+    public feedback(int feedbackID, boolean status) {
+        this.feedbackID = feedbackID;
+        this.status = status;
+    }
+
+    
+    
     public feedback(int feedbackID, String message, int passengerID, String submissionDate, String FeedbackType, boolean Status) {
         this.feedbackID = feedbackID;
         this.message = message;

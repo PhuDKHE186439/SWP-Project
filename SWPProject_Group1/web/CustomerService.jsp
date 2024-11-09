@@ -4,7 +4,6 @@
     Author     : My Asus
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -155,40 +154,36 @@
                                                 <th scope="col">Feedback Type</th>
                                                 <th scope="col">Passenger ID</th>
                                                 <th scope="col">Submission Date</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="feedback" items="${feedbackList}">
-                                                <tr>
-                                                    <td>${feedback.feedbackID}</td>
-                                                    <td>${feedback.message}</td>
-                                                    <td>${feedback.feedbackType}</td>
-                                                    <td>
-                                                        <a href="#" class="passenger-id" data-passenger-id="${feedback.passengerID}" data-bs-toggle="modal" data-bs-target="#passengerInfoModal">
-                                                            ${feedback.passengerID}
-                                                        </a>
-                                                    </td>
-                                                    
-                                                    <td>${feedback.submissionDate}</td>
-                                                    <td>
-                                                        <a href="#" class="btn btn-warning btn-sm" 
-                                                           data-bs-toggle="modal" 
-                                                           data-bs-target="#editFeedbackModal" 
-                                                           data-feedback-id="${feedback.feedbackID}" 
-                                                           data-message="${feedback.message}"
-                                                           data-feedback-type="${feedback.feedbackType}"
-                                                           data-passenger-id="${feedback.passengerID}"
-                                                           data-submission-date="${feedback.submissionDate}">Edit</a>
-                                                        <form action="feedback?action=deleteFeedback" method="post" style="display:inline;">
-                                                            <input type="hidden" name="feedbackID" value="${feedback.feedbackID}" />
-                                                            <button type="submit" class="btn btn-danger btn-sm" 
-                                                                    onclick="return confirm('Are you sure you want to delete this feedback?');">Delete</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
+    <c:forEach var="feedback" items="${feedbackList}">
+        <c:if test="${feedback.feedbackType != 'Bugs'}">
+            <tr>
+                <td>${feedback.feedbackID}</td>
+                <td>${feedback.message}</td>
+                <td>${feedback.feedbackType}</td>
+                <td>
+                    <a href="#" class="passenger-id" data-passenger-id="${feedback.passengerID}" 
+                       data-bs-toggle="modal" data-bs-target="#passengerInfoModal">
+                        ${feedback.passengerID}
+                    </a>
+                </td>
+                <td>${feedback.submissionDate}</td>
+                <td>${feedback.status ? 'Resolved' : 'Pending'}</td>
+                <td>
+                    <a href="#" class="btn btn-warning btn-sm" 
+                       data-bs-toggle="modal" 
+                       data-bs-target="#editFeedbackModal" 
+                       data-feedback-id="${feedback.feedbackID}"
+                       data-status="${feedback.status}">Update Status</a>
+                </td>
+            </tr>
+        </c:if>
+    </c:forEach>
+</tbody>
                                     </table>
                                 </div>
 
@@ -233,40 +228,31 @@
 
                                 <!-- Edit Feedback Modal -->
                                 <div class="modal fade" id="editFeedbackModal" tabindex="-1" aria-labelledby="editFeedbackModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editFeedbackModalLabel">Edit Feedback</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="editFeedbackForm" action="feedback?action=updateFeedback" method="post">
-                                                    <input type="hidden" name="feedbackID" id="feedbackID" value="">
-                                                    <div class="mb-3">
-                                                        <label for="editMessage" class="form-label">Message</label>
-                                                        <input type="text" class="form-control" id="editMessage" name="message" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="editPassengerID" class="form-label">Passenger ID</label>
-                                                        <input type="number" class="form-control" id="editPassengerID" name="passengerID" required readonly>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="editSubmissionDate" class="form-label">Submission Date</label>
-                                                        <input type="date" class="form-control" id="editSubmissionDate" name="submissionDate" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="editFeedbackType" class="form-label">Feedback Type</label>
-                                                        <input type="text" class="form-control" id="editFeedbackType" name="FeedbackType" required>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" form="editFeedbackForm">Update Feedback</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFeedbackModalLabel">Update Feedback Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editFeedbackForm" action="feedback?action=updateFeedback" method="post">
+                    <input type="hidden" name="feedbackID" id="feedbackID" value="">
+                    <div class="mb-3">
+                        <label for="editStatus" class="form-label">Status</label>
+                        <select class="form-select" id="editStatus" name="status" required>
+                            <option value="true">Resolved</option>
+                            <option value="false">Pending</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="editFeedbackForm">Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
 
                                 <!-- Passenger Info Modal -->
                                 <div class="modal fade" id="passengerInfoModal" tabindex="-1" aria-labelledby="passengerInfoModalLabel" aria-hidden="true">
@@ -338,6 +324,20 @@
                                                                                 });
                                                                             });
                                                                         });
+                                                                        
+                                                                        
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+    var editFeedbackModal = document.getElementById('editFeedbackModal');
+    
+    editFeedbackModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var feedbackID = button.getAttribute('data-feedback-id');
+        var status = button.getAttribute('data-status');
+        
+        document.getElementById('feedbackID').value = feedbackID;
+        document.getElementById('editStatus').value = status;
+    });
+});
                         </script>
                     </body>
                 </html>
